@@ -1,0 +1,290 @@
+<resources>
+    <string name="app_name">SOSAchat</string>
+    <string name="welcomeMessage">Hello and welcome to\nSOSAChat</string>
+    <string name="searchMessage">Search e.g: iPhone X, Galaxy S8 &#8230;</string>
+    <string name="consumElec">Electronics</string>
+    <string name="cars">Cars</string>
+    <string name="latestItems">LATEST ITEMS</string>
+    <string name="allCats">All Categories</string>
+    <string name="moto">Buy&amp;Sell</string>
+    <string name="menuHome">Home</string>
+    <string name="menuExposeItem">Expose Item</string>
+    <string name="menuTroque">Troque</string>
+    <string name="menuHelpNCont">Help &amp; Contact</string>
+    <string name="menuSettings">Settings</string>
+    <string name="menuCatCars">@string/cars</string>
+    <string name="menuCatElec">@string/consumElec</string>
+    <string name="aboutSOS">About SOSAChat&#169;</string>
+    <string name="hintNewItemName">Item name</string>
+    <string name="hintNewItemDesc">Describe your item with clear details</string>
+    <string name="aboutMessage">"This is a beta version of SOSAchat&#169;\nDeveloped by KOZI&#169;Engineering, its a platform to help small business grow\nBy easing communications among vendors and buyers."</string>
+    <string name="menuMyAcc">My Account</string>
+    <string name="qualBrandNew">Brand New</string>
+    <string name="qualSecondHand">Second Hand</string>
+    <string name="qualThirdHand">OK</string>
+    <string name="notAvailable">N/A</string>
+    <string name="choseCat">- Choose category -</string>
+    <string name="choseQuality">- Choose quality -</string>
+    <string name="txtAddNewItemPhotos">ADD MORE PICTURES</string>
+    <string name="txtButtonPostItem">POST ITEM</string>
+    <string name="msgClickToChangePic">Click on any picture to replace it with another one.</string>
+    <string name="txtItemMainPic">TOUCH TO ADD PICTURE</string>
+    <string name="currencyUSD">USD</string>
+    <string name="currencyCDF">CDF</string>
+    <string name="hintNewPrice">Item Price</string>
+    <string name="menuWishList">Wish List</string>
+    <string name="txAcceptTerms">Accept Terms&amp;Conditions</string>
+    <string name="txtTermsNConds">Terms&amp;Conditions</string>
+    <string name="msgPostItemFieldsIncomplete">Please fill in all the required fields</string>
+    <string name="titleTermsAndCondition">Terms&amp;Conditions</string>
+    <string name="msgTermAndCondDialog">You need to accept the Terms &amp; Conditions before you post an item.</string>
+    <string name="btnReadTermsNconds">TERMS &amp; CONDITIONS</string>
+    <string name="processing">Processing ...</string>
+    <string name="msgEmptyFields">Empty fields!</string>
+    <string name="msgNoRecentItems">Sorry there are no recent items posted today</string>
+    <string name="menuReloadRecentItems">Reload Recent Items</string>
+    <string name="msgRecentItemsLoaded">Recents Items Loaded</string>
+    <string name="msgNoNetwork">Sorry you need an internet connection to continue.</string>
+    <string name="msgNoNetworkTitle">NO INTERNET CONNECTION</string>
+    <string name="txtBtnRetryConnecting">RETRY</string>
+    <string name="msgStillNoConnection">Still no connection! Check WiFi or 3G data</string>
+    <string name="msgErrorNoProdInType">Sorry this list is still empty for now, but you can be the first one to post something, or come by later to check if anyone as posted anything!</string>
+    <string name="menProSortByLates">Sort by latest</string>
+    <string name="menProSortByCheapest">Sort by cheapest</string>
+    <string name="menProSortByQuality">Sort by quality</string>
+    <string name="menuItemDetailsContactVendor">Contact Vendor</string>
+    <string name="menuItemDetailsAddToWishList">Add to Wishlist</string>
+    <string name="msgAccNotActive">Sorry you need first to activated your sos achat account, before you can contact the vendor</string>
+    <string name="titleAccNotActive">Account Not Activate!</string>
+    <string name="currencyToDiscuss">To discuss</string>
+    <string name="search">Search</string>
+    <string name="titleSettings">Settings</string>
+    <string name="msgAbout">&#169; SOSAchat 2017. All rights reserved.</string>
+    <string name="contactPhoneCall">Phone Call</string>
+    <string name="contactSMS">SMS</string>
+    <string name="contactSOSDM">SOS DM</string>
+    <string name="contactEmail">Email</string>
+    <string name="msgChooseYourPictureSource">Choose your picture source</string>
+    <string name="sourceGallery">Gallery</string>
+    <string name="sourceCamera">Camera</string>
+    <string name="btnCancel">CANCEL</string>
+    <string name="setLabelFullname">Full Name</string>
+    <string name="accSettings">Account Settings</string>
+    <string name="titleAccountActivation">Account Activation</string>
+    <string name="setLabelEmail">Email</string>
+    <string name="setLabelMobile">Mobile</string>
+    <string name="setLabelCompany">Company</string>
+    <string name="setLabelLocation">Location</string>
+    <string name="txtNewItemName">Item Name</string>
+    <string name="txtNewItemPrice">Item Pricing</string>
+    <string name="txtNewItemCat">Item Category</string>
+    <string name="txtNewItemQual">Item Quality</string>
+    <string name="txtNewItemDesc">Item Description</string>
+    <string name="qualOther">Other</string>
+    <string name="strNA">N/A</string>
+    <string name="txtNewItemAddMorePix">ADD MORE PICTURES</string>
+    <string name="txtFeatCatOther">Other</string>
+    <string name="menuCatOther">Other</string>
+    <string name="btnOk">OK</string>
+    <string name="loremTxt">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.
+    \n\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.
+    \n\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.
+    \n\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.
+    \n\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.
+    \n\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.
+    \n\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</string>
+    <string name="msgEmptyWli">Sorry your wishlist is empty.</string>
+    <string name="setRowTxtMyProducts">My Products</string>
+    <string name="setRowTxtMyWishList">My Wishlist</string>
+    <string name="setRowTxtAccountSettings">Account Settings</string>
+    <string name="menuResetExposeForm">RESET FORM</string>
+    <string name="toastMsgFormReset">Form as been reset</string>
+    <string name="menuEmptyWishList">EMPTY WISHLIST</string>
+    <string name="setRowTxtMessages">Messages</string>
+
+
+    <string-array name="newItemCat">
+
+        <item>@string/cars</item>
+        <item>@string/consumElec</item>
+        <item>@string/qualOther</item>
+
+    </string-array>
+
+    <string-array name="btnsTermsAndCond">
+        <item>@string/btnReadTermsNconds</item>
+        <item>OK</item>
+    </string-array>
+
+    <string-array name="newItemQuality">
+
+        <item>@string/qualBrandNew</item>
+        <item>@string/qualSecondHand</item>
+        <item>@string/qualThirdHand</item>
+        <item>@string/strNA</item>
+    </string-array>
+
+    <string-array name="currencies">
+        <item>@string/currencyUSD</item>
+        <item>@string/currencyCDF</item>
+        <item>@string/currencyToDiscuss</item>
+    </string-array>
+
+    <string-array name="dummyList">
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+        <item>Dummy Cont</item>
+    </string-array>
+    <string name="title_activity_messages">Messages</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="menuMessages">Messages</string>
+    <string name="title_activity_my_account">My Account</string>
+    <string name="btnYes">Yes</string>
+    <string name="btnNo">No</string>
+    <string name="titleRemoveFromWishList">Remove %1$s from wish list</string>
+    <string name="dgMsgRemoveFromWishList">Are you sure you want to remove %1$s from wishlist? Can\'t undo.</string>
+    <string name="titleRemoveFromMyProducts">Remove %1$s from your products</string>
+    <string name="dgMsgRemoveFromMyProducts">Are you sure you want to remove %1$s from your products? Can\'t undo.</string>
+    <string name="pbMsgRefreshing">Refreshing</string>
+    <string name="pbMsgProcessing">Processing ...</string>
+    <string name="menuMyProducts">My products</string>
+    <string name="setLabelAccStatus">Account Status</string>
+    <string name="setRowLabelAccStatus">Account Status</string>
+    <string name="setRowLabelLastActivation">Last activation</string>
+    <string name="setRowLabelTimeTillExpire">Time \'till expiration</string>
+    <string name="setRowLabelExpiresOn">Expires On</string>
+    <string name="msgAccountActivation">You can reactivation your accout with mpese, airtel money or orange money by following the guide below</string>
+    <string name="menuNewItem">NEW ITEM</string>
+    <string name="dgTitleContactBy">Contact %1$s by &#8230;</string>
+    <string name="toastMsgItemPostedSuccess">Congrats!Your item has been posted successfully</string>
+    <string name="ctxMenuSaveProductImgToGallery">Save picture to gallery</string>
+    <string name="menuContactsList">CONTACTS</string>
+    <string name="msgContactsListEmpty">Sorry your contacts list is empty.</string>
+    <string name="contacts">Contacts</string>
+    <string name="ctxMenuViewAllPictures">View All Pictures</string>
+    <string name="menuLogout">Logout</string>
+    <string name="msgLoginFailed">Sorry login failed, check your username and password or create an account if you dont have one already!</string>
+    <string name="msgDisconnected">Sorry your are not connected to the internet!</string>
+    <string name="msgFailedSignup">Sorry signup failed, email or phone number may have been used previousely! Try again woth other ones!</string>
+    <string name="dgTitleDeleteAccount">Are you sure?</string>
+    <string name="dgMsgDeleteAccount">Are you sure you wanna delete your account, there is no undo!</string>
+    <string name="dgBtnYes">Yes</string>
+    <string name="msgAccoutDeletedSuccess">\"Account deleted successfully!\"</string>
+    <string name="msgAccoutDeletedFailure">Account delete failled!</string>
+    <string name="msgSettingsChange">Setting chenged!</string>
+    <string name="msgSettingsChangeError">Error!</string>
+    <string name="msgPasswordsMismatch">1. Check your old password.\n2.Make sur your password is betwen 6 and 8 charcters long.\n3.Check if your old and new password match.</string>
+    <string name="msgPleaseInputPassword">Please input your password!</string>
+    <string name="menuInquiry">Inquire</string>
+    <string name="titleInquiry">Inquiry</string>
+    <string name="menuViewAllProducts">View All Products</string>
+    <string name="msgExposeItemError">Error posting item, try again later!</string>
+    <string name="msgExposeItemSuccess">Congrats! your Item has been posted successfully!</string>
+    <string name="msgNoProducts">You havent posted any item yet.You can start now, by clicking on the NEW ITEM menu!</string>
+    <string name="msgProductRemoved">The product has been removed!</string>
+    <string name="msgProductRemovedError">Error removing product try again later!</string>
+    <string name="msgEmptyProducts">Sorry there are no products posted yet!\nBe the first one to post!</string>
+    <string name="menuViewAllProductsRefresh">Refresh</string>
+    <string name="msgInquiryPostError">Error posting, please try again later!</string>
+    <string name="msgInquiryPostSuccess">Congrats! your inquiry has been posted successfully!</string>
+    <string name="msgLoadingError">Loading error, please try again later!</string>
+    <string name="titleInquiryTitle">Item name e.g : Looking for playstation</string>
+    <string name="msgInquiryDesc">Description about what you are looking for</string>
+    <string name="btnTextPost">POST</string>
+    <string name="titleAllCats">ALL CATEGORIES</string>
+    <string name="priceToDiscuss">Price to discuss</string>
+    <string name="txtNewItemType">ITEM TYPE</string>
+    <string name="pbMsgUpdatingPP">Updating Profile Pic ...</string>
+    <string name="btnTextDeleteAccount">DELETE MY ACCOUNT</string>
+    <string name="btnTextUpdatePassword">UPDATE PASSWORD</string>
+    <string name="msgPasswordUpdateFailed">Error updating password!</string>
+    <string name="msgPasswordUpdateSuccess">Password updated successfully!</string>
+    <string name="subtitleExposeItem">Expose Item</string>
+    <string name="subtitleEditing">Editing ...</string>
+    <string name="btnLoadMoreItems">LOAD MORE ITEMS</string>
+    <string name="msgUpdateItemSuccess">Item updated successfully!</string>
+    <string name="msgInquiryEmptyFields">Please fill in all the details!</string>
+    <string name="hintLoginMobile">ex: 0997475663</string>
+    <string name="hintSinupFullName">ex: Alice Liwena Tshisola</string>
+    <string name="hintSinupDisplayName">ex: doctarhyf</string>
+    <string name="hintSinupMobile">ex: 0997475663</string>
+    <string name="hintSinupEmail">ex: drrhyf@gmail.com</string>
+    <string name="msgErrorInternetConnection">No connection. Please check your internet connection.</string>
+    <string name="msgErrorLoadingNoTypes">Sorry this category is empty for now, \nbut our team is working verry hard right now to make sure it\'s updated as soon as possible.</string>
+    <string name="msgInvalideEmailOrPhone">Invalid email or phone number</string>
+    <string name="btnUpdateItem">UPDATE ITEM</string>
+    <string name="DATE_UNIT_SEC">sec</string>
+    <string name="DATE_UNIT_SECS">secs</string>
+    <string name="DATE_UNIT_MIN">min</string>
+    <string name="DATE_UNIT_MINS">mins</string>
+    <string name="DATE_UNIT_HOUR">hour</string>
+    <string name="DATE_UNIT_HOURS">hours</string>
+    <string name="DATE_UNIT_DAY">day</string>
+    <string name="DATE_UNIT_DAYS">days</string>
+    <string name="DATE_UNIT_WEEK">week</string>
+    <string name="DATE_UNIT_WEEKS">weeks</string>
+    <string name="tvLabelItemDatePosted">Posted</string>
+    <string name="testOk">TEST_OK</string>
+    <string name="TAG_SET_ROW_MY_ACC">setRowMyAcc</string>
+    <string name="msgItemAddedToWishlistSuccess">The item <b>%1$s</b> has been added to your wishlist</string>
+    <string name="msgItemRemoveToWishlistSuccess">The item %1$s has been remove from your wishlist</string>
+    <string name="msgErrorAddingWishlistItem">Error adding item to wishlist! Try again later!</string>
+    <string name="msgErrorRemovingWishlistItem">Error removing item : %1$s item from wishlist! Try again later!</string>
+    <string name="btnGoToWishlist">GO TO WISHLIST</string>
+    <string name="dgMsgNoRecentItemsPosted">Sorry there are no recent items posted!\nYou can be the first one to post an item by touching EXPOSE ITEM.</string>
+    <string name="btnExposeItem">EXPOSE ITEM</string>
+    <string name="postedByMe">Me</string>
+    <string name="dgMsgLoadingItems">Loading items ...</string>
+    <string name="setLabelRecentItemsAutoreflresh">Autorefresh Recent Items</string>
+    <string name="msgNetEr">Network Error</string>
+    <string name="menuAccSettins">Account Settings</string>
+    <string name="btnNewItem">NEW ITEM</string>
+    <string name="msgLoadLatestItems">Loading latest Items &#8230;</string>
+    <string name="agreeTerms"><![CDATA[Agree to ]]> </string>
+    <string name="termsAndCond"><![CDATA[Terms & Conditions]]></string>
+    <string name="msgNeedToAgreeTerms">Sorry you need first to read and agree to our terms and conditions before signing up.</string>
+    <string name="btnSignUp">SIGN UP</string>
+    <string name="or">or</string>
+    <string name="txtSignup">Sign up</string>
+    <string name="txtForgotPassword">Forgot your password?</string>
+    <string name="msgFailedToLoadPP">Failed to load profile picture, upload a new one or check your internet connection.</string>
+
+</resources>

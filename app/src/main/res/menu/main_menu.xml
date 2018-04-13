@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/menuExpose"
+        app:showAsAction="always"
+        android:title="@string/menuExposeItem"
+        />
+
+    <item
+        android:id="@+id/menuReloadRecentItems"
+        android:icon="@drawable/cog"
+
+        android:title="@string/menuReloadRecentItems"
+        />
+
+
+    <!--<item android:id="@+id/menuTroque"
+        android:title="@string/menuTroque"
+        />-->
+
+
+    <!--<item
+        android:id="@+id/menuMyAccount"
+        android:title="@string/menuMyAcc"/>-->
+    <item
+        android:id="@+id/menuMyAccount"
+        android:icon="@drawable/cog"
+
+        android:title="@string/menuMyAcc"
+        />
+
+    <item
+        android:id="@+id/menuAccountSettings"
+        android:icon="@drawable/cog"
+
+        android:title="@string/menuAccSettins"
+        />
+
+    <item
+        android:id="@+id/menuViewAllProducts"
+        android:title="@string/menuViewAllProducts"
+        />
+
+
+
+    <!--
+        SOS DM NEXT FEATURE
+    <item
+        android:id="@+id/menuMessages"
+        android:icon="@drawable/cog"
+
+        android:title="@string/menuMessages"
+        />-->
+
+
+    <item
+        android:id="@+id/menuInquire"
+        android:title="@string/menuInquiry"/>
+
+    <item android:id="@+id/menuHelp"
+        android:visible="false"
+        android:title="@string/menuHelpNCont"
+        />
+
+    <item
+
+        android:id="@+id/menuAbout"
+        android:title="@string/aboutSOS"/>
+
+    <item
+        android:id="@+id/menuLogout"
+        android:title="@string/menuLogout"/>
+
+
+
+
+
+</menu>

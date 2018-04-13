@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/padTopBot"
+    android:background="@drawable/color_state_row_category"
+    >
+
+
+
+    <ImageView
+        android:layout_width="116dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/airtel_money"
+        android:id="@+id/ivCatItem"
+        android:layout_marginLeft="@dimen/genPadding"
+        />
+
+
+
+
+        <TextView
+            style="@style/txtCatItem"
+
+            android:id="@+id/tvCatName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Category"
+
+            android:gravity="center"
+            />
+
+
+
+</LinearLayout>

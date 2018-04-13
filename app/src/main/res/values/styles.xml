@@ -1,0 +1,239 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="padTop">
+        <item name="android:paddingTop">@dimen/genPadding</item>
+
+    </style>
+
+    <style name="padBot">
+        <item name="android:paddingBottom">@dimen/genPadding</item>
+
+    </style>
+
+    <style name="styleIvNewItemPic">
+        <item name="android:layout_height">120dp</item>
+    </style>
+
+    <style name="margTop">
+        <item name="android:layout_marginTop">@dimen/genPadding</item>
+
+    </style>
+
+    <style name="styleFeatProdItem" parent="padTopBot">
+        <item name="android:background">@drawable/settings_row_border</item>
+    </style>
+
+    <style name="styleSettingsRow">
+        <item name="android:layout_height">@dimen/rowItemSettings</item>
+        <item name="android:background">@drawable/color_state_row_settings</item>
+        <item name="android:clickable">true</item>
+        <item name="android:onClick">onRowClicked</item>
+    </style>
+
+    <style name="styleSettingsRowText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+
+    </style>
+
+    <style name="styleSettingsLabel">
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:paddingRight">@dimen/genPadding</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+
+        <item name="android:layout_height">match_parent</item>
+
+    </style>
+
+    <style name="styleTvLoginForm">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="styleTvSettingsSeparator">
+
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">@dimen/genPadding</item>
+        <item name="android:paddingBottom">@dimen/genPadding</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <style name="styleIvRowSettings">
+        <item name="android:layout_width">@dimen/rowItemSettings</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="styleIvFeatItem">
+        <!--<item name="android:layout_width">@dimen/ivFeatItemWidth</item>
+        <item name="android:layout_height">@dimen/ivFeatItemHeight</item>-->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:height">30dp</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="styleIvItem">
+        <item name="android:layout_width">@dimen/ivFeatItemWidth</item>
+        <item name="android:layout_height">@dimen/ivFeatItemHeight</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="txtCatItem" parent="padLeft">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="pad">
+        <item name="android:padding">@dimen/genPadding</item>
+    </style>
+
+    <style name="tvItemDetailsLabel" parent="pad">
+
+        <item name="android:gravity">right</item>
+    </style>
+
+
+    <style name="padLeft">
+
+        <item name="android:paddingLeft">@dimen/genPadding</item>
+
+    </style>
+
+    <style name="padTopBot">
+        <item name="android:paddingTop">@dimen/genPadding</item>
+        <item name="android:paddingBottom">@dimen/genPadding</item>
+    </style>
+
+    <style name="allCatsStyle" parent="padTopBot">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="styleMainMenuItem" parent="padTopBot">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="featPriceTextStyle">
+        <item name="android:textSize">@dimen/textLarge</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="styleSettingsValue">
+
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/col_sel_set_value</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="styleSettingsDataRow">
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@drawable/color_state_row_settings</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="tvLoginSignUpFormTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/sosBlue</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <dimen name="rowItemSettings">60dp</dimen>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="styleTextDialogCustomView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:paddingLeft">@dimen/dblGenPadding</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="styleDialogRowCustomView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/genPadding</item>
+        <item name="android:paddingLeft">@dimen/dblGenPadding</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/color_state_row_settings</item>
+    </style>
+
+    <style name="styleIvDialogCustomView">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:tint">@color/colorAccent</item>
+    </style>
+
+    <style name="styleHomeCategoryTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/genPadding</item>
+        <item name="android:paddingBottom">@dimen/genPadding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:background">#d8000000</item>
+
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="styleIvFeatCat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="ivItemMorePic">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:clickable">true</item>
+        <item name="android:onClick">onIvPicClicked</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="tvHomeSectionsSeparator">
+        <item name="android:paddingTop">@dimen/genPadding</item>
+        <item name="android:paddingBottom">@dimen/genPadding</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/sosBlue</item>
+    </style>
+</resources>

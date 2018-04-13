@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menuMessages">Messages</string>
+    <string name="titleInquiryTitle">Item name e.g : Looking for playstation</string>
+</resources>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.rhyfdocta.sosachat.ActivityAccountActivation">
+
+
+
+
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            style="@style/styleSettingsLabel"
+            android:layout_height="match_parent"
+
+            android:text="@string/setRowLabelAccStatus" />
+
+        <TextView
+
+            android:id="@+id/setRowDataAccStatus"
+            style="@style/styleSettingsValue"
+            android:tag="@string/setLabelFullname"
+            android:text="Active"
+
+            android:textColor="@color/niceGreen"
+            android:padding="@dimen/genPadding"
+
+             />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            style="@style/styleSettingsLabel"
+            android:layout_height="match_parent"
+
+            android:text="@string/setRowLabelLastActivation" />
+
+        <TextView
+
+            android:id="@+id/setRowDataLastActivation"
+            style="@style/styleSettingsValue"
+            android:tag="@string/setLabelFullname"
+            android:text="2017-10-15 20:30:45"
+
+
+            android:padding="@dimen/genPadding"
+
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            style="@style/styleSettingsLabel"
+            android:layout_height="match_parent"
+
+            android:text="@string/setRowLabelExpiresOn" />
+
+        <TextView
+
+            android:id="@+id/setRowDataExpiresOn"
+            style="@style/styleSettingsValue"
+            android:tag="@string/setLabelFullname"
+            android:text="2018-01-25 18:46:57"
+
+
+            android:padding="@dimen/genPadding"
+
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            style="@style/styleSettingsLabel"
+            android:layout_height="match_parent"
+
+            android:text="@string/setRowLabelTimeTillExpire" />
+
+        <TextView
+
+            android:id="@+id/setRowDataTimeTillExpire"
+            style="@style/styleSettingsValue"
+            android:tag="@string/setLabelFullname"
+            android:text="20 day(s) 4:30:28"
+
+            android:textColor="#f00"
+            android:padding="@dimen/genPadding"
+
+            />
+
+    </LinearLayout>
+
+
+    <TextView
+
+        android:gravity="center"
+        android:paddingLeft="@dimen/genPadding"
+        android:paddingRight="@dimen/genPadding"
+        android:text="@string/msgAccountActivation"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/genPadding"
+        android:paddingBottom="@dimen/genPadding"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/mpesa"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/airtel_money"
+        />
+
+
+</LinearLayout>
+</ScrollView>

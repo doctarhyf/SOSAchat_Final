@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.example.rhyfdocta.sosachat.ActivityAccountSettings">
+
+
+    <TextView
+
+        android:text="SETTINGS"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            android:text="@string/setLabelRecentItemsAutoreflresh"
+            style="@style/styleSettingsLabel"
+
+            />
+
+        <Switch
+            android:id="@+id/swAutorefreshRecentItems"
+
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+
+        android:text="PROFILE"
+        style="@style/styleTvSettingsSeparator"
+         />
+
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            android:text="@string/setLabelFullname"
+            style="@style/styleSettingsLabel"
+
+             />
+
+        <TextView
+
+            android:id="@+id/accSetFullName"
+
+            android:tag="@string/setLabelFullname"
+            android:text="MUTUNDA KOJI FRANVALE"
+            android:onClick="idleClick"
+            style="@style/styleSettingsValue" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+            style="@style/styleSettingsLabel"
+            android:text="@string/setLabelEmail" />
+
+        <TextView
+            android:id="@+id/accSetEmail"
+            android:tag="@string/setLabelEmail"
+            android:onClick="onSetDataClicked"
+            style="@style/styleSettingsValue"
+            android:text="fmutundak@gmail.com" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+            style="@style/styleSettingsLabel"
+            android:text="@string/setLabelMobile" />
+
+        <TextView
+
+            android:id="@+id/accSetMobile"
+            android:onClick="onSetDataClicked"
+            android:text="+243 99 747 5663"
+            android:tag="@string/setLabelMobile"
+            style="@style/styleSettingsValue" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+            style="@style/styleSettingsLabel"
+            android:text="@string/setLabelCompany" />
+
+        <TextView
+
+            style="@style/styleSettingsValue"
+            android:id="@+id/accSetCompany"
+            android:onClick="onSetDataClicked"
+            android:tag="@string/setLabelCompany"
+            android:text="KOZI Engineering&#169;" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+            style="@style/styleSettingsLabel"
+            android:text="@string/setLabelLocation" />
+
+        <TextView
+            android:id="@+id/accSetLocation"
+            android:onClick="onSetDataClicked"
+            style="@style/styleSettingsValue"
+            android:tag="@string/setLabelLocation"
+            android:text="Lubumbashi" />
+
+    </LinearLayout>
+
+    <TextView
+
+        android:text="ACCOUNT"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            android:text="Old password"
+            style="@style/styleSettingsLabel"
+
+            />
+
+        <EditText
+            android:id="@+id/etOldPassword"
+            style="@style/styleSettingsValue"
+            android:hint=""
+            android:text="freepass"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            style="@style/styleSettingsLabel"
+            android:text="New password"
+
+            />
+
+        <EditText
+            android:id="@+id/etNewPassword"
+            android:text="disck12"
+            android:inputType="textPassword"
+            style="@style/styleSettingsValue" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            style="@style/styleSettingsLabel"
+            android:text="Confirm password"
+
+            />
+
+        <EditText
+            android:id="@+id/etReNewPassword"
+            android:text="disck12"
+            android:inputType="textPassword"
+            style="@style/styleSettingsValue" />
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:id="@+id/llPasswordsMismatch"
+        android:visibility="gone"
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            style="@style/styleSettingsLabel"
+            android:textColor="@color/red"
+            android:gravity="center"
+
+            android:text="@string/msgPasswordsMismatch"
+
+            />
+
+
+
+    </LinearLayout>
+
+
+
+
+
+        <Button
+            android:id="@+id/btnUpdateMyPassword"
+            android:layout_width="match_parent"
+            android:onClick="onUpdateMyPassword"
+            android:enabled="false"
+            android:text="@string/btnTextUpdatePassword"
+            android:layout_height="wrap_content" />
+
+
+
+    <TextView
+        android:visibility="gone"
+        android:text="CONTACTS PRIVACY"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+
+    <LinearLayout
+        android:visibility="gone"
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+
+            android:text="Show my email"
+            style="@style/styleSettingsLabel"
+            android:layout_weight="2"
+            />
+
+        <CheckBox
+
+            android:id="@+id/cbShowMyEmail"
+            android:text="Yes"
+            android:layout_weight="1"
+            android:onClick="onCbClicked"
+            style="@style/styleSettingsValue" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+            android:layout_weight="2"
+            android:text="Show my phone number"
+            style="@style/styleSettingsLabel"
+
+            />
+
+        <CheckBox
+            android:id="@+id/cbShowMyMobile"
+            android:layout_weight="1"
+            android:text="Yes"
+            android:onClick="onCbClicked"
+            style="@style/styleSettingsValue" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        style="@style/styleSettingsDataRow">
+
+        <TextView
+
+            android:layout_weight="2"
+            android:text="Show my address"
+            style="@style/styleSettingsLabel"
+
+            />
+
+        <CheckBox
+            android:id="@+id/cbShowMyAddress"
+            android:layout_weight="1"
+            android:text="Yes"
+            android:onClick="onCbClicked"
+            style="@style/styleSettingsValue" />
+
+    </LinearLayout>
+
+
+
+    <TextView
+
+        android:text="@string/btnTextDeleteAccount"
+        style="@style/styleTvSettingsSeparator"
+        android:textColor="#f00"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="Once you delete your account, there is no going back. Please be certain."
+        android:layout_height="wrap_content" />
+    <Button
+
+        android:id="@+id/btnDelMyAcc"
+        android:onClick="onDelMyAccountButtonClicked"
+        android:layout_width="match_parent"
+        android:text="DELETE MY ACCOUNT"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
+</ScrollView>

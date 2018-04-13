@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context="com.example.rhyfdocta.sosachat.ActivityWishlist">
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/rvAllProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        />
+
+
+
+
+    <TextView
+        android:visibility="gone"
+        android:text="@string/msgEmptyProducts"
+        android:id="@+id/tvAllProductsEmptyList"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:visibility="gone"
+        android:text="@string/msgLoadingError"
+        android:id="@+id/tvAllProductsLoadingError"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <ProgressBar
+        android:id="@+id/pbAllProducts"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        />
+
+</LinearLayout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dblGenPadding"
+    >
+
+
+    <LinearLayout
+
+        android:id="@+id/llDialogContactByPhone"
+        style="@style/styleDialogRowCustomView">
+
+
+        <ImageView
+            android:src="@android:drawable/ic_menu_call"
+            app:srcCompat="@android:drawable/ic_menu_call"
+            style="@style/styleIvDialogCustomView" />
+
+
+        <TextView
+            android:id="@+id/tvContactVendorMobile"
+            android:text="@string/contactPhoneCall"
+            style="@style/styleTextDialogCustomView" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/llDialogContactBySMS"
+        style="@style/styleDialogRowCustomView">
+
+
+        <ImageView
+            android:src="@android:drawable/ic_menu_send"
+            app:srcCompat="@android:drawable/ic_menu_send"
+
+            style="@style/styleIvDialogCustomView" />
+
+
+        <TextView
+            android:id="@+id/tvContactVendorSMS"
+            android:text="@string/contactSMS"
+            style="@style/styleTextDialogCustomView" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/llDialogContactByEmail"
+        style="@style/styleDialogRowCustomView">
+
+
+        <ImageView
+            android:src="@android:drawable/ic_dialog_email"
+            app:srcCompat="@android:drawable/ic_dialog_email"
+            style="@style/styleIvDialogCustomView" />
+
+
+        <TextView
+            android:id="@+id/tvContactVendorEmail"
+            android:text="@string/contactEmail"
+            style="@style/styleTextDialogCustomView" />
+
+
+    </LinearLayout>
+
+    <!--<LinearLayout
+
+        android:id="@+id/llDialogContactBySOSDM"
+        style="@style/styleDialogRowCustomView">
+
+
+        <ImageView
+            android:src="@mipmap/sos_main_logo"
+            app:srcCompat="@mipmap/sos_main_logo"
+            android:tint="@color/blackTransparent"
+            style="@style/styleIvDialogCustomView" />
+
+
+        <TextView
+            android:text="@string/contactSOSDM"
+
+            style="@style/styleTextDialogCustomView" />
+
+
+    </LinearLayout>-->
+
+</LinearLayout>

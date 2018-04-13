@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/svActivityExposeitem"
+    android:layout_height="match_parent">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.example.rhyfdocta.sosachat.ActivityExposeItem"
+    android:padding="@dimen/genPadding"
+    android:weightSum="1">
+
+
+    <TextView
+
+        android:text="@string/txtItemMainPic"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+    <ImageView
+        android:id="@+id/ivNewItemMainPic"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:clickable="true"
+        android:onClick="loadPic"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/product_expose_main_pic" />
+
+
+    <TextView
+
+        android:textAllCaps="true"
+        android:text="@string/txtNewItemName"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+    <EditText
+        android:id="@+id/etNewItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/genPadding"
+        android:ems="10"
+        android:hint="@string/hintNewItemName"
+        android:inputType="textPersonName"
+        android:text="KRK 250" />
+
+    <TextView
+
+        android:text="@string/txtNewItemPrice"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/genPadding"
+        android:paddingBottom="@dimen/genPadding"
+        >
+
+        <EditText
+            android:id="@+id/etNewItemPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/hintNewPrice"
+            android:inputType="numberDecimal"
+            android:text="300" />
+
+
+        <Spinner
+
+            android:id="@+id/spCur"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:entries="@array/currencies"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <TextView
+
+        android:text="@string/txtNewItemCat"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+    <com.example.rhyfdocta.sosachat.HelperObjects.SpinnerReselect
+        android:layout_marginTop="@dimen/genPadding"
+        android:id="@+id/spNewItemCat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/genPadding"
+        android:paddingBottom="@dimen/genPadding"
+        android:entries="@array/newItemCat"
+        />
+
+
+
+    <TextView
+
+    android:text="@string/txtNewItemType"
+    style="@style/styleTvSettingsSeparator"
+    />
+
+    <Spinner
+        android:layout_marginTop="@dimen/genPadding"
+        android:id="@+id/spNewItemType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/genPadding"
+        android:paddingBottom="@dimen/genPadding"
+
+        />
+
+
+    <TextView
+
+        android:text="@string/txtNewItemQual"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+
+    <Spinner
+        android:layout_marginTop="@dimen/genPadding"
+        android:id="@+id/spNewItemQuality"
+        android:paddingTop="@dimen/genPadding"
+        android:paddingBottom="@dimen/genPadding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/newItemQuality"
+         />
+
+
+    <TextView
+
+        android:text="@string/txtNewItemDesc"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+
+    <EditText
+        android:id="@+id/etNewItemDesc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/genPadding"
+        android:layout_weight="4"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="@string/hintNewItemDesc"
+        android:inputType="textMultiLine"
+        android:text="Brand new professional studio monitors KRK. Dont miss it" />
+
+
+    <TextView
+
+        android:text="@string/txtNewItemAddMorePix"
+        style="@style/styleTvSettingsSeparator"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:clickable="true"
+            android:onClick="loadPic"
+            android:id="@+id/ivNewItemPic1"
+            style="@style/styleIvNewItemPic"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/genPadding"
+            android:scaleType="centerCrop"
+            android:src="@color/sosBlue"
+            app:srcCompat="@drawable/shopping_1" />
+
+        <ImageView
+            android:clickable="true"
+            android:onClick="loadPic"
+            android:id="@+id/ivNewItemPic2"
+            style="@style/styleIvNewItemPic"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/genPadding"
+            android:scaleType="centerCrop"
+            android:src="@color/sosBlue" />
+
+        <ImageView
+            android:clickable="true"
+            android:onClick="loadPic"
+            android:id="@+id/ivNewItemPic3"
+            style="@style/styleIvNewItemPic"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/genPadding"
+            android:scaleType="centerCrop"
+            android:src="@color/sosBlue" />
+
+
+    </LinearLayout>
+
+    <TextView
+
+        android:text="@string/msgClickToChangePic"
+        android:layout_width="match_parent"
+        android:padding="@dimen/genPadding"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+    <CheckBox
+
+        android:id="@+id/cbAcceptTerms"
+        android:text="@string/txAcceptTerms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+       <!-- <TextView
+            android:gravity="left"
+            android:text="@string/txtTermsNConds"
+            android:textColor="@color/sosBlue"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
+
+    </LinearLayout>
+
+    <Button
+
+        android:onClick="exposeItem"
+        android:id="@+id/btnExposeItem"
+        android:text="@string/txtButtonPostItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
+</ScrollView>

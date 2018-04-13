@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/myAccRootView"
+    android:orientation="vertical"
+    tools:context="com.example.rhyfdocta.sosachat.ActivityMyAccount">
+
+    <LinearLayout
+        android:id="@+id/ppHeaderCont"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimMyAccountHeader"
+        android:background="@drawable/settings_header_boder"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+
+            android:id="@+id/ivSettingsPP"
+            android:onClick="loadPic"
+            android:clickable="true"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+
+            android:src="@drawable/placeholder_user_pic" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvDisplayName"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Full Name"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAccType"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Vendor"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvMobile"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Mobile" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Email" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvCity"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Location" />
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:tag="@string/TAG_SET_ROW_MY_ACC"
+        style="@style/styleSettingsRow"
+        android:id="@+id/setRowMyProducts"
+        android:layout_width="match_parent"
+        >
+
+        <ImageView
+            style="@style/styleIvRowSettings"
+            android:src="@android:drawable/ic_menu_agenda" />
+
+        <TextView
+
+            android:text="@string/setRowTxtMyProducts"
+            style="@style/styleSettingsRowText"
+            />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/setRowWishList"
+        style="@style/styleSettingsRow"
+        android:layout_width="match_parent"
+        >
+
+        <ImageView
+            style="@style/styleIvRowSettings"
+            android:src="@android:drawable/ic_menu_day" />
+
+        <TextView
+
+            android:text="@string/setRowTxtMyWishList"
+            style="@style/styleSettingsRowText"
+            />
+
+
+
+    </LinearLayout>
+
+    <!--<LinearLayout
+
+        android:id="@+id/setRowAccActivation"
+        style="@style/styleSettingsRow"
+        android:layout_width="match_parent"
+        >
+
+        <ImageView
+            style="@style/styleIvRowSettings"
+            android:src="@android:drawable/ic_popup_sync" />
+
+        <TextView
+
+            android:text="Account Activation"
+            style="@style/styleSettingsRowText"
+            />
+
+
+
+    </LinearLayout>-->
+
+    <LinearLayout
+
+
+        style="@style/styleSettingsRow"
+
+        android:layout_width="match_parent"
+
+        android:id="@+id/setRowAccSettings"
+       >
+
+        <ImageView
+            style="@style/styleIvRowSettings"
+            android:src="@android:drawable/ic_secure" />
+
+        <TextView
+
+            android:text="@string/setRowTxtAccountSettings"
+            style="@style/styleSettingsRowText"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/msgAbout" />
+
+</LinearLayout>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llRoot"
+    android:orientation="vertical"
+    >
+<ImageView
+    android:contentDescription="@string/app_name"
+    android:src="@drawable/plamie"
+    android:id="@+id/ivLauncher"
+    android:scaleType="centerCrop"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+
+
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/loginBg"
+    android:scrollbars="none"
+    android:id="@+id/svRoot"
+    android:visibility="gone"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+
+    tools:context="com.example.rhyfdocta.sosachat.ActivityLoginSignup"
+
+    >
+
+    <ImageView
+        android:id="@+id/ivWelcomLogo"
+        android:layout_width="200dp"
+        android:layout_height="89dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_invert" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/welcomeMessage"
+        android:textColor="@color/white"
+        android:id="@+id/tvWelcomeMsg"
+        app:layout_constraintTop_toBottomOf="@+id/ivWelcomLogo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="32dp"
+        android:textSize="20sp"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginSignupFormsCont"
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMsg"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+
+        >
+
+        <FrameLayout
+            android:id="@+id/flFormsCont"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/formLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="#222"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/tvLoginSignUpFormTitle"
+                android:text="Login" />
+
+            <TextView
+                style="@style/styleTvLoginForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email or Mobile" />
+
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintLoginMobile"
+                android:text="0997475663"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                style="@style/styleTvLoginForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:text="disck13"
+                android:textColor="@color/colorAccent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:onClick="login"
+                    android:text="Login" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/or"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvShowSignupForm"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="showSignUpForm"
+                    android:text="@string/btnSignUp"
+                    android:textColor="@color/col_sel_text_primary_light" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvForgotPassword"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:textColor="@color/col_sel_text_accent_light"
+                android:onClick="onForgotPasswordClicked"
+                android:text="@string/txtForgotPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/formSignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="#222"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+
+            <TextView
+                style="@style/tvLoginSignUpFormTitle"
+                android:text="Create an account" />
+
+            <TextView
+                style="@style/styleTvLoginForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/setLabelMobile" />
+
+            <EditText
+                android:id="@+id/etSignupMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintSinupMobile"
+                android:text="0814046908"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                style="@style/styleTvLoginForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email" />
+
+            <EditText
+                android:id="@+id/etSignupEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintSinupEmail"
+                android:text="emutunda@yahoo.com"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                style="@style/styleTvLoginForm"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:text="Location" />
+
+            <EditText
+                android:id="@+id/etSignupLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lubumbashi"
+                android:hint="Lubumbashi"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                style="@style/styleTvLoginForm"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:text="Full Name" />
+
+            <EditText
+                android:id="@+id/etSignupFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Emile Mutunda Koji"
+                android:hint="@string/hintSinupFullName"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                style="@style/styleTvLoginForm"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:text="Dispay Name" />
+
+            <EditText
+                android:id="@+id/etSignupDisplayName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="emutunda"
+                android:hint="@string/hintSinupDisplayName"
+                android:textColor="@color/colorAccent" />
+
+
+            <TextView
+                style="@style/styleTvLoginForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password" />
+
+            <EditText
+                android:id="@+id/etSignupPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:text="freepass"
+                android:textColor="@color/colorAccent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/cbSignupAgreeTerms"
+                    android:text="@string/agreeTerms"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tvTermsAndCond"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/termsAndCond"
+                    android:onClick="showTermsAndCond"
+                    android:textColor="@color/col_sel_text_accent_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:onClick="signUp"
+                    android:text="@string/txtSignup" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/or"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvShowLoginForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="showLoginForm"
+                    android:text="LOGIN"
+                    android:textColor="@color/col_sel_text_primary_light" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="#666"
+        android:text="&#169; SOSAchat 2017. All rigths reserved."
+        app:layout_constraintTop_toBottomOf="@id/loginSignupFormsCont"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+</android.support.constraint.ConstraintLayout>
+</ScrollView>
+</LinearLayout>

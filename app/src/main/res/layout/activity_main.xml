@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/rootView"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.example.rhyfdocta.sosachat.MainActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp"
+    android:orientation="vertical"
+    android:padding="@dimen/dblGenPadding"
+    android:id="@+id/llMainCont"
+
+
+    >
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:text="@string/welcomeMessage"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/llContSearch"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/genPadding"
+        >
+
+
+        <EditText
+
+            android:id="@+id/etSearch"
+            style="?attr/textAppearanceListItemSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/searchMessage"
+            android:maxLines="1"
+            android:text="" />
+
+
+        <Button
+            android:text="@string/search"
+            android:onClick="startSearch"
+            android:paddingTop="@dimen/genPadding"
+            android:textStyle="bold"
+            android:paddingBottom="@dimen/genPadding"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:textColor="@color/col_stat_search_btn_txt"
+            android:background="@drawable/color_state_search_btn"
+            android:layout_height="match_parent" />
+
+        <!--<Button
+            android:contentDescription="@string/search"
+            android:layout_width="match_parent"
+            style="@style/padTopBot"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:background="@drawable/color_state_search_btn"
+            android:onClick="startSearch"
+             />-->
+
+    </LinearLayout>
+
+
+
+
+
+
+    <TextView
+
+        android:text="@string/latestItems"
+        android:id="@+id/titleLatestItems"
+        style="@style/tvHomeSectionsSeparator" />
+
+
+    <LinearLayout
+        android:id="@+id/contRecentItems"
+        style="@style/padTopBot"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/llPbLoadingRecentItems"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="@string/msgLoadLatestItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/rvRecentItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <TextView
+
+        style="@style/tvHomeSectionsSeparator"
+        android:text="@string/titleAllCats"
+
+        android:id="@+id/titleAllCategories"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/contFeatCats"
+        style="@style/padTopBot"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvCats"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:padding="@dimen/genPadding"
+        android:background="@drawable/botton_bg"
+
+        >
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:id="@+id/tvExchangeRate"
+            android:text="1 USD = 1550 Fc"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/airtel_money"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mpesa"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

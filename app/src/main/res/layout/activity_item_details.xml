@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/svDetail"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/genPadding"
+    >
+
+
+    <ImageView
+        android:id="@+id/ivProdMainPic"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="@dimen/genPadding"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/iphone_test" />
+
+    <LinearLayout
+
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            style="@style/tvItemDetailsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Item" />
+
+
+
+
+        <TextView
+            android:id="@+id/tvItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Item Name"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            style="@style/tvItemDetailsLabel"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Price" />
+
+
+
+        <TextView
+            android:id="@+id/tvItemPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Vendor"
+            android:textStyle="bold" />
+
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:id="@+id/llItemViewsCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            style="@style/tvItemDetailsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Views" />
+
+        <TextView
+
+            android:id="@+id/tvItemViewsCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="0"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/llVendorCont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            style="@style/tvItemDetailsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Vendor" />
+
+        <TextView
+
+            android:id="@+id/tvItemVendor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            style="@style/tvItemDetailsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Quality" />
+
+        <TextView
+
+            android:id="@+id/tvItemQuality"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/llDatePosted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            style="@style/tvItemDetailsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tvLabelItemDatePosted" />
+
+        <TextView
+
+            android:id="@+id/tvDateItemPosted"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvItemDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="5"
+        android:padding="@dimen/genPadding"
+        android:text="Some details"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+
+            android:id="@+id/btnAddToWishList"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="ADD TO WISHLIST"
+            />
+
+        <Button
+            android:id="@+id/btnContactVendor"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="CONTACT VENDOR"
+            />
+
+    </LinearLayout>
+
+    <!--<Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="BUY"
+        android:textColor="@color/buy_btn_selector"
+        android:padding="@dimen/genPadding"
+        android:background="@drawable/color_state_buy_btn"
+        />
+-->
+</LinearLayout>
+
+    </ScrollView>

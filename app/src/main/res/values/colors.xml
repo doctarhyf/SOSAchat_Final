@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="sosBlue">#29abe2</color>
+    <color name="sosLightBlue">#4d91d2ed</color>
+    <color name="black">#000</color>
+    <color name="gray">#afafaf</color>
+    <color name="white">#fff</color>
+    <color name="launchBG">#212121</color>
+    <color name="blackTransparent">#9c000000</color>
+    <color name="grayMyAcc">#fafafa</color>
+    <color name="rowSelectLightGray">#eee</color>
+    <color name="colorRowSeparator">#42ababab</color>
+    <color name="loginBg">#111</color>
+    <color name="niceGreen">#5be75b</color>
+    <color name="red">#f00</color>
+    <color name="rowTransparantGray">#1eeeeeee</color>
+</resources>
