@@ -53,18 +53,18 @@ public class SOS_API {
     public static final String DIR_NAME_PIX_CACHE_HOME_CATS = "cats";
     public static final String DIR_NAME_PIX_CACHE_PRODUCTS = "products";
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.154/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.19/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     private static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
 
-    public static String API_URL = "http://192.168.43.154/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.154/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.154/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.43.154/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.43.154/sosachat/";
+    public static String API_URL = "http://192.168.88.19/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.88.19/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.19/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.88.19/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.88.19/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -187,10 +187,10 @@ public class SOS_API {
 
 
     /*
-    public static String API_URL = "http://192.168.43.154/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.154/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.154/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.43.154/sosachat/img/users/";
+    public static String API_URL = "http://192.168.88.19/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.88.19/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.19/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.88.19/sosachat/img/users/";
     */
 
 
