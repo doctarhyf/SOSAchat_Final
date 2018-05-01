@@ -235,7 +235,7 @@
     <string name="pbMsgUpdatingPP">Updating Profile Pic ...</string>
     <string name="btnTextDeleteAccount">DELETE MY ACCOUNT</string>
     <string name="btnTextUpdatePassword">UPDATE PASSWORD</string>
-    <string name="msgPasswordUpdateFailed">Error updating password!</string>
+    <string name="msgPasswordUpdateFailed">Error updating password!Check internet connection or password requirements.</string>
     <string name="msgPasswordUpdateSuccess">Password updated successfully!</string>
     <string name="subtitleExposeItem">Expose Item</string>
     <string name="subtitleEditing">Editing ...</string>

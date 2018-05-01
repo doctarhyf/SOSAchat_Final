@@ -1,8 +1,9 @@
 package com.example.rhyfdocta.sosachat.HelperObjects;
 
 
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -44,7 +45,7 @@ public class HM extends HelperMethods {
 
     }
 
-    public static AlertDialog GADP(Context context,String message, boolean show){
+    public static AlertDialog GADP(Context context, String message, boolean show){
         return getAlertDialogProcessingWithMessage(context, message, show);
     }
 

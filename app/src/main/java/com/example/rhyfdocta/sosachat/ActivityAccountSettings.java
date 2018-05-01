@@ -1,5 +1,6 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -217,9 +218,28 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
     public void onUpdateMyPassword(View view) {
 
-        Log.e(TAG, "onUpdateMyPassword: NEW PASS" + etNewPassword.getText().toString() );
+        Log.e(TAG, "onUpdateMyPassword: NEW PASS : " + etNewPassword.getText().toString() );
 
-        sosApi.updatePassWord(this, etNewPassword.getText().toString());
+        sosApi.updateUserPassword(new SOS_API.OnUpdatePasswordListenerm() {
+            @Override
+            public void onPasswordUpdateResult(String resStatus, String resMessage) {
+                //Log.e(TAG, "onPasswordUpdateResult: STAT : " + resStatus + "\nRes Msg : " + resMessage );
+
+                etNewPassword.setText("");
+                etOldPassword.setText("");
+                etReNewPassword.setText("");
+
+                if(resStatus.equals(SOS_API.JSON_RESULT_SUCCESS)) {
+                    HM.GADWMAT(ActivityAccountSettings.this, HM.RGS(ActivityAccountSettings.this, R.string.txtDialogTitlePasswordChange),
+                            HM.RGS(ActivityAccountSettings.this, R.string.msgPasswordUpdateSuccess) + ".\nNew password : " + resMessage, true, true);
+                }else{
+                    HM.GADWMAT(ActivityAccountSettings.this, HM.RGS(ActivityAccountSettings.this, R.string.txtDialogTitlePasswordChange),
+                            HM.RGS(ActivityAccountSettings.this, R.string.msgPasswordUpdateFailed), true, true);
+
+                }
+
+                }
+        }, etNewPassword.getText().toString());
 
 
     }
@@ -326,7 +346,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
         if (resp.equals(SOS_API.JSON_RESULT_SUCCESS)) {
             //Toast.makeText(this, HM.getStringResource(this, R.string.msgPasswordUpdateSuccess), Toast.LENGTH_SHORT).show();
             HM.GADWMAT(this, getResources().getString(R.string.txtDialogTitlePasswordChange),
-                    getResources().getString(R.string.msgPasswordUpdateSuccess), true, true);
+                    getResources().getString(R.string.msgPasswordUpdateSuccess) , true, true);
         } else {
             //Toast.makeText(this, HM.getStringResource(this, R.string.msgPasswordUpdateFailed), Toast.LENGTH_SHORT).show();
             HM.GADWMAT(this, getResources().getString(R.string.txtDialogTitlePasswordChange),

@@ -246,7 +246,10 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
             @Override
             public void onBitmapShouldBeSaved(Bitmap bitmap, String picUrl) {
-                Log.e(TAG, "onBitmapShouldBeSaved: url -> " + picUrl );
+
+                // TODO: 5/1/2018 CACHE PRODUCTS IMAGES
+
+                //Log.e(TAG, "onBitmapShouldBeSaved: url -> " + picUrl );
 
                 //Log.e(TAG, "CATS onBitmapShouldBeSaved: url -> " + picUrl );
                 String[] splits = picUrl.split("/");
@@ -257,6 +260,8 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
                 Log.e(TAG, "FILE EX : -> " + bitmapCacheManager.saveImage(bitmap, picName,dirName));
             }
         });
+
+
 
         rvRecentItems.setAdapter(adapterRecentItems);
 

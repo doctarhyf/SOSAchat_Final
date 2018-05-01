@@ -53,18 +53,18 @@ public class SOS_API {
     public static final String DIR_NAME_PIX_CACHE_HOME_CATS = "cats";
     public static final String DIR_NAME_PIX_CACHE_PRODUCTS = "products";
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.2/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
-    private static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
+    public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
 
-    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.43.177/sosachat/";
+    public static String API_URL = "http://192.168.1.2/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.2/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.2/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.2/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.1.2/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -187,10 +187,10 @@ public class SOS_API {
 
 
     /*
-    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/users/";
+    public static String API_URL = "http://192.168.1.2/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.2/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.2/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.2/sosachat/img/users/";
     */
 
 
@@ -1042,6 +1042,57 @@ public class SOS_API {
 
     }
 
+    public void updateUserPassword(final OnUpdatePasswordListenerm listener, final String newPassword){
+
+        String url = API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&newVal=" + newPassword +
+                "&" + KEY_ACC_DATA_USER_ID + "=" + GSV(KEY_ACC_DATA_USER_ID) + "&setName=" + KEY_ACC_DATA_PASSWORD;
+
+        Log.e(TAG, "updateUserPassword: url -> " + url );
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        String resMsg;
+
+                        if(s.equals(JSON_RESULT_SUCCESS)){
+
+                            // TODO: 5/1/2018 SEND CONFIRMATION SMS
+
+                            resMsg = newPassword;
+
+                            SSV(KEY_ACC_DATA_PASSWORD, newPassword);
+
+                        }else{
+                            resMsg = s;
+                        }
+
+                        listener.onPasswordUpdateResult(s, resMsg);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                        listener.onPasswordUpdateResult(JSON_RESULT_FAILURE, volleyError.getMessage());
+
+                    }
+                }
+        );
+
+        Volley.newRequestQueue(context).add(stringRequest);
+
+    }
+
+    public interface OnUpdatePasswordListenerm{
+        void onPasswordUpdateResult(String resStatus, String resMessage);
+    }
+
+    /*
     public void updatePassWord(final SOSApiListener listener, String newPassword) {
 
         //Bundle b = new Bundle();
@@ -1060,6 +1111,7 @@ public class SOS_API {
                     @Override
                     public void onResponse(String s) {
 
+
                         if(s.equals(JSON_RESULT_SUCCESS)){
                             listener.onUpdatePasswordResult(JSON_RESULT_SUCCESS);
                             // TODO: 5/1/2018 SEND SMS WITH NEW EMAIL
@@ -1067,7 +1119,7 @@ public class SOS_API {
                             listener.onUpdatePasswordResult(JSON_RESULT_FAILURE);
                         }
 
-                       //Log.e(TAG, "ON_UPD_PWD_RESP -> " + s );
+                       Log.e(TAG, "ON_UPD_PWD_RESP -> " + s );
 
                     }
                 },
@@ -1075,6 +1127,7 @@ public class SOS_API {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                        //Log.e(TAG, "ON_UPD_PWD_RESP_ERR -> " + volleyError.getMessage() );
+                        listener.onUpdatePasswordResult(JSON_RESULT_FAILURE);
                     }
                 }
         );
@@ -1082,6 +1135,9 @@ public class SOS_API {
         Volley.newRequestQueue(context).add(request);
 
     }
+    */
+
+
 
     public static String getSOSAchatItemPixCameraPath() {
         return Environment.getExternalStorageDirectory().toString()+"/" + KEY_SOSACHAT_PIX_DIR;
