@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
@@ -54,14 +54,14 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
 
     private Context context;
     private List<Product> products;
-    private CallbacksAdapterRecentItems callbacksAdapterRecentItems;
+    private GlideBitmapLoaderCallbacks glideBitmapLoaderCallbacks;
     private SOS_API sosApi;
 
-    public AdapterRecentItems(Context context, List<Product> products, CallbacksAdapterRecentItems callbacksAdapterRecentItems){
+    public AdapterRecentItems(Context context, List<Product> products, GlideBitmapLoaderCallbacks glideBitmapLoaderCallbacks){
 
         this.context = context;
         this.products = products;
-        this.callbacksAdapterRecentItems = callbacksAdapterRecentItems;
+        this.glideBitmapLoaderCallbacks = glideBitmapLoaderCallbacks;
         sosApi = new SOS_API(context);
 
 
@@ -106,7 +106,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
             }
         });*/
 
-        // TODO: 1/26/2018 FUCK BITCHES
+        // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
         String cachePath = BitmapCacheManager.GET_PIC_CACHE_PATH(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
         if(BitmapCacheManager.FILE_EXISTS(cachePath)){
             picUri = Uri.fromFile(new File(cachePath));
@@ -132,7 +132,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 
 
-                        callbacksAdapterRecentItems.onBitmapShouldBeSaved(resource, pixPath);
+                        glideBitmapLoaderCallbacks.onBitmapShouldBeSaved(resource, pixPath);
 
                         holder.ivItemPic.setImageBitmap(resource);
                     }
@@ -145,7 +145,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
             @Override
             public void onClick(View view) {
 
-                callbacksAdapterRecentItems.onItemClicked(pd);
+                glideBitmapLoaderCallbacks.onItemClicked(pd);
 
             }
         });
@@ -156,10 +156,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         return products.size();
     }
 
-    public interface CallbacksAdapterRecentItems {
-        void onItemClicked(Product pd);
-        void onBitmapShouldBeSaved(Bitmap bitmap, String picUrl);
-    }
+
 
 
 }

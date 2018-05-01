@@ -20,7 +20,7 @@
         android:layout_height="300dp"
         android:padding="@dimen/genPadding"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/iphone_test" />
+        app:srcCompat="@drawable/progress_animation" />
 
     <LinearLayout
 

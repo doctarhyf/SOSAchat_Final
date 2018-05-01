@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     private void displayRecentItems() {
 
 
-        adapterRecentItems = new AdapterRecentItems(this, recentProducts, new AdapterRecentItems.CallbacksAdapterRecentItems() {
+        adapterRecentItems = new AdapterRecentItems(this, recentProducts, new GlideBitmapLoaderCallbacks() {
             @Override
             public void onItemClicked(Product pd) {
                 //HM.T(MainActivity.this, pd.getPdName(), HM.TLL);

@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperDate;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
@@ -211,9 +212,11 @@ public class SOS_API {
     private  SharedPreferences preferences;
     Context context;
     SharedPreferences.Editor editor;
+    private BitmapCacheManager bitmapCacheManager;
     //AlertDialog alertDialog;
     public SOS_API(Context context){
         this.context = context;
+        setBitmapCacheManager(new BitmapCacheManager(context));
         preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
         setupAlertDialogResponse();
@@ -789,6 +792,14 @@ public class SOS_API {
         Volley.newRequestQueue(context).add(request);
 
 
+    }
+
+    public BitmapCacheManager getBitmapCacheManager() {
+        return bitmapCacheManager;
+    }
+
+    public void setBitmapCacheManager(BitmapCacheManager bitmapCacheManager) {
+        this.bitmapCacheManager = bitmapCacheManager;
     }
 
     public interface  ListenerLoadMyProducts{

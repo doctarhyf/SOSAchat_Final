@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -25,7 +26,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
@@ -38,13 +43,15 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.util.List;
 
 /**
  * Created by rhyfdocta on 11/8/17.
  */
 
-public class ActivityViewItemDetails extends AppCompatActivity implements SOS_API.SOSApiListener {
+public class ActivityViewItemDetails extends AppCompatActivity implements SOS_API.SOSApiListener,
+ GlideBitmapLoaderCallbacks{
 
 
     private static final String TAG = "Test Debug";
@@ -72,14 +79,17 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     private LinearLayout llVendorCont, llItemViewsCount, llDateSold;
     SOS_API sosApi;
     //private LinearLayout ;
+
     private String itemPrice;
     private View customView;
+    ;
 
 
     @Override
     public void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
+
 
         sosApi = new SOS_API(this);
 
@@ -353,9 +363,12 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         String itemsPixPath = SOS_API.DIR_PATH_PRODUCTS_PIX;
 
-        final Uri picUri = Uri.parse(itemsPixPath.concat(bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg"));
+        Uri picUri = Uri.parse(itemsPixPath.concat(bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg"));
+        //final String imgName = bundle.getString(Product.KEY_PD_UNIQUE_NAME);
+        final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
+        String picName = bundle.getString(Product.KEY_PD_UNIQUE_NAME);
 
-        Picasso.with(getApplicationContext()).load(picUri).error(R.drawable.ic_error)
+        /*Picasso.with(getApplicationContext()).load(picUri).error(R.drawable.ic_error)
                 .placeholder(R.drawable.progress_animation).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).centerInside().resize(450,450).into(ivItemMainPic, new Callback() {
             @Override
             public void onSuccess() {
@@ -366,7 +379,40 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
             public void onError() {
                 Log.e("PICASSO  ", "onError: PICASSO ITEM DETAILS ERROR \nLink : " + picUri.toString() );
             }
-        });
+        });*/
+
+        // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
+        String cachePath = BitmapCacheManager.GET_PIC_CACHE_PATH(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + "_main.jpg");
+        if(BitmapCacheManager.FILE_EXISTS(cachePath)){
+            picUri = Uri.fromFile(new File(cachePath));
+
+
+            Log.e(TAG, "PIC_PATH : -> " + picUri.toString() );
+
+            //Toast.makeText(this, "Loade from cache", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Log.e(TAG, "NO_CACHE -> " + picUri.toString() );
+            //Toast.makeText(this, "Loade from network", Toast.LENGTH_SHORT).show();
+        }
+
+
+        Glide.with(this)
+                .load(picUri)
+                .asBitmap()
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_error)
+                .fitCenter()
+                .into(new SimpleTarget<Bitmap>(450,450) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+                        ActivityViewItemDetails.this.onBitmapShouldBeSaved(resource, pixPath);
+
+                        ivItemMainPic.setImageBitmap(resource);
+                    }
+                });
 
         //Log.e(TAG, "loadItemDataFromBundle: THE BUNDLE -> " + itemDataBundle.toString() );
 
@@ -714,4 +760,23 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
     }
 
+    @Override
+    public void onItemClicked(Product pd) {
+
+    }
+
+    @Override
+    public void onBitmapShouldBeSaved(Bitmap bitmap, String picUrl) {
+        // TODO: 5/1/2018 CACHE PRODUCTS IMAGES
+
+        //Log.e(TAG, "onBitmapShouldBeSaved: url -> " + picUrl );
+
+        //Log.e(TAG, "CATS onBitmapShouldBeSaved: url -> " + picUrl );
+        String[] splits = picUrl.split("/");
+        String dirName = SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS;
+        String picName = splits[splits.length-1];
+        //Log.e(TAG, "onBitmapShouldBeSaved:" );
+
+        Log.e(TAG, "FILE EX : -> " + sosApi.getBitmapCacheManager().saveImage(bitmap, picName,dirName));
+    }
 }
