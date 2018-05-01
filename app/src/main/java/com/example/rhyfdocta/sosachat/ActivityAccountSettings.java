@@ -150,6 +150,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
     public void onSetDataClicked(View view) {
 
+        /*
         final TextView curTextView = (TextView) view;
         String title = "Change " + view.getTag().toString();
 
@@ -181,7 +182,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
             }
         });
 
-        builder.show();
+        builder.show();*/
 
     }
 

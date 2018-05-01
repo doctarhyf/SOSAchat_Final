@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -110,7 +111,18 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         if(BitmapCacheManager.FILE_EXISTS(cachePath)){
             picUri = Uri.fromFile(new File(cachePath));
 
+
+            Log.e(TAG, "PIC_PATH : -> " + picUri.toString() );
+
+            //Toast.makeText(context, "Loade from cache", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Log.e(TAG, "NO_CACHE -> " + picUri.toString() );
+            //Toast.makeText(context, "Loade from network", Toast.LENGTH_SHORT).show();
         }
+
+
+
         Glide.with(context)
                 .load(picUri)
                 .asBitmap()

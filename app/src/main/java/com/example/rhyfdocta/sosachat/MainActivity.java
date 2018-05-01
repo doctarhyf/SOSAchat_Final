@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
                 String[] splits = picUrl.split("/");
                 String dirName = SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS;
                 String picName = splits[splits.length-1];
-                Log.e(TAG, "onBitmapShouldBeSaved:" );
+                //Log.e(TAG, "onBitmapShouldBeSaved:" );
 
                 Log.e(TAG, "FILE EX : -> " + bitmapCacheManager.saveImage(bitmap, picName,dirName));
             }

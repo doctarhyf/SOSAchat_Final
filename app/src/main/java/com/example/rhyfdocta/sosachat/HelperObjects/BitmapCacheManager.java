@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
@@ -22,6 +23,7 @@ import java.io.OutputStream;
 
 public class BitmapCacheManager {
 
+    //public static final String CACHE_DIR_NAME_PRODUCTS = "products";
     private Context context;
     public static final String CACHE_ROOT_DIR = "SOSAchat";
     private String localPath;
@@ -35,6 +37,7 @@ public class BitmapCacheManager {
     public static final boolean FILE_EXISTS(String pathName) {
 
 
+        Log.e("EE", "DA_FILE -> " + pathName );
         File file = new File(pathName);
 
         return file.exists();
@@ -46,7 +49,14 @@ public class BitmapCacheManager {
 
         switch (PIC_CACHE_PATH_TYPE){
             case PIC_CACHE_PATH_TYPE_RECENT_ITEMS:
-                path = "Tha fucking path";
+                //path = "Tha fucking path";
+                String dirName = SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS;
+                String localPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+                //String imageFileName = imgName;
+                //File storageDir = new File(localPath + "/" + CACHE_ROOT_DIR + "/" + dirName );
+
+                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgName;
+
                 break;
         }
 
@@ -87,7 +97,7 @@ public class BitmapCacheManager {
 
             // Add the image to the system gallery
             galleryAddPic(savedImagePath);
-            Toast.makeText(context, "IMAGE SAVED", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "IMAGE SAVED", Toast.LENGTH_LONG).show();
         }
         return savedImagePath;
     }
