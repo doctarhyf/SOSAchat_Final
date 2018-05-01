@@ -116,6 +116,10 @@ public class HM extends HelperMethods {
         return decodeSampledBitmapFromResource(res, resId, reqWidth, reqHeight);
     }
 
+    public static AlertDialog GADWMAT(Context context, String title, String message, boolean show, boolean okBtn){
+        return getAlertDialogWithMessageAndTitle(context, title, message, show, okBtn);
+    }
+
     public static Bitmap DSBFF(String picPath, int reqWidth, int reqHeight){
         return decodeSampledBitmapFromFile(picPath, reqWidth, reqHeight);
     }
@@ -134,4 +138,7 @@ public class HM extends HelperMethods {
     }
 
 
+    public static boolean CPC(String string) {
+        return HelperMethods.checkPasswordChars(string);
+    }
 }

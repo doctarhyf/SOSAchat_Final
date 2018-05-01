@@ -145,6 +145,37 @@ public class HelperMethods {
         return context.getResources().getStringArray(resourceStringArrayID);
     }
 
+    public static AlertDialog getAlertDialogWithMessageAndTitle(Context context, String title, String message, boolean show,
+                                                                boolean okBtn){
+
+        AlertDialog.Builder builder;
+        AlertDialog alertDialog;
+
+        builder =new AlertDialog.Builder(context);
+
+        builder.setTitle(title);
+        builder.setMessage(message);
+
+        if(okBtn){
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        }
+
+        alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+
+        if(show)
+            alertDialog.show();
+
+        return alertDialog;
+
+    }
+
+
     public static AlertDialog getAlertDialogProcessingWithMessage(Context context, String message, boolean show){
 
         AlertDialog.Builder builder;
@@ -523,6 +554,16 @@ public class HelperMethods {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeByteArray(byteArray, 0, bitmap.getByteCount());
+    }
+
+    public static boolean checkPasswordChars(String string) {
+
+        boolean sizeOk = string.length() >= 6;
+
+        // TODO: 5/1/2018 CHECK PASSWORD CHARS
+        boolean charsOk = true;
+
+        return sizeOk && charsOk;
     }
 
     public static interface SpinnerLoaderListener {

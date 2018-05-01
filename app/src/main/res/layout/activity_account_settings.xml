@@ -167,10 +167,19 @@
             android:id="@+id/etOldPassword"
             style="@style/styleSettingsValue"
             android:hint=""
-            android:text="freepass"
             android:inputType="textPassword" />
 
+
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvErrorOlPassword"
+        style="@style/styleTxtError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txtErrorOldPassword"
+        android:visibility="gone" />
 
     <LinearLayout
 
@@ -186,11 +195,12 @@
 
         <EditText
             android:id="@+id/etNewPassword"
-            android:text="disck12"
-            android:inputType="textPassword"
-            style="@style/styleSettingsValue" />
+            style="@style/styleSettingsValue"
+            android:inputType="textPassword" />
 
     </LinearLayout>
+
+
 
     <LinearLayout
 
@@ -206,12 +216,27 @@
 
         <EditText
             android:id="@+id/etReNewPassword"
-            android:text="disck12"
-            android:inputType="textPassword"
-            style="@style/styleSettingsValue" />
+            style="@style/styleSettingsValue"
+            android:inputType="textPassword" />
 
     </LinearLayout>
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/tvErrorNewPasswords"
+        style="@style/styleTxtError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txtErrorNewPasswords"
+        android:visibility="gone" />
+
+    <TextView
+        android:text="@string/tvErrorNewPasswordCharCheckFailed"
+        android:id="@+id/tvErrorNewPasswordCharCheckFailed"
+        style="@style/styleTxtError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--<LinearLayout
 
         android:id="@+id/llPasswordsMismatch"
         android:visibility="gone"
@@ -230,7 +255,7 @@
 
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 

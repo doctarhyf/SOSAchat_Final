@@ -6,7 +6,9 @@ import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -30,18 +32,20 @@ import org.json.JSONArray;
 
 import java.util.List;
 
-public class ActivityAccountSettings extends AppCompatActivity implements SOS_API.SOSApiListener, View.OnKeyListener {
+public class ActivityAccountSettings extends AppCompatActivity implements SOS_API.SOSApiListener, TextWatcher {
 
     private static final String TAG = "DBG";
     Resources res;
 
-    TextView tvAccSetFullName, tvAccSetEmail,tvAccSetMobile,tvAccSetCompany,tvAccSetLocation;
+    TextView tvAccSetFullName, tvAccSetEmail, tvAccSetMobile, tvAccSetCompany, tvAccSetLocation, tvErrorOldPassword,
+    tvErrorNewPasswords;
     EditText etOldPassword, etNewPassword, etReNewPassword;
     CheckBox cbShowMyEmail, cbShowMyMobile, cbShowMyAddress;
     Button btnDelMyAccount, btnUpdateMyPassword;
     SOS_API sosApi;
     String sessionPwd;
     Switch swAutorefreshRecentItems;
+    private TextView tvErrorNewPasswordCharCheckFailed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +65,21 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
         sessionPwd = sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_PASSWORD);
 
-
     }
 
     private void prepareGUI() {
 
+        tvErrorNewPasswordCharCheckFailed = findViewById(R.id.tvErrorNewPasswordCharCheckFailed);
+        tvErrorOldPassword = findViewById(R.id.tvErrorOlPassword);
+        tvErrorNewPasswords = findViewById(R.id.tvErrorNewPasswords);
+
+
+
+        //llPasswordMismatch = findViewById(R.id.llPasswordsMismatch);
+
         swAutorefreshRecentItems = findViewById(R.id.swAutorefreshRecentItems);
+        swAutorefreshRecentItems.setChecked(sosApi.GSV(SOS_API.KEY_AUTOREFRESH_RECENT_ITEMS).equals("true"));
 
-        boolean autorefresh = sosApi.GSV(SOS_API.KEY_AUTOREFRESH_RECENT_ITEMS).equals("true");
-
-        if(autorefresh) {
-            swAutorefreshRecentItems.setChecked(true);
-        }
 
         tvAccSetFullName = (TextView) findViewById(R.id.accSetFullName);
         tvAccSetEmail = (TextView) findViewById(R.id.accSetEmail);
@@ -91,11 +98,11 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
         btnDelMyAccount = (Button) findViewById(R.id.btnDelMyAcc);
         btnUpdateMyPassword = (Button) findViewById(R.id.btnUpdateMyPassword);
 
-        llPasswordMismatch = (LinearLayout) findViewById(R.id.llPasswordsMismatch);
+        //llPasswordMismatch = (LinearLayout) findViewById(R.id.llPasswordsMismatch);
 
-        etNewPassword.setOnKeyListener(this);
-        etReNewPassword.setOnKeyListener(this);
-        etOldPassword.setOnKeyListener(this);
+        etNewPassword.addTextChangedListener(this);
+        etReNewPassword.addTextChangedListener(this);
+        etOldPassword.addTextChangedListener(this);
 
         swAutorefreshRecentItems.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +110,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
                 boolean on = swAutorefreshRecentItems.isChecked();
                 String ar = on ? "true" : "false";
 
-                    sosApi.SSV(SOS_API.KEY_AUTOREFRESH_RECENT_ITEMS, ar);
+                sosApi.SSV(SOS_API.KEY_AUTOREFRESH_RECENT_ITEMS, ar);
 
             }
         });
@@ -112,7 +119,6 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
     }
 
     private void loadAccData() {
-
 
         tvAccSetFullName.setText(sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_FULL_NAME));
         tvAccSetEmail.setText(sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_EMAIL));
@@ -124,8 +130,6 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
         toggleCheckBox(cbShowMyMobile, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_SHOW_MY_MOBILE).equals("1"));
         toggleCheckBox(cbShowMyAddress, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_SHOW_MY_ADDRESS).equals("1"));
 
-
-
     }
 
     private void toggleCheckBox(CheckBox cb, boolean aTrue) {
@@ -135,10 +139,9 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
-
 
 
         return super.onOptionsItemSelected(item);
@@ -179,7 +182,6 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
         builder.show();
 
-
     }
 
     public void onDelMyAccountButtonClicked(View view) {
@@ -187,7 +189,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.dgTitleDeleteAccount))
-                .setMessage(HelperMethods.getStringResource(getApplication(),R.string.dgMsgDeleteAccount))
+                .setMessage(HelperMethods.getStringResource(getApplication(), R.string.dgMsgDeleteAccount))
                 .setNegativeButton(getResources().getString(R.string.btnCancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -202,8 +204,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
                         //Log.e(TAG, "ON POSITIVE BTN " );
 
                     }
-                })
-                ;
+                });
 
         builder.show();
     }
@@ -211,11 +212,12 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
     private void deleteMyAccount() {
 
         //Log.e(TAG, "deleteMyAccount: called accdata -> :" + accData.toString() );
-        SOS_API.deleAccount(this,this,sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_MOBILE));
+        SOS_API.deleAccount(this, this, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_MOBILE));
     }
 
     public void onUpdateMyPassword(View view) {
 
+        Log.e(TAG, "onUpdateMyPassword: NEW PASS" + etNewPassword.getText().toString() );
 
         sosApi.updatePassWord(this, etNewPassword.getText().toString());
 
@@ -231,7 +233,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
         //Toast.makeText(this, "Cb Clicked", Toast.LENGTH_SHORT).show();
 
-        switch (cbId){
+        switch (cbId) {
             case R.id.cbShowMyEmail:
 
 
@@ -240,7 +242,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
                 break;
 
             case R.id.cbShowMyAddress:
-                sosApi.updateAccSettings(this,SOS_API.KEY_ACC_DATA_SHOW_MY_ADDRESS, val);
+                sosApi.updateAccSettings(this, SOS_API.KEY_ACC_DATA_SHOW_MY_ADDRESS, val);
                 break;
 
             case R.id.cbShowMyMobile:
@@ -286,11 +288,11 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
         boolean result = data.getString(SOS_API.JSON_KEY_RESULT).equalsIgnoreCase(SOS_API.JSON_RESULT_SUCCESS);
 
-        if(result == true){
+        if (result == true) {
             String text = HelperMethods.getStringResource(this, R.string.msgAccoutDeletedSuccess);
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
             sosApi.logout();
-        }else{
+        } else {
             String text = HelperMethods.getStringResource(this, R.string.msgAccoutDeletedFailure);
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
         }
@@ -304,7 +306,6 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
     @Override
     public void onExposeItemResult(Bundle data) {
-
 
 
     }
@@ -322,19 +323,23 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
     @Override
     public void onUpdatePasswordResult(String resp) {
 
-        if(resp.equals(SOS_API.JSON_RESULT_SUCCESS)){
-            Toast.makeText(this, HM.getStringResource(this, R.string.msgPasswordUpdateSuccess), Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, HM.getStringResource(this, R.string.msgPasswordUpdateFailed), Toast.LENGTH_SHORT).show();
+        if (resp.equals(SOS_API.JSON_RESULT_SUCCESS)) {
+            //Toast.makeText(this, HM.getStringResource(this, R.string.msgPasswordUpdateSuccess), Toast.LENGTH_SHORT).show();
+            HM.GADWMAT(this, getResources().getString(R.string.txtDialogTitlePasswordChange),
+                    getResources().getString(R.string.msgPasswordUpdateSuccess), true, true);
+        } else {
+            //Toast.makeText(this, HM.getStringResource(this, R.string.msgPasswordUpdateFailed), Toast.LENGTH_SHORT).show();
+            HM.GADWMAT(this, getResources().getString(R.string.txtDialogTitlePasswordChange),
+                    getResources().getString(R.string.msgPasswordUpdateFailed), true,true);
         }
     }
 
     @Override
     public void onUpdateSettingsResult(String settingKey, String result) {
 
-        if(result.equals(SOS_API.JSON_RESULT_SUCCESS)) {
+        if (result.equals(SOS_API.JSON_RESULT_SUCCESS)) {
             Toast.makeText(this, HelperMethods.getStringResource(this, R.string.msgSettingsChange), Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(this, HelperMethods.getStringResource(this, R.string.msgSettingsChangeError), Toast.LENGTH_SHORT).show();
         }
         //Log.e(TAG, "onUpdateSettingsResult: res - > " + result );
@@ -400,46 +405,74 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
     }
 
-    LinearLayout llPasswordMismatch;
+    //LinearLayout llPasswordMismatch;
 
     @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
+    public void afterTextChanged(Editable s) {
 
+        // TODO: 4/30/2018 PASSWORD EDIT
+        String newPassword;// = etNewPassword.getText().toString();
+        String reNewPassword;// = etReNewPassword.getText().toString();
+        String curPassword;// = sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_PASSWORD);
+        String oldPassword;
 
+        newPassword =etNewPassword.getText().toString();
+        reNewPassword =etReNewPassword.getText().toString();
+        curPassword =sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_PASSWORD);
+        oldPassword = etOldPassword.getText().toString();
 
+        Log.e(TAG,"CURP : "+curPassword +", NP : "+newPassword +", RNP : "+reNewPassword + ", PWD : " + oldPassword  );
 
+        boolean curPwdEqOldPwd = curPassword.equals(oldPassword);
+        boolean newPwdEqReNewPwd = newPassword.equals(reNewPassword);
+        boolean newPwdCharCheckIsOk = HM.CPC(tvErrorNewPasswordCharCheckFailed.getText().toString());
 
-        if(event.getAction() == KeyEvent.ACTION_UP){
-
-            String nwPwd = etNewPassword.getText().toString();
-            String reNwPwd = etReNewPassword.getText().toString();
-
-            boolean nwPwdNotEqualsOldPwd = !nwPwd.equals(sessionPwd);
-            boolean nwPwdEqualsReNwPwd = nwPwd.equals(reNwPwd);
-            boolean nwPwdLenOk = nwPwd.length() >= 6 && nwPwd.length() <= 8;
-            boolean nwPwdContainsCharsAndLetters = true;
-            boolean oldPwdNotEmpty = !etOldPassword.getText().toString().equals("");
-            boolean oldPwdEqualsSessionPwd = etOldPassword.getText().toString().equals(sessionPwd);
-
-
-
-
-               if(oldPwdEqualsSessionPwd && nwPwdEqualsReNwPwd && nwPwdNotEqualsOldPwd && nwPwdLenOk && nwPwdContainsCharsAndLetters && oldPwdNotEmpty){
-                   btnUpdateMyPassword.setEnabled(true);
-                   llPasswordMismatch.setVisibility(View.GONE);
-               }else{
-                   btnUpdateMyPassword.setEnabled(false);
-                   llPasswordMismatch.setVisibility(View.VISIBLE);
-               }
-
-
-
+        if(curPwdEqOldPwd){
+            tvErrorOldPassword.setVisibility(View.GONE);
+        }else{
+            tvErrorOldPassword.setVisibility(View.VISIBLE);
         }
 
-        return false;
+        if(newPwdEqReNewPwd){
+            tvErrorNewPasswords.setVisibility(View.GONE);
+        }else{
+            tvErrorNewPasswords.setVisibility(View.VISIBLE);
+        }
+
+        if(newPwdCharCheckIsOk){
+            tvErrorNewPasswordCharCheckFailed.setVisibility(View.GONE);
+        }else{
+            tvErrorNewPasswordCharCheckFailed.setVisibility(View.VISIBLE);
+        }
+
+        if(newPwdEqReNewPwd && curPwdEqOldPwd && newPwdCharCheckIsOk){
+            btnUpdateMyPassword.setEnabled(true);
+        }else{
+            btnUpdateMyPassword.setEnabled(false);
+        }
+
+
+
+
+
     }
+
 
     public void idleClick(View view) {
         Log.e(TAG, "idleClick: " );
     }
+
+
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+
 }

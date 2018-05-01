@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -25,8 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".ActivitySearchResult"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".ActivitySearchResult"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".ActivityViewItemDetails" />
         <activity android:name=".ActivityViewAllTypesInCat" />
         <activity
@@ -35,16 +36,18 @@
         <activity android:name=".ActivityExposeItem" />
         <activity android:name=".ActivityNoNetwork" />
         <activity android:name=".ActivityViewAllItemsInType" />
-        <activity android:name=".ActivityMyAccount"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".ActivityAccountSettings"
-            android:parentActivityName=".ActivityMyAccount"/>
-        <activity android:name=".ActivityAccountActivation"
-            android:parentActivityName=".ActivityMyAccount"
-            />
-        <activity android:name=".ActivityTermsAndCond"
-            android:parentActivityName=".ActivityExposeItem"
-            />
+        <activity
+            android:name=".ActivityMyAccount"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ActivityAccountSettings"
+            android:parentActivityName=".ActivityMyAccount" />
+        <activity
+            android:name=".ActivityAccountActivation"
+            android:parentActivityName=".ActivityMyAccount" />
+        <activity
+            android:name=".ActivityTermsAndCond"
+            android:parentActivityName=".ActivityExposeItem" />
         <activity android:name=".ActivityLoginSignup">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,19 +55,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityWishlist"
-            android:parentActivityName=".ActivityMyAccount"/>
-        <activity android:name=".ActivityMyProducts"
-            android:parentActivityName=".ActivityMyAccount"
-            />
-        <activity android:name=".ActivityMessages"
-            android:parentActivityName=".MainActivity"
-            />
+        <activity
+            android:name=".ActivityWishlist"
+            android:parentActivityName=".ActivityMyAccount" />
+        <activity
+            android:name=".ActivityMyProducts"
+            android:parentActivityName=".ActivityMyAccount" />
+        <activity
+            android:name=".ActivityMessages"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".ActivityViewItemPics" />
         <activity android:name=".ActivityInquiry" />
-        <activity android:name=".ActivityViewAllProducts"
-            android:parentActivityName=".MainActivity"
-            />
+        <activity
+            android:name=".ActivityViewAllProducts"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ActivityAccountSettings2"
+            android:label="@string/title_activity_account_settings2"></activity>
     </application>
 
 </manifest>

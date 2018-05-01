@@ -53,18 +53,18 @@ public class SOS_API {
     public static final String DIR_NAME_PIX_CACHE_HOME_CATS = "cats";
     public static final String DIR_NAME_PIX_CACHE_PRODUCTS = "products";
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.19/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     private static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
 
-    public static String API_URL = "http://192.168.88.19/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.19/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.19/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.88.19/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.88.19/sosachat/";
+    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.43.177/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -187,10 +187,10 @@ public class SOS_API {
 
 
     /*
-    public static String API_URL = "http://192.168.88.19/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.19/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.19/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.88.19/sosachat/img/users/";
+    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/users/";
     */
 
 
@@ -292,8 +292,6 @@ public class SOS_API {
         toggleAlertDialogResponseWithMessage(show, msg);
     }
 
-
-
     public boolean isLoggedIn(){
 
 
@@ -317,8 +315,6 @@ public class SOS_API {
 
 
     }
-
-
 
     public  void login(final SOSApiListener SOSApiListener, final String username, final String password) {
 
@@ -1046,8 +1042,6 @@ public class SOS_API {
 
     }
 
-    //public static final String ACTION_UPDATE_USER_PASSWORD = "";
-
     public void updatePassWord(final SOSApiListener listener, String newPassword) {
 
         //Bundle b = new Bundle();
@@ -1056,7 +1050,7 @@ public class SOS_API {
         String url = API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&newVal=" + newPassword +
                 "&" + KEY_ACC_DATA_USER_ID + "=" + GSV(KEY_ACC_DATA_USER_ID) + "&setName=" + KEY_ACC_DATA_PASSWORD;
 
-       //Log.e(TAG, "updatePassWord: url  -> " + url );
+        Log.e(TAG, "updatePassWord: url  -> " + url );
 
 
         StringRequest request = new StringRequest(
@@ -1068,6 +1062,7 @@ public class SOS_API {
 
                         if(s.equals(JSON_RESULT_SUCCESS)){
                             listener.onUpdatePasswordResult(JSON_RESULT_SUCCESS);
+                            // TODO: 5/1/2018 SEND SMS WITH NEW EMAIL
                         }else{
                             listener.onUpdatePasswordResult(JSON_RESULT_FAILURE);
                         }
@@ -1789,6 +1784,7 @@ public class SOS_API {
     }
 
     public static final String ACTION_ADD_ITEM_TO_WISHLIST = "addItemToWishlist";
+
     public static final String ACTION_REMOVE_ITEM_FROM_WISHLIST = "removeItemFromWishlist";
 
     public void removeItemFromWishlist(final ListenerItemsWishlist listener, final Bundle itemData) {
@@ -1823,8 +1819,6 @@ public class SOS_API {
 
         Volley.newRequestQueue(context).add(request);
     }
-
-
 
     public interface ListenerItemsWishlist {
         public void onItemAddedSuccess();
@@ -2080,11 +2074,8 @@ public class SOS_API {
 
         void onItemsInTypeLoaded(List<Product> prods);
         void onNoProdsInType();
-
         void onErrorLoadProdsInType(String msg);
     }
-
-
 
     public void loadItemsInType(final CallBacksItemsInTypes listener, String typeId){
 
