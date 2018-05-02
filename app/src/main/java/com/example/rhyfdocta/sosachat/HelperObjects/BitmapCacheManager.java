@@ -43,6 +43,24 @@ public class BitmapCacheManager {
         return file.exists();
     }
 
+    public static long folderSize(File directory) {
+        long length = 0;
+
+
+
+            for (File file : directory.listFiles()) {
+                if (file.isFile())
+                    length += file.length();
+                else
+                    length += folderSize(file);
+            }
+
+
+
+
+        return length;
+    }
+
     public static String GET_PIC_CACHE_PATH(int PIC_CACHE_PATH_TYPE, String imgName){
 
         String path = null;

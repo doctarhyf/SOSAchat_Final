@@ -375,7 +375,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
             }
 
-            @Override
+            @Overr ide
             public void onError() {
                 Log.e("PICASSO  ", "onError: PICASSO ITEM DETAILS ERROR \nLink : " + picUri.toString() );
             }

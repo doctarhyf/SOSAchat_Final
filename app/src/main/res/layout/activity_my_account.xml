@@ -172,6 +172,24 @@
 
     </LinearLayout>
 
+    <Button
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/btnClearImgsCache"
+        android:onClick="clearImgsCache"
+        android:text="@string/strBtnClearImgsCache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_margin="16dp"
+        android:text="@string/strClearImgsCache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <TextView

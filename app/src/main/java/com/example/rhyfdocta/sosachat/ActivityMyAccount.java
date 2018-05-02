@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -16,12 +17,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
@@ -54,11 +57,17 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
     String fileName;
     Bundle profileBundle;
     boolean showingProfile;
+    Button btnClearCache;
+    boolean firstLaunch = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
+
+        firstLaunch = savedInstanceState == null ;
+
+        btnClearCache = findViewById(R.id.btnClearImgsCache);
 
         sosApi = new SOS_API(this);
 
@@ -119,8 +128,27 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
             loadAccountData();
         }
 
+        calculateImgsCachec();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //if(!firstLaunch){
+            calculateImgsCachec();
+        //}
 
 
+    }
+
+    private void calculateImgsCachec() {
+        /*File picsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
+        + BitmapCacheManager.CACHE_ROOT_DIR);*/
+        double cacheSize = BitmapCacheManager.folderSize(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/" + BitmapCacheManager.CACHE_ROOT_DIR + "/"));
+b
+        btnClearCache.setText(String.format(getResources().getString(R.string.strBtnClearImgsCache), cacheSize / 1000000f));
     }
 
     private void loadProfileData() {
@@ -669,6 +697,12 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
 
     @Override
     public void onCategoryTypesLoaded(List<TypesItem> types, boolean errorLoading) {
+
+    }
+
+    public void clearImgsCache(View view) {
+
+
 
     }
 }

@@ -363,5 +363,7 @@
     <string name="txtErrorNewPasswords">New passwords dont match</string>
     <string name="tvErrorNewPasswordCharCheckFailed">The password should be minum 6 chars long</string>
     <string name="txtDialogTitlePasswordChange">Password change</string>
+    <string name="strBtnClearImgsCache">CLEAR IMAGES CACHE ( %.2fMb. )</string>
+    <string name="strClearImgsCache">Delete all saved products images to free up storage space.</string>
 
 </resources>
