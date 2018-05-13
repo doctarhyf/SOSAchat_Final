@@ -1,13 +1,14 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -23,16 +24,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
+import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 
@@ -59,11 +62,17 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
     boolean showingProfile;
     Button btnClearCache;
     boolean firstLaunch = false;
+    private MyGlideBitmapLoaderCallbacks glideBitmapLoaderCallbacks;
+    //private BitmapCacheManager bitmapCacheManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
+
+        //bitmapCacheManager = new BitmapCacheManager(this);
+        glideBitmapLoaderCallbacks = new MyGlideBitmapLoaderCallbacks(this);
+
 
         firstLaunch = savedInstanceState == null ;
 
@@ -123,13 +132,20 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
 
         if(showingProfile){
             //HM.T(this, R.string.testOk, HM.TLS);
+            // Loading a profile of another user
             loadProfileData();
         }else {
+
+            //load account data of the current logged in user
             loadAccountData();
         }
 
-        calculateImgsCachec();
+        updateBtnTextCacheSize(BitmapCacheManager.getImagesCacheSize());
 
+    }
+
+    private void updateBtnTextCacheSize(double cacheSize) {
+        btnClearCache.setText(String.format(getResources().getString(R.string.strBtnClearImgsCache), cacheSize));
     }
 
     @Override
@@ -137,18 +153,31 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
         super.onResume();
 
         //if(!firstLaunch){
-            calculateImgsCachec();
+            updateBtnTextCacheSize(BitmapCacheManager.getImagesCacheSize());
         //}
 
 
     }
 
-    private void calculateImgsCachec() {
-        /*File picsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
-        + BitmapCacheManager.CACHE_ROOT_DIR);*/
-        double cacheSize = BitmapCacheManager.folderSize(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/" + BitmapCacheManager.CACHE_ROOT_DIR + "/"));
-b
-        btnClearCache.setText(String.format(getResources().getString(R.string.strBtnClearImgsCache), cacheSize / 1000000f));
+    private class MyGlideBitmapLoaderCallbacks implements GlideBitmapLoaderCallbacks{
+
+        private final Context context;
+
+        public MyGlideBitmapLoaderCallbacks(Context context){
+            this.context = context;
+        }
+
+        @Override
+        public void onItemClicked(Product pd) {
+
+        }
+
+        @Override
+        public void saveBitmapToLocalCache(Bitmap bitmap, String picUrl, String dirName) {
+
+            Log.e(TAG, "FILE EX : -> " +  sosApi.getBitmapCacheManager().saveBitmapToCache(bitmap,  picUrl, dirName));
+
+        }
     }
 
     private void loadProfileData() {
@@ -222,6 +251,7 @@ b
 
     public void onAccountDataLoaded() {
 
+        //Log.e(TAG, "onAccountDataLoaded: " );
 
         getSupportActionBar().setTitle(accDataBundle.getString(SOS_API.KEY_ACC_DATA_FULL_NAME));
         tvDisplayName.setText(accDataBundle.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
@@ -234,26 +264,44 @@ b
         String ppName = sosApi.GSV(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
 
         String path = SOS_API.DIR_PATH_PP + ppName ;//+ "?ts=" + HM.getTimeStamp();//accDataBundle.get(SOS_API.KEY_ACC_DATA_ACC_PIC_NAME);
-        Uri uri = Uri.parse(path);
-
-        Log.e(TAG, "PPNAME -> " + path );
 
 
+        String cachePath = BitmapCacheManager.GET_PIC_CACHE_PATH(BitmapCacheManager.PIC_CACHE_PATH_TYPE_PROFILE_PIC, ppName);
+        final Uri picUri = BitmapCacheManager.loadImageFromCacheOrNetwork(Uri.parse(path), cachePath);
+
+        //final Uri picUri = Uri.parse(path);
+        ivProfilePic.setImageResource(R.drawable.progress_animation);
+
+        Log.e(TAG, "onAccountDataLoaded: picUri -> " + picUri.toString() );
 
 
+        Glide.with(this)
+                .load(picUri)
 
-        Picasso picasso = new Picasso.Builder(this)
-                .listener(new Picasso.Listener() {
+                .asBitmap()
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_error)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(new SimpleTarget<Bitmap>(300,300) {
                     @Override
-                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                        //Here your log
-                        ivProfilePic.setImageResource(R.drawable.placeholder_user_pic);
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+
+
+                        glideBitmapLoaderCallbacks.saveBitmapToLocalCache(resource, picUri.toString(), SOS_API.DIR_NAME_PIX_CACHE_PROFILCE_PIC);
+                        ivProfilePic.setImageBitmap(resource);
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+                        ivProfilePic.setImageResource(R.drawable.ic_error);
                         sosApi.TADRWM(true, HM.RGS(ActivityMyAccount.this, R.string.msgFailedToLoadPP));
                     }
-                })
-                .build();
-        picasso.load(uri).placeholder(R.drawable.progress_animation).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).centerCrop().resize(300,300).into(ivProfilePic);
-
+                });
 
 
 
@@ -473,7 +521,7 @@ b
         }else{
 
             String[] permissions = { Manifest.permission.CAMERA};
-            requestPermissions(permissions, SOS_API.REQ_PERMISSION_CAMERA);
+            requestPermissions(permissions, SOS_API.REQ_PERMISSION_SAVE_BITMAP);
 
         }
 
@@ -671,6 +719,9 @@ b
         Log.e(TAG, "onUploadPPResult: result -> " + data.toString() );
 
         if(data.getString(SOS_API.JSON_KEY_RESULT).equals(SOS_API.JSON_RESULT_SUCCESS)){
+
+            SOS_API.deletePP();
+
             curImageView.setImageBitmap(b);
             Toast.makeText(this, "Profile Picture set!", Toast.LENGTH_SHORT).show();
         }else{
@@ -701,6 +752,30 @@ b
     }
 
     public void clearImgsCache(View view) {
+
+
+
+        File dir = SOS_API.getSOSAchatRootDir();
+        if(dir == null) return;
+        Log.e(TAG, "deleting cache path -> " + dir.toString() );
+
+
+        if(dir.exists()) {
+
+                BitmapCacheManager.emptyDir(dir);
+                double cacheSize = BitmapCacheManager.getImagesCacheSize();
+                updateBtnTextCacheSize(cacheSize);
+
+                if(cacheSize == 0) {
+                    Toast.makeText(this, getResources().getString(R.string.strCacheCleared), Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this, "Cache not cleared, size -> " + cacheSize + " Mb.", Toast.LENGTH_LONG).show();
+                }
+
+        }else{
+            Log.e(TAG, "Folder is null. Path -> " + dir.toString() );
+        }
+
 
 
 

@@ -1,6 +1,5 @@
 package com.example.rhyfdocta.sosachat;
 
-import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -8,9 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.annotation.StringRes;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -32,14 +28,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
-import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
+import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 
@@ -51,7 +43,7 @@ import java.util.List;
  */
 
 public class ActivityViewItemDetails extends AppCompatActivity implements SOS_API.SOSApiListener,
- GlideBitmapLoaderCallbacks{
+        GlideBitmapLoaderCallbacks {
 
 
     private static final String TAG = "Test Debug";
@@ -408,7 +400,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 
 
-                        ActivityViewItemDetails.this.onBitmapShouldBeSaved(resource, pixPath);
+                        ActivityViewItemDetails.this.saveBitmapToLocalCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
 
                         ivItemMainPic.setImageBitmap(resource);
                     }
@@ -766,17 +758,9 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     }
 
     @Override
-    public void onBitmapShouldBeSaved(Bitmap bitmap, String picUrl) {
-        // TODO: 5/1/2018 CACHE PRODUCTS IMAGES
+    public void saveBitmapToLocalCache(Bitmap bitmap, String picUrl, String dirName) {
 
-        //Log.e(TAG, "onBitmapShouldBeSaved: url -> " + picUrl );
 
-        //Log.e(TAG, "CATS onBitmapShouldBeSaved: url -> " + picUrl );
-        String[] splits = picUrl.split("/");
-        String dirName = SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS;
-        String picName = splits[splits.length-1];
-        //Log.e(TAG, "onBitmapShouldBeSaved:" );
-
-        Log.e(TAG, "FILE EX : -> " + sosApi.getBitmapCacheManager().saveImage(bitmap, picName,dirName));
+        Log.e(TAG, "FILE EX : -> " + sosApi.getBitmapCacheManager().saveBitmapToCache(bitmap, picUrl,dirName));
     }
 }

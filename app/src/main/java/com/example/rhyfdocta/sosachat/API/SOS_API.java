@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,18 +54,19 @@ public class SOS_API {
     public static final String KEY_AUTOREFRESH_RECENT_ITEMS = "autorefreshRecentItems";
     public static final String DIR_NAME_PIX_CACHE_HOME_CATS = "cats";
     public static final String DIR_NAME_PIX_CACHE_PRODUCTS = "products";
+    public static final String DIR_NAME_PIX_CACHE_PROFILCE_PIC = "pp";
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://jmtinvestment.com/casos/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://jmtinvestment.com/casos/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://jmtinvestment.com/casos/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://jmtinvestment.com/casos/img/products/";
-    public static String DIR_PATH_PP = "http://jmtinvestment.com/casos/img/pp/";
-    public static String ROOT_URL = "http://jmtinvestment.com/casos/";
+    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.43.177/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -154,7 +156,7 @@ public class SOS_API {
     private static final String KEY_ITEM_TYPES = "itemTypes";
     public static final int RESULT_LOAD_IMAGE = 1340;
     public static final int REQ_CAMERA = 1341;
-    public static final int REQ_PERMISSION_CAMERA = 1342;
+    public static final int REQ_PERMISSION_SAVE_BITMAP = 1342;
     public static final int REQ_PERMISSION_GALLERY = 1343;
     private static final String KEY_PROFILE_PIC_DATA = "ppData";
     private static final String ACTION_UPLOAD_PP = "uploadPP";
@@ -185,10 +187,10 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://jmtinvestment.com/casos/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://jmtinvestment.com/casos/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://jmtinvestment.com/casos/img/products/";
-    public static String DIR_PATH_PP = "http://jmtinvestment.com/casos
+    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.43.177 /sosachat
     /img/users/";
     */
 
@@ -793,6 +795,16 @@ public class SOS_API {
 
     public void setBitmapCacheManager(BitmapCacheManager bitmapCacheManager) {
         this.bitmapCacheManager = bitmapCacheManager;
+    }
+
+    public static File getSOSAchatRootDir() {
+        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + BitmapCacheManager.CACHE_ROOT_DIR + "/");
+    }
+
+    public static void deletePP() {
+
+        BitmapCacheManager.emptyDir(new File(getSOSAchatRootDir().toString() + "/" + DIR_NAME_PIX_CACHE_PROFILCE_PIC));
+        Log.e(TAG, "deletePP: " );
     }
 
     public interface  ListenerLoadMyProducts{

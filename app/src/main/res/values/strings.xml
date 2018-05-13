@@ -365,5 +365,6 @@
     <string name="txtDialogTitlePasswordChange">Password change</string>
     <string name="strBtnClearImgsCache">CLEAR IMAGES CACHE ( %.2fMb. )</string>
     <string name="strClearImgsCache">Delete all saved products images to free up storage space.</string>
+    <string name="strCacheCleared">Images cached cleared.</string>
 
 </resources>

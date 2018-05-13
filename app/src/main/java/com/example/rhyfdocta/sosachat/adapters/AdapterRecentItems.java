@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.GlideBitmapLoaderCallbacks;
+import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
@@ -92,20 +92,6 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdUniqueName() + "_main.jpg";
         Uri picUri = Uri.parse(pixPath);
 
-
-
-        /*Picasso.with(context).load(picUri).centerInside().resize(450,450).into(holder.ivItemPic, new Callback() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onError() {
-                Log.e("PICASSO  ", "onError: PICASSO ITEM DETAILS ERROR \nLink : " + picUri.toString() );
-            }
-        });*/
-
         // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
         String cachePath = BitmapCacheManager.GET_PIC_CACHE_PATH(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
         if(BitmapCacheManager.FILE_EXISTS(cachePath)){
@@ -132,14 +118,14 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 
 
-                        glideBitmapLoaderCallbacks.onBitmapShouldBeSaved(resource, pixPath);
+                        glideBitmapLoaderCallbacks.saveBitmapToLocalCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
 
                         holder.ivItemPic.setImageBitmap(resource);
                     }
                 });
 
 
-        Log.e(TAG, "LINK_REC_ITEM ->  " + pixPath );
+        //Log.e(TAG, "LINK_REC_ITEM ->  " + pixPath );
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override

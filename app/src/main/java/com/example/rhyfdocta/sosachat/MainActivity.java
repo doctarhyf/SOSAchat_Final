@@ -1,12 +1,15 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,9 +31,9 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
+import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.HomeCategoryItem;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
@@ -44,6 +47,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.rhyfdocta.sosachat.API.SOS_API.REQ_PERMISSION_SAVE_BITMAP;
 
 public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiListener {
 
@@ -86,7 +91,10 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     private RecyclerView.Adapter adapterRecentItems;
     private RecyclerView.LayoutManager layoutManagerRecentItems;
     private LinearLayout llPbLoadingRecentItems ;
-    BitmapCacheManager bitmapCacheManager;
+    private Bitmap cacheBitmap;
+    private String cachePicUrl;
+    private String cacheDirName;
+    //BitmapCacheManager bitmapCacheManager;
 
 
     @Override
@@ -97,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             SOS_API.POST_MARSHMALLOW = true;
         }
 
-        bitmapCacheManager = new BitmapCacheManager(this);
+        //bitmapCacheManager = new BitmapCacheManager(this);
 
         llPbLoadingRecentItems = findViewById(R.id.llPbLoadingRecentItems);
 
@@ -245,19 +253,22 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             }
 
             @Override
-            public void onBitmapShouldBeSaved(Bitmap bitmap, String picUrl) {
+            public void saveBitmapToLocalCache(Bitmap bitmap, String picUrl, String dirName) {
 
-                // TODO: 5/1/2018 CACHE PRODUCTS IMAGES
+                if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
 
-                //Log.e(TAG, "onBitmapShouldBeSaved: url -> " + picUrl );
+                    cacheBitmap = bitmap;
+                    cachePicUrl = picUrl;
+                    cacheDirName = dirName;
+                    Log.e(TAG, "FILE EX : -> " +  sosApi.getBitmapCacheManager().saveBitmapToCache(cacheBitmap,  cachePicUrl, cacheDirName));
 
-                //Log.e(TAG, "CATS onBitmapShouldBeSaved: url -> " + picUrl );
-                String[] splits = picUrl.split("/");
-                String dirName = SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS;
-                String picName = splits[splits.length-1];
-                //Log.e(TAG, "onBitmapShouldBeSaved:" );
+                }else{
 
-                Log.e(TAG, "FILE EX : -> " + bitmapCacheManager.saveImage(bitmap, picName,dirName));
+                    String[] permissions = { Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    requestPermissions(permissions, REQ_PERMISSION_SAVE_BITMAP);
+
+                }
+
             }
         });
 
@@ -275,6 +286,25 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             refreshing = false;
             Toast.makeText(this, getResources().getString(R.string.msgRecentItemsLoaded), Toast.LENGTH_SHORT).show();
             smoothScrollToBottom();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+
+
+        if(requestCode == REQ_PERMISSION_SAVE_BITMAP){
+
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED ){
+                Log.e(TAG, "FILE EX : -> " +  sosApi.getBitmapCacheManager().saveBitmapToCache(cacheBitmap,  cachePicUrl, cacheDirName));
+
+            }else{
+                Toast.makeText(this, "We need your permission to access to save cache!", Toast.LENGTH_LONG).show();
+            }
+
         }
 
     }
@@ -674,11 +704,11 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             @Override
             public void onBitmapShouldBeSaved(Bitmap bitmap, String picUrl) {
 
-                Log.e(TAG, "CATS onBitmapShouldBeSaved: url -> " + picUrl );
+                Log.e(TAG, "CATS saveBitmapToLocalCache: url -> " + picUrl );
                 String[] splits = picUrl.split("/");
                 String dirName = SOS_API.DIR_NAME_PIX_CACHE_HOME_CATS;
                 String picName = splits[splits.length-1];
-                Log.e(TAG, "onBitmapShouldBeSaved:" );
+                Log.e(TAG, "saveBitmapToLocalCache:" );
             }
         });
         rvCats.setAdapter(adapterCats);
