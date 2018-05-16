@@ -1,6 +1,5 @@
 package com.example.rhyfdocta.sosachat;
 
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
@@ -71,22 +70,22 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         String uniqueName = itemBundle.getString(Product.KEY_PD_IMG).split("_")[0] + "_" +
                 itemBundle.getString(Product.KEY_PD_IMG).split("_")[1];
         final Uri picUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + "_main.jpg");
-        picassoLoadInto(picUri, ivMain, tw, th);
+        loadBitmapIntoImageView(picUri, ivMain, tw, th);
 
         tw = 300;//ivp1.getWidth();
         th = 300;//ivp1.getHeight();
         final Uri pic1Uri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + "_pic1.jpg");
-        picassoLoadInto(pic1Uri, ivp1, tw, th);
+        loadBitmapIntoImageView(pic1Uri, ivp1, tw, th);
 
         /*tw = ivp2.getWidth();
         th = ivp2.getHeight();*/
         final Uri pic2Uri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + "_pic2.jpg");
-        picassoLoadInto(pic2Uri, ivp2, tw, th);
+        loadBitmapIntoImageView(pic2Uri, ivp2, tw, th);
 
         /*tw = ivp3.getWidth();
         th = ivp3.getHeight();*/
         final Uri pic3Uri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + "_pic3.jpg");
-        picassoLoadInto(pic3Uri, ivp3, tw, th);
+        loadBitmapIntoImageView(pic3Uri, ivp3, tw, th);
 
 
 
@@ -97,12 +96,20 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
     }
 
-    private void picassoLoadInto(final Uri picUri, final ImageView iv, int tw, int th) {
+    private void loadBitmapIntoImageView(final Uri picUri, final ImageView iv, int tw, int th) {
 
 
+        // TODO: 5/13/2018 LOAD ITEM PIC FROM CACHE
         //Drawable placeHolder = getResources().getDrawable(R.drawable.placeholder_item_pics);
-        Picasso.with(this).load(picUri).error(R.drawable.ic_error)
-                .placeholder(R.drawable.progress_animation).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).centerInside().resize(tw, th).into(iv, new Callback() {
+        Picasso.with(this)
+                .load(picUri)
+                .error(R.drawable.ic_error)
+                .placeholder(R.drawable.progress_animation)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .centerInside()
+                .resize(tw, th)
+                .into(iv, new Callback() {
             @Override
             public void onSuccess() {
 
@@ -183,7 +190,7 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         super.onCreateContextMenu(menu, v, menuInfo);
 
 
-        getMenuInflater().inflate(R.menu.ctx_menu_product_image, menu);
+        getMenuInflater().inflate(R.menu.menu_ctx_product_image, menu);
     }
 
 

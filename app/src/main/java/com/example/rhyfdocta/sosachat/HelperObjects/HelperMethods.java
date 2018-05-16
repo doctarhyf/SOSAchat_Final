@@ -257,6 +257,22 @@ public class HelperMethods {
         return bundle;
     }
 
+    public static JSONObject bundleToJson(Bundle bundle){
+        //String json;
+        JSONObject  jsonObject = null;
+
+        for (String key: bundle.keySet()) {
+            try {
+                jsonObject.put(key, bundle.get(key));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return jsonObject;
+    }
+
 
     public static void getImageViewSize(ImageViewSizeListener listener, final ImageView imageView) {
         //final Size size = new Size(0,0);

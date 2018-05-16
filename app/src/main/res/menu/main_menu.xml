@@ -32,6 +32,12 @@
         />
 
     <item
+        android:id="@+id/menuCheckInquiry"
+        android:icon="@drawable/cog"
+        android:title="@string/menuCheckInquiry"
+        />
+
+    <item
         android:id="@+id/menuAccountSettings"
         android:icon="@drawable/cog"
 

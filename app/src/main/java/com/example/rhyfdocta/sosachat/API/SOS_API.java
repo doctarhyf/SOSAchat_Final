@@ -24,10 +24,12 @@ import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperDate;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
 
+import com.example.rhyfdocta.sosachat.ObjectsModels.Inquiry;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
+import com.example.rhyfdocta.sosachat.adapters.AdapterInquiry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +57,8 @@ public class SOS_API {
     public static final String DIR_NAME_PIX_CACHE_HOME_CATS = "cats";
     public static final String DIR_NAME_PIX_CACHE_PRODUCTS = "products";
     public static final String DIR_NAME_PIX_CACHE_PROFILCE_PIC = "pp";
+    private static final String ACTION_LOAD_ALL_INQUIRIES = "checkAllInquiries";
+    public static final String TAG = "SOSACHAT_DBG";
     public static boolean POST_MARSHMALLOW = false;
     public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
@@ -78,7 +82,7 @@ public class SOS_API {
     public static final String ACTION_LOAD_CHAT_CONTACTS = "loadChatContacts";
     public static final String ACTION_LOGIN = "login";
     public static final String LOGIN_SUCCESS = "true";
-    private static final String TAG = "SOS_API";
+    //private static final String TAG = "SOS_API";
     private static final String SHARED_PREF_NAME = "sosSharedPref";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
@@ -220,15 +224,6 @@ public class SOS_API {
 
         //getAllItemCats();
     }
-
-    /*public void toggleAlertDialog(boolean show){
-
-        if(show == true){
-            alertDialog.show();
-        }else{
-            alertDialog.hide();
-        }
-    }*/
 
     private void setupAlertDialogResponse() {
 
@@ -807,6 +802,62 @@ public class SOS_API {
         Log.e(TAG, "deletePP: " );
     }
 
+    public void loadAllInquiries(final AdapterInquiry.CallBacks callBacks) {
+
+        String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES;
+        Log.e(TAG, "loadRecentItems: url -> " + url );
+
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        try {
+                            JSONArray array = new JSONArray(s);
+                            ArrayList<Inquiry> inquiries = new ArrayList<>();
+
+                            for (int i = 0; i < array.length(); i++){
+
+                                JSONObject object = array.getJSONObject(i);
+                                Inquiry inquiry = new Inquiry();
+
+                                inquiry.setTitle(object.getString(Inquiry.KEY_TITLE));
+                                inquiry.setMessage(object.getString(Inquiry.KEY_DESC));
+                                inquiry.setDateTime(object.getString(Inquiry.KEY_DATETIME));
+                                inquiry.setPosterName(object.getString(Inquiry.KEY_POSTERNAME));
+
+                                Bundle data = new Bundle();
+
+                                data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
+                                data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
+
+                                inquiry.setData(data);
+                                inquiries.add(inquiry);
+
+                            }
+
+                            callBacks.onInquiriesLoaded(inquiries);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callBacks.onInquiriesLoadError(false, e.getMessage());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        callBacks.onInquiriesLoadError(true, volleyError.getMessage());
+                    }
+                }
+        );
+
+        Volley.newRequestQueue(context).add(request);
+
+    }
+
     public interface  ListenerLoadMyProducts{
         void onMyProductsLoaded(List<ProductMyProducts> products);
         void onMyProductsEmpty();
@@ -1108,53 +1159,6 @@ public class SOS_API {
         void onPasswordUpdateResult(String resStatus, String resMessage);
     }
 
-    /*
-    public void updatePassWord(final SOSApiListener listener, String newPassword) {
-
-        //Bundle b = new Bundle();
-        //listener.onUpdatePasswordResult(b);
-
-        String url = API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&newVal=" + newPassword +
-                "&" + KEY_ACC_DATA_USER_ID + "=" + GSV(KEY_ACC_DATA_USER_ID) + "&setName=" + KEY_ACC_DATA_PASSWORD;
-
-        Log.e(TAG, "updatePassWord: url  -> " + url );
-
-
-        StringRequest request = new StringRequest(
-                Request.Method.POST,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-
-
-                        if(s.equals(JSON_RESULT_SUCCESS)){
-                            listener.onUpdatePasswordResult(JSON_RESULT_SUCCESS);
-                            // TODO: 5/1/2018 SEND SMS WITH NEW EMAIL
-                        }else{
-                            listener.onUpdatePasswordResult(JSON_RESULT_FAILURE);
-                        }
-
-                       Log.e(TAG, "ON_UPD_PWD_RESP -> " + s );
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                       //Log.e(TAG, "ON_UPD_PWD_RESP_ERR -> " + volleyError.getMessage() );
-                        listener.onUpdatePasswordResult(JSON_RESULT_FAILURE);
-                    }
-                }
-        );
-
-        Volley.newRequestQueue(context).add(request);
-
-    }
-    */
-
-
-
     public static String getSOSAchatItemPixCameraPath() {
         return Environment.getExternalStorageDirectory().toString()+"/" + KEY_SOSACHAT_PIX_DIR;
     }
@@ -1309,7 +1313,7 @@ public class SOS_API {
 
         /*JsonArrayRequest request = new JsonArrayRequest(
                 url,
-                new Response.Listener<JSONArray>() {
+                new Response.CallBacks<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
 
@@ -1675,7 +1679,7 @@ public class SOS_API {
 
             StringRequest request = new StringRequest(
                     url,
-                    new Response.Listener<String>() {
+                    new Response.CallBacks<String>() {
                         @Override
                         public void onResponse(String s) {
                             //Log.e(TAG, "ALL CATS RESP -> " + s);

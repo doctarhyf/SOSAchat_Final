@@ -315,7 +315,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         super.onCreateContextMenu(menu, v, menuInfo);
 
 
-        getMenuInflater().inflate(R.menu.ctx_menu_product_image, menu);
+        getMenuInflater().inflate(R.menu.menu_ctx_product_image, menu);
     }
 
     private void setUpBtnsListeners() {

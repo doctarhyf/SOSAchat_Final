@@ -476,6 +476,12 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             showMessage(getResources().getString(R.string.aboutSOS), getResources().getString(R.string.aboutMessage));
         }
 
+        if(item.getItemId() == R.id.menuCheckInquiry){
+            //Toast.makeText(this, "On check inquiry", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ActivityInquiriesList.class);
+            startActivity(intent);
+        }
+
         // TODO: 12/28/2017 SOS DM NEXT FEATURE
         /*if(item.getItemId() == R.id.menuMessages){
             Intent intent = new Intent(this, ActivityMessages.class);
@@ -516,7 +522,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         }
 
         if(item.getItemId() == R.id.menuInquire){
-            Intent intent = new Intent(this, ActivityInquiry.class);
+            Intent intent = new Intent(this, ActivityPostInquiry.class);
             startActivity(intent);
         }
 

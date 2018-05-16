@@ -98,7 +98,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
             picUri = Uri.fromFile(new File(cachePath));
 
 
-            Log.e(TAG, "PIC_PATH : -> " + picUri.toString() );
+             Log.e(TAG, "PIC_PATH : -> " + picUri.toString() );
 
             //Toast.makeText(context, "Loade from cache", Toast.LENGTH_SHORT).show();
 
