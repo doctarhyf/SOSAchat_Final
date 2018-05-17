@@ -12,7 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.example.rhyfdocta.sosachat.ActivityExposeItem"
+    tools:context="com.example.rhyfdocta.sosachat.ActivityPostItem"
     android:padding="@dimen/genPadding"
     android:weightSum="1">
 

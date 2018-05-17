@@ -31,7 +31,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 public class ActivityInquiryView extends AppCompatActivity {
 
     private Inquiry inquiry;
-    private TextView tvPosterName, tvPhone, tvEmail, tvTitle, tvDesc, tvDatePosted;
+    private TextView tvPosterName, tvPhone, tvEmail, tvTitle, tvDesc, tvDatePosted, tvInqPriority;
     private Button btnContact;
     private ImageView ivPp;
     private String title;
@@ -187,6 +187,7 @@ public class ActivityInquiryView extends AppCompatActivity {
         tvPosterName.setText((String) inquiry.getProperty(Inquiry.KEY_POSTERNAME));
         tvPhone.setText((String)inquiry.getProperty(SOS_API.KEY_ACC_DATA_MOBILE));
         tvEmail.setText((String)inquiry.getProperty(SOS_API.KEY_ACC_DATA_EMAIL));
+        tvInqPriority.setText((String)inquiry.getProperty(Inquiry.KEY_INQUIRY_RATING));
         // TODO: 5/16/2018 ADD STR TO RESOURCE
         tvTitle.setText(title);
         tvDatePosted.setText((String) inquiry.getProperty(Inquiry.KEY_DATETIME));
@@ -258,6 +259,7 @@ public class ActivityInquiryView extends AppCompatActivity {
     }
 
     private void initGUI() {
+        tvInqPriority = findViewById(R.id.tvInqPriority);
         tvPosterName = findViewById(R.id.tvInqPostername);
         tvPhone = findViewById(R.id.tvInqPosterPhone);
         tvEmail = findViewById(R.id.tvInqPosterEmail);

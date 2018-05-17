@@ -11,6 +11,7 @@ public class Inquiry implements Serializable {
     public static final String KEY_DESC = "inq_desc";
     public static final String KEY_POSTERNAME = "user_display_name";
     public static final String KEY_INQUIRY = "inquiryData";
+    public static final String KEY_INQUIRY_RATING = "inq_rating";
     private String title;
     private String message;
     private String dateTime;

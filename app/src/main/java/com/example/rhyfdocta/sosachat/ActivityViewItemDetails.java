@@ -353,6 +353,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         tvItemQual.setText(qual);
 
+        //Loading picture
         String itemsPixPath = SOS_API.DIR_PATH_PRODUCTS_PIX;
 
         Uri picUri = Uri.parse(itemsPixPath.concat(bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg"));

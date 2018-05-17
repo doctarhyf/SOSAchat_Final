@@ -29,7 +29,7 @@ public class ActivityInquiryPost extends AppCompatActivity implements SOS_API.SO
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inquiry);
+        setContentView(R.layout.activity_inquiry_post);
 
         sosApi = new SOS_API(this);
 

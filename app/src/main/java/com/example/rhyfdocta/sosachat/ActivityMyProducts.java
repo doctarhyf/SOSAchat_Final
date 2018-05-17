@@ -101,7 +101,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(ctx, ActivityExposeItem.class);
+                            Intent intent = new Intent(ctx, ActivityPostItem.class);
                             startActivity(intent);
                         }
                     }, btnOk,
@@ -237,7 +237,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
     @Override
     public void onItemEditClicked(ProductMyProducts pd, Uri picUri) {
-        Intent intent = new Intent(this, ActivityExposeItem.class);
+        Intent intent = new Intent(this, ActivityPostItem.class);
 
         Bundle b = new Bundle(pd.toBundle());
         b.putString(Product.KEY_PD_PIC_URI, picUri.toString());
@@ -269,7 +269,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
         if(item.getItemId() == R.id.menuExpose){
 
-            intent = new Intent(this, ActivityExposeItem.class);
+            intent = new Intent(this, ActivityPostItem.class);
             startActivity(intent);
 
         }

@@ -3,15 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <item
+        android:id="@+id/menuViewAllProducts"
+        android:title="@string/menuViewAllProducts" />
     <item android:id="@+id/menuExpose"
         app:showAsAction="always"
         android:title="@string/menuExposeItem"
+        android:icon="@android:drawable/ic_menu_send"
         />
 
     <item
         android:id="@+id/menuReloadRecentItems"
-        android:icon="@drawable/cog"
-
+        android:icon="@android:drawable/ic_menu_rotate"
+        app:showAsAction="always"
         android:title="@string/menuReloadRecentItems"
         />
 
@@ -32,23 +36,15 @@
         />
 
     <item
+        android:id="@+id/menuAccountSettings"
+        android:icon="@drawable/cog"
+
+        android:title="@string/menuAccSettins" />
+    <item
         android:id="@+id/menuCheckInquiry"
         android:icon="@drawable/cog"
         android:title="@string/menuCheckInquiry"
         />
-
-    <item
-        android:id="@+id/menuAccountSettings"
-        android:icon="@drawable/cog"
-
-        android:title="@string/menuAccSettins"
-        />
-
-    <item
-        android:id="@+id/menuViewAllProducts"
-        android:title="@string/menuViewAllProducts"
-        />
-
 
 
     <!--

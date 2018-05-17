@@ -213,7 +213,7 @@
     <string name="msgSettingsChangeError">Error!</string>
     <string name="msgPasswordsMismatch">1. Check your old password.\n2.Make sur your password is betwen 6 and 8 charcters long.\n3.Check if your old and new password match.</string>
     <string name="msgPleaseInputPassword">Please input your password!</string>
-    <string name="menuInquiry">Inquire</string>
+    <string name="menuInquiry">Post Inquiry</string>
     <string name="titleInquiry">Inquiry</string>
     <string name="menuViewAllProducts">View All Products</string>
     <string name="msgExposeItemError">Error posting item, try again later!</string>
@@ -237,8 +237,8 @@
     <string name="btnTextUpdatePassword">UPDATE PASSWORD</string>
     <string name="msgPasswordUpdateFailed">Error updating password!Check internet connection or password requirements.</string>
     <string name="msgPasswordUpdateSuccess">Password updated successfully!</string>
-    <string name="subtitleExposeItem">Expose Item</string>
-    <string name="subtitleEditing">Editing ...</string>
+    <string name="subtitlePostItem">Post Item</string>
+    <string name="subtitleEditing">Editing &#8230;</string>
     <string name="btnLoadMoreItems">LOAD MORE ITEMS</string>
     <string name="msgUpdateItemSuccess">Item updated successfully!</string>
     <string name="msgInquiryEmptyFields">Please fill in all the details!</string>

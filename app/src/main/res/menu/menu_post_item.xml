@@ -6,6 +6,7 @@
     <item android:id="@+id/menuResetExposeForm"
         app:showAsAction="always"
         android:title="@string/menuResetExposeForm"
+        android:icon="@android:drawable/ic_menu_revert"
         />
 
 

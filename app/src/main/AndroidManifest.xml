@@ -33,7 +33,7 @@
         <activity
             android:name=".ActivityLauncher"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".ActivityExposeItem" />
+        <activity android:name=".ActivityPostItem" />
         <activity android:name=".ActivityNoNetwork" />
         <activity android:name=".ActivityViewAllItemsInType" />
         <activity
@@ -47,7 +47,7 @@
             android:parentActivityName=".ActivityMyAccount" />
         <activity
             android:name=".ActivityTermsAndCond"
-            android:parentActivityName=".ActivityExposeItem" />
+            android:parentActivityName=".ActivityPostItem" />
         <activity android:name=".ActivityLoginSignup">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

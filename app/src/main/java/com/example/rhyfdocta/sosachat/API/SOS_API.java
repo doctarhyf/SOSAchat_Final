@@ -834,6 +834,7 @@ public class SOS_API {
                                 data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
                                 data.putString(Inquiry.KEY_DATETIME, object.getString(Inquiry.KEY_DATETIME));
                                 data.putString(SOS_API.KEY_ACC_DATA_MOBILE_HASH, object.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH));
+                                data.putString(Inquiry.KEY_INQUIRY_RATING, object.getString(Inquiry.KEY_INQUIRY_RATING));
 
                                 inquiry.setData(data);
                                 inquiries.add(inquiry);

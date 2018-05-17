@@ -9,9 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -48,14 +46,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.xml.datatype.Duration;
-
-public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOSApiListener {
+public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSApiListener {
 
 
     private static final int RESULT_LOAD_IMAGE = 1200;
@@ -101,12 +96,12 @@ public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_expose_item);
+        setContentView(R.layout.activity_post_item);
         sosApi = new SOS_API(this);
         Intent intent = getIntent();
         editingData = intent.getExtras();
         initGUI();
-        subtitle = HM.getStringResource(this, R.string.subtitleExposeItem);
+        subtitle = HM.getStringResource(this, R.string.subtitlePostItem);
 
         if(editingData != null) {
 
@@ -127,7 +122,7 @@ public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOS
 
         svActivityExposeitem = (ScrollView) findViewById(R.id.svActivityExposeitem);
 
-        getSupportActionBar().setSubtitle(subtitle);
+        getSupportActionBar().setTitle(subtitle);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -178,7 +173,7 @@ public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOS
             public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
             {
                 exception.printStackTrace();
-                //Toast.makeText(ActivityExposeItem.this, "", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ActivityPostItem.this, "", Toast.LENGTH_SHORT).show();
                 ivPixLoaded[idx] = false;
                //Log.e(TAG, "onImageLoadFailed: img id -> " + idx );
 
@@ -304,11 +299,11 @@ public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOS
                     realid = new Integer(itemsCategoriesJSONArray.getJSONObject(i).getString(SOS_API.KEY_ITEM_CATEGORY_ID)).intValue();
                    //Log.e(TAG, "Cat selected id -> " + i + ", text -> " + spCat.getSelectedItem().toString() +", realid -> " + realid);
 
-                        //sosApi.loadItemsTypes(ActivityExposeItem.this, realid);
+                        //sosApi.loadItemsTypes(ActivityPostItem.this, realid);
 
                     itemCategoryId = "" + realid;
 
-                    sosApi.loadItemsTypesFromCatId(ActivityExposeItem.this, realid);
+                    sosApi.loadItemsTypesFromCatId(ActivityPostItem.this, realid);
 
                     //Log.e(TAG, "cur id -> " + spCat.getSelectedItemId() );
 
@@ -747,7 +742,7 @@ public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOS
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_expose_item, menu);
+        getMenuInflater().inflate(R.menu.menu_post_item, menu);
         return true;
     }
 
@@ -762,7 +757,7 @@ public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOS
                     public void onClick(DialogInterface dialog, int which) {
 
                         clearAllFields();
-                        Toast.makeText(ActivityExposeItem.this, getResources().getString(R.string.toastMsgFormReset), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityPostItem.this, getResources().getString(R.string.toastMsgFormReset), Toast.LENGTH_SHORT).show();
 
                     }
                 })
@@ -848,7 +843,7 @@ public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOS
                     .setPositiveButton(getResources().getString(R.string.btnReadTermsNconds), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(ActivityExposeItem.this, ActivityTermsAndCond.class);
+                            Intent intent = new Intent(ActivityPostItem.this, ActivityTermsAndCond.class);
                             startActivity(intent);
                         }
                     })
@@ -1079,7 +1074,7 @@ public class ActivityExposeItem extends AppCompatActivity implements SOS_API.SOS
 
                             }else{
                                 //Log.e(TAG, "TYPES IS ZERO" );
-                                HM.LSP(spType, new String[]{HM.getStringResource(ActivityExposeItem.this, R.string.strNA)}, null);
+                                HM.LSP(spType, new String[]{HM.getStringResource(ActivityPostItem.this, R.string.strNA)}, null);
                             }
 
                         }

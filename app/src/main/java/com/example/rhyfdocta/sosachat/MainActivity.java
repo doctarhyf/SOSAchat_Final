@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(MainActivity.this, ActivityExposeItem.class);
+                            Intent intent = new Intent(MainActivity.this, ActivityPostItem.class);
                             startActivity(intent);
                         }
                     }, btnOk,
@@ -498,7 +498,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
         if(item.getItemId() == R.id.menuExpose){
 
-            Intent intent = new Intent(this, ActivityExposeItem.class);
+            Intent intent = new Intent(this, ActivityPostItem.class);
             startActivity(intent);
 
         }

@@ -53,18 +53,27 @@
 
         </LinearLayout>
 
-        <FrameLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/ivInqPp"
-            android:src="@drawable/logo"
-            android:layout_gravity="center"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-        </FrameLayout>
+            <ImageView
+                android:id="@+id/ivInqPp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:src="@drawable/logo" />
+
+           <TextView
+               android:id="@+id/tvInqPriority"
+               android:text="0"
+               android:textColor="@color/colorAccent"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -20,6 +20,8 @@ import java.io.OutputStream;
 public class BitmapCacheManager {
 
     private static final String TAG = "EE";
+    private static final int PIC_CACHE_PATH_TYPE_PRODUCTS = 200;
+
     //public static final String CACHE_DIR_NAME_PRODUCTS = "products";
     private Context context;
     public static final String CACHE_ROOT_DIR = "SOSAchat";
@@ -98,6 +100,8 @@ public class BitmapCacheManager {
         String dirName, localPath;
 
         switch (PIC_CACHE_PATH_TYPE){
+
+
             case PIC_CACHE_PATH_TYPE_RECENT_ITEMS:
                 //path = "Tha fucking path";
                 dirName = SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS;
