@@ -5,22 +5,22 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
-import com.example.rhyfdocta.sosachat.ObjectsModels.HomeCategoryItem;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -29,6 +29,8 @@ import java.util.List;
 
 public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
 
+
+    private static final String TAG = "SOSAchat";
 
     public static  class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -94,8 +96,27 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
         holder.tvPriceNQual.setText(priceNQual);
         holder.tvDate.setText(pd.getDataBundle().getString(Product.KEY_PD_DATE_ADDED));
 
-        final Uri picUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + pd.getDataBundle().getString(SOS_API.KEY_ITEM_UNIQUE_NAME) + "_main.jpg");
-        //Log.e(TAG, "FUCK " + picUri.toString());
+        //////////////////////////////////////////////////
+
+        final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdUniqueName() + "_main.jpg";
+        Uri uri = Uri.parse(pixPath);
+
+
+        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
+        if(BitmapCacheManager.FILE_EXISTS(cachePath)){
+            uri = Uri.fromFile(new File(cachePath));
+
+
+            Log.e(TAG, "PIC_PATH : -> " + uri.toString() );
+
+            //Toast.makeText(context, "Loade from cache", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Log.e(TAG, "NO_CACHE -> " + uri.toString() );
+            //Toast.makeText(context, "Loade from network", Toast.LENGTH_SHORT).show();
+        }
+
+        final Uri picUri = uri;
         Picasso.with(context).load(picUri).centerCrop().error(R.drawable.ic_error)
                 .placeholder(R.drawable.progress_animation).resize(400, 400).into(holder.iv, new Callback() {
             @Override
@@ -105,9 +126,11 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
 
             @Override
             public void onError() {
-                Log.e("PICASSO AdapterTypesItem", "onError: ");
+                Log.e("SOSAchat", "onError: ");
             }
         });
+
+        ///////////////////////////////////////////////////
 
         View view = holder.layout;
         view.setOnClickListener(new View.OnClickListener() {

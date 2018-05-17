@@ -94,7 +94,7 @@ public class BitmapCacheManager {
         return length;
     }
 
-    public static String GET_PIC_CACHE_PATH(int PIC_CACHE_PATH_TYPE, String imgName){
+    public static String getImageCachePath(int PIC_CACHE_PATH_TYPE, String imgName){
 
         String path = null;
         String dirName, localPath;
@@ -152,6 +152,12 @@ public class BitmapCacheManager {
         }
         if (success) {
             File imageFile = new File(storageDir, imageFileName);
+
+            // TODO: 5/17/2018 CHECK CACHE FILE REWRITE
+            if(imageFile.exists()){
+                return imageFile.toString();
+            }
+
             savedImagePath = imageFile.getAbsolutePath();
             try {
                 OutputStream fOut = new FileOutputStream(imageFile);
@@ -180,7 +186,7 @@ public class BitmapCacheManager {
 
         Uri uri = picUri;
 
-        //String cachePath = BitmapCacheManager.GET_PIC_CACHE_PATH(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
+        //String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
         if(BitmapCacheManager.FILE_EXISTS(cachePath)) {
             uri = Uri.fromFile(new File(cachePath));
         }

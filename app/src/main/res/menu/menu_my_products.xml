@@ -6,6 +6,7 @@
     <item android:id="@+id/menuExpose"
         app:showAsAction="always"
         android:title="@string/menuNewItem"
+        android:icon="@android:drawable/ic_menu_send"
         />
 
 

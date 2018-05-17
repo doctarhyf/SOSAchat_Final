@@ -375,7 +375,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         });*/
 
         // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
-        String cachePath = BitmapCacheManager.GET_PIC_CACHE_PATH(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + "_main.jpg");
+        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + "_main.jpg");
         if(BitmapCacheManager.FILE_EXISTS(cachePath)){
             picUri = Uri.fromFile(new File(cachePath));
 

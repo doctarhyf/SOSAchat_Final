@@ -129,7 +129,7 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         });*/
 
         // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
-        String cachePath = BitmapCacheManager.GET_PIC_CACHE_PATH(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + picType);
+        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + picType);
         if(BitmapCacheManager.FILE_EXISTS(cachePath)){
             uri = Uri.fromFile(new File(cachePath));
 

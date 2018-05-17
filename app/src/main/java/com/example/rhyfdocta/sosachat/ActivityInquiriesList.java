@@ -113,8 +113,18 @@ public class ActivityInquiriesList extends AppCompatActivity implements
 
         Log.e("SOSACHAT", msg );
 
-        tvError.setVisibility(View.VISIBLE);
+
         tvError.setText(message);
+        tvError.setVisibility(View.VISIBLE);
+        pb.setVisibility(View.GONE);
+        lvInquiries.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onInquiriesEmpty() {
+
+        tvError.setText(getResources().getString(R.string.msgInqListEmpty));
+        tvError.setVisibility(View.VISIBLE);
 
         pb.setVisibility(View.GONE);
         lvInquiries.setVisibility(View.GONE);

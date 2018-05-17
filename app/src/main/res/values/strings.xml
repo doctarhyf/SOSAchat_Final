@@ -226,8 +226,8 @@
     <string name="msgInquiryPostError">Error posting, please try again later!</string>
     <string name="msgInquiryPostSuccess">Congrats! your inquiry has been posted successfully!</string>
     <string name="msgLoadingError">Loading error, please try again later!</string>
-    <string name="titleInquiryTitle">Item name e.g : Looking for playstation</string>
-    <string name="msgInquiryDesc">Description about what you are looking for</string>
+    <string name="titleInquiryTitle">e.g : Looking for PS4</string>
+    <string name="msgInquiryDesc">e.g : In good conditions, used for less than 2 years with both gamepads</string>
     <string name="btnTextPost">POST</string>
     <string name="titleAllCats">ALL CATEGORIES</string>
     <string name="priceToDiscuss">Price to discuss</string>
@@ -369,5 +369,6 @@
     <string name="menuCheckInquiry">Check Inquiry</string>
     <string name="strInqPriority">PRIORITY : </string>
     <string name="contactSeller">CONTACT</string>
+    <string name="msgInqListEmpty">No inquiries for now, please check back later. Thanks!</string>
 
 </resources>

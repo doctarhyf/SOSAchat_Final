@@ -60,17 +60,17 @@ public class SOS_API {
     private static final String ACTION_LOAD_ALL_INQUIRIES = "checkAllInquiries";
     public static final String TAG = "SOSACHAT_DBG";
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.2/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.29/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.1.2/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.1.2/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.2/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.1.2/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.1.2/sosachat/";
+    public static String API_URL = "http://192.168.88.29/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.88.29/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.29/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.88.29/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.88.29/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -191,9 +191,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.1.2/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.1.2/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.2/sosachat/img/products/";
+    public static String API_URL = "http://192.168.88.29/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.88.29/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.29/sosachat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -818,30 +818,35 @@ public class SOS_API {
                             JSONArray array = new JSONArray(s);
                             ArrayList<Inquiry> inquiries = new ArrayList<>();
 
-                            for (int i = 0; i < array.length(); i++){
+                            if(inquiries.size() > 0) {
+                                for (int i = 0; i < array.length(); i++) {
 
-                                JSONObject object = array.getJSONObject(i);
-                                Inquiry inquiry = new Inquiry();
+                                    JSONObject object = array.getJSONObject(i);
+                                    Inquiry inquiry = new Inquiry();
 
-                                inquiry.setTitle(object.getString(Inquiry.KEY_TITLE));
-                                inquiry.setMessage(object.getString(Inquiry.KEY_DESC));
-                                inquiry.setDateTime(object.getString(Inquiry.KEY_DATETIME));
-                                inquiry.setPosterName(object.getString(Inquiry.KEY_POSTERNAME));
+                                    inquiry.setTitle(object.getString(Inquiry.KEY_TITLE));
+                                    inquiry.setMessage(object.getString(Inquiry.KEY_DESC));
+                                    inquiry.setDateTime(object.getString(Inquiry.KEY_DATETIME));
+                                    inquiry.setPosterName(object.getString(Inquiry.KEY_POSTERNAME));
 
-                                Bundle data = new Bundle();
+                                    Bundle data = new Bundle();
 
-                                data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
-                                data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
-                                data.putString(Inquiry.KEY_DATETIME, object.getString(Inquiry.KEY_DATETIME));
-                                data.putString(SOS_API.KEY_ACC_DATA_MOBILE_HASH, object.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH));
-                                data.putString(Inquiry.KEY_INQUIRY_RATING, object.getString(Inquiry.KEY_INQUIRY_RATING));
+                                    data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
+                                    data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
+                                    data.putString(Inquiry.KEY_DATETIME, object.getString(Inquiry.KEY_DATETIME));
+                                    data.putString(SOS_API.KEY_ACC_DATA_MOBILE_HASH, object.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH));
+                                    data.putString(Inquiry.KEY_INQUIRY_RATING, object.getString(Inquiry.KEY_INQUIRY_RATING));
 
-                                inquiry.setData(data);
-                                inquiries.add(inquiry);
+                                    inquiry.setData(data);
+                                    inquiries.add(inquiry);
 
+                                }
+
+                                callBacks.onInquiriesLoaded(inquiries);
+
+                            }else{
+                                callBacks.onInquiriesEmpty();
                             }
-
-                            callBacks.onInquiriesLoaded(inquiries);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

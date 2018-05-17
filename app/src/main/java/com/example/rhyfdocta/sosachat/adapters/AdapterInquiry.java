@@ -61,5 +61,7 @@ public class AdapterInquiry extends ArrayAdapter<Inquiry> {
         void onInquiriesLoaded(ArrayList<Inquiry> inquiries);
 
         void onInquiriesLoadError(boolean isNetworkError, String message);
+
+        void onInquiriesEmpty();
     }
 }
