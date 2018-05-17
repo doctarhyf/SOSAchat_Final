@@ -367,7 +367,7 @@
     <string name="strClearImgsCache">Delete all saved products images to free up storage space.</string>
     <string name="strCacheCleared">Images cached cleared.</string>
     <string name="menuCheckInquiry">Check Inquiry</string>
-    <string name="strInqPriority">Priority</string>
+    <string name="strInqPriority">PRIORITY : </string>
     <string name="contactSeller">CONTACT</string>
 
 </resources>

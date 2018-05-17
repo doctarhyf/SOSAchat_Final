@@ -530,7 +530,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         }
 
         if(item.getItemId() == R.id.menuInquire){
-            Intent intent = new Intent(this, ActivityPostInquiry.class);
+            Intent intent = new Intent(this, ActivityInquiryPost.class);
             startActivity(intent);
         }
 

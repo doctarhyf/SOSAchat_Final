@@ -1214,12 +1214,12 @@ public class SOS_API {
 
     }
 
-    public void postInquiry(final SOSApiListener listener, String title, String desc) {
+    public void postInquiry(final SOSApiListener listener, String title, String desc, float rating) {
 
         title = Uri.encode(title);
         desc = Uri.encode(desc);
 
-        String url = API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
+        String url = API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating;
        //Log.e(TAG, "postInquiry: url -> " + url );
         StringRequest request = new StringRequest(
                 url,

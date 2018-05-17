@@ -65,7 +65,7 @@
             android:name=".ActivityMessages"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ActivityViewItemPics" />
-        <activity android:name=".ActivityPostInquiry" />
+        <activity android:name=".ActivityInquiryPost" />
         <activity
             android:name=".ActivityViewAllProducts"
             android:parentActivityName=".MainActivity" />

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
@@ -18,7 +19,7 @@ import org.json.JSONArray;
 
 import java.util.List;
 
-public class ActivityPostInquiry extends AppCompatActivity implements SOS_API.SOSApiListener {
+public class ActivityInquiryPost extends AppCompatActivity implements SOS_API.SOSApiListener {
 
 
     private static final String TAG = "ACT_INQ";
@@ -60,7 +61,9 @@ public class ActivityPostInquiry extends AppCompatActivity implements SOS_API.SO
         String desc = etInqDesc.getText().toString();
 
         if(!title.equals("") && !desc.equals("")) {
-            sosApi.postInquiry(this, title, desc);
+            RatingBar rb = findViewById(R.id.rbInqPriority);
+            float rating = rb.getRating();
+            sosApi.postInquiry(this, title, desc, rating);
         }else{
             Toast.makeText(this, HM.getStringResource(this, R.string.msgInquiryEmptyFields), Toast.LENGTH_SHORT).show();
         }
