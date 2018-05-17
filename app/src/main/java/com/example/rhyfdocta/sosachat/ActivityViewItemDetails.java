@@ -527,28 +527,8 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     }
 
     private void onShowContactVendorDialog() {
-        //showMessage(getResources().getString(R.string.titleAccNotActive), getResources().getString(R.string.msgAccNotActive));
-
-        /*
-        String phoneNumber = "4567 8987 6785 8986";
-        String uri = "tel:" +"+243997475663" ;
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse(uri));
-
-        startActivity(intent);*/
-
-
-
-
         alertContactChoice.show();
-
-
-
-
-
-
     }
-
     protected void onConctactChoiceMade(int choice) {
         Log.e(TAG, "onConctactChoiceMade: " + choice );
         Intent intent;

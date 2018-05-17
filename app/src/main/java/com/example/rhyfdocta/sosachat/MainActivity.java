@@ -255,17 +255,25 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             @Override
             public void saveBitmapToLocalCache(Bitmap bitmap, String picUrl, String dirName) {
 
-                if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
+                        cacheBitmap = bitmap;
+                        cachePicUrl = picUrl;
+                        cacheDirName = dirName;
+                        Log.e(TAG, "FILE EX : -> " + sosApi.getBitmapCacheManager().saveBitmapToCache(cacheBitmap, cachePicUrl, cacheDirName));
+
+                    } else {
+
+                        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permissions, REQ_PERMISSION_SAVE_BITMAP);
+
+                    }
+                }else{
                     cacheBitmap = bitmap;
                     cachePicUrl = picUrl;
                     cacheDirName = dirName;
-                    Log.e(TAG, "FILE EX : -> " +  sosApi.getBitmapCacheManager().saveBitmapToCache(cacheBitmap,  cachePicUrl, cacheDirName));
-
-                }else{
-
-                    String[] permissions = { Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                    requestPermissions(permissions, REQ_PERMISSION_SAVE_BITMAP);
+                    Log.e(TAG, "FILE EX : -> " + sosApi.getBitmapCacheManager().saveBitmapToCache(cacheBitmap, cachePicUrl, cacheDirName));
 
                 }
 

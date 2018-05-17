@@ -60,17 +60,17 @@ public class SOS_API {
     private static final String ACTION_LOAD_ALL_INQUIRIES = "checkAllInquiries";
     public static final String TAG = "SOSACHAT_DBG";
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.2/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.43.177/sosachat/";
+    public static String API_URL = "http://192.168.1.2/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.2/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.2/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.2/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.1.2/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -191,10 +191,10 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.43.177 /sosachat
+    public static String API_URL = "http://192.168.1.2/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.2/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.2/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
 
@@ -832,6 +832,8 @@ public class SOS_API {
 
                                 data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
                                 data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
+                                data.putString(Inquiry.KEY_DATETIME, object.getString(Inquiry.KEY_DATETIME));
+                                data.putString(SOS_API.KEY_ACC_DATA_MOBILE_HASH, object.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH));
 
                                 inquiry.setData(data);
                                 inquiries.add(inquiry);
