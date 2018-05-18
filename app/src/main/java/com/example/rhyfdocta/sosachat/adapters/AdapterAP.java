@@ -98,7 +98,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
 
         //////////////////////////////////////////////////
 
-        final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdUniqueName() + "_main.jpg";
+        final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdImg();
         Uri uri = Uri.parse(pixPath);
 
 

@@ -59,6 +59,10 @@ public class SOS_API {
     public static final String DIR_NAME_PIX_CACHE_PROFILCE_PIC = "pp";
     private static final String ACTION_LOAD_ALL_INQUIRIES = "checkAllInquiries";
     public static final String TAG = "SOSACHAT_DBG";
+    public static final int KEY_CONTACT_BY_PHONE = 250;
+    public static final int KEY_CONTACT_BY_SMS = 251;
+    public static final int KEY_CONTACT_BY_EMAIL = 252;
+    public static final int KEY_CONTACT_BY_SOSDM = 253;
     public static boolean POST_MARSHMALLOW = false;
     public static final String DIR_PATH_CAT_PIX = "http://192.168.88.29/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
@@ -804,7 +808,7 @@ public class SOS_API {
 
     public void loadAllInquiries(final AdapterInquiry.CallBacks callBacks) {
 
-        String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES;
+        String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES + "&uid=" + getSessionVar(KEY_ACC_DATA_ID);
         Log.e(TAG, "loadRecentItems: url -> " + url );
 
         StringRequest request = new StringRequest(
@@ -818,7 +822,7 @@ public class SOS_API {
                             JSONArray array = new JSONArray(s);
                             ArrayList<Inquiry> inquiries = new ArrayList<>();
 
-                            if(inquiries.size() > 0) {
+                            if(array.length() > 0) {
                                 for (int i = 0; i < array.length(); i++) {
 
                                     JSONObject object = array.getJSONObject(i);
@@ -836,6 +840,8 @@ public class SOS_API {
                                     data.putString(Inquiry.KEY_DATETIME, object.getString(Inquiry.KEY_DATETIME));
                                     data.putString(SOS_API.KEY_ACC_DATA_MOBILE_HASH, object.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH));
                                     data.putString(Inquiry.KEY_INQUIRY_RATING, object.getString(Inquiry.KEY_INQUIRY_RATING));
+                                    data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
+                                    data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
 
                                     inquiry.setData(data);
                                     inquiries.add(inquiry);

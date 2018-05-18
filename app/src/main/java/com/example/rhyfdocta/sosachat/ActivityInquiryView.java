@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -39,6 +40,8 @@ public class ActivityInquiryView extends AppCompatActivity {
     private SOS_API sosApi;
     private String TAG = "SOSAchat";
     private MyGlideBitmapLoaderCallbacks glideBitmapLoaderCallbacks;
+    private String phoneNumber;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,9 @@ public class ActivityInquiryView extends AppCompatActivity {
 
             data = intent.getExtras();
             inquiry = new Inquiry(data);
+
+            phoneNumber = data.getString(SOS_API.KEY_ACC_DATA_MOBILE);
+            email = data.getString(SOS_API.KEY_ACC_DATA_EMAIL);
 
             updateGUI();
             initDialogContact();
@@ -92,21 +98,21 @@ public class ActivityInquiryView extends AppCompatActivity {
         rowContactByPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onConctactChoiceMade(KEY_CONTACT_BY_PHONE);
+                onConctactChoiceMade(SOS_API.KEY_CONTACT_BY_PHONE);
             }
         });
 
         rowContactBySMS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onConctactChoiceMade(KEY_CONTACT_BY_SMS);
+                onConctactChoiceMade(SOS_API.KEY_CONTACT_BY_SMS);
             }
         });
 
         rowContactByEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onConctactChoiceMade(KEY_CONTACT_BY_EMAIL);
+                onConctactChoiceMade(SOS_API.KEY_CONTACT_BY_EMAIL);
             }
         });
 
@@ -132,14 +138,14 @@ public class ActivityInquiryView extends AppCompatActivity {
 
     }
 
-    /*
+
     protected void onConctactChoiceMade(int choice) {
         Log.e(TAG, "onConctactChoiceMade: " + choice );
         Intent intent;
 
         switch (choice){
 
-            case KEY_CONTACT_BY_PHONE:
+            case SOS_API.KEY_CONTACT_BY_PHONE:
 
                 String uri = "tel:" + phoneNumber ;
                 intent = new Intent(Intent.ACTION_CALL);
@@ -149,25 +155,25 @@ public class ActivityInquiryView extends AppCompatActivity {
 
                 break;
 
-            case KEY_CONTACT_BY_SMS:
+            case SOS_API.KEY_CONTACT_BY_SMS:
 
-                String message = "Hello Im interrested in your product " + itemDataBundle.getString(Product.KEY_PD_NAME) + ", how can we get in touch?";
+                String message = "Hello I just read that you are interrested in \"" + title + "\", let's get in touch, I can hook you up";
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));
                 intent.putExtra("sms_body", message);
                 startActivity(intent);
                 //alertContactChoice.dismiss();
                 break;
 
-            case KEY_CONTACT_BY_EMAIL:
+            case SOS_API.KEY_CONTACT_BY_EMAIL:
                 intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto",email, null));
-                intent.putExtra(Intent.EXTRA_SUBJECT, itemDataBundle.getString(Product.KEY_PD_NAME));
-                intent.putExtra(Intent.EXTRA_TEXT, "Hello there im interested in the " + itemDataBundle.getString(Product.KEY_PD_NAME) + ", how can we get in touch?");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Re : " + title);
+                intent.putExtra(Intent.EXTRA_TEXT, "Hello I just read that you are interrested in \"" + title + "\", let's get in touch, I can hook you up");
                 startActivity(Intent.createChooser(intent, "Send email..."));
                 //alertContactChoice.dismiss();
                 break;
 
-            case KEY_CONTACT_BY_SOSDM:
+            case SOS_API.KEY_CONTACT_BY_SOSDM:
                 Toast.makeText(this, phoneNumber, Toast.LENGTH_SHORT).show();
                 //alertContactChoice.dismiss();
                 break;
@@ -178,7 +184,7 @@ public class ActivityInquiryView extends AppCompatActivity {
         //alertContactChoice = null;
 
 
-    }*/
+    }
 
     private void updateGUI() {
         title  = inquiry.getTitle();
