@@ -7,13 +7,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+
         android:id="@+id/tvListInquiryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Inquiry"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
        />
 
     <LinearLayout

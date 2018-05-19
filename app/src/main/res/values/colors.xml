@@ -17,4 +17,6 @@
     <color name="niceGreen">#5be75b</color>
     <color name="red">#f00</color>
     <color name="rowTransparantGray">#1eeeeeee</color>
+    <color name="bgColFormLogSign">#ed131313</color>
+    <color name="colTextColorHintLogSignForm">#616161</color>
 </resources>

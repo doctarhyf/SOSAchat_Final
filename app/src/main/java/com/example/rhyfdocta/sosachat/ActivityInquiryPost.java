@@ -1,5 +1,6 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -89,6 +90,8 @@ public class ActivityInquiryPost extends AppCompatActivity implements SOS_API.SO
         if(result.equals(SOS_API.JSON_RESULT_SUCCESS)){
             Toast.makeText(this, HM.getStringResource(this, R.string.msgInquiryPostSuccess), Toast.LENGTH_SHORT).show();
             clearAllFields();
+            Intent intent = new Intent(this, ActivityInquiriesList.class);
+            startActivity(intent);
         }else{
             Toast.makeText(this, HM.getStringResource(this, R.string.msgInquiryPostError), Toast.LENGTH_SHORT).show();
         }

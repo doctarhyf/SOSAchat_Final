@@ -17,7 +17,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
@@ -77,7 +76,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
     public AdapterRecentItems.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.layout_recent_prod, parent, false);
+        View view = layoutInflater.inflate(R.layout.list_item_recent_prod, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

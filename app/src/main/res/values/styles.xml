@@ -7,7 +7,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/colTextColorHintLogSignForm</item>
     </style>
+
+
 
 
     <style name="padTop">
@@ -241,5 +244,30 @@
         <item name="android:textSize">28sp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/sosBlue</item>
+    </style>
+
+    <style name="styleItemName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="styleItemPrice">
+        <item name="android:textColor">@color/sosBlue</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="styleItemPostAge">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">#999</item>
+        <item name="android:textStyle">italic</item>
     </style>
 </resources>

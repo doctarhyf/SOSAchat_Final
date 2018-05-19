@@ -9,62 +9,50 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:background="@drawable/color_state_row_settings"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/color_state_row_settings"
 
-    android:padding="8dp"
-        android:orientation="vertical">
-
-
-    <ImageView
-        android:id="@+id/ivFetProd"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/progress_animation" />
+        android:orientation="horizontal"
+        android:padding="8dp">
 
 
+        <ImageView
+            android:id="@+id/ivFetProd"
+            android:layout_width="@dimen/sizeImgRecentProdW"
+            android:layout_height="@dimen/sizeImgRecentProdH"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/progress_animation" />
 
-    <LinearLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical">
 
-        <TextView
+            <TextView
 
-            android:id="@+id/tvFeatProdName"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:textSize="22dp"
-            android:textColor="#000"
-            android:layout_weight="1"
-            android:text="Item" />
+                android:id="@+id/tvFeatProdName"
+                style="@style/styleItemName"
+                android:text="Item" />
 
-        <TextView
-            android:id="@+id/tvFeatProdPrice"
-            style="@style/featPriceTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Item Price" />
+            <TextView
+                android:id="@+id/tvFeatProdPrice"
+                style="@style/styleItemPrice"
+                android:text="220 $" />
 
-        <TextView
-            android:id="@+id/tvFeatProdDate"
-            android:textColor="#999"
-            android:textStyle="italic"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Item Price" />
+            <TextView
+                android:id="@+id/tvFeatProdDate"
+                android:text="Item Price"
+                style="@style/styleItemPostAge" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <!--<ImageView
+        <!--<ImageView
         android:id="@+id/ivFetProd"
         android:layout_marginLeft="@dimen/genPadding"
         style="@style/styleIvFeatItem"
@@ -105,6 +93,6 @@
         </LinearLayout>-->
 
 
-</LinearLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

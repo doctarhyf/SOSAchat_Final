@@ -70,6 +70,11 @@ public class ActivityInquiriesList extends AppCompatActivity implements
                 pb.setVisibility(View.VISIBLE);
                 lvInquiries.setVisibility(View.GONE);
                 break;
+
+            case R.id.menuInqNew:
+                Intent intent = new Intent(this, ActivityInquiryPost.class);
+                startActivity(intent);
+                break;
         }
 
         return true;

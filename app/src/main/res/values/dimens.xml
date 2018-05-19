@@ -10,5 +10,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="dblGenPadding">16dp</dimen>
+    <dimen name="sizeImgRecentProdW">120dp</dimen>
+    <dimen name="sizeImgRecentProdH">120dp</dimen>
+    <dimen name="marginSimple">8dp</dimen>
 
 </resources>

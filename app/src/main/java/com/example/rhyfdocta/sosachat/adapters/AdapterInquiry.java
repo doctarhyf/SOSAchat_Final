@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.rhyfdocta.sosachat.HelperObjects.HM;
+import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Inquiry;
 import com.example.rhyfdocta.sosachat.R;
 
@@ -34,15 +37,15 @@ public class AdapterInquiry extends ArrayAdapter<Inquiry> {
 
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_list_item_inquiry, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_inquiry, parent, false);
         }
 
         TextView tvTitle = convertView.findViewById(R.id.tvListInquiryTitle);
         TextView tvPostedBy = convertView.findViewById(R.id.tvInqPostedBy);
         TextView tvDate = convertView.findViewById(R.id.tvInqDate);
 
-        tvTitle.setText(inquiry.getTitle());
-        tvPostedBy.setText(inquiry.getPosterName());
+        tvTitle.setText(HelperMethods.UCFirst(inquiry.getTitle()));
+        tvPostedBy.setText(HM.UCF(inquiry.getPosterName()));
         tvDate.setText(inquiry.getDateTime());
 
         /*

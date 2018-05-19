@@ -242,10 +242,10 @@
     <string name="btnLoadMoreItems">LOAD MORE ITEMS</string>
     <string name="msgUpdateItemSuccess">Item updated successfully!</string>
     <string name="msgInquiryEmptyFields">Please fill in all the details!</string>
-    <string name="hintLoginMobile">ex: 0997475663</string>
-    <string name="hintSinupFullName">ex: Alice Liwena Tshisola</string>
+    <string name="hintLoginMobile">ex:0997475663 or name@me.com</string>
+    <string name="hintSinupFullName">ex: Franvale Mutunda Koji</string>
     <string name="hintSinupDisplayName">ex: doctarhyf</string>
-    <string name="hintSinupMobile">ex: 0997475663</string>
+    <string name="hintSinupMobile">ex: 0977779133</string>
     <string name="hintSinupEmail">ex: drrhyf@gmail.com</string>
     <string name="msgErrorInternetConnection">No connection. Please check your internet connection.</string>
     <string name="msgErrorLoadingNoTypes">Sorry this category is empty for now, \nbut our team is working verry hard right now to make sure it\'s updated as soon as possible.</string>
@@ -371,5 +371,7 @@
     <string name="contactSeller">CONTACT</string>
     <string name="msgInqListEmpty">No inquiries for now, please check back later. Thanks!</string>
     <string name="msgNoInternetConnection">Sorry you need an internet connection, check your WIFI or mobile data connection.</string>
+    <string name="strRefresh">REFRESH</string>
+    <string name="strPostNewInquiry">NEW INQUIRY</string>
 
 </resources>

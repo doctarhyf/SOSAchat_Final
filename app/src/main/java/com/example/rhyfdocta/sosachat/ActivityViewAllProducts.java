@@ -61,7 +61,7 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
 
         //lv = (ListView) findViewById(R.id.rvAllProducts);
         recyclerView = findViewById(R.id.rvAllProducts);
-        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         sosApi = new SOS_API(this);
