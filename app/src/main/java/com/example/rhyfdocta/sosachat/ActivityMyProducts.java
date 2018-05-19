@@ -3,6 +3,7 @@ package com.example.rhyfdocta.sosachat;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
+import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
@@ -143,6 +145,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
         //Log.e(TAG, "loadMyProductsData: ON RESUME -->>" );
 
     }
+
 
 
 

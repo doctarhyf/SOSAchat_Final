@@ -29,6 +29,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
+import com.example.rhyfdocta.sosachat.adapters.AdapterAP;
 import com.example.rhyfdocta.sosachat.adapters.AdapterInquiry;
 
 import org.json.JSONArray;
@@ -55,6 +56,7 @@ public class SOS_API {
 
     public static final String KEY_AUTOREFRESH_RECENT_ITEMS = "autorefreshRecentItems";
     public static final String DIR_NAME_PIX_CACHE_HOME_CATS = "cats";
+    public static final String DIR_NAME_PIX_CACHE_HOME_TYPES_IN_CATS = "typesInCats";
     public static final String DIR_NAME_PIX_CACHE_PRODUCTS = "products";
     public static final String DIR_NAME_PIX_CACHE_PROFILCE_PIC = "pp";
     private static final String ACTION_LOAD_ALL_INQUIRIES = "checkAllInquiries";
@@ -63,18 +65,22 @@ public class SOS_API {
     public static final int KEY_CONTACT_BY_SMS = 251;
     public static final int KEY_CONTACT_BY_EMAIL = 252;
     public static final int KEY_CONTACT_BY_SOSDM = 253;
+    public static final int REQ_CODE_NO_INTERNET_CONNECTION = 2234;
+    public static final int IMG_W_ADP_RECENT_ITEMS = 900;
+    public static final int IMG_H_ADP_RECENT_ITEMS = 900;
+    public static final String DIR_NAME_PIX_CACHE_HOME_CAT_TYPES = "catTypes";
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.29/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.3/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.88.29/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.29/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.29/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.88.29/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.88.29/sosachat/";
+    public static String API_URL = "http://192.168.1.3/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.3/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.3/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.3/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.1.3/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -195,9 +201,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.88.29/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.29/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.29/sosachat/img/products/";
+    public static String API_URL = "http://192.168.1.3/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.3/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.3/sosachat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -2089,6 +2095,8 @@ public class SOS_API {
         void onLoadCatsTypesNames(String cn, String tn);
 
         void onCategoryTypesLoaded(List<TypesItem> types, boolean errorLoading);
+
+
     }
 
     public void loadItemsCatsAndTypes(final SOSApiListener listener){

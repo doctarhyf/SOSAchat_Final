@@ -1,6 +1,7 @@
 package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,12 +12,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.R;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
+
+import static com.example.rhyfdocta.sosachat.API.SOS_API.TAG;
 
 /**
  * Created by rhyfdocta on 11/9/17.
@@ -29,6 +37,7 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
     List<TypesItem> objects;
     private String catPixPath;
     private CallBacks callBacks;
+    private SOS_API sosApi;
 
 
     public AdapterTypesItem(Context context, int resource, List<TypesItem> objects, CallBacks callBacks) {
@@ -36,6 +45,7 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
         this.context = context;
         this.objects = objects;
         this.callBacks = callBacks;
+        this.sosApi = new SOS_API(context);
     }
 
     static class ViewHolderCatItem{
@@ -49,7 +59,7 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         View view = convertView;
-        ViewHolderCatItem viewHolderCatItem;
+        final ViewHolderCatItem viewHolderCatItem;
 
         if(view == null){
 
@@ -74,7 +84,9 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
 
         Log.e("ADPT_TYPES", "type url ->  " + picUri.toString() );
 
-        Picasso.with(context).load(picUri).error(R.drawable.ic_error)
+        /*
+        Picasso.with(context).load(picUri)
+        .error(R.drawable.ic_error)
                 .placeholder(R.drawable.progress_animation).centerInside().resize(400,400).into(viewHolderCatItem.iv, new Callback() {
             @Override
             public void onSuccess() {
@@ -83,9 +95,51 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
 
             @Override
             public void onError() {
-                Log.e("PICASSO AdapterTypesItem", "onError: " );
+                Log.e("PICASSO", "onError: " );
             }
-        });
+        });*/
+
+        Uri uri = picUri;
+        final String  url = item.getTypeImgPath();
+
+
+        String picName = url.split("/")[url.split("/").length-1];
+        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_TYPES_IN_CAT, picName);
+        if(BitmapCacheManager.FILE_EXISTS(cachePath)){
+            uri = Uri.fromFile(new File(cachePath));
+
+
+            Log.e(TAG, "PIC_PATH : -> " + uri.toString() );
+
+            //Toast.makeText(context, "Loade from cache", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Log.e(TAG, "NO_CACHE -> " + uri.toString() );
+            //Toast.makeText(context, "Loade from network", Toast.LENGTH_SHORT).show();
+        }
+
+        Glide.with(context)
+                .load(uri)
+                .asBitmap()
+                .error(R.drawable.ic_error)
+                .placeholder(R.drawable.progress_animation)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .fitCenter()
+                .into(new SimpleTarget<Bitmap>(400,400) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+                        //callbacks.onBitmapShouldBeSaved(resource, homeCategoryItem.getImageUrl());
+                        sosApi.getBitmapCacheManager().saveBitmapToCache(resource, url, SOS_API.DIR_NAME_PIX_CACHE_HOME_CAT_TYPES );
+
+
+                        viewHolderCatItem.iv.setImageBitmap(resource);
+
+                        //callbacks.onItemClicked(homeCategoryItem);
+                    }
+                });
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

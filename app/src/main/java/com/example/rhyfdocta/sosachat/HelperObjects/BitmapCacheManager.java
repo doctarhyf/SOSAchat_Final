@@ -20,7 +20,14 @@ import java.io.OutputStream;
 public class BitmapCacheManager {
 
     private static final String TAG = "EE";
-    private static final int PIC_CACHE_PATH_TYPE_PRODUCTS = 200;
+
+    public static final int PIC_CACHE_PATH_TYPE_RECENT_ITEMS = 200;
+    public static final int PIC_CACHE_PATH_TYPE_PRODUCTS = 200;
+    public static final int PIC_CACHE_PATH_TYPE_PROFILE_PIC = 201;
+    public static final int PIC_CACHE_PATH_TYPE_CATS = 202;
+    public static final int PIC_CACHE_PATH_TYPE_TYPES_IN_CAT = 203;
+
+    //public static final int PIC_CACHE_PATH_TYPE_PRODUCTS = ;
 
     //public static final String CACHE_DIR_NAME_PRODUCTS = "products";
     private Context context;
@@ -101,6 +108,24 @@ public class BitmapCacheManager {
 
         switch (PIC_CACHE_PATH_TYPE){
 
+            case PIC_CACHE_PATH_TYPE_TYPES_IN_CAT:
+                dirName = SOS_API.DIR_NAME_PIX_CACHE_HOME_TYPES_IN_CATS;
+                localPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+                //String imageFileName = imgName;
+                //File storageDir = new File(localPath + "/" + CACHE_ROOT_DIR + "/" + dirName );
+
+                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgName;
+
+                break;
+
+            case PIC_CACHE_PATH_TYPE_CATS:
+                dirName = SOS_API.DIR_NAME_PIX_CACHE_HOME_CATS;
+                localPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+                //String imageFileName = imgName;
+                //File storageDir = new File(localPath + "/" + CACHE_ROOT_DIR + "/" + dirName );
+
+                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgName;
+                break;
 
             case PIC_CACHE_PATH_TYPE_RECENT_ITEMS:
                 //path = "Tha fucking path";
@@ -128,10 +153,9 @@ public class BitmapCacheManager {
             return path;
     }
 
-    public static final int PIC_CACHE_PATH_TYPE_RECENT_ITEMS = 200;
-    public static final int PIC_CACHE_PATH_TYPE_PROFILE_PIC = 201;
 
-    public String saveCacheImage(Bitmap image, String imgName, String dirName) {
+
+    private String saveCacheImage(Bitmap image, String imgName, String dirName) {
 
         //iv.setImageBitmap(image);
 
@@ -142,7 +166,9 @@ public class BitmapCacheManager {
 
         String targetFilePath = storageDir.getName() + "/" + dirName + "/" + imgName ;
 
-        if (FILE_EXISTS(targetFilePath)){
+        boolean fileExists = FILE_EXISTS(targetFilePath);
+
+        if (fileExists){
             return targetFilePath;
         }
 

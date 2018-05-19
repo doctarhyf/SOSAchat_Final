@@ -36,7 +36,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="@string/msgNoNetwork"
+        android:text="@string/msgNoInternetConnection"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

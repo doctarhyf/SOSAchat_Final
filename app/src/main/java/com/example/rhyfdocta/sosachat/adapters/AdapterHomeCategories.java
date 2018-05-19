@@ -1,7 +1,10 @@
 package com.example.rhyfdocta.sosachat.adapters;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,13 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.ObjectsModels.HomeCategoryItem;
 import com.example.rhyfdocta.sosachat.R;
-import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
+
+import static com.example.rhyfdocta.sosachat.API.SOS_API.TAG;
 
 
 /**
@@ -25,6 +33,8 @@ import java.util.List;
 
 public class AdapterHomeCategories extends RecyclerView.Adapter<AdapterHomeCategories.ViewHolder> {
 
+
+    private Context context;
 
     public static  class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -42,11 +52,15 @@ public class AdapterHomeCategories extends RecyclerView.Adapter<AdapterHomeCateg
     }
 
     private List<HomeCategoryItem> list;
-    private HomeCategoryItemListener listener;
+    private Callbacks callbacks;
+    private SOS_API sosApi;
 
-    public AdapterHomeCategories(List<HomeCategoryItem> list, HomeCategoryItemListener listener){
+    public AdapterHomeCategories(Context context, List<HomeCategoryItem> list, Callbacks callbacks){
+
+        this.context = context;
         this.list = list;
-        this.listener = listener;
+        this.callbacks = callbacks;
+        this.sosApi = new SOS_API(context);
     }
 
     @Override
@@ -65,30 +79,51 @@ public class AdapterHomeCategories extends RecyclerView.Adapter<AdapterHomeCateg
         holder.tvCatTitle.setText(homeCategoryItem.getTitle());
 
 
-        /*Picasso.with(holder.ivCatBg.getContext())
-                .load(homeCategoryItem.getImageUrl())
-                .error(R.drawable.ic_error)
-                .placeholder(R.drawable.progress_animation)
-                .centerInside()
-                .resize(300,300)
-                .into(holder.ivCatBg);*/
+       String url = homeCategoryItem.getImageUrl();
+
+        //final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdImg();
+        Uri uri = Uri.parse(url);
+
+
+        String picName = url.split("/")[url.split("/").length-1];
+        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_CATS, picName);
+        if(BitmapCacheManager.FILE_EXISTS(cachePath)){
+            uri = Uri.fromFile(new File(cachePath));
+
+
+            Log.e(TAG, "PIC_PATH : -> " + uri.toString() );
+
+            //Toast.makeText(context, "Loade from cache", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Log.e(TAG, "NO_CACHE -> " + uri.toString() );
+            //Toast.makeText(context, "Loade from network", Toast.LENGTH_SHORT).show();
+        }
 
         Glide.with(holder.ivCatBg.getContext())
-                .load(homeCategoryItem.getImageUrl())
+                .load(uri)
                 .asBitmap()
                 .error(R.drawable.ic_error)
                 .placeholder(R.drawable.progress_animation)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .fitCenter()
                 .into(new SimpleTarget<Bitmap>(300,300) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 
 
-                        listener.onBitmapShouldBeSaved(resource, homeCategoryItem.getImageUrl());
+                        //callbacks.onBitmapShouldBeSaved(resource, homeCategoryItem.getImageUrl());
+                        sosApi.getBitmapCacheManager().saveBitmapToCache(resource, homeCategoryItem.getImageUrl(), SOS_API.DIR_NAME_PIX_CACHE_HOME_CATS );
+
 
                         holder.ivCatBg.setImageBitmap(resource);
+
+                        //callbacks.onItemClicked(homeCategoryItem);
                     }
                 });
+
+        //callbacks.onItemClicked(homeCategoryItem);
 
         holder.ivCatBg.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -106,7 +141,7 @@ public class AdapterHomeCategories extends RecyclerView.Adapter<AdapterHomeCateg
                 }
 
                 if(event.getAction() == 1){
-                    listener.onItemClicked(homeCategoryItem);
+                    callbacks.onItemClicked(homeCategoryItem);
                 }
 
 
@@ -128,9 +163,9 @@ public class AdapterHomeCategories extends RecyclerView.Adapter<AdapterHomeCateg
         return list.size();
     }
 
-    public static interface HomeCategoryItemListener{
+    public  interface Callbacks {
         void onItemClicked(HomeCategoryItem homeCategoryItem);
-        void onBitmapShouldBeSaved(Bitmap bitmap,String picUrl);
+
     }
 
 

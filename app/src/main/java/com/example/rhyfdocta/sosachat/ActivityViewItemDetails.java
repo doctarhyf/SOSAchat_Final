@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
@@ -395,6 +396,8 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
                 .asBitmap()
                 .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.ic_error)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .fitCenter()
                 .into(new SimpleTarget<Bitmap>(450,450) {
                     @Override
@@ -407,9 +410,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
                     }
                 });
 
-        //Log.e(TAG, "loadItemDataFromBundle: THE BUNDLE -> " + itemDataBundle.toString() );
 
-        //prepareGUI();
 
     }
 

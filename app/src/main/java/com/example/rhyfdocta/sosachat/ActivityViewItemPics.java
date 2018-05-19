@@ -1,5 +1,6 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
@@ -97,12 +102,6 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         loadBitmapIntoImageView(pic3Uri, uniqueName, picType, ivp3, tw, th);
 
 
-
-
-
-
-
-
     }
 
     private void loadBitmapIntoImageView(final Uri picUri, String uniqueName, String picType, final ImageView iv, int tw, int th) {
@@ -115,20 +114,6 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + uniqueName + picType;
         String picName = uniqueName;
 
-        /*Picasso.with(getApplicationContext()).load(picUri).error(R.drawable.ic_error)
-                .placeholder(R.drawable.progress_animation).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).centerInside().resize(450,450).into(ivItemMainPic, new Callback() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Overr ide
-            public void onError() {
-                Log.e("PICASSO  ", "onError: PICASSO ITEM DETAILS ERROR \nLink : " + picUri.toString() );
-            }
-        });*/
-
-        // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
         String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + picType);
         if(BitmapCacheManager.FILE_EXISTS(cachePath)){
             uri = Uri.fromFile(new File(cachePath));
@@ -145,7 +130,61 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
 
         // TODO: 5/13/2018 LOAD ITEM PIC FROM CACHE
-        //Drawable placeHolder = getResources().getDrawable(R.drawable.placeholder_item_pics);
+
+        Glide.with(this)
+                .load(uri)
+                .asBitmap()
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_error)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .fitCenter()
+                .into(new SimpleTarget<Bitmap>(450,450) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+                        sosApi.getBitmapCacheManager().saveBitmapToCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
+
+                        iv.setImageBitmap(resource);
+
+                        if(iv.getId() == R.id.ivmpMain){
+                            registerForContextMenu(iv);
+
+                            iv.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                                    ImageView v = (ImageView) view;
+                                    MotionEvent event = motionEvent;
+
+                                    if(event.getAction() == 0){
+                                        v.setAlpha(0.5f);
+
+                                        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                                        vibrator.vibrate(100);
+                                    }
+
+                                    if(event.getAction() == 1 || event.getAction() == 3) {
+                                        v.setAlpha(1f);
+                                    }
+
+
+                                    return false;
+                                }
+                            });
+
+
+                        }else {
+
+                            iv.setOnTouchListener(ActivityViewItemPics.this);
+                        }
+                    }
+
+
+                });
+
+        /*
         Picasso.with(this)
                 .load(uri)
                 .error(R.drawable.ic_error)
@@ -195,7 +234,7 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
             public void onError() {
                 Log.e(TAG, "picasso pic error ActivityViewItemPics::loadPicsFromServer(). url -> " + picUri.toString() );
             }
-        });
+        });*/
 
     }
 

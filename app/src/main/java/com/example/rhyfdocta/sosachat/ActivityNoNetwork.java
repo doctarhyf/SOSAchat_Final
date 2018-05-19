@@ -7,11 +7,14 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.rhyfdocta.sosachat.API.SOS_API;
 
 public class ActivityNoNetwork extends AppCompatActivity {
 
@@ -26,7 +29,7 @@ public class ActivityNoNetwork extends AppCompatActivity {
         setContentView(R.layout.activity_no_network);
 
 
-        getSupportActionBar().setSubtitle(getResources().getString(R.string.msgNoNetworkTitle));
+        getSupportActionBar().setTitle(getResources().getString(R.string.msgNoNetworkTitle));
 
         pbRetryConn = (ProgressBar) findViewById(R.id.pbRetryNetwork);
 
@@ -39,7 +42,7 @@ public class ActivityNoNetwork extends AppCompatActivity {
 
         Log.e(TAG, "onBtnRetryClicked: " );
 
-        if(isOnline() == true){
+        if(SOS_API.isOnline(this) == true){
 
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -55,13 +58,5 @@ public class ActivityNoNetwork extends AppCompatActivity {
 
     }
 
-    protected boolean isOnline(){
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnectedOrConnecting()){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
 }

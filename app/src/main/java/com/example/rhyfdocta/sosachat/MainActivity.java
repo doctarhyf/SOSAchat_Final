@@ -1,6 +1,5 @@
 package com.example.rhyfdocta.sosachat;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,7 +32,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
-import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.HomeCategoryItem;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
     public static final String KEY_CAT_NAME_CARS = "Cars";
     public static final String KEY_CAT_NAME_ELEC = "Electronics";
-    //private static final int REQ_CODE_CON = 2342;
+    //private static final int REQ_CODE_NO_INTERNET_CONNECTION = 2342;
     public static final String KEY_SOSACHAT_FOLDER = "sdcard/SOSAchat";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
@@ -138,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
 
             Intent intent = new Intent(this, ActivityNoNetwork.class);
-            startActivityForResult(intent, REQ_CODE_CON);
+            startActivityForResult(intent, REQ_CODE_NO_INTERNET_CONNECTION);
             //pbLoadingFeatItems.setVisibility(View.GONE);
             alertDialogProcessing.dismiss();
             return;
@@ -185,8 +183,6 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
     }
 
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -231,7 +227,30 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     private void displayRecentItems() {
 
 
-        adapterRecentItems = new AdapterRecentItems(this, recentProducts, new GlideBitmapLoaderCallbacks() {
+        adapterRecentItems = new AdapterRecentItems(this, recentProducts, new AdapterRecentItems.Callbacks() {
+            @Override
+            public void onItemClicked(Product pd) {
+
+                //HM.T(MainActivity.this, pd.getPdName(), HM.TLL);
+                Intent intent = new Intent(MainActivity.this, ActivityViewItemDetails.class);
+                Bundle bundle = new Bundle();
+                bundle.putAll(pd.toBundle());
+                bundle.putAll(pd.getData());
+
+                boolean itemIsMine = false;
+
+                if(bundle.getString(SOS_API.KEY_ACC_DATA_USER_ID).equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_USER_ID))){
+                    itemIsMine = true;
+                }
+                bundle.putBoolean(SOS_API.KEY_ITEM_IS_MINE, itemIsMine);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                //HM.T(MainActivity.this, "" + rvRecentItems.computeHorizontalScrollRange(), HM.TLS);
+
+            }
+        });
+
+        /*adapterRecentItems = new AdapterRecentItems(this, recentProducts, new GlideBitmapLoaderCallbacks() {
             @Override
             public void onItemClicked(Product pd) {
                 //HM.T(MainActivity.this, pd.getPdName(), HM.TLL);
@@ -278,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
                 }
 
             }
-        });
+        });*/
 
 
 
@@ -397,7 +416,8 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         @Override
         public void onNetworkError(String msg) {
             //Toast.makeText(MainActivity.this, "onNetworkError", Toast.LENGTH_SHORT).show();
-            sosApi.TADRWM(true, "onNetworkError:\nError : " + msg);
+            Log.e(TAG, "onNetworkError: Message -> " + msg );
+            sosApi.TADRWM(true, MainActivity.this.getResources().getString(R.string.msgServerUnreachable));
             alertDialogProcessing.hide();
             llPbLoadingRecentItems.setVisibility(View.GONE);
         }
@@ -548,17 +568,17 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
             // TODO: 11/10/17  REACTIVATE NO NETWORK ACTIVITY AFTER TEST
 
-            /*
-            if(isOnline() == false){
+
+            if(!SOS_API.isOnline(this)){
 
                 Intent intent = new Intent(this, ActivityNoNetwork.class);
-                startActivityForResult(intent, REQ_CODE_CON);
+                startActivity(intent);
 
                 //pbLoadingFeatItems.setVisibility(View.GONE);
 
                 alertDialogProcessing.dismiss();
 
-            }*/
+            }
 
 
             loadRecentItems();
@@ -703,7 +723,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             e.printStackTrace();
         }
 
-        adapterCats = new AdapterHomeCategories(list, new AdapterHomeCategories.HomeCategoryItemListener() {
+        adapterCats = new AdapterHomeCategories(this, list, new AdapterHomeCategories.Callbacks() {
             @Override
             public void onItemClicked(HomeCategoryItem homeCategoryItem) {
                 Log.e(TAG, "Home Cat Clicked : " + homeCategoryItem.getTitle() );
@@ -715,7 +735,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
                 startActivity(intent);
             }
 
-            @Override
+            /*@Override
             public void onBitmapShouldBeSaved(Bitmap bitmap, String picUrl) {
 
                 Log.e(TAG, "CATS saveBitmapToLocalCache: url -> " + picUrl );
@@ -723,7 +743,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
                 String dirName = SOS_API.DIR_NAME_PIX_CACHE_HOME_CATS;
                 String picName = splits[splits.length-1];
                 Log.e(TAG, "saveBitmapToLocalCache:" );
-            }
+            }*/
         });
         rvCats.setAdapter(adapterCats);
 

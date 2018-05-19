@@ -44,7 +44,7 @@
     <string name="msgNoRecentItems">Sorry there are no recent items posted today</string>
     <string name="menuReloadRecentItems">Reload Recent Items</string>
     <string name="msgRecentItemsLoaded">Recents Items Loaded</string>
-    <string name="msgNoNetwork">Sorry you need an internet connection to continue.</string>
+    <string name="msgServerUnreachable">Sorry SOSAchat server unreachable!</string>
     <string name="msgNoNetworkTitle">NO INTERNET CONNECTION</string>
     <string name="txtBtnRetryConnecting">RETRY</string>
     <string name="msgStillNoConnection">Still no connection! Check WiFi or 3G data</string>
@@ -370,5 +370,6 @@
     <string name="strInqPriority">PRIORITY : </string>
     <string name="contactSeller">CONTACT</string>
     <string name="msgInqListEmpty">No inquiries for now, please check back later. Thanks!</string>
+    <string name="msgNoInternetConnection">Sorry you need an internet connection, check your WIFI or mobile data connection.</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
@@ -102,7 +107,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
         Uri uri = Uri.parse(pixPath);
 
 
-        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
+        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdImg());
         if(BitmapCacheManager.FILE_EXISTS(cachePath)){
             uri = Uri.fromFile(new File(cachePath));
 
@@ -117,7 +122,12 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
         }
 
         final Uri picUri = uri;
-        Picasso.with(context).load(picUri).centerCrop().error(R.drawable.ic_error)
+
+        /*
+        Picasso.with(context)
+                .load(picUri)
+                .centerCrop()
+                .error(R.drawable.ic_error)
                 .placeholder(R.drawable.progress_animation).resize(400, 400).into(holder.iv, new Callback() {
             @Override
             public void onSuccess() {
@@ -128,7 +138,30 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
             public void onError() {
                 Log.e("SOSAchat", "onError: ");
             }
-        });
+        });*/
+
+        Glide.with(context)
+                .load(uri)
+                .asBitmap()
+                .error(R.drawable.ic_error)
+                .placeholder(R.drawable.progress_animation)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .fitCenter()
+                .into(new SimpleTarget<Bitmap>(400,400) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+                        //callbacks.onBitmapShouldBeSaved(resource, homeCategoryItem.getImageUrl());
+                        sosApi.getBitmapCacheManager().saveBitmapToCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS );
+
+
+                        holder.iv.setImageBitmap(resource);
+
+                        //callbacks.onItemClicked(homeCategoryItem);
+                    }
+                });
 
         ///////////////////////////////////////////////////
 
@@ -164,6 +197,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
     public interface ListenerAllProducts {
         void onItemClicked(ProductMyProducts pd, Uri picUri);
         void onItemFavorite(ProductMyProducts pd, Uri picUri);
+
 
     }
 

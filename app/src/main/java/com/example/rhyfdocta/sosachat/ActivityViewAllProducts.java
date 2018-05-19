@@ -66,6 +66,12 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
 
         sosApi = new SOS_API(this);
 
+        if(!SOS_API.isOnline(this)) {
+
+            Intent intent = new Intent(this, ActivityNoNetwork.class);
+            startActivity(intent);
+        }
+
         sosApi.loadAllProducts(this, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_USER_ID));
 
     }
@@ -90,10 +96,11 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
                 break;
 
             case R.id.menuViewAllProductsRefresh:
+                /*
                 tvAllProductsEmptyList.setVisibility(View.GONE);
                 pbAllProducts.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
-                sosApi.loadAllProducts(this, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_USER_ID));
+                sosApi.loadAllProducts(this, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_USER_ID));*/
                 break;
         }
 
@@ -166,7 +173,6 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
     }
 
 
-
     @Override
     public void onLoadAllProductsResult(List<ProductMyProducts> allProducts) {
 
@@ -181,6 +187,7 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
             //btnLoadMore.setVisibility(View.VISIBLE);
 
             products = allProducts;
+            //adapter.notifyDataSetChanged();
             adapter = new AdapterAP(this, allProducts, this);
             recyclerView.setAdapter(adapter);
         }else{
@@ -213,10 +220,23 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
 
         //Toast.makeText(this, "Load products error, please try again later", Toast.LENGTH_SHORT).show();
         tvAllProductsEmptyList.setVisibility(View.GONE);
+        //tvAllProductsEmptyList.setText(getResources().getString(R.string.msgServerUnreachable));
         pbAllProducts.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
+        tvAllProductsLoadingError.setText(getResources().getString(R.string.msgServerUnreachable));
         tvAllProductsLoadingError.setVisibility(View.VISIBLE);
     }
+
+    /*
+    @Override
+    public void onLoadAllServerUnreachable(String message) {
+        tvAllProductsEmptyList.setVisibility(View.GONE);
+        //tvAllProductsEmptyList.setText(getResources().getString(R.string.msgServerUnreachable));
+        pbAllProducts.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+        tvAllProductsLoadingError.setText(getResources().getString(R.string.msgServerUnreachable));
+        tvAllProductsLoadingError.setVisibility(View.VISIBLE);
+    }*/
 
     @Override
     public void onLoadSearchResultItemsResult(List<ProductMyProducts> searchResultProducts) {
