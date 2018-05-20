@@ -24,12 +24,12 @@ import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
-import com.example.rhyfdocta.sosachat.ObjectsModels.Inquiry;
+import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 
 public class ActivityInquiryView extends AppCompatActivity {
 
-    private Inquiry inquiry;
+    private LookingFor lookingFor;
     private TextView tvPosterName, tvPhone, tvEmail, tvTitle, tvDesc, tvDatePosted, tvInqPriority;
     private Button btnContact;
     private ImageView ivPp;
@@ -53,12 +53,12 @@ public class ActivityInquiryView extends AppCompatActivity {
         initGUI();
 
         Intent intent = getIntent();
-        title = "No Inquiry Data";
+        title = "No LookingFor Data";
 
         if(intent.getExtras() != null){
 
             data = intent.getExtras();
-            inquiry = new Inquiry(data);
+            lookingFor = new LookingFor(data);
 
             phoneNumber = data.getString(SOS_API.KEY_ACC_DATA_MOBILE);
             email = data.getString(SOS_API.KEY_ACC_DATA_EMAIL);
@@ -187,17 +187,17 @@ public class ActivityInquiryView extends AppCompatActivity {
     }
 
     private void updateGUI() {
-        title  = inquiry.getTitle();
-        tvPosterName.setText((String) inquiry.getProperty(Inquiry.KEY_POSTERNAME));
-        tvPhone.setText((String)inquiry.getProperty(SOS_API.KEY_ACC_DATA_MOBILE));
-        tvEmail.setText((String)inquiry.getProperty(SOS_API.KEY_ACC_DATA_EMAIL));
-        tvInqPriority.setText((String)inquiry.getProperty(Inquiry.KEY_INQUIRY_RATING));
+        title  = lookingFor.getTitle();
+        tvPosterName.setText((String) lookingFor.getProperty(LookingFor.KEY_POSTERNAME));
+        tvPhone.setText((String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE));
+        tvEmail.setText((String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_EMAIL));
+        tvInqPriority.setText((String) lookingFor.getProperty(LookingFor.KEY_INQUIRY_RATING));
         // TODO: 5/16/2018 ADD STR TO RESOURCE
         tvTitle.setText(title);
-        tvDatePosted.setText((String) inquiry.getProperty(Inquiry.KEY_DATETIME));
-        tvDesc.setText(inquiry.getMessage());
+        tvDatePosted.setText((String) lookingFor.getProperty(LookingFor.KEY_DATETIME));
+        tvDesc.setText(lookingFor.getMessage());
 
-        String ppName = (String) inquiry.getProperty(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
+        String ppName = (String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
 
         String path = SOS_API.DIR_PATH_PP + ppName ;//+ "?ts=" + HM.getTimeStamp();//accDataBundle.get(SOS_API.KEY_ACC_DATA_ACC_PIC_NAME);
 

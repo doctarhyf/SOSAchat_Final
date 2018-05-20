@@ -12,19 +12,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.HelperObjects.HM;
-import com.example.rhyfdocta.sosachat.ObjectsModels.Inquiry;
-import com.example.rhyfdocta.sosachat.adapters.AdapterInquiry;
+import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
+import com.example.rhyfdocta.sosachat.adapters.AdapterLookingFor;
 
 import java.util.ArrayList;
 
-public class ActivityInquiriesList extends AppCompatActivity implements
-        AdapterInquiry.CallBacks,
+public class ActivityLookingFor extends AppCompatActivity implements
+        AdapterLookingFor.CallBacks,
         AdapterView.OnItemClickListener{
 
     ListView lvInquiries;
-    AdapterInquiry adapterInquiry;
-    private ArrayList<Inquiry> inquiries;
+    AdapterLookingFor adapterLookingFor;
+    private ArrayList<LookingFor> inquiries;
     private SOS_API sosApi;
     private ProgressBar pb;
     private TextView tvError;
@@ -37,21 +36,21 @@ public class ActivityInquiriesList extends AppCompatActivity implements
         pb = findViewById(R.id.pbInqList);
         tvError = findViewById(R.id.tvInqListError);
 
-        getSupportActionBar().setTitle(getResources().getString(R.string.titleInquiry));
+        getSupportActionBar().setTitle(getResources().getString(R.string.titleLookingFor));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         lvInquiries = findViewById(R.id.lvInquiries);
 
         sosApi = new SOS_API(this);
-        sosApi.loadAllInquiries(this);
+        sosApi.loadAllLookingFors(this);
 
 
         inquiries = new ArrayList<>();
-        //inquiries.add(new Inquiry("Poster Name","null","My inquiry", "Them details"));
+        //inquiries.add(new LookingFor("Poster Name","null","My inquiry", "Them details"));
 
-        adapterInquiry = new AdapterInquiry(this, inquiries, this);
-        lvInquiries.setAdapter(adapterInquiry);
+        adapterLookingFor = new AdapterLookingFor(this, inquiries, this);
+        lvInquiries.setAdapter(adapterLookingFor);
 
         lvInquiries.setOnItemClickListener(this);
     }
@@ -65,14 +64,14 @@ public class ActivityInquiriesList extends AppCompatActivity implements
                 break;
 
             case R.id.menuInqRefresh:
-                sosApi.loadAllInquiries(this);
+                sosApi.loadAllLookingFors(this);
                 tvError.setVisibility(View.GONE);
                 pb.setVisibility(View.VISIBLE);
                 lvInquiries.setVisibility(View.GONE);
                 break;
 
             case R.id.menuInqNew:
-                Intent intent = new Intent(this, ActivityInquiryPost.class);
+                Intent intent = new Intent(this, ActivityNewLookingFor.class);
                 startActivity(intent);
                 break;
         }
@@ -90,11 +89,11 @@ public class ActivityInquiriesList extends AppCompatActivity implements
     }
 
     @Override
-    public void onInquiriesLoaded(ArrayList<Inquiry> inquiries) {
+    public void onLookingForsLoaded(ArrayList<LookingFor> inquiries) {
         this.inquiries = inquiries;
-        adapterInquiry = new AdapterInquiry(this, inquiries, this);
-        //adapterInquiry.notifyAll();
-        lvInquiries.setAdapter(adapterInquiry);
+        adapterLookingFor = new AdapterLookingFor(this, inquiries, this);
+        //adapterLookingFor.notifyAll();
+        lvInquiries.setAdapter(adapterLookingFor);
 
         if(inquiries.size() == 0){
             tvError.setVisibility(View.VISIBLE);
@@ -112,21 +111,21 @@ public class ActivityInquiriesList extends AppCompatActivity implements
     }
 
     @Override
-    public void onInquiriesLoadError(boolean isNetworkError, String message) {
+    public void onLookingForsLoadError(boolean isNetworkError, String message) {
 
-        String msg = "onInquiriesLoadError: netErr -> " + isNetworkError + ", msg : " + message;
+        String msg = "onLookingForsLoadError: netErr -> " + isNetworkError + ", msg : " + message;
 
         Log.e("SOSACHAT", msg );
 
 
-        tvError.setText(message);
+        tvError.setText(getResources().getString(R.string.msgServerUnreachable));
         tvError.setVisibility(View.VISIBLE);
         pb.setVisibility(View.GONE);
         lvInquiries.setVisibility(View.GONE);
     }
 
     @Override
-    public void onInquiriesEmpty() {
+    public void onLookingForsEmpty() {
 
         tvError.setText(getResources().getString(R.string.msgInqListEmpty));
         tvError.setVisibility(View.VISIBLE);
@@ -139,11 +138,11 @@ public class ActivityInquiriesList extends AppCompatActivity implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Inquiry inquiry = inquiries.get(position);
+        LookingFor lookingFor = inquiries.get(position);
         Intent intent = new Intent(this, ActivityInquiryView.class);
 
         Bundle data = new Bundle();
-        data.putAll(inquiry.toBundle());
+        data.putAll(lookingFor.toBundle());
         intent.putExtras(data);
         startActivity(intent);
     }

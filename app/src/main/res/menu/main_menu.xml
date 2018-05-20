@@ -41,9 +41,9 @@
 
         android:title="@string/menuAccSettins" />
     <item
-        android:id="@+id/menuCheckInquiry"
+        android:id="@+id/menuLookingFor"
         android:icon="@drawable/cog"
-        android:title="@string/menuCheckInquiry"
+        android:title="@string/menuLookingFor"
         />
 
 
@@ -57,9 +57,7 @@
         />-->
 
 
-    <item
-        android:id="@+id/menuInquire"
-        android:title="@string/menuInquiry"/>
+
 
     <item android:id="@+id/menuHelp"
         android:visible="false"

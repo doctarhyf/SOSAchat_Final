@@ -24,13 +24,12 @@ import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperDate;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
 
-import com.example.rhyfdocta.sosachat.ObjectsModels.Inquiry;
+import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
-import com.example.rhyfdocta.sosachat.adapters.AdapterAP;
-import com.example.rhyfdocta.sosachat.adapters.AdapterInquiry;
+import com.example.rhyfdocta.sosachat.adapters.AdapterLookingFor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -812,7 +811,7 @@ public class SOS_API {
         Log.e(TAG, "deletePP: " );
     }
 
-    public void loadAllInquiries(final AdapterInquiry.CallBacks callBacks) {
+    public void loadAllLookingFors(final AdapterLookingFor.CallBacks callBacks) {
 
         String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES + "&uid=" + getSessionVar(KEY_ACC_DATA_ID);
         Log.e(TAG, "loadRecentItems: url -> " + url );
@@ -826,50 +825,50 @@ public class SOS_API {
 
                         try {
                             JSONArray array = new JSONArray(s);
-                            ArrayList<Inquiry> inquiries = new ArrayList<>();
+                            ArrayList<LookingFor> inquiries = new ArrayList<>();
 
                             if(array.length() > 0) {
                                 for (int i = 0; i < array.length(); i++) {
 
                                     JSONObject object = array.getJSONObject(i);
-                                    Inquiry inquiry = new Inquiry();
+                                    LookingFor lookingFor = new LookingFor();
 
-                                    inquiry.setTitle(object.getString(Inquiry.KEY_TITLE));
-                                    inquiry.setMessage(object.getString(Inquiry.KEY_DESC));
-                                    inquiry.setDateTime(object.getString(Inquiry.KEY_DATETIME));
-                                    inquiry.setPosterName(object.getString(Inquiry.KEY_POSTERNAME));
+                                    lookingFor.setTitle(object.getString(LookingFor.KEY_TITLE));
+                                    lookingFor.setMessage(object.getString(LookingFor.KEY_DESC));
+                                    lookingFor.setDateTime(object.getString(LookingFor.KEY_DATETIME));
+                                    lookingFor.setPosterName(object.getString(LookingFor.KEY_POSTERNAME));
 
                                     Bundle data = new Bundle();
 
                                     data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
                                     data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
-                                    data.putString(Inquiry.KEY_DATETIME, object.getString(Inquiry.KEY_DATETIME));
+                                    data.putString(LookingFor.KEY_DATETIME, object.getString(LookingFor.KEY_DATETIME));
                                     data.putString(SOS_API.KEY_ACC_DATA_MOBILE_HASH, object.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH));
-                                    data.putString(Inquiry.KEY_INQUIRY_RATING, object.getString(Inquiry.KEY_INQUIRY_RATING));
+                                    data.putString(LookingFor.KEY_INQUIRY_RATING, object.getString(LookingFor.KEY_INQUIRY_RATING));
                                     data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
                                     data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
 
-                                    inquiry.setData(data);
-                                    inquiries.add(inquiry);
+                                    lookingFor.setData(data);
+                                    inquiries.add(lookingFor);
 
                                 }
 
-                                callBacks.onInquiriesLoaded(inquiries);
+                                callBacks.onLookingForsLoaded(inquiries);
 
                             }else{
-                                callBacks.onInquiriesEmpty();
+                                callBacks.onLookingForsEmpty();
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            callBacks.onInquiriesLoadError(false, e.getMessage());
+                            callBacks.onLookingForsLoadError(false, e.getMessage());
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        callBacks.onInquiriesLoadError(true, volleyError.getMessage());
+                        callBacks.onLookingForsLoadError(true, volleyError.getMessage());
                     }
                 }
         );

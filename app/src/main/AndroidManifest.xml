@@ -65,14 +65,14 @@
             android:name=".ActivityMessages"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ActivityViewItemPics" />
-        <activity android:name=".ActivityInquiryPost" />
+        <activity android:name=".ActivityNewLookingFor" />
         <activity
             android:name=".ActivityViewAllProducts"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ActivityAccountSettings2"
             android:label="@string/title_activity_account_settings2" />
-        <activity android:name=".ActivityInquiriesList" />
+        <activity android:name=".ActivityLookingFor" />
         <activity android:name=".ActivityInquiryView"></activity>
     </application>
 

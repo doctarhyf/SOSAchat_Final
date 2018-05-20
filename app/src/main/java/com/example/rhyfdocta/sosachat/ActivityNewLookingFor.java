@@ -20,7 +20,7 @@ import org.json.JSONArray;
 
 import java.util.List;
 
-public class ActivityInquiryPost extends AppCompatActivity implements SOS_API.SOSApiListener {
+public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.SOSApiListener {
 
 
     private static final String TAG = "ACT_INQ";
@@ -30,11 +30,12 @@ public class ActivityInquiryPost extends AppCompatActivity implements SOS_API.SO
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inquiry_post);
+        setContentView(R.layout.activity_new_looking_for);
 
         sosApi = new SOS_API(this);
 
-        getSupportActionBar().setTitle(HelperMethods.getStringResource(getBaseContext(),R.string.titleInquiry).toUpperCase());
+        getSupportActionBar().setTitle(HelperMethods.getStringResource(getBaseContext(),R.string.titleLookingFor).toUpperCase());
+        getSupportActionBar().setSubtitle(HelperMethods.getStringResource(getBaseContext(),R.string.stLookingFor));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -90,7 +91,7 @@ public class ActivityInquiryPost extends AppCompatActivity implements SOS_API.SO
         if(result.equals(SOS_API.JSON_RESULT_SUCCESS)){
             Toast.makeText(this, HM.getStringResource(this, R.string.msgInquiryPostSuccess), Toast.LENGTH_SHORT).show();
             clearAllFields();
-            Intent intent = new Intent(this, ActivityInquiriesList.class);
+            Intent intent = new Intent(this, ActivityLookingFor.class);
             startActivity(intent);
         }else{
             Toast.makeText(this, HM.getStringResource(this, R.string.msgInquiryPostError), Toast.LENGTH_SHORT).show();

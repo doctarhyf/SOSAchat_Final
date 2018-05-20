@@ -11,18 +11,18 @@ import android.widget.TextView;
 
 import com.example.rhyfdocta.sosachat.HelperObjects.HM;
 import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
-import com.example.rhyfdocta.sosachat.ObjectsModels.Inquiry;
+import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.R;
 
 import java.util.ArrayList;
 
-public class AdapterInquiry extends ArrayAdapter<Inquiry> {
+public class AdapterLookingFor extends ArrayAdapter<LookingFor> {
 
     private final Context context;
     private final CallBacks callBacks;
-    private ArrayList<Inquiry> inquiries;
+    private ArrayList<LookingFor> inquiries;
 
-    public AdapterInquiry(Context context, ArrayList<Inquiry> inquiries, CallBacks callBacks){
+    public AdapterLookingFor(Context context, ArrayList<LookingFor> inquiries, CallBacks callBacks){
         super(context, 0, inquiries);
         this.context = context;
         this.inquiries = inquiries;
@@ -32,7 +32,7 @@ public class AdapterInquiry extends ArrayAdapter<Inquiry> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final Inquiry inquiry = getItem(position);
+        final LookingFor lookingFor = getItem(position);
 
 
 
@@ -44,9 +44,9 @@ public class AdapterInquiry extends ArrayAdapter<Inquiry> {
         TextView tvPostedBy = convertView.findViewById(R.id.tvInqPostedBy);
         TextView tvDate = convertView.findViewById(R.id.tvInqDate);
 
-        tvTitle.setText(HelperMethods.UCFirst(inquiry.getTitle()));
-        tvPostedBy.setText(HM.UCF(inquiry.getPosterName()));
-        tvDate.setText(inquiry.getDateTime());
+        tvTitle.setText(HelperMethods.UCFirst(lookingFor.getTitle()));
+        tvPostedBy.setText(HM.UCF(lookingFor.getPosterName()));
+        tvDate.setText(lookingFor.getDateTime());
 
         /*
         tvQuestion.setOnClickListener(new View.OnClickListener() {
@@ -61,10 +61,10 @@ public class AdapterInquiry extends ArrayAdapter<Inquiry> {
     }
 
     public interface CallBacks {
-        void onInquiriesLoaded(ArrayList<Inquiry> inquiries);
+        void onLookingForsLoaded(ArrayList<LookingFor> inquiries);
 
-        void onInquiriesLoadError(boolean isNetworkError, String message);
+        void onLookingForsLoadError(boolean isNetworkError, String message);
 
-        void onInquiriesEmpty();
+        void onLookingForsEmpty();
     }
 }

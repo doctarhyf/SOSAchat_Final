@@ -17,7 +17,7 @@
     <string name="aboutSOS">About SOSAChat&#169;</string>
     <string name="hintNewItemName">Item name</string>
     <string name="hintNewItemDesc">Describe your item with clear details</string>
-    <string name="aboutMessage">"This is a beta version of SOSAchat&#169;\nDeveloped by KOZI&#169;Engineering, its a platform to help small business grow\nBy easing communications among vendors and buyers."</string>
+    <string name="aboutMessage">SOSAchat&#169; Beta version.\nDeveloped by Docta Rhyf.</string>
     <string name="menuMyAcc">My Account</string>
     <string name="qualBrandNew">Brand New</string>
     <string name="qualSecondHand">Second Hand</string>
@@ -214,7 +214,7 @@
     <string name="msgPasswordsMismatch">1. Check your old password.\n2.Make sur your password is betwen 6 and 8 charcters long.\n3.Check if your old and new password match.</string>
     <string name="msgPleaseInputPassword">Please input your password!</string>
     <string name="menuInquiry">Post Inquiry</string>
-    <string name="titleInquiry">Inquiry</string>
+    <string name="titleLookingFor">Looking for ...</string>
     <string name="menuViewAllProducts">View All Products</string>
     <string name="msgExposeItemError">Error posting item, try again later!</string>
     <string name="msgExposeItemSuccess">Congrats! your Item has been posted successfully!</string>
@@ -224,7 +224,7 @@
     <string name="msgEmptyProducts">Sorry there are no products posted yet!\nBe the first one to post!</string>
     <string name="menuViewAllProductsRefresh">Refresh</string>
     <string name="msgInquiryPostError">Error posting, please try again later!</string>
-    <string name="msgInquiryPostSuccess">Congrats! your inquiry has been posted successfully!</string>
+    <string name="msgInquiryPostSuccess">Congrats! your lookingFor has been posted successfully!</string>
     <string name="msgLoadingError">Loading error, please try again later!</string>
     <string name="titleInquiryTitle">e.g : Looking for PS4</string>
     <string name="msgInquiryDesc">e.g : In good conditions, used for less than 2 years with both gamepads</string>
@@ -366,12 +366,13 @@
     <string name="strBtnClearImgsCache">CLEAR IMAGES CACHE ( %.2fMb. )</string>
     <string name="strClearImgsCache">Delete all saved products images to free up storage space.</string>
     <string name="strCacheCleared">Images cached cleared.</string>
-    <string name="menuCheckInquiry">Check Inquiry</string>
+    <string name="menuLookingFor">Looking for</string>
     <string name="strInqPriority">PRIORITY : </string>
     <string name="contactSeller">CONTACT</string>
     <string name="msgInqListEmpty">No inquiries for now, please check back later. Thanks!</string>
     <string name="msgNoInternetConnection">Sorry you need an internet connection, check your WIFI or mobile data connection.</string>
     <string name="strRefresh">REFRESH</string>
     <string name="strPostNewInquiry">NEW INQUIRY</string>
+    <string name="stLookingFor">What ya looking for?</string>
 
 </resources>

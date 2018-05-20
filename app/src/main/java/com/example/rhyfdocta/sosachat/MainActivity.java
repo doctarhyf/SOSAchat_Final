@@ -504,9 +504,9 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             showMessage(getResources().getString(R.string.aboutSOS), getResources().getString(R.string.aboutMessage));
         }
 
-        if(item.getItemId() == R.id.menuCheckInquiry){
+        if(item.getItemId() == R.id.menuLookingFor){
             //Toast.makeText(this, "On check inquiry", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, ActivityInquiriesList.class);
+            Intent intent = new Intent(this, ActivityLookingFor.class);
             startActivity(intent);
         }
 
@@ -549,10 +549,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
         }
 
-        if(item.getItemId() == R.id.menuInquire){
-            Intent intent = new Intent(this, ActivityInquiryPost.class);
-            startActivity(intent);
-        }
+
 
         if(item.getItemId() == R.id.menuViewAllProducts){
 

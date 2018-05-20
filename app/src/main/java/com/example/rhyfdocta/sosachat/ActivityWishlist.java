@@ -148,6 +148,11 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
     @Override
     public void onErrorLoadWishList(String message) {
         sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this, R.string.msgErrorInternetConnection));
+
+        lvWli.setVisibility(View.GONE);
+        tvEmptyWli.setText(getResources().getString(R.string.msgServerUnreachable));
+        tvEmptyWli.setVisibility(View.VISIBLE);
+        pbWli.setVisibility(View.GONE);
     }
 
     @Override

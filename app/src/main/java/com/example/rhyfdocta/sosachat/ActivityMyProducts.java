@@ -120,11 +120,11 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
         @Override
         public void onNetworkError(String msg) {
-            String netEr = HM.RGS(this, R.string.msgNetEr);
-            msg = netEr + ":\n" + msg;
-            sosApi.TADRWM(true, msg);
+            String netEr = HM.RGS(this, R.string.msgServerUnreachable );
+            //msg = netEr + ":\n" + msg;
+            sosApi.TADRWM(true, netEr);
             progressBar.setVisibility(View.INVISIBLE);
-            tvEmptyList.setText(msg);
+            tvEmptyList.setText(netEr);
             tvEmptyList.setVisibility(View.VISIBLE);
         }
 

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import java.io.Serializable;
 
-public class Inquiry implements Serializable {
+public class LookingFor implements Serializable {
 
     public static final String KEY_TITLE = "inq_title";
     public static final String KEY_DATETIME = "inq_date";
@@ -18,11 +18,11 @@ public class Inquiry implements Serializable {
     private String posterName;
     private Bundle data = new Bundle();
 
-    public Inquiry(){
+    public LookingFor(){
 
     }
 
-    public Inquiry(Bundle data){
+    public LookingFor(Bundle data){
         this.data = data;
     }
 
@@ -30,7 +30,7 @@ public class Inquiry implements Serializable {
         return data.get(key);
     }
 
-    public Inquiry(String posterName, String dateTime, String title, String message){
+    public LookingFor(String posterName, String dateTime, String title, String message){
         this.message = message;
         this.title = title;
         this.dateTime = dateTime;
