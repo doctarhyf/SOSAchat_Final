@@ -190,7 +190,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         if(itemIsMine == false) {
             Log.e(TAG, "updateItemViewsCount: id -> " + itemDataBundle.getString(SOS_API.KEY_ITEM_ID));
-            //sosApi.updateItemViewsCount(this,itemDataBundle.getString(SOS_API.KEY_ITEM_ID));
+            sosApi.updateItemViewsCount(this,itemDataBundle.getString(SOS_API.KEY_ITEM_ID));
 
         }else{
             Log.e(TAG, "updateItemViewsCount: Item is mine!!!" );

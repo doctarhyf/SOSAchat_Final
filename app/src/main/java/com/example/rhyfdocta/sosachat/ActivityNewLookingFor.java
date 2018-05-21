@@ -1,10 +1,12 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -26,13 +28,19 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
     private static final String TAG = "ACT_INQ";
     EditText etInqTitle, etInqDesc;
     SOS_API sosApi;
+    private Button btn;
+    private AlertDialog dialogProcessing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_looking_for);
 
+
+        btn = findViewById(R.id.btnPostInquiry);
         sosApi = new SOS_API(this);
+
+        dialogProcessing = HM.GADP(this, getResources().getString(R.string.processing), false);
 
         getSupportActionBar().setTitle(HelperMethods.getStringResource(getBaseContext(),R.string.titleLookingFor).toUpperCase());
         getSupportActionBar().setSubtitle(HelperMethods.getStringResource(getBaseContext(),R.string.stLookingFor));
@@ -66,6 +74,11 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
             RatingBar rb = findViewById(R.id.rbInqPriority);
             float rating = rb.getRating();
             sosApi.postInquiry(this, title, desc, rating);
+            //Button btn = (Button) view;
+            btn.setEnabled(false);
+
+           dialogProcessing.show();
+
         }else{
             Toast.makeText(this, HM.getStringResource(this, R.string.msgInquiryEmptyFields), Toast.LENGTH_SHORT).show();
         }
@@ -87,6 +100,9 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
 
     @Override
     public void onPostInquiryResult(String result) {
+
+        btn.setEnabled(true);
+        dialogProcessing.hide();
 
         if(result.equals(SOS_API.JSON_RESULT_SUCCESS)){
             Toast.makeText(this, HM.getStringResource(this, R.string.msgInquiryPostSuccess), Toast.LENGTH_SHORT).show();

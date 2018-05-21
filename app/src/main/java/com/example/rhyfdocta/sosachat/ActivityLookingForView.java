@@ -27,7 +27,7 @@ import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 
-public class ActivityInquiryView extends AppCompatActivity {
+public class ActivityLookingForView extends AppCompatActivity {
 
     private LookingFor lookingFor;
     private TextView tvPosterName, tvPhone, tvEmail, tvTitle, tvDesc, tvDatePosted, tvInqPriority;
@@ -235,7 +235,7 @@ public class ActivityInquiryView extends AppCompatActivity {
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         super.onLoadFailed(e, errorDrawable);
                         ivPp.setImageResource(R.drawable.ic_error);
-                        sosApi.TADRWM(true, HM.RGS(ActivityInquiryView.this, R.string.msgFailedToLoadPP));
+                        sosApi.TADRWM(true, HM.RGS(ActivityLookingForView.this, R.string.msgFailedToLoadPP));
                     }
                 });
 

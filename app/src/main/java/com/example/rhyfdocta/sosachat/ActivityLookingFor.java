@@ -139,7 +139,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         LookingFor lookingFor = inquiries.get(position);
-        Intent intent = new Intent(this, ActivityInquiryView.class);
+        Intent intent = new Intent(this, ActivityLookingForView.class);
 
         Bundle data = new Bundle();
         data.putAll(lookingFor.toBundle());

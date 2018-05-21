@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
-    tools:context="com.example.rhyfdocta.sosachat.ActivityInquiryView">
+    tools:context="com.example.rhyfdocta.sosachat.ActivityLookingForView">
 
     <LinearLayout
         android:padding="16dp"
