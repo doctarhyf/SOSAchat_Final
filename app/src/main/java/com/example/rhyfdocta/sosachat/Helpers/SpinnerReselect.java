@@ -1,4 +1,4 @@
-package com.example.rhyfdocta.sosachat.HelperObjects;
+package com.example.rhyfdocta.sosachat.Helpers;
 
 import java.lang.reflect.Field;
 

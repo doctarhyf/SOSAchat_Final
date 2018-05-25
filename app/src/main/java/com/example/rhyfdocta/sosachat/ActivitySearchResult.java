@@ -37,6 +37,7 @@ public class ActivitySearchResult extends AppCompatActivity implements SOS_API.S
     TextView tvLoadingSearchResultError;
     private List<ProductMyProducts> products;
     private AdapterAllProducts adapter;
+    private String searchKeyWord;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -45,7 +46,11 @@ public class ActivitySearchResult extends AppCompatActivity implements SOS_API.S
 
         sosApi = new SOS_API(this);
 
-        getSupportActionBar().setSubtitle("The dealers paridise");
+        Intent intent = getIntent();
+        String ids = intent.getStringExtra(SOS_API.KEY_ITEMS_SEARCH_RESULT_IDS);
+        searchKeyWord = intent.getStringExtra(SOS_API.KEY_SEARCH_KEYWORD);
+
+        getSupportActionBar().setTitle(String.format(getResources().getString(R.string.strSearcingFor), searchKeyWord));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -57,8 +62,7 @@ public class ActivitySearchResult extends AppCompatActivity implements SOS_API.S
         lvItemsSearchResult = (ListView) findViewById(R.id.lvItemsSearchResult);
         tvLoadingSearchResultError = (TextView) findViewById(R.id.tvLoadingSearchResultError);
 
-        Intent intent = getIntent();
-        String ids = intent.getStringExtra(SOS_API.KEY_ITEMS_SEARCH_RESULT_IDS);
+
 
         Log.e(TAG, "onCreate: the fucks ids -> " + ids );
 

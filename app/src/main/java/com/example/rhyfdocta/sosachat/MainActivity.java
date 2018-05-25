@@ -30,8 +30,8 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.HelperObjects.HM;
-import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
+import com.example.rhyfdocta.sosachat.Helpers.HM;
+import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.HomeCategoryItem;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     private Bitmap cacheBitmap;
     private String cachePicUrl;
     private String cacheDirName;
+    private String searchKeyword;
     //BitmapCacheManager bitmapCacheManager;
 
 
@@ -477,12 +478,12 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     }
 
     public void startSearch(View v){
-        String q = etSearch.getText().toString().trim();
+        searchKeyword = etSearch.getText().toString().trim();
         //Toast.makeText(this, q, Toast.LENGTH_SHORT).show();
 
-        if(q.length() > 0) {
+        if(searchKeyword.length() > 0) {
 
-            sosApi.search(this,q);
+            sosApi.search(this,searchKeyword);
 
         }else{
             Toast.makeText(this, "Please write something!", Toast.LENGTH_SHORT).show();
@@ -611,6 +612,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         //intent.put(SOS_API.KEY_NAME_FOUND_PRODUCTS_LIST, foundProducts);
         Log.e(TAG, "onSearchResult: items ids -> " + ids );
         intent.putExtra(SOS_API.KEY_ITEMS_SEARCH_RESULT_IDS, ids);
+        intent.putExtra(SOS_API.KEY_SEARCH_KEYWORD, searchKeyword);
         startActivity(intent);
 
     }

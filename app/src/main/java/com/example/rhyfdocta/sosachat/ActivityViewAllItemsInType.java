@@ -2,7 +2,6 @@ package com.example.rhyfdocta.sosachat;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.widget.ListViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,12 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.HelperObjects.HM;
+import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;

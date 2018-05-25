@@ -1,4 +1,4 @@
-package com.example.rhyfdocta.sosachat.HelperObjects;
+package com.example.rhyfdocta.sosachat.Helpers;
 
 
 import android.content.Context;
@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Spinner;
-
-import com.example.rhyfdocta.sosachat.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

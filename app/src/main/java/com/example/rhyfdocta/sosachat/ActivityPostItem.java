@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -32,9 +33,10 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.HelperObjects.SpinnerReselect;
-import com.example.rhyfdocta.sosachat.HelperObjects.HM;
-import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
+import com.example.rhyfdocta.sosachat.Helpers.SpinnerReselect;
+import com.example.rhyfdocta.sosachat.Helpers.HM;
+import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
+import com.example.rhyfdocta.sosachat.Helpers.UploadAsyncTask;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
@@ -48,6 +50,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSApiListener {
@@ -91,6 +94,9 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
     private String typeToSelect = "";
     private String catToSelect = "";
     private Button btnExposeItem;
+    private String picType = "null";
+    private boolean[] picsUploaded = {false, false, false, false};
+    private String curPicPath;
 
 
     @Override
@@ -347,70 +353,6 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
     }
     Boolean[] ivPixLoaded = {false,false,false,false};  //Main pic, Pic 1, Pic 2, Pic 3
 
-    private void prepareDataBundle() {
-
-        String currency = spCur.getSelectedItem().toString();
-
-        String[] curs = HelperMethods.RGSA(this, R.array.currencies);
-
-        String priceToDiscuss = currency.equalsIgnoreCase(curs[2]) ? "1" : "0";
-        if(priceToDiscuss.equalsIgnoreCase("1")){
-            currency = HM.getStringResource(this, R.string.strNA);
-        }
-
-
-
-
-
-        // TODO: 12/15/2017 PREPARE DATA BUNDLE TO EXPOSE ITEM
-        data = new Bundle();
-
-        data.putString(SOS_API.KEY_ITEM_NAME, etItemName.getText().toString());
-        data.putString(SOS_API.KEY_ITEM_PRICE, etItemPrice.getText().toString());
-        data.putString(SOS_API.KEY_ITEM_CURRENCY, currency);
-        data.putString(SOS_API.KEY_ITEM_PRICE_TO_DISCUSS, priceToDiscuss);
-        data.putString(SOS_API.KEY_ITEM_DESCRIPTION, etItemDesc.getText().toString());
-        data.putString(SOS_API.KEY_ITEM_CATEGORY, spCat.getSelectedItem().toString());
-
-        data.putString(SOS_API.KEY_ITEM_TYPE, spType.getSelectedItem().toString());
-        data.putString(Product.KEY_PD_CAT, spCat.getSelectedItem().toString());
-        data.putString(Product.KEY_PD_OWNER_ID, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_USER_ID));
-        data.putString(SOS_API.KEY_ITEM_MAIN_PIC,getBase64Pic(SOS_API.KEY_ITEM_MAIN_PIC));
-
-        data.putString(SOS_API.KEY_ITEM_PIC_1,SOS_API.KEY_ITEM_NO_PIC);
-        data.putString(SOS_API.KEY_ITEM_PIC_2,SOS_API.KEY_ITEM_NO_PIC);
-        data.putString(SOS_API.KEY_ITEM_PIC_3,SOS_API.KEY_ITEM_NO_PIC);
-
-        if(ivPixLoaded[1] == true) {
-            data.putString(SOS_API.KEY_ITEM_PIC_1, getBase64Pic(SOS_API.KEY_ITEM_PIC_1));
-        }
-
-        if(ivPixLoaded[2] == true) {
-            data.putString(SOS_API.KEY_ITEM_PIC_2, getBase64Pic(SOS_API.KEY_ITEM_PIC_2));
-        }
-
-        if(ivPixLoaded[3] == true) {
-            data.putString(SOS_API.KEY_ITEM_PIC_3, getBase64Pic(SOS_API.KEY_ITEM_PIC_3));
-        }
-
-
-        data.putString(SOS_API.KEY_ITEM_QUALITY, spQual.getSelectedItem().toString());
-
-
-
-
-
-        if(itemModeEditing == true) {
-
-            String itemId = editingData.getString(SOS_API.KEY_ITEM_ID);
-            data.putString(SOS_API.KEY_ITEM_ID, itemId);
-            data.putString(Product.KEY_PD_UNIQUE_NAME, pdUniqueName);
-        }
-
-
-
-    }
-
     AlertDialog alertDialogPictureSource;
 
     @Override
@@ -648,11 +590,13 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
     }
 
     // TODO: 12/19/2017 SETUP REAL REQ SIZE FROM IMAGE VIEWS
-    int[] reqSize = {300,300};
 
+    int[] reqSize = {300,300};
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        setCurrentIvType(curImageView);
 
         if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data){
             Uri selectedImage = data.getData();
@@ -664,6 +608,12 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
+
+            curPicPath = picturePath;
+
+
+
+            Log.e(TAG, "PICTYPE : " + picType + ", IMAGE PATH GALLERY -> " + picturePath );
             cursor.close();
 
             /*
@@ -692,9 +642,12 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
         if(requestCode == REQ_CAMERA && resultCode == RESULT_OK){
 
             String path = SOS_API.GSAIPCP() + "/" + fileName;
+
+            curPicPath = path;
+
             //curImageView.setImageDrawable(Drawable.createFromPath(path));
 
-
+            Log.e(TAG, "PIC TYPE : " + picType + ", IMAGE PATH CAMERA -> " + path );
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize=4;      // 1/8 of original image
             Bitmap b = BitmapFactory.decodeFile(path, options);
@@ -715,7 +668,42 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
 
         }
 
-        Log.e(TAG, "onActivityResult: " );
+
+        NEW_ITEM_IMAGES_TYPES_AND_URLS.put(picType, curPicPath);
+    }
+
+    HashMap<String, String> NEW_ITEM_IMAGES_TYPES_AND_URLS = new HashMap<>();
+
+    private String setCurrentIvType(ImageView curImageView) {
+        String iv = "null";
+
+
+        switch (curImageView.getId()) {
+            case R.id.ivNewItemMainPic:
+                picType = iv = SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN;
+                //NEW_ITEM_IMAGES_TYPES_AND_URLS.put(SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN, iv);
+                break;
+
+            case R.id.ivNewItemPic1:
+                picType = iv = SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC1;
+                //NEW_ITEM_IMAGES_TYPES_AND_URLS.put(SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC1, iv);
+                break;
+
+            case R.id.ivNewItemPic2:
+                picType = iv = SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC2;
+                //NEW_ITEM_IMAGES_TYPES_AND_URLS.put(SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC2, iv);
+                break;
+
+            case R.id.ivNewItemPic3:
+                picType = iv = SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC3;
+                //NEW_ITEM_IMAGES_TYPES_AND_URLS.put(SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC3, iv);
+                break;
+        }
+
+
+
+
+        return iv;
     }
 
     @Override
@@ -770,8 +758,8 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
                 .setCancelable(false);
 
         builder.show();
-        
-        
+
+
         deleteCameraPictureFiles();
 
 
@@ -876,40 +864,101 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
 
 
 
-        toggleProgressDialog(true);
+        //toggleProgressDialog(true);
 
 
         prepareDataBundle();
         sosApi.exposeItem(this, data);
+    }
 
+    private void prepareDataBundle() {
+
+        String currency = spCur.getSelectedItem().toString();
+
+        String[] curs = HelperMethods.RGSA(this, R.array.currencies);
+
+        String priceToDiscuss = currency.equalsIgnoreCase(curs[2]) ? "1" : "0";
+        if(priceToDiscuss.equalsIgnoreCase("1")){
+            currency = HM.getStringResource(this, R.string.strNA);
+        }
+
+
+
+
+
+        // TODO: 12/15/2017 PREPARE DATA BUNDLE TO EXPOSE ITEM
+        data = new Bundle();
+
+        data.putString(SOS_API.KEY_ITEM_NAME, etItemName.getText().toString());
+        data.putString(SOS_API.KEY_ITEM_PRICE, etItemPrice.getText().toString());
+        data.putString(SOS_API.KEY_ITEM_CURRENCY, currency);
+        data.putString(SOS_API.KEY_ITEM_PRICE_TO_DISCUSS, priceToDiscuss);
+        data.putString(SOS_API.KEY_ITEM_DESCRIPTION, etItemDesc.getText().toString());
+        data.putString(SOS_API.KEY_ITEM_CATEGORY, spCat.getSelectedItem().toString());
+
+        data.putString(SOS_API.KEY_ITEM_TYPE, spType.getSelectedItem().toString());
+        data.putString(Product.KEY_PD_CAT, spCat.getSelectedItem().toString());
+        data.putString(Product.KEY_PD_OWNER_ID, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_USER_ID));
+
+        // TODO: 5/24/2018 Upload Pic with progress
+
+        data.putString(SOS_API.KEY_ITEM_MAIN_PIC, SOS_API.TRUE);//getBase64Pic(SOS_API.KEY_ITEM_MAIN_PIC));
+        data.putString(SOS_API.KEY_ITEM_PIC_1,SOS_API.KEY_ITEM_NO_PIC);
+        data.putString(SOS_API.KEY_ITEM_PIC_2,SOS_API.KEY_ITEM_NO_PIC);
+        data.putString(SOS_API.KEY_ITEM_PIC_3,SOS_API.KEY_ITEM_NO_PIC);
+
+
+
+
+        if(ivPixLoaded[1] == true) {
+            data.putString(SOS_API.KEY_ITEM_PIC_1, SOS_API.TRUE);//getBase64Pic(SOS_API.KEY_ITEM_PIC_1));
+
+        }
+
+        if(ivPixLoaded[2] == true) {
+            data.putString(SOS_API.KEY_ITEM_PIC_2, SOS_API.TRUE);//getBase64Pic(SOS_API.KEY_ITEM_PIC_2));
+        }
+
+        if(ivPixLoaded[3] == true) {
+            data.putString(SOS_API.KEY_ITEM_PIC_3, SOS_API.TRUE);//getBase64Pic(SOS_API.KEY_ITEM_PIC_3));
+        }
+
+        data.putString(SOS_API.KEY_ITEM_QUALITY, spQual.getSelectedItem().toString());
+
+        if(itemModeEditing == true) {
+
+            String itemId = editingData.getString(SOS_API.KEY_ITEM_ID);
+            data.putString(SOS_API.KEY_ITEM_ID, itemId);
+            data.putString(Product.KEY_PD_UNIQUE_NAME, pdUniqueName);
+        }
 
 
 
 
     }
 
-    private String getBase64Pic(String keyItemMainPic) {
+    private String getBase64Pic(String pic) {
         String imgString = "no_pic";
 
-        if(keyItemMainPic == SOS_API.KEY_ITEM_MAIN_PIC){
+        if(pic == SOS_API.KEY_ITEM_MAIN_PIC){
 
             byte[] imgBytes = HelperMethods.getByteArrayFromImageView(ivMainItemPic);
             imgString =  Base64.encodeToString(imgBytes, Base64.DEFAULT);
         }
 
-        if(keyItemMainPic == SOS_API.KEY_ITEM_PIC_1 ){
+        if(pic == SOS_API.KEY_ITEM_PIC_1 ){
 
             byte[] imgBytes = HelperMethods.getByteArrayFromImageView(ivPic1);
             imgString =  Base64.encodeToString(imgBytes, Base64.DEFAULT);
         }
 
-        if(keyItemMainPic == SOS_API.KEY_ITEM_PIC_2 ){
+        if(pic == SOS_API.KEY_ITEM_PIC_2 ){
 
             byte[] imgBytes = HelperMethods.getByteArrayFromImageView(ivPic2);
             imgString =  Base64.encodeToString(imgBytes, Base64.DEFAULT);
         }
 
-        if(keyItemMainPic == SOS_API.KEY_ITEM_PIC_3 ){
+        if(pic == SOS_API.KEY_ITEM_PIC_3 ){
 
             byte[] imgBytes = HelperMethods.getByteArrayFromImageView(ivPic3);
             imgString =  Base64.encodeToString(imgBytes, Base64.DEFAULT);
@@ -962,12 +1011,62 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
 
     @Override
     public void onExposeItemResult(final Bundle data) {
-        //Log.e(TAG, "onExposeItemResult: data -> " + data.toString() );
+        Log.e(TAG, "onExposeItemResult: data -> " + data.toString() );
         toggleProgressDialog(false);
         boolean itemUpdated = data.getBoolean(SOS_API.KEY_ITEM_UPDATED);
 
         if(data.getString(SOS_API.JSON_KEY_RESULT).equals(SOS_API.JSON_RESULT_SUCCESS)){
 
+            Log.e(TAG, "onExposeItemResult: -> " + data.getString(SOS_API.JSON_KEY_RESULT) );
+
+            String pdUniqueName = data.getString(Product.KEY_PD_UNIQUE_NAME);
+
+            Bundle metaData = new Bundle();
+            metaData.putString(SOS_API.KEY_NEW_ITEM_IMG_TYPE, SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN);
+            String fileName = pdUniqueName + SOS_API.KEY_ITEM_MAIN_PIC_POST_FIX;
+            String dirPath = Html.escapeHtml(SOS_API.DIR_NAME_PIX_ROOT + "/" + SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS + "/");
+
+            Log.e(TAG, "DPATH -> " + dirPath );
+
+            sosApi.uploadPicFile(
+                    new SOS_API.CallbacksImageFileUpload() {
+                                     @Override
+                                     public void onFileWillUpload() {
+
+                                     }
+
+                                     @Override
+                                     public void onUploadProgress(int progress) {
+                                         Log.e(TAG, "onUploadProgress: -> " + progress );
+                                     }
+
+                                     @Override
+                                     public void didUpload() {
+
+                                     }
+
+                                     @Override
+                                     public void onUploadFailed(Bundle data) {
+
+                                     }
+
+                                     @Override
+                                     public void onUploadSuccess(Bundle data) {
+
+                                     }
+
+                                     @Override
+                                     public void onPostExecute(String result) {
+                                         Log.e(TAG, "onPostExecute: -> " + result );
+                                     }
+                                 },
+                    curPicPath,
+                    fileName,
+                    dirPath,
+                    metaData
+            );
+
+            /*
             String congratMsg;
 
             if(itemUpdated){
@@ -980,14 +1079,15 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
 
             clearAllFields();
 
-             Handler handler = new Handler();
+
+            Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 gotoMyProducts(data);
                             }
                         }, Toast.LENGTH_SHORT + DELAY_TO_ITEM_DET_TRANSITION);
-
+            */
 
 
         }else{

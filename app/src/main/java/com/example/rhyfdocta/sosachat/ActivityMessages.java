@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import com.example.rhyfdocta.sosachat.Fragments.FragmentChat;
 import com.example.rhyfdocta.sosachat.Fragments.FragmentContactsList;
-import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
+import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Contact;
 
 public class ActivityMessages extends AppCompatActivity implements FragmentContactsList.FragmentContactsListListener {

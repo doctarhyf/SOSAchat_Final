@@ -90,7 +90,7 @@
         style="@style/styleTvSettingsSeparator"
         />
 
-    <com.example.rhyfdocta.sosachat.HelperObjects.SpinnerReselect
+    <com.example.rhyfdocta.sosachat.Helpers.SpinnerReselect
         android:layout_marginTop="@dimen/genPadding"
         android:id="@+id/spNewItemCat"
         android:layout_width="match_parent"

@@ -19,11 +19,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.rhyfdocta.sosachat.HelperObjects.BitmapCacheManager;
-import com.example.rhyfdocta.sosachat.HelperObjects.HM;
-import com.example.rhyfdocta.sosachat.HelperObjects.HelperDate;
-import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
+import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
+import com.example.rhyfdocta.sosachat.Helpers.HM;
+import com.example.rhyfdocta.sosachat.Helpers.HelperDate;
+import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 
+import com.example.rhyfdocta.sosachat.Helpers.UploadAsyncTask;
 import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
@@ -68,18 +69,27 @@ public class SOS_API {
     public static final int IMG_W_ADP_RECENT_ITEMS = 900;
     public static final int IMG_H_ADP_RECENT_ITEMS = 900;
     public static final String DIR_NAME_PIX_CACHE_HOME_CAT_TYPES = "catTypes";
+    public static final String KEY_SEARCH_KEYWORD = "skw";
+    public static final String KEY_NEW_ITEM_IMG_TYPE_MAIN = "mainPic";
+    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC1 = "pic1";
+    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC2 = "pic2";
+    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC3 = "pic3";
+    public static final String TRUE = "true";
+    private static final String ACTION_UPLOAD_IMAGE_FILE = "uploadImageFile";
+    public static final String KEY_NEW_ITEM_IMG_TYPE = "imageType";
+    public static final String DIR_NAME_PIX_ROOT = "img";
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://jmtinvestment.com/casos/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.3/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://jmtinvestment.com/casos/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://jmtinvestment.com/casos/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://jmtinvestment.com/casos/img/products/";
-    public static String DIR_PATH_PP = "http://jmtinvestment.com/casos/img/pp/";
-    public static String ROOT_URL = "http://jmtinvestment.com/casos/";
+    public static String API_URL = "http://192.168.1.3/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.3/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.3/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.3/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.1.3/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -200,9 +210,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://jmtinvestment.com/casos/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://jmtinvestment.com/casos/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://jmtinvestment.com/casos/img/products/";
+    public static String API_URL = "http://192.168.1.3/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.3/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.3/sosachat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -680,10 +690,12 @@ public class SOS_API {
                 params.put(KEY_ITEM_CATEGORY,data.getString(KEY_ITEM_CATEGORY));
                 params.put(KEY_ITEM_TYPE,data.getString(KEY_ITEM_TYPE));
                 params.put(Product.KEY_PD_OWNER_ID, data.getString(Product.KEY_PD_OWNER_ID));
-                params.put(KEY_ITEM_MAIN_PIC,  data.getString(KEY_ITEM_MAIN_PIC));
-                params.put(KEY_ITEM_PIC_1, data.getString(KEY_ITEM_PIC_1));
-                params.put(KEY_ITEM_PIC_2,  data.getString(KEY_ITEM_PIC_2));
-                params.put(KEY_ITEM_PIC_3,  data.getString(KEY_ITEM_PIC_3));
+
+                params.put(KEY_ITEM_MAIN_PIC,  KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_MAIN_PIC));
+
+                params.put(KEY_ITEM_PIC_1, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_1));
+                params.put(KEY_ITEM_PIC_2, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_2));
+                params.put(KEY_ITEM_PIC_3, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_3));
                 params.put(KEY_ITEM_QUALITY, data.getString(KEY_ITEM_QUALITY));
 
 
@@ -791,6 +803,46 @@ public class SOS_API {
         Volley.newRequestQueue(context).add(request);
 
 
+    }
+
+    public void uploadPicFile(final CallbacksImageFileUpload callbacksImageFileUpload, String filePath, String fileName, String dirPath, Bundle metaData) {
+
+        String url = API_URL + "act=" + ACTION_UPLOAD_IMAGE_FILE + "&dirPath=" + dirPath + "&fname=" + fileName;
+
+        UploadAsyncTask uploadAsyncTask = new UploadAsyncTask(
+                context,
+                filePath,
+                url,
+
+                new UploadAsyncTask.Callbacks() {
+                    @Override
+                    public void onProgress(int progress) {
+                        callbacksImageFileUpload.onUploadProgress(progress);
+                    }
+
+                    @Override
+                    public void onPostExecute(String result) {
+                        callbacksImageFileUpload.onPostExecute(result);
+                    }
+
+                    @Override
+                    public void onPreExecute() {
+                        callbacksImageFileUpload.onFileWillUpload();
+                    }
+                }
+        );
+
+        uploadAsyncTask.execute();
+    }
+
+    public interface CallbacksImageFileUpload{
+
+        void onFileWillUpload();
+        void onUploadProgress(int progress);
+        void didUpload();
+        void onUploadFailed(Bundle data);
+        void onUploadSuccess(Bundle data);
+        void onPostExecute(String result);
     }
 
     public BitmapCacheManager getBitmapCacheManager() {
@@ -1657,6 +1709,11 @@ public class SOS_API {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Bundle b = new Bundle();
+                            b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
+                            b.putString(JSON_KEY_RESULT_ERROR_MESSAGE, e.getMessage());
+
+                            listener.onUploadPPResult(b);
                         }
                     }
                 },

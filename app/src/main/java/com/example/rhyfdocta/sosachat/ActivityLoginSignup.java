@@ -2,7 +2,6 @@ package com.example.rhyfdocta.sosachat;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,8 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.HelperObjects.HM;
-import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
+import com.example.rhyfdocta.sosachat.Helpers.HM;
+import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;

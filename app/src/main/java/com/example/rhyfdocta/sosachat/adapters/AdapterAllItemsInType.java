@@ -11,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
-import com.example.rhyfdocta.sosachat.HelperObjects.HM;
-import com.example.rhyfdocta.sosachat.HelperObjects.HelperMethods;
-import com.example.rhyfdocta.sosachat.ObjectsModels.HomeCategoryItem;
+import com.example.rhyfdocta.sosachat.Helpers.HM;
+import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.R;
 import com.squareup.picasso.Picasso;

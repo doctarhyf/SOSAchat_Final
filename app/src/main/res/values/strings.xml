@@ -374,5 +374,6 @@
     <string name="strRefresh">REFRESH</string>
     <string name="strPostNewInquiry">NEW INQUIRY</string>
     <string name="stLookingFor">What ya looking for?</string>
+    <string name="strSearcingFor">Searching : %1$s</string>
 
 </resources>
