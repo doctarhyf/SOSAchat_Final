@@ -31,6 +31,7 @@ public class UploadAsyncTask extends AsyncTask<Void, Integer, String> {
     private File file;
     private String SERVER_PATH;
     private Callbacks callbacks;
+    //private String tag;
 
     public UploadAsyncTask(Context context, String filePath, String serverPath,  Callbacks callbacks) {
         this.context = context;

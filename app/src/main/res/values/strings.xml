@@ -375,5 +375,6 @@
     <string name="strPostNewInquiry">NEW INQUIRY</string>
     <string name="stLookingFor">What ya looking for?</string>
     <string name="strSearcingFor">Searching : %1$s</string>
+    <string name="msgImagesStillUploading">Please wait until all images are uploaded!</string>
 
 </resources>

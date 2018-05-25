@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -36,7 +35,6 @@ import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.SpinnerReselect;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
-import com.example.rhyfdocta.sosachat.Helpers.UploadAsyncTask;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
@@ -53,7 +51,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSApiListener {
+public class ActivityPostItem extends AppCompatActivity implements
+        SOS_API.SOSApiListener,
+        SOS_API.CallbacksImageFileUpload{
 
 
     private static final int RESULT_LOAD_IMAGE = 1200;
@@ -95,7 +95,7 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
     private String catToSelect = "";
     private Button btnExposeItem;
     private String picType = "null";
-    private boolean[] picsUploaded = {false, false, false, false};
+    private boolean[] imagesUploaded = {false, false, false, false};
     private String curPicPath;
 
 
@@ -136,6 +136,16 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
 
         alertDialog = HelperMethods.getAlertDialogProcessingWithMessage(this, HelperMethods.getStringResource(this,R.string.pbMsgProcessing),false);
         sosApi.loadItemsCatsAndTypes(this);
+
+        toggleImageViews(false);
+    }
+
+    private void toggleImageViews(boolean enabled) {
+
+        ivMainItemPic.setEnabled(enabled);
+        ivPic1.setEnabled(enabled);
+        ivPic2.setEnabled(enabled);
+        ivPic3.setEnabled(enabled);
     }
 
     private void loadEdintingData() {
@@ -191,8 +201,6 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
         builder.build().load(url).into(ivsIds.get(idx));
 
     }
-
-
 
     private void initGUI() {
 
@@ -367,8 +375,10 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
         alertDialogPictureSource = null;
     }
 
+
     public void loadPic(View view){
 
+        Log.e(TAG, "loadPic: " );
 
         curImageView = (ImageView)view;
         String[] sources = {getResources().getString(R.string.sourceGallery), getResources().getString(R.string.sourceCamera)};
@@ -634,6 +644,8 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
             curImageView.setImageBitmap(b);
 
 
+
+
             setItemPicAdded(curImageView.getId());
         }
 
@@ -868,7 +880,84 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
 
 
         prepareDataBundle();
-        sosApi.exposeItem(this, data);
+        sosApi.getNewItemUniqueId(new SOS_API.CallbacksUniqueID() {
+            @Override
+            public void onUniqueIDLoaded(String un) {
+                //uploadNewItemImages(un);
+                if(imagesUploaded()){
+                    sosApi.exposeItem(ActivityPostItem.this, data);
+                }else{
+                    Toast.makeText(ActivityPostItem.this, getResources().getString(R.string.msgImagesStillUploading), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e(TAG, "onError: Getting new unique ID" );
+            }
+        });
+        //
+    }
+
+    private boolean imagesUploaded() {
+        return imagesUploaded[0] && imagesUploaded[1] && imagesUploaded[2] && imagesUploaded[3];
+    }
+
+
+    private void uploadImageToServer(String un) {
+        String pdUniqueName = un;//data.getString(Product.KEY_PD_UNIQUE_NAME);
+
+            Bundle metaData = new Bundle();
+            metaData.putString(SOS_API.KEY_NEW_ITEM_IMG_TYPE, SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN);
+            String tag = SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN;
+            String fileName = pdUniqueName + SOS_API.KEY_ITEM_MAIN_PIC_POST_FIX;
+            String dirPath = Html.escapeHtml(SOS_API.DIR_NAME_PIX_ROOT + "/" + SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS + "/");
+
+            Log.e(TAG, "DPATH -> " + dirPath );
+
+
+            sosApi.uploadPicFile(
+                    this,
+                    curPicPath,
+                    fileName,
+                    dirPath,
+                    tag,
+                    metaData
+            );
+
+
+    }
+
+    @Override
+    public void CBIFUonFileWillUpload(String tag) {
+
+        Log.e(TAG, "TAG : " + tag + ", CBIFUonFileWillUpload: " );
+
+    }
+
+    @Override
+    public void CBIFUonUploadProgress(String tag, int progress) {
+        Log.e(TAG, "TAG : " + tag + ",CBIFUonUploadProgress: -> " + ((double)progress / 100) + "%" );
+    }
+
+    @Override
+    public void CBIFUdidUpload(String tag) {
+        Log.e(TAG, "TAG : " + tag + ",CBIFUdidUpload: " );
+    }
+
+    @Override
+    public void CBIFUonUploadFailed(String tag, Bundle data) {
+        Log.e(TAG, "TAG : " + tag + ",CBIFUonUploadFailed: " );
+    }
+
+    @Override
+    public void CBIFUonUploadSuccess(String tag, Bundle data) {
+        Log.e(TAG, "TAG : " + tag + ",CBIFUonUploadSuccess: " );
+    }
+
+    @Override
+    public void CBIFUonPostExecute(String tag, String result) {
+        Log.e(TAG, "CBIFUonPostExecute: -> " + result );
     }
 
     private void prepareDataBundle() {
@@ -1019,52 +1108,7 @@ public class ActivityPostItem extends AppCompatActivity implements SOS_API.SOSAp
 
             Log.e(TAG, "onExposeItemResult: -> " + data.getString(SOS_API.JSON_KEY_RESULT) );
 
-            String pdUniqueName = data.getString(Product.KEY_PD_UNIQUE_NAME);
 
-            Bundle metaData = new Bundle();
-            metaData.putString(SOS_API.KEY_NEW_ITEM_IMG_TYPE, SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN);
-            String fileName = pdUniqueName + SOS_API.KEY_ITEM_MAIN_PIC_POST_FIX;
-            String dirPath = Html.escapeHtml(SOS_API.DIR_NAME_PIX_ROOT + "/" + SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS + "/");
-
-            Log.e(TAG, "DPATH -> " + dirPath );
-
-            sosApi.uploadPicFile(
-                    new SOS_API.CallbacksImageFileUpload() {
-                                     @Override
-                                     public void onFileWillUpload() {
-
-                                     }
-
-                                     @Override
-                                     public void onUploadProgress(int progress) {
-                                         Log.e(TAG, "onUploadProgress: -> " + progress );
-                                     }
-
-                                     @Override
-                                     public void didUpload() {
-
-                                     }
-
-                                     @Override
-                                     public void onUploadFailed(Bundle data) {
-
-                                     }
-
-                                     @Override
-                                     public void onUploadSuccess(Bundle data) {
-
-                                     }
-
-                                     @Override
-                                     public void onPostExecute(String result) {
-                                         Log.e(TAG, "onPostExecute: -> " + result );
-                                     }
-                                 },
-                    curPicPath,
-                    fileName,
-                    dirPath,
-                    metaData
-            );
 
             /*
             String congratMsg;

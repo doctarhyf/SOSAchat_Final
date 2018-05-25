@@ -33,6 +33,10 @@
         app:srcCompat="@drawable/product_expose_main_pic" />
 
 
+
+
+
+
     <TextView
 
         android:textAllCaps="true"
