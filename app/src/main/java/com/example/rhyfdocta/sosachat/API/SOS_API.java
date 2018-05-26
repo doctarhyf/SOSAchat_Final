@@ -2,6 +2,7 @@ package com.example.rhyfdocta.sosachat.API;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -19,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rhyfdocta.sosachat.ActivityNoNetwork;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperDate;
@@ -70,27 +72,34 @@ public class SOS_API {
     public static final int IMG_H_ADP_RECENT_ITEMS = 900;
     public static final String DIR_NAME_PIX_CACHE_HOME_CAT_TYPES = "catTypes";
     public static final String KEY_SEARCH_KEYWORD = "skw";
-    public static final String KEY_NEW_ITEM_IMG_TYPE_MAIN = "mainPic";
-    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC1 = "pic1";
-    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC2 = "pic2";
-    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC3 = "pic3";
+    public static final String KEY_NEW_ITEM_IMG_TYPE_MAIN = "_main.jpg";
+    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC1 = "_pic1.jpg";
+    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC2 = "_pic2.jpg";
+    public static final String KEY_NEW_ITEM_IMG_TYPE_PIC3 = "_pic3.jpg";
     public static final String TRUE = "true";
     private static final String ACTION_UPLOAD_IMAGE_FILE = "uploadImageFile";
     public static final String KEY_NEW_ITEM_IMG_TYPE = "imageType";
     public static final String DIR_NAME_PIX_ROOT = "img";
     private static final String ACTION_GET_UNIQUE_ID = "getUniqueId";
+    public static final float IMAGEVIEW_ALPHA_DISABLED = .5f;
+    public static final float IMAGEVIEW_ALPHA_ENABLED = 1f;
+    public static final String KEY_NEW_ITEM_UNIQUE_ID = "uniqueID";
+    public static final String KEY_ITEM_POST_FIX_PIC_1 = "_pic1.jpg";
+    public static final String KEY_ITEM_POST_FIX_PIC_2 = "_pic2.jpg";
+    public static final String KEY_ITEM_POST_FIX_PIC_3 = "_pic3.jpg";
+
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.2/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.1.2/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.1.2/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.2/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.1.2/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.1.2/sosachat/";
+    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.43.177/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -160,7 +169,7 @@ public class SOS_API {
     public static final String ACTION_LOAD_ALL_PRODUCTS = "loadAllProducts";
     // TODO: 12/4/2017 CORRECT LOAD FEATURED PRODUCTS
     public static final String ACTION_LOAD_FEATURED_PRODUCTS = "loadAllFeaturedProducts";
-    public static final String KEY_ITEM_MAIN_PIC_POST_FIX = "_main.jpg";
+    public static final String KEY_ITEM_POST_FIX_MAIN_PIC = "_main.jpg";
     public static final String KEY_ITEM_UNIQUE_NAME = "pdUniqueName";
 
     public static final String ACTION_REMOVE_PRODUCT = "rmProd";
@@ -211,9 +220,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.1.2/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.1.2/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.2/sosachat/img/products/";
+    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -239,6 +248,9 @@ public class SOS_API {
         preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
         setupAlertDialogResponse();
+        //SSV(KEY_NEW_ITEM_UNIQUE_ID, null);
+
+        Log.e(TAG, "FUCK -> " + GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) );
 
         //alertDialog = HelperMethods.getAlertDialogProcessingWithMessage(context, HelperMethods.getStringResource(this, R.string.pbMsgProcessing),false);
 
@@ -410,7 +422,7 @@ public class SOS_API {
         return preferences.getString(key, KEY_SESSION_DATA_EMPTY);
     }
 
-    private void setSessionVar(String key, String val){
+    public void setSessionVar(String key, String val){
 
         editor.putString(key, val);
         editor.apply();
@@ -616,6 +628,11 @@ public class SOS_API {
         Volley.newRequestQueue(context).add(request);
     }
 
+    public void gotoNoNetworkActivity() {
+        Intent intent = new Intent(context, ActivityNoNetwork.class);
+        context.startActivity(intent);
+    }
+
     public interface CallbacksUniqueID{
         void onUniqueIDLoaded(String un);
         void onError(String error);
@@ -775,7 +792,7 @@ public class SOS_API {
                                         ProductMyProducts pd = new ProductMyProducts(
                                                 jo.getString(Product.KEY_PD_NAME),
                                                 jo.getString(Product.KEY_PD_PRICE),
-                                                jo.getString(Product.KEY_PD_IMG) + SOS_API.KEY_ITEM_MAIN_PIC_POST_FIX,
+                                                jo.getString(Product.KEY_PD_IMG) + SOS_API.KEY_ITEM_POST_FIX_MAIN_PIC,
                                                 jo.getString(Product.KEY_PD_CUR),
                                                 jo.getString(Product.KEY_PD_CAT),
                                                 jo.getString(Product.KEY_PD_QUAL),
@@ -1011,7 +1028,7 @@ public class SOS_API {
                                         Product pd = new Product(
                                                 jo.getString(Product.KEY_PD_NAME),
                                                 jo.getString(Product.KEY_PD_PRICE),
-                                                jo.getString(Product.KEY_PD_IMG) + SOS_API.KEY_ITEM_MAIN_PIC_POST_FIX,
+                                                jo.getString(Product.KEY_PD_IMG) + SOS_API.KEY_ITEM_POST_FIX_MAIN_PIC,
                                                 jo.getString(Product.KEY_PD_CUR),
                                                 jo.getString(Product.KEY_PD_CAT),
                                                 jo.getString(Product.KEY_PD_QUAL),
@@ -1109,7 +1126,7 @@ public class SOS_API {
                                     ProductMyProducts pd = new ProductMyProducts(
                                             jo.getString(Product.KEY_PD_NAME),
                                             jo.getString(Product.KEY_PD_PRICE),
-                                            jo.getString(Product.KEY_PD_IMG) + KEY_ITEM_MAIN_PIC_POST_FIX,
+                                            jo.getString(Product.KEY_PD_IMG) + KEY_ITEM_POST_FIX_MAIN_PIC,
                                             jo.getString(Product.KEY_PD_CUR),
                                             jo.getString(Product.KEY_PD_CAT),
                                             jo.getString(Product.KEY_PD_QUAL),
@@ -1440,7 +1457,7 @@ public class SOS_API {
                                     ProductMyProducts pd = new ProductMyProducts(
                                             jo.getString(Product.KEY_PD_NAME),
                                             jo.getString(Product.KEY_PD_PRICE),
-                                            jo.getString(Product.KEY_PD_IMG) + KEY_ITEM_MAIN_PIC_POST_FIX,
+                                            jo.getString(Product.KEY_PD_IMG) + KEY_ITEM_POST_FIX_MAIN_PIC,
                                             jo.getString(Product.KEY_PD_CUR),
                                             jo.getString(Product.KEY_PD_CAT),
                                             jo.getString(Product.KEY_PD_QUAL),
@@ -1532,7 +1549,7 @@ public class SOS_API {
                                     ProductMyProducts pd = new ProductMyProducts(
                                             jo.getString(Product.KEY_PD_NAME),
                                             jo.getString(Product.KEY_PD_PRICE),
-                                            jo.getString(Product.KEY_PD_IMG) + KEY_ITEM_MAIN_PIC_POST_FIX,
+                                            jo.getString(Product.KEY_PD_IMG) + KEY_ITEM_POST_FIX_MAIN_PIC,
                                             jo.getString(Product.KEY_PD_CUR),
                                             jo.getString(Product.KEY_PD_CAT),
                                             jo.getString(Product.KEY_PD_QUAL),

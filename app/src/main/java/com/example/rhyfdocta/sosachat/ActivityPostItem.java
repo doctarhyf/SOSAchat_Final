@@ -1,6 +1,7 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -65,7 +67,7 @@ public class ActivityPostItem extends AppCompatActivity implements
 
     private ImageView ivMainItemPic;
     private ImageView curImageView;
-    private String TAG = "TAG";
+    private String TAG = "API";
 
     EditText etItemName, etItemPrice, etItemDesc;
 
@@ -89,14 +91,20 @@ public class ActivityPostItem extends AppCompatActivity implements
     Bundle editingData;
     private Spinner spType;
     String subtitle;
-    String pdUniqueName;
+    String pdUniqueName = null;
     List<ImageView> ivsIds = new ArrayList<>();
     private String typeToSelect = "";
     private String catToSelect = "";
     private Button btnExposeItem;
     private String picType = "null";
-    private boolean[] imagesUploaded = {false, false, false, false};
+    private Boolean[] imagesUploaded = {false, false, false, false};
     private String curPicPath;
+    private ProgressDialog progressDialog;
+    private int totalUploadProgress = 0;
+    private int progMain = 0;
+    private int prog1 = 0;
+    private int prog2 = 0;
+    private int prog3 = 0;
 
 
     @Override
@@ -124,6 +132,11 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         }
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        //progressDialog.setCancelable(false);
+
+
 
 
         svActivityExposeitem = (ScrollView) findViewById(R.id.svActivityExposeitem);
@@ -137,7 +150,11 @@ public class ActivityPostItem extends AppCompatActivity implements
         alertDialog = HelperMethods.getAlertDialogProcessingWithMessage(this, HelperMethods.getStringResource(this,R.string.pbMsgProcessing),false);
         sosApi.loadItemsCatsAndTypes(this);
 
-        toggleImageViews(false);
+        //prepareDataBundle();
+
+
+
+        //toggleImageViews(SOS_API.isOnline(this));
     }
 
     private void toggleImageViews(boolean enabled) {
@@ -146,6 +163,19 @@ public class ActivityPostItem extends AppCompatActivity implements
         ivPic1.setEnabled(enabled);
         ivPic2.setEnabled(enabled);
         ivPic3.setEnabled(enabled);
+
+        if(enabled){
+            ivMainItemPic.setAlpha(SOS_API.IMAGEVIEW_ALPHA_ENABLED);
+            ivPic1.setAlpha(SOS_API.IMAGEVIEW_ALPHA_ENABLED);
+            ivPic2.setAlpha(SOS_API.IMAGEVIEW_ALPHA_ENABLED);
+            ivPic3.setAlpha(SOS_API.IMAGEVIEW_ALPHA_ENABLED);
+        }else {
+            ivMainItemPic.setAlpha(SOS_API.IMAGEVIEW_ALPHA_DISABLED);
+            ivPic1.setAlpha(SOS_API.IMAGEVIEW_ALPHA_DISABLED);
+            ivPic2.setAlpha(SOS_API.IMAGEVIEW_ALPHA_DISABLED);
+            ivPic3.setAlpha(SOS_API.IMAGEVIEW_ALPHA_DISABLED);
+        }
+
     }
 
     private void loadEdintingData() {
@@ -174,7 +204,7 @@ public class ActivityPostItem extends AppCompatActivity implements
     private void loadItemEditingOldPic(String picName, final int idx) {
 
 
-        ivPixLoaded = new Boolean[]{true, true, true, true};
+        imagesLoaded = new Boolean[]{true, true, true, true};
 
 
         //String picMain = editingData.getString(SOS_API.KEY_PD_MAIN_PIC_URI);
@@ -190,7 +220,7 @@ public class ActivityPostItem extends AppCompatActivity implements
             {
                 exception.printStackTrace();
                 //Toast.makeText(ActivityPostItem.this, "", Toast.LENGTH_SHORT).show();
-                ivPixLoaded[idx] = false;
+                imagesLoaded[idx] = false;
                //Log.e(TAG, "onImageLoadFailed: img id -> " + idx );
 
             }
@@ -209,6 +239,8 @@ public class ActivityPostItem extends AppCompatActivity implements
 
 
         ivMainItemPic = (ImageView) findViewById(R.id.ivNewItemMainPic);
+
+
 
 
         ivPic1 = (ImageView) findViewById(R.id.ivNewItemPic1);
@@ -354,12 +386,12 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         //noError = ! (itemDescNE && itemNameNE);// && itemPriceNE);
 
-        Log.d("BOOLCHECK", "desc name price iv " + itemDescNE + " " + itemNameNE + " " + itemPriceNE + " " + ivPixLoaded[0]);
+        Log.d("BOOLCHECK", "desc name price iv " + itemDescNE + " " + itemNameNE + " " + itemPriceNE + " " + imagesLoaded[0]);
 
 
-        return itemDescNE && itemNameNE && itemPriceNE && ivPixLoaded[0] ;
+        return itemDescNE && itemNameNE && itemPriceNE && imagesLoaded[0] ;
     }
-    Boolean[] ivPixLoaded = {false,false,false,false};  //Main pic, Pic 1, Pic 2, Pic 3
+    Boolean[] imagesLoaded = {false,false,false,false};  //Main pic, Pic 1, Pic 2, Pic 3
 
     AlertDialog alertDialogPictureSource;
 
@@ -446,22 +478,22 @@ public class ActivityPostItem extends AppCompatActivity implements
     private void setItemPicAdded(int id) {
 
         if(id == ivMainItemPic.getId()){
-            ivPixLoaded[0] = true;
+            imagesLoaded[0] = true;
         }
 
         if(id == ivPic1.getId()){
-            ivPixLoaded[1] = true;
+            imagesLoaded[1] = true;
         }
 
         if(id == ivPic2.getId()){
-            ivPixLoaded[2] = true;
+            imagesLoaded[2] = true;
         }
 
         if(id == ivPic3.getId()){
-            ivPixLoaded[3] = true;
+            imagesLoaded[3] = true;
         }
 
-       //Log.e(TAG, "setItemPicAdded: -> " + ivPixLoaded.toString() );
+       //Log.e(TAG, "setItemPicAdded: -> " + imagesLoaded.toString() );
 
 
     }
@@ -659,7 +691,7 @@ public class ActivityPostItem extends AppCompatActivity implements
 
             //curImageView.setImageDrawable(Drawable.createFromPath(path));
 
-            Log.e(TAG, "PIC TYPE : " + picType + ", IMAGE PATH CAMERA -> " + path );
+            Log.e(TAG, "PICTYPE : " + picType + ", IMAGE PATH CAMERA -> " + path );
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize=4;      // 1/8 of original image
             Bitmap b = BitmapFactory.decodeFile(path, options);
@@ -865,7 +897,7 @@ public class ActivityPostItem extends AppCompatActivity implements
 
 
 
-        if(checkFieldsValidity() == false) {
+        if(!checkFieldsValidity()) {
 
 
             showMessageDialog(getResources().getString(R.string.msgEmptyFields),
@@ -874,47 +906,90 @@ public class ActivityPostItem extends AppCompatActivity implements
         }
 
 
-
-
-        //toggleProgressDialog(true);
-
-
         prepareDataBundle();
-        sosApi.getNewItemUniqueId(new SOS_API.CallbacksUniqueID() {
-            @Override
-            public void onUniqueIDLoaded(String un) {
-                //uploadNewItemImages(un);
-                if(imagesUploaded()){
-                    sosApi.exposeItem(ActivityPostItem.this, data);
-                }else{
-                    Toast.makeText(ActivityPostItem.this, getResources().getString(R.string.msgImagesStillUploading), Toast.LENGTH_LONG).show();
-                }
-            }
 
-            @Override
-            public void onError(String error) {
-                Log.e(TAG, "onError: Getting new unique ID" );
-            }
-        });
-        //
+        if(SOS_API.isOnline(this)) {
+            sosApi.getNewItemUniqueId(new SOS_API.CallbacksUniqueID() {
+                @Override
+                public void onUniqueIDLoaded(String un) {
+                    Log.e(TAG, "onUniqueIDLoaded: -> " + un);
+
+
+
+                    if(sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID).equals(SOS_API.KEY_SESSION_DATA_EMPTY)){
+                        sosApi.SSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID, un);
+
+
+                    }
+
+                    pdUniqueName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID);
+
+                    uploadImageToServer();
+
+                }
+
+                @Override
+                public void onError(String error) {
+
+                    Toast.makeText(ActivityPostItem.this,"Error getting UID : " + error, Toast.LENGTH_LONG).show();
+                }
+            });
+        }else{
+            sosApi.gotoNoNetworkActivity();
+        }
     }
 
-    private boolean imagesUploaded() {
+    private boolean allImagesUploaded() {
         return imagesUploaded[0] && imagesUploaded[1] && imagesUploaded[2] && imagesUploaded[3];
     }
 
 
-    private void uploadImageToServer(String un) {
-        String pdUniqueName = un;//data.getString(Product.KEY_PD_UNIQUE_NAME);
+    private void uploadImageToServer() {
+
+
+            progressDialog.show();
+            totalUploadProgress = progMain = prog1 = prog2 = prog3 = 0;
+            //data.getString(Product.KEY_PD_UNIQUE_NAME);
 
             Bundle metaData = new Bundle();
             metaData.putString(SOS_API.KEY_NEW_ITEM_IMG_TYPE, SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN);
             String tag = SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN;
-            String fileName = pdUniqueName + SOS_API.KEY_ITEM_MAIN_PIC_POST_FIX;
+            String fileName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) + SOS_API.KEY_ITEM_POST_FIX_MAIN_PIC;
             String dirPath = Html.escapeHtml(SOS_API.DIR_NAME_PIX_ROOT + "/" + SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS + "/");
 
             Log.e(TAG, "DPATH -> " + dirPath );
 
+            curPicPath = NEW_ITEM_IMAGES_TYPES_AND_URLS.get(tag);
+            sosApi.uploadPicFile(
+                    this,
+                    curPicPath,
+                    fileName,
+                    dirPath,
+                    tag,
+                    metaData
+            );
+
+            if(imagesLoaded[1]){
+
+                tag = SOS_API.KEY_ITEM_POST_FIX_PIC_1;
+                fileName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) + tag;
+                curPicPath = NEW_ITEM_IMAGES_TYPES_AND_URLS.get(tag);
+
+                sosApi.uploadPicFile(
+                        this,
+                        curPicPath,
+                        fileName,
+                        dirPath,
+                        tag,
+                        metaData
+                );
+            }
+
+        if(imagesLoaded[2]){
+
+            tag = SOS_API.KEY_ITEM_POST_FIX_PIC_2;
+            fileName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) + tag;
+            curPicPath = NEW_ITEM_IMAGES_TYPES_AND_URLS.get(tag);
 
             sosApi.uploadPicFile(
                     this,
@@ -924,6 +999,23 @@ public class ActivityPostItem extends AppCompatActivity implements
                     tag,
                     metaData
             );
+        }
+
+        if(imagesLoaded[3]){
+
+            tag = SOS_API.KEY_ITEM_POST_FIX_PIC_3;
+            fileName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) + tag;
+            curPicPath = NEW_ITEM_IMAGES_TYPES_AND_URLS.get(tag);
+
+            sosApi.uploadPicFile(
+                    this,
+                    curPicPath,
+                    fileName,
+                    dirPath,
+                    tag,
+                    metaData
+            );
+        }
 
 
     }
@@ -937,7 +1029,25 @@ public class ActivityPostItem extends AppCompatActivity implements
 
     @Override
     public void CBIFUonUploadProgress(String tag, int progress) {
-        Log.e(TAG, "TAG : " + tag + ",CBIFUonUploadProgress: -> " + ((double)progress / 100) + "%" );
+
+        if(tag.equals(SOS_API.KEY_ITEM_POST_FIX_MAIN_PIC)) progMain = progress;
+        if(tag.equals(SOS_API.KEY_ITEM_POST_FIX_PIC_1)) prog1 = progress;
+        if(tag.equals(SOS_API.KEY_ITEM_POST_FIX_PIC_2)) prog2 = progress;
+        if(tag.equals(SOS_API.KEY_ITEM_POST_FIX_PIC_3)) prog3 = progress;
+
+        int progressDivider = 1;
+
+        if(imagesLoaded[1]) progressDivider = 2;
+        if(imagesLoaded[2]) progressDivider = 3;
+        if(imagesLoaded[3]) progressDivider = 4;
+
+        totalUploadProgress = (progMain + prog1 + prog2 + prog3 ) / progressDivider;
+
+        progressDialog.setProgress(totalUploadProgress);
+
+        Log.e(TAG, "TAG : " + tag + ",CBIFUonUploadProgress: -> " + totalUploadProgress + "%" );
+
+
     }
 
     @Override
@@ -955,9 +1065,63 @@ public class ActivityPostItem extends AppCompatActivity implements
         Log.e(TAG, "TAG : " + tag + ",CBIFUonUploadSuccess: " );
     }
 
+    private int numImgUploaded = 0;
+
     @Override
     public void CBIFUonPostExecute(String tag, String result) {
         Log.e(TAG, "CBIFUonPostExecute: -> " + result );
+        //pdUniqueName = null;
+
+        numImgUploaded ++;
+
+
+        if(tag.equals(SOS_API.KEY_ITEM_POST_FIX_MAIN_PIC)) imagesUploaded[0] = true;
+        if(tag.equals(SOS_API.KEY_ITEM_POST_FIX_PIC_1)) imagesUploaded[1] = true;
+        if(tag.equals(SOS_API.KEY_ITEM_POST_FIX_PIC_2)) imagesUploaded[2] = true;
+        if(tag.equals(SOS_API.KEY_ITEM_POST_FIX_PIC_3)) imagesUploaded[3] = true;
+
+        if(numImgUploaded == countBoolArrayWithVal(imagesLoaded, true)) {
+            //data.putString(SOS_API.KEY_ITEM_UNIQUE_NAME, sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID));
+            pdUniqueName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID);
+            data.putString(Product.KEY_PD_UNIQUE_NAME, pdUniqueName);
+            data.putString(Product.KEY_PD_UNIQUE_ID, pdUniqueName);
+            sosApi.SSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID, SOS_API.KEY_SESSION_DATA_EMPTY);
+
+            numImgUploaded = 0;
+            progressDialog.dismiss();
+            btnExposeItem.setEnabled(false);
+            sosApi.exposeItem(this, data);
+            imagesLoaded = new Boolean[]{false, false, false, false};
+            imagesUploaded = new Boolean[]{false, false, false, false};
+            Log.e(TAG, "CBIFUonPostExecute: " + data.toString() );
+
+        }
+
+
+    }
+
+
+
+    private int countBoolArrayWithVal(Boolean[] array, boolean valueToCount) {
+
+
+        int count = 0;
+
+        for(int i = 0; i < array.length; i++){
+            if(array[i] == valueToCount){
+                count ++;
+            }
+        }
+
+        return count;
+
+    }
+
+    private boolean allImagesLoadedAreUploaded() {
+        return (imagesLoaded[0] == imagesUploaded[0]) &&
+                (imagesLoaded[1] == imagesUploaded[1]) &&
+                (imagesLoaded[2] == imagesUploaded[1]) &&
+                (imagesLoaded[3] == imagesUploaded[1]);
     }
 
     private void prepareDataBundle() {
@@ -999,16 +1163,16 @@ public class ActivityPostItem extends AppCompatActivity implements
 
 
 
-        if(ivPixLoaded[1] == true) {
+        if(imagesLoaded[1] == true) {
             data.putString(SOS_API.KEY_ITEM_PIC_1, SOS_API.TRUE);//getBase64Pic(SOS_API.KEY_ITEM_PIC_1));
 
         }
 
-        if(ivPixLoaded[2] == true) {
+        if(imagesLoaded[2] == true) {
             data.putString(SOS_API.KEY_ITEM_PIC_2, SOS_API.TRUE);//getBase64Pic(SOS_API.KEY_ITEM_PIC_2));
         }
 
-        if(ivPixLoaded[3] == true) {
+        if(imagesLoaded[3] == true) {
             data.putString(SOS_API.KEY_ITEM_PIC_3, SOS_API.TRUE);//getBase64Pic(SOS_API.KEY_ITEM_PIC_3));
         }
 
@@ -1110,7 +1274,7 @@ public class ActivityPostItem extends AppCompatActivity implements
 
 
 
-            /*
+
             String congratMsg;
 
             if(itemUpdated){
@@ -1129,9 +1293,10 @@ public class ActivityPostItem extends AppCompatActivity implements
                             @Override
                             public void run() {
                                 gotoMyProducts(data);
+                                btnExposeItem.setEnabled(true);
                             }
                         }, Toast.LENGTH_SHORT + DELAY_TO_ITEM_DET_TRANSITION);
-            */
+
 
 
         }else{
@@ -1350,6 +1515,7 @@ public class ActivityPostItem extends AppCompatActivity implements
     public void onCategoryTypesLoaded(List<TypesItem> types, boolean errorLoading) {
 
     }
+
 
 
 }

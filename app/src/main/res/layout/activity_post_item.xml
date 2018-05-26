@@ -23,11 +23,16 @@
         style="@style/styleTvSettingsSeparator"
         />
 
+
+
     <ImageView
+
+        android:contentDescription="@string/cdMainPic"
         android:id="@+id/ivNewItemMainPic"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:clickable="true"
+        android:focusable="true"
         android:onClick="loadPic"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/product_expose_main_pic" />

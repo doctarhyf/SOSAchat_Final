@@ -376,5 +376,9 @@
     <string name="stLookingFor">What ya looking for?</string>
     <string name="strSearcingFor">Searching : %1$s</string>
     <string name="msgImagesStillUploading">Please wait until all images are uploaded!</string>
+    <string name="cdMainPic">Main pic</string>
+    <string name="strMsgErrorGetttingID">There was an error getting a new unique ID for the new item</string>
+    <string name="strTitleErrorGetttingID">Error get new unique ID</string>
+    <string name="strNoProducts">No products posted yet.\\nTap POST NEW ITEM to post a new product.</string>
 
 </resources>

@@ -27,7 +27,7 @@ public class UploadAsyncTask extends AsyncTask<Void, Integer, String> {
     private HttpClient httpClient = new DefaultHttpClient();
     private Context context;
     private Exception exception;
-    private ProgressDialog progressDialog;
+    //private ProgressDialog progressDialog;
     private File file;
     private String SERVER_PATH;
     private Callbacks callbacks;
@@ -104,10 +104,10 @@ public class UploadAsyncTask extends AsyncTask<Void, Integer, String> {
     protected void onPreExecute() {
 
         // Init and show dialog
-        this.progressDialog = new ProgressDialog(this.context);
+        /*this.progressDialog = new ProgressDialog(this.context);
         this.progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         this.progressDialog.setCancelable(false);
-        this.progressDialog.show();
+        this.progressDialog.show();*/
         callbacks.onPreExecute();
     }
 
@@ -115,8 +115,8 @@ public class UploadAsyncTask extends AsyncTask<Void, Integer, String> {
     protected void onPostExecute(String result) {
 
         // Close dialog
-        this.progressDialog.dismiss();
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        //this.progressDialog.dismiss();
+        Log.e("UAT", "onPostExecute: -> " + result );
         //showFileChooser();
         callbacks.onPostExecute(result);
 
@@ -125,7 +125,7 @@ public class UploadAsyncTask extends AsyncTask<Void, Integer, String> {
     @Override
     protected void onProgressUpdate(Integer... progress) {
         // Update process
-        this.progressDialog.setProgress((int) progress[0]);
+        //this.progressDialog.setProgress((int) progress[0]);
         callbacks.onProgress((int) progress[0]);
 
     }
