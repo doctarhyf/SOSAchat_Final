@@ -54,7 +54,8 @@ import java.util.List;
 
 public class ActivityPostItem extends AppCompatActivity implements
         SOS_API.SOSApiListener,
-        SOS_API.CallbacksImageFileUpload{
+        //SOS_API.CallbacksImageFileUpload,
+        ProductImageManager.Callbacks{
 
 
     private static final int RESULT_LOAD_IMAGE = 1200;
@@ -321,8 +322,8 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         int[] ids = new int[]{ivMainItemPic.getId(), ivPic1.getId(), ivPic2.getId(), ivPic3.getId()};
         String[] postfixes = new String[]{SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN,SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC1,SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC2, SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC3};
-
-        productImageManager = new ProductImageManager(this, ids, postfixes,4);
+        String PRODUCTS_IMAGES_SERVER_ROOT_PATH = SOS_API.ROOT_URL + SOS_API.DIR_NAME_PIX_ROOT + "/" + SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS+ "/";
+        productImageManager = new ProductImageManager(this, ids, postfixes,4, PRODUCTS_IMAGES_SERVER_ROOT_PATH);
 
 
         if(!SOS_API.isOnline(this)){
@@ -997,7 +998,7 @@ public class ActivityPostItem extends AppCompatActivity implements
                         productImageManager.setUploadToken(un);
 
                         Log.e(TAG, "onUniqueIDLoaded: -> " + un);
-
+                        uploadImageToServer();
 
                     }
 
@@ -1013,10 +1014,13 @@ public class ActivityPostItem extends AppCompatActivity implements
             }else{
                 Log.e(TAG, "onUniqueID FROM SESSION -> " + unid);
                 productImageManager.setUploadToken(unid);
+                uploadImageToServer();
             }
 
             Log.e(TAG, "PIM STATS : \n\n" + productImageManager.toString());
             Log.e(TAG, "ALL PD IMAGES : \n\n" + productImageManager.toStringAllProducImages() );
+
+
         }
 
         /*
@@ -1057,16 +1061,50 @@ public class ActivityPostItem extends AppCompatActivity implements
     }*/
 
 
+
+    @Override
+    public void onProducImageManagerProgress(ProductImage productImage, int progress, int totalProgress) {
+        Log.e(TAG, "total : " + totalProgress + " %" );
+        progressDialog.setProgress(totalProgress);
+    }
+
+
+
+    @Override
+    public void onProducImageManagerPostExecute(ProductImage pi) {
+        Log.e(TAG, "onProducImageManagerPostExecute: -> " + pi.getImagePostfix() );
+    }
+
+    @Override
+    public void onProducImageManagerPreExecute(ProductImage pi) {
+        Log.e(TAG, "onProducImageManagerPreExecute: -> " + pi.getImagePostfix() );
+    }
+
+    @Override
+    public void onProducImageAllImagesUploadedComplete() {
+        Log.e("BAAM", "onProducImageAllImagesUploadedComplete: " );
+
+
+        pdUniqueName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID);
+        data.putString(Product.KEY_PD_UNIQUE_NAME, pdUniqueName);
+        data.putString(Product.KEY_PD_UNIQUE_ID, pdUniqueName);
+        sosApi.SSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID, SOS_API.KEY_SESSION_DATA_EMPTY);
+
+        //numImgUploaded = 0;
+        sosApi.SSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID, SOS_API.KEY_SESSION_DATA_EMPTY);
+        progressDialog.dismiss();
+        btnExposeItem.setEnabled(false);
+        sosApi.exposeItem(this, data);
+    }
+
     private void uploadImageToServer() {
 
             //to remove
-            progressDialog.setCancelable(true);
+            //progressDialog.setCancelable(true);
             progressDialog.show();
 
             productImageManager.setUploadToken(sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID));
-            productImageManager.uploadAllImagesToServer(new ProductImageManager.Callbacks() {
-
-            });
+            productImageManager.uploadAllImagesToServer(this);
 
 
             //totalUploadProgress = progMain = prog1 = prog2 = prog3 = 0;
@@ -1143,14 +1181,14 @@ public class ActivityPostItem extends AppCompatActivity implements
 
     }
 
-    @Override
+
     public void CBIFUonFileWillUpload(String tag) {
 
         Log.e(TAG, "TAG : " + tag + ", CBIFUonFileWillUpload: " );
 
     }
 
-    @Override
+
     public void CBIFUonUploadProgress(String tag, int progress) {
 
         /*
@@ -1175,24 +1213,19 @@ public class ActivityPostItem extends AppCompatActivity implements
 
     }
 
-    @Override
+
     public void CBIFUdidUpload(String tag) {
         Log.e(TAG, "TAG : " + tag + ",CBIFUdidUpload: " );
     }
 
-    @Override
     public void CBIFUonUploadFailed(String tag, Bundle data) {
         Log.e(TAG, "TAG : " + tag + ",CBIFUonUploadFailed: " );
     }
 
-    @Override
     public void CBIFUonUploadSuccess(String tag, Bundle data) {
         Log.e(TAG, "TAG : " + tag + ",CBIFUonUploadSuccess: " );
     }
 
-
-
-    @Override
     public void CBIFUonPostExecute(String tag, String result) {
         Log.e(TAG, "CBIFUonPostExecute: -> " + result );
         //pdUniqueName = null;
@@ -1236,30 +1269,6 @@ public class ActivityPostItem extends AppCompatActivity implements
     }
 
 
-
-    private int countBoolArrayWithVal(Boolean[] array, boolean valueToCount) {
-
-
-        int count = 0;
-
-        for(int i = 0; i < array.length; i++){
-            if(array[i] == valueToCount){
-                count ++;
-            }
-        }
-
-        return count;
-
-    }
-
-    private boolean allImagesLoadedAreUploaded() {
-        /*
-        return (imagesLoaded[0] == imagesUploaded[0]) &&
-                (imagesLoaded[1] == imagesUploaded[1]) &&
-                (imagesLoaded[2] == imagesUploaded[1]) &&
-                (imagesLoaded[3] == imagesUploaded[1]);*/
-        return false;
-    }
 
     private void prepareDataBundle() {
 

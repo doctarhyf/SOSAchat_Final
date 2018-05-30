@@ -35,6 +35,7 @@ public class UploadAsyncTask extends AsyncTask<Void, Integer, String> {
 
     public UploadAsyncTask(Context context, String filePath, String serverPath,  Callbacks callbacks) {
         this.context = context;
+        //Log.e("DAFAK", "UploadAsyncTask: -> " + filePath );
         this.file = new File(filePath);
         this.SERVER_PATH = serverPath;
         //this.serverFormFileName = serverFormFileName;

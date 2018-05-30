@@ -77,7 +77,7 @@ public class SOS_API {
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC2 = "_pic2.jpg";
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC3 = "_pic3.jpg";
     public static final String TRUE = "true";
-    public static final String ACTION_UPLOAD_IMAGE_FILE = "uploadImageFile";
+    public static final String ACTION_UPLOAD_IMAGE_FILE = "uploadProductImageFile";
     public static final String KEY_NEW_ITEM_IMG_TYPE = "imageType";
     public static final String DIR_NAME_PIX_ROOT = "img";
     private static final String ACTION_GET_UNIQUE_ID = "getUniqueId";
@@ -93,21 +93,21 @@ public class SOS_API {
     private static final int KEY_ITEM_PIC_IDX_P3 = 3;
 
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.13/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.88.13/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.13/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.13/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.88.13/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.88.13/sosachat/";
+    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.43.177/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
-    public static final String ACTION_LOAD_FEATURED_ITEMS = "loadFeat Items";
+    public static final String ACTION_LOAD_FEATURED_ITEMS = "loadFeatItems";
     public static final String ACTION_LOAD_CATEGORY_CARS = "loadCatCars";
     public static final String ACTION_LOAD_CATEGORY_ELECTRONICS = "loadCatElec";
     public static final String ACTION_LOAD_WISH_LIST = "loadWishList";
@@ -224,9 +224,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.88.13/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.13/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.13/sosachat/img/products/";
+    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -882,7 +882,7 @@ public class SOS_API {
 
     }
 
-    public void uploadPicFile(final CallbacksImageFileUpload callbacksImageFileUpload, String filePath, String fileName, String dirPath, final String tag, final Bundle metaData) {
+    /*public void uploadPicFile(final CallbacksImageFileUpload callbacksImageFileUpload, String filePath, String fileName, String dirPath, final String tag, final Bundle metaData) {
 
         String url = API_URL + "act=" + ACTION_UPLOAD_IMAGE_FILE + "&dirPath=" + dirPath + "&fname=" + fileName;
         final Bundle data = new Bundle(metaData);
@@ -926,7 +926,7 @@ public class SOS_API {
         void CBIFUonUploadFailed(String tag, Bundle data);
         void CBIFUonUploadSuccess(String tag, Bundle data);
         void CBIFUonPostExecute(String tag, String result);
-    }
+    }*/
 
     public BitmapCacheManager getBitmapCacheManager() {
         return bitmapCacheManager;

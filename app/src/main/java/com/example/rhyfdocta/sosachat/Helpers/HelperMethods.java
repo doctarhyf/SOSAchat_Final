@@ -588,6 +588,18 @@ public class HelperMethods {
         }
     }
 
+    public static int ArraySum(int[] array) {
+
+        int sum = 0;
+
+        for(int i = 0; i < array.length; i++){
+            sum += array[i];
+        }
+
+        return sum;
+
+    }
+
     public static interface SpinnerLoaderListener {
         public void onLoadComplete();
     }
