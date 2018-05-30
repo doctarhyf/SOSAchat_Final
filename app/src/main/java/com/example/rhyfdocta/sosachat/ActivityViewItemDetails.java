@@ -335,7 +335,8 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         });
     }
 
-    private void loadItemDataFromBundle(Bundle bundle) {
+
+    private void loadItemDataFromBundle( Bundle bundle) {
 
 
         tvItemName.setText(bundle.getString(Product.KEY_PD_NAME));
@@ -376,8 +377,8 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         });*/
 
         // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
-        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + "_main.jpg");
-        if(BitmapCacheManager.FILE_EXISTS(cachePath)){
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + "_main.jpg");
+        if(BitmapCacheManager.FileExists(cachePath)){
             picUri = Uri.fromFile(new File(cachePath));
 
 

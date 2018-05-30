@@ -40,7 +40,7 @@ public class BitmapCacheManager {
     }
 
 
-    public static final boolean FILE_EXISTS(String pathName) {
+    public static final boolean FileExists(String pathName) {
 
 
         Log.e("EE", "DA_FILE -> " + pathName );
@@ -73,14 +73,27 @@ public class BitmapCacheManager {
     public static double getImagesCacheSize() {
         /*File picsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
         + BitmapCacheManager.CACHE_ROOT_DIR);*/
-        double cacheSize = BitmapCacheManager.folderSize(SOS_API.getSOSAchatRootDir());
+        double cacheSize = BitmapCacheManager.DirectorySize(SOS_API.getSOSAchatRootDir());
         cacheSize /= 1000000f;
 
 
         return cacheSize;
     }
 
-    public static long folderSize(File directory) {
+    public static long FileSize(File file){
+        long length = -1;
+
+        if(file.exists()){
+            length = file.length();
+
+        }else{
+            Log.e("FSIZE", "FileSize: Error file can't be found -> " + file.toString() );
+        }
+
+        return length;
+    }
+
+    public static long DirectorySize(File directory) {
         long length = 0;
 
 
@@ -89,7 +102,7 @@ public class BitmapCacheManager {
             if (file.isFile())
                 length += file.length();
             else
-                length += folderSize(file);
+                length += DirectorySize(file);
         }
 
     }else{
@@ -101,7 +114,7 @@ public class BitmapCacheManager {
         return length;
     }
 
-    public static String getImageCachePath(int PIC_CACHE_PATH_TYPE, String imgName){
+    public static String GetImageCachePath(int PIC_CACHE_PATH_TYPE, String imgFullName){
 
         String path = null;
         String dirName, localPath;
@@ -114,7 +127,7 @@ public class BitmapCacheManager {
                 //String imageFileName = imgName;
                 //File storageDir = new File(localPath + "/" + CACHE_ROOT_DIR + "/" + dirName );
 
-                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgName;
+                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgFullName;
 
                 break;
 
@@ -124,7 +137,7 @@ public class BitmapCacheManager {
                 //String imageFileName = imgName;
                 //File storageDir = new File(localPath + "/" + CACHE_ROOT_DIR + "/" + dirName );
 
-                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgName;
+                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgFullName;
                 break;
 
             case PIC_CACHE_PATH_TYPE_RECENT_ITEMS:
@@ -134,7 +147,7 @@ public class BitmapCacheManager {
                 //String imageFileName = imgName;
                 //File storageDir = new File(localPath + "/" + CACHE_ROOT_DIR + "/" + dirName );
 
-                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgName;
+                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgFullName;
 
                 break;
 
@@ -145,7 +158,7 @@ public class BitmapCacheManager {
                 //String imageFileName = imgName;
                 //File storageDir = new File(localPath + "/" + CACHE_ROOT_DIR + "/" + dirName );
 
-                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgName;
+                path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgFullName;
 
                 break;
         }
@@ -166,7 +179,7 @@ public class BitmapCacheManager {
 
         String targetFilePath = storageDir.getName() + "/" + dirName + "/" + imgName ;
 
-        boolean fileExists = FILE_EXISTS(targetFilePath);
+        boolean fileExists = FileExists(targetFilePath);
 
         if (fileExists){
             return targetFilePath;
@@ -212,8 +225,8 @@ public class BitmapCacheManager {
 
         Uri uri = picUri;
 
-        //String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
-        if(BitmapCacheManager.FILE_EXISTS(cachePath)) {
+        //String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
+        if(BitmapCacheManager.FileExists(cachePath)) {
             uri = Uri.fromFile(new File(cachePath));
         }
         /*
@@ -238,5 +251,17 @@ public class BitmapCacheManager {
         String picName = splits[splits.length-1];
         return saveCacheImage(bitmap, picName,dirName);
 
+    }
+
+    public static boolean RemoveFile(String fileCache) {
+
+        boolean res = false;
+
+        if(FileExists(fileCache)){
+            File file = new File(fileCache);
+            res = file.delete();
+        }
+
+        return res;
     }
 }

@@ -582,6 +582,12 @@ public class HelperMethods {
         return sizeOk && charsOk;
     }
 
+    public static void initBooleanArrayWithValue(boolean[] array, boolean val) {
+        for(int i = 0; i < array.length; i++){
+            array[i] = val;
+        }
+    }
+
     public static interface SpinnerLoaderListener {
         public void onLoadComplete();
     }

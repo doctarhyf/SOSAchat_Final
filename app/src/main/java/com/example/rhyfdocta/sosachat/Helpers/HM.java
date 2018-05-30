@@ -140,4 +140,31 @@ public class HM extends HelperMethods {
     public static boolean CPC(String string) {
         return HelperMethods.checkPasswordChars(string);
     }
+
+    public static void IBWAV(boolean[] array, boolean val) {
+        initBooleanArrayWithValue(array, val);
+    }
+
+    public static String BATOS(boolean[] array) {
+        return booleanArrayToString(array);
+    }
+
+    private static String booleanArrayToString(boolean[] array) {
+        String s= "[ ";
+
+        for(int i = 0; i < array.length; i ++){
+
+            String v = array[i] ? "true" : "false";
+            String end = ", ";
+
+            if(i == array.length -1) end = " ]";
+
+            s = s.concat(v + end);
+        }
+
+
+
+        return s;
+
+    }
 }

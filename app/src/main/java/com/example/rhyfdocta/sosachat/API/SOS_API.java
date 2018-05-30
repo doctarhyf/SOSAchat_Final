@@ -77,7 +77,7 @@ public class SOS_API {
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC2 = "_pic2.jpg";
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC3 = "_pic3.jpg";
     public static final String TRUE = "true";
-    private static final String ACTION_UPLOAD_IMAGE_FILE = "uploadImageFile";
+    public static final String ACTION_UPLOAD_IMAGE_FILE = "uploadImageFile";
     public static final String KEY_NEW_ITEM_IMG_TYPE = "imageType";
     public static final String DIR_NAME_PIX_ROOT = "img";
     private static final String ACTION_GET_UNIQUE_ID = "getUniqueId";
@@ -87,23 +87,27 @@ public class SOS_API {
     public static final String KEY_ITEM_POST_FIX_PIC_1 = "_pic1.jpg";
     public static final String KEY_ITEM_POST_FIX_PIC_2 = "_pic2.jpg";
     public static final String KEY_ITEM_POST_FIX_PIC_3 = "_pic3.jpg";
+    private static final int KEY_ITEM_PIC_IDX_MAIN = 0;
+    private static final int KEY_ITEM_PIC_IDX_P1 = 1;
+    private static final int KEY_ITEM_PIC_IDX_P2 = 2;
+    private static final int KEY_ITEM_PIC_IDX_P3 = 3;
 
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.13/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.43.177/sosachat/";
+    public static String API_URL = "http://192.168.88.13/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.88.13/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.13/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.88.13/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.88.13/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
-    public static final String ACTION_LOAD_FEATURED_ITEMS = "loadFeatItems";
+    public static final String ACTION_LOAD_FEATURED_ITEMS = "loadFeat Items";
     public static final String ACTION_LOAD_CATEGORY_CARS = "loadCatCars";
     public static final String ACTION_LOAD_CATEGORY_ELECTRONICS = "loadCatElec";
     public static final String ACTION_LOAD_WISH_LIST = "loadWishList";
@@ -220,9 +224,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
+    public static String API_URL = "http://192.168.88.13/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.88.13/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.13/sosachat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -255,6 +259,32 @@ public class SOS_API {
         //alertDialog = HelperMethods.getAlertDialogProcessingWithMessage(context, HelperMethods.getStringResource(this, R.string.pbMsgProcessing),false);
 
         //getAllItemCats();
+    }
+
+    public static String GetPicExtTagByIndex(int idx) {
+        String tag = null;
+
+        switch (idx){
+            case SOS_API.KEY_ITEM_PIC_IDX_MAIN:
+                tag = SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN;
+                break;
+
+            case SOS_API.KEY_ITEM_PIC_IDX_P1:
+                tag = SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC1;
+                break;
+
+            case SOS_API.KEY_ITEM_PIC_IDX_P2:
+                tag = SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC2;
+                break;
+
+            case SOS_API.KEY_ITEM_PIC_IDX_P3:
+                tag = SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC3;
+                break;
+        }
+
+
+
+        return tag;
     }
 
     private void setupAlertDialogResponse() {
@@ -855,6 +885,7 @@ public class SOS_API {
     public void uploadPicFile(final CallbacksImageFileUpload callbacksImageFileUpload, String filePath, String fileName, String dirPath, final String tag, final Bundle metaData) {
 
         String url = API_URL + "act=" + ACTION_UPLOAD_IMAGE_FILE + "&dirPath=" + dirPath + "&fname=" + fileName;
+        final Bundle data = new Bundle(metaData);
 
         UploadAsyncTask uploadAsyncTask = new UploadAsyncTask(
                 context,
@@ -865,6 +896,9 @@ public class SOS_API {
                     @Override
                     public void onProgress(int progress) {
                         callbacksImageFileUpload.CBIFUonUploadProgress(tag, progress);
+                        if(progress == 100){
+                            callbacksImageFileUpload.CBIFUonUploadSuccess(tag, data);
+                        }
                     }
 
                     @Override

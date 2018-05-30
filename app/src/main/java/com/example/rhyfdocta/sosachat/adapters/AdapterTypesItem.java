@@ -104,8 +104,8 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
 
 
         String picName = url.split("/")[url.split("/").length-1];
-        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_TYPES_IN_CAT, picName);
-        if(BitmapCacheManager.FILE_EXISTS(cachePath)){
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_TYPES_IN_CAT, picName);
+        if(BitmapCacheManager.FileExists(cachePath)){
             uri = Uri.fromFile(new File(cachePath));
 
 

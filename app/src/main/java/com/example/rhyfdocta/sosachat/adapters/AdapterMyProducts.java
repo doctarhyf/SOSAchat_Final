@@ -122,8 +122,8 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
 
 
-        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg");
-        if(BitmapCacheManager.FILE_EXISTS(cachePath)){
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg");
+        if(BitmapCacheManager.FileExists(cachePath)){
             uri = Uri.fromFile(new File(cachePath));
 
 

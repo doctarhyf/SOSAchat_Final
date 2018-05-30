@@ -266,7 +266,7 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
         String path = SOS_API.DIR_PATH_PP + ppName ;//+ "?ts=" + HM.getTimeStamp();//accDataBundle.get(SOS_API.KEY_ACC_DATA_ACC_PIC_NAME);
 
 
-        String cachePath = BitmapCacheManager.getImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_PROFILE_PIC, ppName);
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_PROFILE_PIC, ppName);
         final Uri picUri = BitmapCacheManager.loadImageFromCacheOrNetwork(Uri.parse(path), cachePath);
 
         //final Uri picUri = Uri.parse(path);
