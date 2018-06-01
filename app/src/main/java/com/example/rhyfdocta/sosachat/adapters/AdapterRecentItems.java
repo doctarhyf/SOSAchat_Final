@@ -98,7 +98,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         Uri picUri = Uri.parse(pixPath);
 
 
-        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
         if(BitmapCacheManager.FileExists(cachePath)){
             picUri = Uri.fromFile(new File(cachePath));
 

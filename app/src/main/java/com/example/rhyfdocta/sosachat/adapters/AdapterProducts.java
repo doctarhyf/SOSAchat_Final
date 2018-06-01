@@ -79,7 +79,7 @@ public class AdapterProducts extends ArrayAdapter<Product> {
 
         final Uri picUri = Uri.parse(SOS_API.DIR_PATH_PRODUCTS_PIX + product.getPdImg() + ".jpg");
         Log.e("ADP", "getView: it url -> " + picUri.toString() );
-        //view.setTag(1,picUri);
+        //view.setUniqueName(1,picUri);
         Log.e("PROD PIC ERR", "\nurl: " + picUri );
 
         Picasso.with(context).load(picUri).error(R.drawable.ic_error)
@@ -137,7 +137,7 @@ public class AdapterProducts extends ArrayAdapter<Product> {
 
         ImageView ivProd = (ImageView) view.findViewById(R.id.ivProd);
         final Uri picUri = Uri.parse(MainActivity.DIR_PATH_PRODUCTS_PIX.concat(product.getPdImg()));
-        //view.setTag(1,picUri);
+        //view.setUniqueName(1,picUri);
         Log.e("PROD PIC ERR", "\nurl: " + picUri );
 
         Picasso.with(context).load(picUri).centerCrop().resize(1000,563).into(ivProd, new Callback() {

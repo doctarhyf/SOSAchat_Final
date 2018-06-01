@@ -1,6 +1,8 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,11 +33,12 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
-import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
+import com.example.rhyfdocta.sosachat.Helpers.UploadAsyncTask;
 import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
+import com.example.rhyfdocta.sosachat.ServerImageManagement.ServerImageManager;
 
 import org.json.JSONArray;
 
@@ -44,7 +47,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSApiListener {
+public class ActivityMyAccount extends AppCompatActivity implements
+        SOS_API.SOSApiListener,
+        UploadAsyncTask.Callbacks {
 
 
     private static final String TAG = "ACT_MY_ACC";
@@ -56,13 +61,15 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
     private Bitmap b;
     ImageView curImageView;
     AlertDialog alertDialogPictureSource;
-    AlertDialog alertDialog;
+    ProgressDialog progressDialog;
     String fileName;
     Bundle profileBundle;
     boolean showingProfile;
     Button btnClearCache;
     boolean firstLaunch = false;
     private MyGlideBitmapLoaderCallbacks glideBitmapLoaderCallbacks;
+    private int uploadProgress = 0;
+    private String localPath = null;
     //private BitmapCacheManager bitmapCacheManager;
 
     @Override
@@ -80,7 +87,10 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
 
         sosApi = new SOS_API(this);
 
-        alertDialog = HM.GADP(this, HM.getStringResource(this, R.string.pbMsgUpdatingPP),false);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setCancelable(true);
+        //HM.GADP(this, HM.getStringResource(this, R.string.pbMsgUpdatingPP),false);
 
         getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_my_account));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -140,7 +150,9 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
             loadAccountData();
         }
 
-        updateBtnTextCacheSize(BitmapCacheManager.getImagesCacheSize());
+        double cacheSize = BitmapCacheManager.GetImagesCacheSize();
+        Log.e(TAG, "CACHE SIZE : " + cacheSize );
+        updateBtnTextCacheSize(cacheSize);
 
     }
 
@@ -153,10 +165,44 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
         super.onResume();
 
         //if(!firstLaunch){
-            updateBtnTextCacheSize(BitmapCacheManager.getImagesCacheSize());
+            updateBtnTextCacheSize(BitmapCacheManager.GetImagesCacheSize());
         //}
 
 
+    }
+
+    @Override
+    public void onProgress(int progress) {
+        this.uploadProgress = progress;
+        progressDialog.setProgress(progress);
+    }
+
+    @Override
+    public void onPostExecute(String result) {
+        if(uploadProgress == 100){
+            uploadProgress = 0;
+            progressDialog.dismiss();
+
+            Log.e("DAREZ", "onPostExecute: -> " + result );
+            //curImageView.setImageBitmap(b);
+            String pp = sosApi.GSV(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
+
+            String path = SOS_API.ROOT_URL + SOS_API.SERVER_REL_ROOT_DIR_PATH_PROFILE_PICTURES + pp;
+            final Uri picUri = Uri.parse(path);
+
+            if(BitmapCacheManager.DeleteCacheFile(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC, pp)){
+                BitmapCacheManager.LoadBitmapIntoImageView(curImageView, b);
+                glideBitmapLoaderCallbacks.saveBitmapToLocalCache(b, picUri.toString(), SOS_API.DIR_NAME_PIX_CACHE_PROFILCE_PIC);
+
+            }else{
+                Log.e(TAG, "Cant delete cache -> " + pp );
+            }
+        }
+    }
+
+    @Override
+    public void onPreExecute() {
+        progressDialog.show();
     }
 
     private class MyGlideBitmapLoaderCallbacks implements GlideBitmapLoaderCallbacks{
@@ -238,18 +284,13 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
         b.putString(SOS_API.KEY_ACC_DATA_PASSWORD, sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD));
         b.putString(SOS_API.KEY_ACC_DATA_EMAIL, sosApi.GSV(SOS_API.KEY_ACC_DATA_EMAIL));
 
-
-        //String s = sosApi.GSV(SOS_API.KEY_ACC_DATA_MOBILE_HASH);
-
-
         this.accDataBundle = b;
-
 
         onAccountDataLoaded();
 
     }
 
-    public void onAccountDataLoaded() {
+    public void onAccountDataLoaded() throws NullPointerException {
 
         //Log.e(TAG, "onAccountDataLoaded: " );
 
@@ -266,7 +307,7 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
         String path = SOS_API.DIR_PATH_PP + ppName ;//+ "?ts=" + HM.getTimeStamp();//accDataBundle.get(SOS_API.KEY_ACC_DATA_ACC_PIC_NAME);
 
 
-        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_PROFILE_PIC, ppName);
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC, ppName);
         final Uri picUri = BitmapCacheManager.loadImageFromCacheOrNetwork(Uri.parse(path), cachePath);
 
         //final Uri picUri = Uri.parse(path);
@@ -391,35 +432,29 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
             cursor.moveToFirst();
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
+            localPath = cursor.getString(columnIndex);
             cursor.close();
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize=4;      // 1/8 of original image
-            b = BitmapFactory.decodeFile(picturePath, options);
-
-            // TODO: 11/16/17 COMPRESS ON BYTES COUNT THRESHOLD
-
-            Log.e(TAG, "BYTES CT " + b.getByteCount());
+            b = BitmapFactory.decodeFile(localPath, options);
 
             //curImageView.setImageBitmap(b);
-            //uploadProfilePic(b);
-
             uploadProfilePic();
         }
 
 
         if(requestCode == SOS_API.REQ_CAMERA && resultCode == RESULT_OK){
 
-            String path = SOS_API.GSAIPCP() + "/" + fileName;
+            localPath = SOS_API.GSAIPCP() + "/" + fileName;
             //curImageView.setImageDrawable(Drawable.createFromPath(path));
 
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize=4;      // 1/8 of original image
-            b = BitmapFactory.decodeFile(path, options);
+            b = BitmapFactory.decodeFile(localPath, options);
 
-            curImageView.setImageBitmap(b);
+            //curImageView.setImageBitmap(b);
 
             uploadProfilePic();
 
@@ -461,13 +496,26 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
 
     private void uploadProfilePic() {
 
+        uploadProgress = 0;
+        progressDialog.show();
+        progressDialog.setCancelable(true);
+        //sosApi.uploadProfilePic(this,imgStr);
+        String serverFileName = sosApi.GSV(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
+        String serverRelRootDir = SOS_API.SERVER_REL_ROOT_DIR_PATH_PROFILE_PICTURES;
+        String scriptPath = SOS_API.API_URL + "act=" + SOS_API.ACTION_UPLOAD_IMAGE + "&" +
+                ServerImageManager.KEY_REQ_SERVER_FILE_NAME + "=" + serverFileName + "&" +
+                ServerImageManager.KEY_REQ_REL_ROOT_DIR+ "=" + serverRelRootDir;
+
+        Log.e("UPDPH", "uploadProfilePic: -> " + scriptPath );
+
+        /*
+        $serverFileName = $_REQUEST['sfn'];
+        $data = $_REQUEST['data'];
+        $relRootDir = $_REQUEST['relRootDir'];
+        $destination = $relRootDir . $serverFileName;*/
 
 
-        String imgStr = HelperMethods.getBase64StringFromBitmap(b);
-
-
-        alertDialog.show();
-        sosApi.uploadProfilePic(this,imgStr);
+        ServerImageManager.UploadFileToServer(this, this, scriptPath,  localPath  );
 
 
 
@@ -714,7 +762,7 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
     @Override
     public void onUploadPPResult(Bundle data) {
 
-        alertDialog.hide();
+        progressDialog.hide();
 
         Log.e(TAG, "onUploadPPResult: result -> " + data.toString() );
 
@@ -755,15 +803,15 @@ public class ActivityMyAccount extends AppCompatActivity implements SOS_API.SOSA
 
 
 
-        File dir = SOS_API.getSOSAchatRootDir();
+        File dir = SOS_API.GetSOSAchatCacheRootDir();
         if(dir == null) return;
         Log.e(TAG, "deleting cache path -> " + dir.toString() );
 
 
         if(dir.exists()) {
 
-                BitmapCacheManager.emptyDir(dir);
-                double cacheSize = BitmapCacheManager.getImagesCacheSize();
+                BitmapCacheManager.EmptyDir(dir);
+                double cacheSize = BitmapCacheManager.GetImagesCacheSize();
                 updateBtnTextCacheSize(cacheSize);
 
                 if(cacheSize == 0) {

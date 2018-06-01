@@ -105,7 +105,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
         Uri uri = Uri.parse(pixPath);
 
 
-        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdImg());
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS, pd.getPdImg());
         if(BitmapCacheManager.FileExists(cachePath)){
             uri = Uri.fromFile(new File(cachePath));
 

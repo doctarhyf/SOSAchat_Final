@@ -148,7 +148,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
         /*
         final TextView curTextView = (TextView) view;
-        String title = "Change " + view.getTag().toString();
+        String title = "Change " + view.getUniqueName().toString();
 
         final String[] m_Text = {""};
         //Toast.makeText(this, "SET DATA CLICKED", Toast.LENGTH_SHORT).show();

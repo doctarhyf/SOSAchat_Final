@@ -86,7 +86,7 @@ public class AdapterHomeCategories extends RecyclerView.Adapter<AdapterHomeCateg
 
 
         String picName = url.split("/")[url.split("/").length-1];
-        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_CATS, picName);
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_ITEMS_CATEGORIES, picName);
         if(BitmapCacheManager.FileExists(cachePath)){
             uri = Uri.fromFile(new File(cachePath));
 

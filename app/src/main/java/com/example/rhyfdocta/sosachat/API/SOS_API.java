@@ -26,7 +26,6 @@ import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperDate;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 
-import com.example.rhyfdocta.sosachat.Helpers.UploadAsyncTask;
 import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
@@ -77,7 +76,7 @@ public class SOS_API {
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC2 = "_pic2.jpg";
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC3 = "_pic3.jpg";
     public static final String TRUE = "true";
-    public static final String ACTION_UPLOAD_IMAGE_FILE = "uploadProductImageFile";
+    public static final String ACTION_UPLOAD_PRODUCT_IMAGE_FILE = "uploadProductImageFile";
     public static final String KEY_NEW_ITEM_IMG_TYPE = "imageType";
     public static final String DIR_NAME_PIX_ROOT = "img";
     private static final String ACTION_GET_UNIQUE_ID = "getUniqueId";
@@ -91,19 +90,22 @@ public class SOS_API {
     private static final int KEY_ITEM_PIC_IDX_P1 = 1;
     private static final int KEY_ITEM_PIC_IDX_P2 = 2;
     private static final int KEY_ITEM_PIC_IDX_P3 = 3;
+    public static final String SERVER_REL_ROOT_DIR_PATH_PROFILE_PICTURES = "img/pp/";
+    public static final String ACTION_UPLOAD_IMAGE = "uploadImage";
+    public static final String IMAGE_UPLOAD_FORM_NAME = "uploaded_file";
 
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.43.177/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.4/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.43.177/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.43.177/sosachat/";
+    public static String API_URL = "http://192.168.1.4/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.4/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.4/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.4/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.1.4/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -224,9 +226,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.43.177/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.43.177/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.43.177/sosachat/img/products/";
+    public static String API_URL = "http://192.168.1.4/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.4/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.4/sosachat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -884,7 +886,7 @@ public class SOS_API {
 
     /*public void uploadPicFile(final CallbacksImageFileUpload callbacksImageFileUpload, String filePath, String fileName, String dirPath, final String tag, final Bundle metaData) {
 
-        String url = API_URL + "act=" + ACTION_UPLOAD_IMAGE_FILE + "&dirPath=" + dirPath + "&fname=" + fileName;
+        String url = API_URL + "act=" + ACTION_UPLOAD_PRODUCT_IMAGE_FILE + "&dirPath=" + dirPath + "&fname=" + fileName;
         final Bundle data = new Bundle(metaData);
 
         UploadAsyncTask uploadAsyncTask = new UploadAsyncTask(
@@ -936,13 +938,14 @@ public class SOS_API {
         this.bitmapCacheManager = bitmapCacheManager;
     }
 
-    public static File getSOSAchatRootDir() {
-        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + BitmapCacheManager.CACHE_ROOT_DIR + "/");
+    public static File GetSOSAchatCacheRootDir() {
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + BitmapCacheManager.CACHE_ROOT_DIR + "/";
+        return new File(path);
     }
 
     public static void deletePP() {
 
-        BitmapCacheManager.emptyDir(new File(getSOSAchatRootDir().toString() + "/" + DIR_NAME_PIX_CACHE_PROFILCE_PIC));
+        BitmapCacheManager.EmptyDir(new File(GetSOSAchatCacheRootDir().toString() + "/" + DIR_NAME_PIX_CACHE_PROFILCE_PIC));
         Log.e(TAG, "deletePP: " );
     }
 

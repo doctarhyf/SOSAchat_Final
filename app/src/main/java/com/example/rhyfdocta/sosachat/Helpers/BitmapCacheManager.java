@@ -6,11 +6,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -21,13 +23,13 @@ public class BitmapCacheManager {
 
     private static final String TAG = "EE";
 
-    public static final int PIC_CACHE_PATH_TYPE_RECENT_ITEMS = 200;
-    public static final int PIC_CACHE_PATH_TYPE_PRODUCTS = 200;
-    public static final int PIC_CACHE_PATH_TYPE_PROFILE_PIC = 201;
-    public static final int PIC_CACHE_PATH_TYPE_CATS = 202;
-    public static final int PIC_CACHE_PATH_TYPE_TYPES_IN_CAT = 203;
+    public static final int PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS = 200;
+    public static final int PIC_CACHE_ROOT_PATH_ID_PRODUCTS = 200;
+    public static final int PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC = 201;
+    public static final int PIC_CACHE_ROOT_PATH_ID_ITEMS_CATEGORIES = 202;
+    public static final int PIC_CACHE_ROOT_PATH_ID_ITEMS_TYPES_IN_CATEGORIES = 203;
 
-    //public static final int PIC_CACHE_PATH_TYPE_PRODUCTS = ;
+    //public static final int PIC_CACHE_ROOT_PATH_ID_PRODUCTS = ;
 
     //public static final String CACHE_DIR_NAME_PRODUCTS = "products";
     private Context context;
@@ -39,7 +41,6 @@ public class BitmapCacheManager {
         localPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
     }
 
-
     public static final boolean FileExists(String pathName) {
 
 
@@ -49,7 +50,7 @@ public class BitmapCacheManager {
         return file.exists();
     }
 
-    public static void emptyDir(File dir){
+    public static void EmptyDir(File dir){
 
 
 
@@ -61,7 +62,7 @@ public class BitmapCacheManager {
                 File file = new File(dir, children[i]);
 
                 if(file.isDirectory()){
-                    emptyDir(file);
+                    EmptyDir(file);
                 }else{
                     file.delete();
                 }
@@ -70,10 +71,10 @@ public class BitmapCacheManager {
 
     }
 
-    public static double getImagesCacheSize() {
+    public static double GetImagesCacheSize() {
         /*File picsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()
         + BitmapCacheManager.CACHE_ROOT_DIR);*/
-        double cacheSize = BitmapCacheManager.DirectorySize(SOS_API.getSOSAchatRootDir());
+        double cacheSize = BitmapCacheManager.DirectorySize(SOS_API.GetSOSAchatCacheRootDir());
         cacheSize /= 1000000f;
 
 
@@ -121,7 +122,7 @@ public class BitmapCacheManager {
 
         switch (PIC_CACHE_PATH_TYPE){
 
-            case PIC_CACHE_PATH_TYPE_TYPES_IN_CAT:
+            case PIC_CACHE_ROOT_PATH_ID_ITEMS_TYPES_IN_CATEGORIES:
                 dirName = SOS_API.DIR_NAME_PIX_CACHE_HOME_TYPES_IN_CATS;
                 localPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
                 //String imageFileName = imgName;
@@ -131,7 +132,7 @@ public class BitmapCacheManager {
 
                 break;
 
-            case PIC_CACHE_PATH_TYPE_CATS:
+            case PIC_CACHE_ROOT_PATH_ID_ITEMS_CATEGORIES:
                 dirName = SOS_API.DIR_NAME_PIX_CACHE_HOME_CATS;
                 localPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
                 //String imageFileName = imgName;
@@ -140,7 +141,7 @@ public class BitmapCacheManager {
                 path = localPath + "/" + CACHE_ROOT_DIR + "/" + dirName + "/" + imgFullName;
                 break;
 
-            case PIC_CACHE_PATH_TYPE_RECENT_ITEMS:
+            case PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS:
                 //path = "Tha fucking path";
                 dirName = SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS;
                 localPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
@@ -151,7 +152,7 @@ public class BitmapCacheManager {
 
                 break;
 
-            case PIC_CACHE_PATH_TYPE_PROFILE_PIC:
+            case PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC:
                 //path = "Tha fucking path";
                 dirName = SOS_API.DIR_NAME_PIX_CACHE_PROFILCE_PIC;
                 localPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
@@ -165,8 +166,6 @@ public class BitmapCacheManager {
 
             return path;
     }
-
-
 
     private String saveCacheImage(Bitmap image, String imgName, String dirName) {
 
@@ -225,7 +224,7 @@ public class BitmapCacheManager {
 
         Uri uri = picUri;
 
-        //String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
+        //String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS, pd.getPdUniqueName() + "_main.jpg");
         if(BitmapCacheManager.FileExists(cachePath)) {
             uri = Uri.fromFile(new File(cachePath));
         }
@@ -263,5 +262,60 @@ public class BitmapCacheManager {
         }
 
         return res;
+    }
+
+    public static boolean DeleteCacheFile(int cacheRootPathID, String fileName) {
+
+        boolean res = false;
+
+        String path = GetImageCachePath(cacheRootPathID, fileName);
+
+        File file = new File(path);
+
+        if(file.exists()) {
+            res = file.delete();
+        }
+
+        return res;
+    }
+
+    public static boolean SaveBitmapToCache(Bitmap bitmap, int cacheRootPathID, String fileName) {
+
+        boolean res = false;
+
+        String path = GetImageCachePath(cacheRootPathID, fileName);
+
+        Log.e(TAG, "SaveBitmapToCache: " + path );
+        File file = new File(path);
+
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(fileName);
+
+            res = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(out != null){
+                    out.flush();
+                    out.close();
+
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        return res;
+
+
+    }
+
+    public static void LoadBitmapIntoImageView(ImageView iv, Bitmap b) {
+        // TODO: 6/1/2018 PROPER BITMAP DECODING
+
+        iv.setImageBitmap(b);
     }
 }

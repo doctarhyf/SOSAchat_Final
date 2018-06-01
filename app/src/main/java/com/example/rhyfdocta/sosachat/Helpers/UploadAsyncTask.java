@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.rhyfdocta.sosachat.API.SOS_API;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -62,8 +64,9 @@ public class UploadAsyncTask extends AsyncTask<Void, Integer, String> {
             HttpPost httpPost = new HttpPost(SERVER_PATH);
             MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
 
+
             // Add the file to be uploaded
-            multipartEntityBuilder.addPart("uploaded_file", new FileBody(file));
+            multipartEntityBuilder.addPart(SOS_API.IMAGE_UPLOAD_FORM_NAME, new FileBody(file));
 
             // Progress listener - updates task's progress
             MyHttpEntity.ProgressListener progressListener =

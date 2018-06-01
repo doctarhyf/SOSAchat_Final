@@ -1,28 +1,39 @@
-package com.example.rhyfdocta.sosachat.ImageManager;
+package com.example.rhyfdocta.sosachat.ServerImageManagement;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.Helpers.UploadAsyncTask;
+import com.example.rhyfdocta.sosachat.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ProductImageManager {
+public class ServerImageManager {
 
 
+    public static final String KEY_REQ_SERVER_FILE_NAME = "sfn";
+    public static final String KEY_REQ_REL_ROOT_DIR = "relRootDir";
     private String serverRootPath = "img/products/";
     private int numImages = 0;
     private Context context;
-    private List<ProductImage> productImages = new ArrayList<>();
+    private List<ServerImage> serverImages = new ArrayList<>();
     private HashMap<Integer, String> imagesIDsAndPostfix = new HashMap<>();
     private int[] imageViewsIDS;
-    private int[] imagesProgress;
+
     private String[] imagesPostfixes;
     private SOS_API sosApi;
 
@@ -35,20 +46,20 @@ public class ProductImageManager {
     public static final String BUNDLE_KEY = "key";
 
     //private int totalUploadProgress = 0;
-    private int[] imagesProgess;
+    private int[] imagesProgress;
     private String uploadToken = null;
     private int totalProgress = 0;
     //private long totalProgress = 0;
 
 
-    public ProductImageManager(Context context, int[] imageViewsIDS, String[] imagesPostfixes, int numImages, String serverRootPath){
+    public ServerImageManager(Context context, int[] imageViewsIDS, String[] imagesPostfixes, int numImages, String serverRootPath){
         this.context = context;
         this.numImages = numImages;
         this.imageViewsIDS = imageViewsIDS;
         this.imagesPostfixes = imagesPostfixes;
         this.serverRootPath = serverRootPath;
         this.sosApi = new SOS_API(context);
-        imagesProgess = new int[numImages];
+        imagesProgress = new int[numImages];
 
 
         resetImagesProgressArray();
@@ -61,11 +72,11 @@ public class ProductImageManager {
     }
 
     public boolean setImageLoaded(int imageViewID, String imageLocalPath){
-        //ProductImage productImage = null;
+        //ServerImage productImage = null;
         boolean set = false;
 
-        for(int i = 0; i < productImages.size(); i++){
-            ProductImage pi = productImages.get(i);
+        for(int i = 0; i < serverImages.size(); i++){
+            ServerImage pi = serverImages.get(i);
 
             if(pi.getImageViewID() == imageViewID){
                 pi.setImageLoaded(true, imageLocalPath);
@@ -85,22 +96,22 @@ public class ProductImageManager {
         }else {
 
             for (int i = 0; i < numImages; i++) {
-                ProductImage productImage = new ProductImage(context, i, serverRootPath);
+                ServerImage serverImage = new ServerImage(context, i, serverRootPath, BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PRODUCTS);
                 String postfix = imagesPostfixes[i];
                 int ivid = imageViewsIDS[i];
                 imagesIDsAndPostfix.put(ivid, postfix);
 
-                productImage.setImagePostfix(postfix);
-                productImage.setImageViewID(ivid);
-                productImages.add(productImage);
+                serverImage.setImagePostfix(postfix);
+                serverImage.setImageViewID(ivid);
+                serverImages.add(serverImage);
 
             }
         }
     }
 
-    public ProductImage getProductImageByKey(final int KEY_GET_IMAGE_BY, Bundle value){
+    public ServerImage getProductImageByKey(final int KEY_GET_IMAGE_BY, Bundle value){
 
-        ProductImage productImage = null;
+        ServerImage serverImage = null;
 
 
         switch (KEY_GET_IMAGE_BY){
@@ -108,9 +119,9 @@ public class ProductImageManager {
 
                 int ivID = value.getInt(BUNDLE_KEY);
                 for (int i = 0; i < numImages; i++) {
-                    ProductImage tmppi = productImages.get(i);
+                    ServerImage tmppi = serverImages.get(i);
                     if(tmppi.getImageViewID() == ivID){
-                        productImage = tmppi;
+                        serverImage = tmppi;
                     }
                 }
                 break;
@@ -118,7 +129,7 @@ public class ProductImageManager {
             case KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID:
 
                 int galPriorID = value.getInt(BUNDLE_KEY);
-                productImage = productImages.get(galPriorID);
+                serverImage = serverImages.get(galPriorID);
                 break;
 
             case KEY_GET_IMAGE_BY_POSTFIX:
@@ -131,12 +142,12 @@ public class ProductImageManager {
                     i ++;
 
                 }
-                productImage = productImages.get(id);
+                serverImage = serverImages.get(id);
                 break;
         }
 
 
-        return productImage;
+        return serverImage;
 
     }
 
@@ -145,14 +156,14 @@ public class ProductImageManager {
         HM.IBWAV(manifest, false);
 
         for(int i = 0; i < numImages; i++){
-            ProductImage pi = productImages.get(i);
+            ServerImage pi = serverImages.get(i);
             switch (KEY_MANIFEST){
                 case KEY_MANIFEST_IMAGES_LOADED:
                     manifest[i] = pi.isImageLoaded();
                     break;
 
                 case KEY_MANIFEST_IMAGES_UPLOADED:
-                    manifest[i] = pi.isImageUploaded();
+                    manifest[i] = pi.getImageUploaded();
                     break;
             }
         }
@@ -169,7 +180,7 @@ public class ProductImageManager {
         status = status.concat("MANIFEST LOADED : " + HM.BATOS(getManifestImages(KEY_MANIFEST_IMAGES_LOADED)) + "\n");
         status = status.concat("NUM PICS UPLOADED : " + numImagesUploaded() + "\n");
         status = status.concat("MANIFEST UPLOADED : " + HM.BATOS(getManifestImages(KEY_MANIFEST_IMAGES_UPLOADED)) + "\n");
-        status = status.concat("NUM TOTAL PICS : " + productImages.size() + "\n");
+        status = status.concat("NUM TOTAL PICS : " + serverImages.size() + "\n");
         status = status.concat("IMGS TOTAL SIZE : " + imagesTotalSize() + " byte(s)\n");
         status = status.concat("===================================");
 
@@ -178,10 +189,10 @@ public class ProductImageManager {
 
     public String toStringAllProducImages(){
 
-        String s = productImages.get(0).toString() + "\n\n";
+        String s = serverImages.get(0).toString() + "\n\n";
 
-        for(int i = 1; i < productImages.size(); i++){
-            s = s.concat(productImages.get(i).toString() + "\n\n");
+        for(int i = 1; i < serverImages.size(); i++){
+            s = s.concat(serverImages.get(i).toString() + "\n\n");
         }
 
         return s;
@@ -190,9 +201,9 @@ public class ProductImageManager {
     private int numImagesLoaded() {
         int imgsLoaded = 0;
 
-        for(int i = 0; i < productImages.size(); i++){
-            ProductImage productImage = productImages.get(i);
-            if(productImage.isImageLoaded()) imgsLoaded++;
+        for(int i = 0; i < serverImages.size(); i++){
+            ServerImage serverImage = serverImages.get(i);
+            if(serverImage.isImageLoaded()) imgsLoaded++;
         }
 
         return imgsLoaded;
@@ -201,9 +212,9 @@ public class ProductImageManager {
     private int numImagesUploaded() {
         int imgsUploaded = 0;
 
-        for(int i = 0; i < productImages.size(); i++){
-            ProductImage productImage = productImages.get(i);
-            if(productImage.isImageUploaded()) imgsUploaded++;
+        for(int i = 0; i < serverImages.size(); i++){
+            ServerImage serverImage = serverImages.get(i);
+            if(serverImage.getImageUploaded()) imgsUploaded++;
         }
 
         return imgsUploaded;
@@ -212,9 +223,9 @@ public class ProductImageManager {
     public boolean isImageLoaded(int imageViewID) {
         Bundle b = new Bundle();
         b.putInt(BUNDLE_KEY, imageViewID);
-        ProductImage productImage = getProductImageByKey(KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS, b);
+        ServerImage serverImage = getProductImageByKey(KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS, b);
 
-        return productImage.isImageLoaded();
+        return serverImage.isImageLoaded();
     }
 
     public void uploadAllImagesToServer(final Callbacks callbacks) {
@@ -230,27 +241,26 @@ public class ProductImageManager {
 
 
 
-        for(int i = 0; i < productImages.size(); i++) {
+        for(int i = 0; i < serverImages.size(); i++) {
 
-                ProductImage pi = productImages.get(i);
+                ServerImage pi = serverImages.get(i);
 
             if(pi.isImageLoaded()) {
                 String serverFileName = pi.getFileNameOnServer();
                 String localPath = pi.getLocalPath();
-                //String tag = pi.getTag();
+                //String tag = pi.getUniqueName();
                 //Bundle metaData = new Bundle();
 
                 Log.e("DAFAK", "uploadAllImagesToServer: -> " + pi.getImagePostfix() + ", " + pi.getLocalPath() + ", " + pi.isImageLoaded() );
 
-                uploadFile(
+                uploadImageFile(
+                        context,
                         callbacks,
                         localPath,
+
+
                         serverFileName,
-
-
-
-                        pi
-                );
+                        pi);
             }
 
 
@@ -263,10 +273,10 @@ public class ProductImageManager {
         long size = 0;
         for(int i =0 ; i < getManifestImages(KEY_MANIFEST_IMAGES_LOADED).length; i++){
 
-            ProductImage productImage = productImages.get(i);
+            ServerImage serverImage = serverImages.get(i);
 
-            if(productImage.isImageLoaded()){
-                size += productImage.imageSize();
+            if(serverImage.isImageLoaded()){
+                size += serverImage.imageSize();
             }
 
         }
@@ -274,22 +284,21 @@ public class ProductImageManager {
         return size;
     }
 
-    private void uploadFile(
+    private void uploadImageFile(
+            Context context,
             final Callbacks callbacks,
             String fileLocalPath,
             String fileNameOnServer,
+            final ServerImage si) {
 
 
-            final ProductImage pi) {
+        //Log.e("UPD", "uploadImageFile: ..." );
 
 
-        //Log.e("UPD", "uploadFile: ..." );
-
-
-        String serverPath = SOS_API.API_URL + "act=" + SOS_API.ACTION_UPLOAD_IMAGE_FILE + "&fn=" + fileNameOnServer;
+        String serverPath = SOS_API.API_URL + "act=" + SOS_API.ACTION_UPLOAD_PRODUCT_IMAGE_FILE + "&fn=" + fileNameOnServer;
         //final Bundle data = new Bundle(metaData);
 
-        Log.e("SPATH", "uploadFile: -> " + serverPath );
+        Log.e("SPATH", "uploadImageFile: -> " + serverPath );
 
         UploadAsyncTask uploadAsyncTask = new UploadAsyncTask(
                 context,
@@ -305,29 +314,34 @@ public class ProductImageManager {
 
                         //Log.e("PROG", "onProgress: " + );
 
+                        Log.e("PICPROG", "pic -> " + si.getUniqueName() + ", " + progress + " %" );
 
                         if(progress == 100){
-                            pi.setImageUploaded(true);
-                            updateTotalProgress(pi, progress);
+                            si.setImageUploaded(true);
+                            updateTotalProgress(si, progress);
                         }
-                        callbacks.onProducImageManagerProgress(pi, progress, getTotalProgress());
+                        callbacks.onProducImageManagerProgress(si, progress, getTotalProgress());
                     }
 
                     @Override
                     public void onPostExecute(String result) {
                         //callbacksImageFileUpload.CBIFUonPostExecute(tag, result);
                         //callbacksImageFileUpload.CBIFUdidUpload(tag);
-                        callbacks.onProducImageManagerPostExecute(pi);
+                        callbacks.onProducImageManagerPostExecute(si);
+                        if(si.deleteLocalCache()){
+                            Log.e("DELKASH", "deleted cache -> " + si.imageCachePath() );
+                        }
 
                         //if(getManifestImages(KEY_MANIFEST_IMAGES_UPLOADED) == getManifestImages(KEY_MANIFEST_IMAGES_LOADED)){
                             //callbacks.onProducImageAllImagesUploadedComplete();
 
-                            Log.e("BAAM", "onPostExecute: -> " + pi.getImagePostfix() );
-                        Log.e("BAAM", "onPostExecute: -> " + numImagesLoaded() + ", " + numImagesUploaded() + ", " + pi.getImagePostfix() );
+                            Log.e("BAAM", "onPostExecute: -> " + si.getImagePostfix() );
+                        Log.e("BAAM", "onPostExecute: -> " + numImagesLoaded() + ", " + numImagesUploaded() + ", " + si.getImagePostfix() );
                         //}
                         Log.e("BAAM", "totProg : " + getTotalProgress() );
                         if(numImagesLoaded() == numImagesUploaded()){
                             callbacks.onProducImageAllImagesUploadedComplete();
+
                             resetImagesProgressArray();
                         }
 
@@ -336,7 +350,7 @@ public class ProductImageManager {
                     @Override
                     public void onPreExecute() {
                         //callbacksImageFileUpload.CBIFUonFileWillUpload(tag);
-                        callbacks.onProducImageManagerPreExecute(pi);
+                        callbacks.onProducImageManagerPreExecute(si);
                         resetImagesProgressArray();
                         initTotalProgress();
                     }
@@ -351,10 +365,10 @@ public class ProductImageManager {
 
     }
 
-    private void updateTotalProgress(ProductImage pi, int progress) {
-        imagesProgess[pi.getImageGalleryPriorityID()] = progress;
+    private void updateTotalProgress(ServerImage pi, int progress) {
+        imagesProgress[pi.getImageGalleryPriorityID()] = progress;
 
-        totalProgress = HelperMethods.ArraySum(imagesProgess) / numImagesLoaded();
+        totalProgress = HelperMethods.ArraySum(imagesProgress) / numImagesLoaded();
     }
 
     public int getTotalProgress(){
@@ -363,8 +377,8 @@ public class ProductImageManager {
 
 
     private void resetImagesProgressArray(){
-        for(int i = 0; i < imagesProgess.length; i++){
-            imagesProgess[i] = 0;
+        for(int i = 0; i < imagesProgress.length; i++){
+            imagesProgress[i] = 0;
         }
     }
 
@@ -376,7 +390,7 @@ public class ProductImageManager {
         this.uploadToken = uploadToken;
 
         for(int i = 0; i < numImages; i++){
-            ProductImage pi = productImages.get(i);
+            ServerImage pi = serverImages.get(i);
 
             pi.setUploadToken(uploadToken);
         }
@@ -391,14 +405,87 @@ public class ProductImageManager {
         this.serverRootPath = serverRootPath;
     }
 
+    public void loadImagesForEdit(List<ImageView> ivs) {
+
+
+        for(int i = 0; i < numImages; i++){
+            ServerImage pi = serverImages.get(i);
+
+            String imagePath = pi.isImageCached() ? pi.imageCachePath() : pi.getRemotePath();
+            final Uri picUri = Uri.parse(imagePath);
+
+            //glideLoadPic(picUri, i, ivs.get(i));
+
+            //Log.e("ABC", "cached : " + pi.isImageCached() + " path : " + imagePath );
+
+
+
+        }
+    }
+
+
+
+    private void glideLoadPic(final Uri picUri, final int idx, final ImageView iv) {
+
+        Log.e("PASH", "glideLoadPic: -> " + picUri.toString() );
+
+        Glide.with(context)
+                .load(picUri)
+                .asBitmap()
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_error)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .fitCenter()
+                .into(new SimpleTarget<Bitmap>(450,450) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+                        //String localPath = sosApi.getBitmapCacheManager().saveBitmapToCache(resource, url, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
+
+                        Bundle b = new Bundle();
+                        b.putInt(ServerImageManager.BUNDLE_KEY, idx);
+                        ServerImage pi = getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
+                        //ImageView iv = findViewById(pi.getImageViewID());
+                        iv.setImageBitmap(resource);
+
+                        Log.e("PICURI", "onResourceReady: \n\n" + pi.toString() );
+                        //ITEM_IMAGEVIEWS_IDS_ARRAY.get(idx).setImageBitmap(resource);
+                        //imagesLoaded[idx] = true;
+                        /*String tag = SOS_API.GetPicExtTagByIndex(idx);
+                        Bundle b = new Bundle();
+                        b.putInt(ServerImageManager.BUNDLE_KEY, idx);
+                        ServerImage pi = productImageManager.getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
+
+                        pi.setImageLoaded(true, localPath);
+                        pi.setUniqueName(tag);
+                        pi.setUploadToken(tag);
+
+                        Log.e("TAAR", "onResourceReady: -> \n\n" + pi.toString() );*/
+
+                        //NEW_ITEM_IMAGES_TYPES_AND_URLS.put(tag, cachePath);
+
+                        //Log.e(TAG, "onResourceReady: -> " + NEW_ITEM_IMAGES_TYPES_AND_URLS );
+
+                    }
+                });
+    }
+
+    public static void UploadFileToServer(Context context, UploadAsyncTask.Callbacks callbacks, String scriptPath, String localPath) {
+
+        UploadAsyncTask uploadAsyncTask = new UploadAsyncTask(context, localPath, scriptPath, callbacks);
+        uploadAsyncTask.execute();
+    }
+
     public interface Callbacks{
 
-        void onProducImageManagerProgress(ProductImage productImage, int progress, int totalProgress);
+        void onProducImageManagerProgress(ServerImage serverImage, int progress, int totalProgress);
 
 
-        void onProducImageManagerPostExecute(ProductImage pi);
+        void onProducImageManagerPostExecute(ServerImage pi);
 
-        void onProducImageManagerPreExecute(ProductImage pi);
+        void onProducImageManagerPreExecute(ServerImage pi);
 
         void onProducImageAllImagesUploadedComplete();
     }

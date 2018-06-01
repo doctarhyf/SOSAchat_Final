@@ -122,7 +122,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         tvItemName = (TextView) findViewById(R.id.tvItemName);
         tvItemPrice = (TextView) findViewById(R.id.tvItemPrice);
         tvItemVendor = (TextView) findViewById(R.id.tvItemVendor);
-        //tvItemVendor.setTag(R.id.TAG_USER_ID, itemDataBundle.getString(SOS_API.KEY_ACC_DATA_USER_ID));
+        //tvItemVendor.setUniqueName(R.id.TAG_USER_ID, itemDataBundle.getString(SOS_API.KEY_ACC_DATA_USER_ID));
         tvItemDesc = (TextView) findViewById(R.id.tvItemDesc);
         tvItemQual = (TextView) findViewById(R.id.tvItemQuality);
         ivItemMainPic = (ImageView) findViewById(R.id.ivProdMainPic);
@@ -377,7 +377,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         });*/
 
         // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
-        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + "_main.jpg");
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS, picName + "_main.jpg");
         if(BitmapCacheManager.FileExists(cachePath)){
             picUri = Uri.fromFile(new File(cachePath));
 

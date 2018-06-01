@@ -110,7 +110,7 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + uniqueName + picType;
         String picName = uniqueName;
 
-        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_PATH_TYPE_RECENT_ITEMS, picName + picType);
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS, picName + picType);
         if(BitmapCacheManager.FileExists(cachePath)){
             uri = Uri.fromFile(new File(cachePath));
 

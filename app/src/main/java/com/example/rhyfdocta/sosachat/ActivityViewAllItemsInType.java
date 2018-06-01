@@ -74,7 +74,7 @@ public class ActivityViewAllItemsInType extends AppCompatActivity implements Ada
 
 
 
-        //alertDialog.hide();
+        //progressDialog.hide();
 
 
         Intent intent = getIntent();

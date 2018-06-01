@@ -1,36 +1,40 @@
-package com.example.rhyfdocta.sosachat.ImageManager;
+package com.example.rhyfdocta.sosachat.ServerImageManagement;
 
 import android.content.Context;
 import android.net.Uri;
 
+import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
+
 import java.io.File;
 
-public class ProductImage {
+public class ServerImage {
 
     private static final int NO_ID = -1;
+    private static final String NO_IMAGE_CACHE = "no_cache";
     private Context context;
-    private String cacheURL = null;
-    private Uri cacheURI = null;
     private String localPath = null;
     private String remotePath = null;
-    private String localURI = null;
-    private String uniqueName = null;
+
+
     private String imagePostfix = null;
     private int imageGalleryPriorityID = NO_ID;
     private int imageViewID = NO_ID;
     private boolean imageUploaded = false;
     private boolean imageLoaded = false;
-    private boolean imageCached = false;
+    //private boolean imageCached = false;
     private String fileNameOnServer = null;
-    private String tag = null;
+    private boolean isNewFileToUploadLoaded = false;
+    private String uniqueName = null;
     private String uploadToken = null;
-    private String serverImagesRootPath = null;
+    private String serverRootPath = null;
+    private int cacheRootPathID = -1;
 
-    public ProductImage(Context context, int imageGalleryPriorityID, String serverImagesRootPath){
+    public ServerImage(Context context, int imageGalleryPriorityID, String serverRootPath, int cacheRootPathID){
 
         this.context = context;
         this.setImageGalleryPriorityID(imageGalleryPriorityID);
-        this.serverImagesRootPath = serverImagesRootPath;
+        this.serverRootPath = serverRootPath;
+        this.cacheRootPathID = cacheRootPathID;
 
     }
 
@@ -45,8 +49,8 @@ public class ProductImage {
         data = data.concat("Postfix : " + imagePostfix + "\n");
         data = data.concat("ImageViewID : " + imageViewID + "\n");
         data = data.concat("Image Loaded : " + imageLoaded + "\n");
-        data = data.concat("Image Uploaded : " + isImageUploaded() + "\n");
-        data = data.concat("Image cached : " + imageCached + "\n");
+        data = data.concat("Image Uploaded : " + getImageUploaded() + "\n");
+        data = data.concat("Image cached : " + isImageCached() + "\n");
         data = data.concat("FileName on SERVER : " + fileNameOnServer + "\n");
         data = data.concat("Token : " + uploadToken + "\n");
         data = data.concat("=====================================");
@@ -54,6 +58,29 @@ public class ProductImage {
         return data;
     }
 
+    public boolean isImageCached() {
+
+
+        return !imageCachePath().equals(NO_IMAGE_CACHE);
+    }
+
+    public String imageCachePath() {
+        String cachePath = NO_IMAGE_CACHE;
+
+
+        //String picName = uniqueName + imagePostfix;
+        final String picCachePath = BitmapCacheManager.GetImageCachePath(cacheRootPathID, fileNameOnServer);
+
+        if(BitmapCacheManager.FileExists(picCachePath)){
+
+            //Log.e("ABC", "pname : " + picName );
+            cachePath = picCachePath;
+
+        }
+
+
+        return cachePath;
+    }
 
 
     public long imageSize(){
@@ -80,11 +107,9 @@ public class ProductImage {
         return imageLoaded;
     }
 
-    public boolean isImageUploaded(){
-        return imageUploaded;
-    }
 
-    protected void setImageLoaded(boolean imageLoaded, String imageLocalPath) {
+
+    public void setImageLoaded(boolean imageLoaded, String imageLocalPath) {
         this.imageLoaded = imageLoaded;
         this.localPath = imageLocalPath;
 
@@ -110,6 +135,10 @@ public class ProductImage {
         return imagePostfix;
     }
 
+    public Uri localURI(){
+        return Uri.parse(localPath);
+    }
+
     public void setImagePostfix(String imagePostfix) {
         this.imagePostfix = imagePostfix;
     }
@@ -122,33 +151,62 @@ public class ProductImage {
         this.fileNameOnServer = fileNameOnServer;
     }
 
-    public String getTag() {
-        return tag;
+    public String getUniqueName() {
+        return uniqueName;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setUniqueName(String uniqueName) {
+        this.uniqueName = uniqueName;
     }
 
     public void setUploadToken(String uploadToken) {
         fileNameOnServer = uploadToken + imagePostfix;
-        setRemotePath(serverImagesRootPath + fileNameOnServer);
+        setRemotePath(serverRootPath + fileNameOnServer);
         this.uploadToken = uploadToken;
     }
 
-    public void setServerImagesRootPath(String serverImagesRootPath) {
-        this.serverImagesRootPath = serverImagesRootPath;
+    public void setServerRootPath(String serverRootPath) {
+        this.serverRootPath = serverRootPath;
     }
 
     public String getRemotePath() {
-        return serverImagesRootPath + fileNameOnServer;
+        return serverRootPath + fileNameOnServer;
     }
 
     public void setRemotePath(String remotePath) {
         this.remotePath = remotePath;
     }
 
+    public Uri getRemoteOrCacheURI(){
+        String imagePath = isImageCached() ? imageCachePath() : getRemotePath();
+        return Uri.parse(imagePath);
+
+    }
+
     public void setImageUploaded(boolean imageUploaded) {
         this.imageUploaded = imageUploaded;
+    }
+
+    public boolean isNewFileToUploadLoaded() {
+        return isNewFileToUploadLoaded;
+    }
+
+    public void setNewFileToUploadLoaded(boolean newFileToUploadLoaded) {
+        isNewFileToUploadLoaded = newFileToUploadLoaded;
+    }
+
+    public boolean deleteLocalCache() {
+        File file = new File(imageCachePath());
+        boolean res = false;
+
+        if(file.exists()){
+            res = file.delete();
+        }
+
+        return res;
+    }
+
+    public boolean getImageUploaded() {
+        return imageUploaded;
     }
 }
