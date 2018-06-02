@@ -191,7 +191,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
             final Uri picUri = Uri.parse(path);
 
             if(BitmapCacheManager.DeleteCacheFile(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC, pp)){
-                BitmapCacheManager.LoadBitmapIntoImageView(curImageView, b);
+                BitmapCacheManager.LoadBitmapFilePathIntoImageView(curImageView, localPath);
                 glideBitmapLoaderCallbacks.saveBitmapToLocalCache(b, picUri.toString(), SOS_API.DIR_NAME_PIX_CACHE_PROFILCE_PIC);
 
             }else{

@@ -2,8 +2,10 @@ package com.example.rhyfdocta.sosachat.ServerImageManagement;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -27,13 +29,14 @@ public class ServerImageManager {
 
     public static final String KEY_REQ_SERVER_FILE_NAME = "sfn";
     public static final String KEY_REQ_REL_ROOT_DIR = "relRootDir";
+
     private String serverRootPath = "img/products/";
     private int numImages = 0;
     private Context context;
     private List<ServerImage> serverImages = new ArrayList<>();
     private HashMap<Integer, String> imagesIDsAndPostfix = new HashMap<>();
     private int[] imageViewsIDS;
-
+    private boolean editing = false;
     private String[] imagesPostfixes;
     private SOS_API sosApi;
 
@@ -43,6 +46,7 @@ public class ServerImageManager {
     public static final int KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID = 2;
     public static final int KEY_MANIFEST_IMAGES_LOADED = 1;
     public static final int KEY_MANIFEST_IMAGES_UPLOADED = 2;
+    public static final int KEY_MANIFEST_IMAGES_EDITED = 3;
     public static final String BUNDLE_KEY = "key";
 
     //private int totalUploadProgress = 0;
@@ -88,6 +92,23 @@ public class ServerImageManager {
 
     }
 
+    public boolean setImageEdited(int imageViewID, String imageLocalPath){
+        //ServerImage productImage = null;
+        boolean set = false;
+
+        for(int i = 0; i < serverImages.size(); i++){
+            ServerImage pi = serverImages.get(i);
+
+            if(pi.getImageViewID() == imageViewID){
+                pi.setEditedLocalPath( imageLocalPath);
+                set = true;
+            }
+        }
+
+        return set;
+
+    }
+
     private void createProductImages() throws Exception {
 
         if(imageViewsIDS.length != numImages || imagesPostfixes.length != numImages){
@@ -109,7 +130,7 @@ public class ServerImageManager {
         }
     }
 
-    public ServerImage getProductImageByKey(final int KEY_GET_IMAGE_BY, Bundle value){
+    public ServerImage getServerImageByKey(final int KEY_GET_IMAGE_BY, Bundle value){
 
         ServerImage serverImage = null;
 
@@ -165,6 +186,10 @@ public class ServerImageManager {
                 case KEY_MANIFEST_IMAGES_UPLOADED:
                     manifest[i] = pi.getImageUploaded();
                     break;
+
+                case KEY_MANIFEST_IMAGES_EDITED:
+                    manifest[i] = pi.isImageEdited();
+                    break;
             }
         }
 
@@ -180,11 +205,24 @@ public class ServerImageManager {
         status = status.concat("MANIFEST LOADED : " + HM.BATOS(getManifestImages(KEY_MANIFEST_IMAGES_LOADED)) + "\n");
         status = status.concat("NUM PICS UPLOADED : " + numImagesUploaded() + "\n");
         status = status.concat("MANIFEST UPLOADED : " + HM.BATOS(getManifestImages(KEY_MANIFEST_IMAGES_UPLOADED)) + "\n");
+        status = status.concat("NUM PICS EDITED : " + numImagesEdited() + "\n");
+        status = status.concat("MANIFEST EDITED : " + HM.BATOS(getManifestImages(KEY_MANIFEST_IMAGES_EDITED)) + "\n");
         status = status.concat("NUM TOTAL PICS : " + serverImages.size() + "\n");
         status = status.concat("IMGS TOTAL SIZE : " + imagesTotalSize() + " byte(s)\n");
         status = status.concat("===================================");
 
         return status;
+    }
+
+    private int numImagesEdited() {
+        int imgsEdited = 0;
+
+        for(int i = 0; i < serverImages.size(); i++){
+            ServerImage serverImage = serverImages.get(i);
+            if(serverImage.isImageEdited()) imgsEdited++;
+        }
+
+        return imgsEdited;
     }
 
     public String toStringAllProducImages(){
@@ -223,45 +261,66 @@ public class ServerImageManager {
     public boolean isImageLoaded(int imageViewID) {
         Bundle b = new Bundle();
         b.putInt(BUNDLE_KEY, imageViewID);
-        ServerImage serverImage = getProductImageByKey(KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS, b);
+        ServerImage serverImage = getServerImageByKey(KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS, b);
 
         return serverImage.isImageLoaded();
     }
 
-    public void uploadAllImagesToServer(final Callbacks callbacks) {
+    public boolean isImageEdited(int imageViewID) {
+        Bundle b = new Bundle();
+        b.putInt(BUNDLE_KEY, imageViewID);
+        ServerImage serverImage = getServerImageByKey(KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS, b);
+
+        return serverImage.isImageEdited();
+    }
+
+    public void uploadAllImagesToServer(final Callbacks callbacks, boolean editiing) {
 
         if(uploadToken == null) return;
+
+        this.editing = editiing;
         resetImagesProgressArray();
 
 
 
         boolean[] indexesImagesLoaded = getManifestImages(KEY_MANIFEST_IMAGES_LOADED);
+        boolean[] indexesImagesEdited = getManifestImages(KEY_MANIFEST_IMAGES_EDITED);
 
-        Log.e("BOOM", "uploadAllImagesToServer: -> " + HM.BATOS(indexesImagesLoaded) );
 
+        if(editiing){
+            Log.e("BOOM", "UPLOADING EDITED IMAGES: -> " + HM.BATOS(indexesImagesEdited) );
+        }else{
+            Log.e("BOOM", "UPLOADING LOADED IMAGES: -> " + HM.BATOS(indexesImagesLoaded) );
+        }
+
+        if(numImagesEdited() == 0 && editiing){
+            callbacks.onProducImageAllImagesUploadedComplete();
+            return;
+        }
 
 
         for(int i = 0; i < serverImages.size(); i++) {
 
                 ServerImage pi = serverImages.get(i);
-
-            if(pi.isImageLoaded()) {
                 String serverFileName = pi.getFileNameOnServer();
-                String localPath = pi.getLocalPath();
-                //String tag = pi.getUniqueName();
-                //Bundle metaData = new Bundle();
+                String localPath;
 
-                Log.e("DAFAK", "uploadAllImagesToServer: -> " + pi.getImagePostfix() + ", " + pi.getLocalPath() + ", " + pi.isImageLoaded() );
+                if(editiing && pi.isImageEdited()){
 
-                uploadImageFile(
-                        context,
-                        callbacks,
-                        localPath,
+                    localPath = pi.getEditedLocalPath();
+                    uploadImageFile(context, callbacks, localPath, serverFileName, pi);
+
+                }else if (pi.isImageLoaded()) {
+                    localPath = pi.getLocalPath();
+                    uploadImageFile(context, callbacks, localPath, serverFileName, pi);
 
 
-                        serverFileName,
-                        pi);
-            }
+
+
+                }
+
+
+
 
 
         }
@@ -339,7 +398,8 @@ public class ServerImageManager {
                         Log.e("BAAM", "onPostExecute: -> " + numImagesLoaded() + ", " + numImagesUploaded() + ", " + si.getImagePostfix() );
                         //}
                         Log.e("BAAM", "totProg : " + getTotalProgress() );
-                        if(numImagesLoaded() == numImagesUploaded()){
+
+                        if( (editing && numImagesEdited() == numImagesUploaded()) || (!editing && numImagesLoaded() == numImagesUploaded())){
                             callbacks.onProducImageAllImagesUploadedComplete();
 
                             resetImagesProgressArray();
@@ -368,7 +428,9 @@ public class ServerImageManager {
     private void updateTotalProgress(ServerImage pi, int progress) {
         imagesProgress[pi.getImageGalleryPriorityID()] = progress;
 
-        totalProgress = HelperMethods.ArraySum(imagesProgress) / numImagesLoaded();
+        int divider = editing ? numImagesEdited() : numImagesLoaded();
+
+        totalProgress = HelperMethods.ArraySum(imagesProgress) / divider;
     }
 
     public int getTotalProgress(){
@@ -405,20 +467,57 @@ public class ServerImageManager {
         this.serverRootPath = serverRootPath;
     }
 
-    public void loadImagesForEdit(List<ImageView> ivs) {
+    public void loadImagesForEdit(AppCompatActivity activity) {
+
+        //ivs.get(0).setImageResource(R.drawable.mpesa);
+        /*ServerImage si = serverImages.get(0);
+        */
 
 
         for(int i = 0; i < numImages; i++){
-            ServerImage pi = serverImages.get(i);
 
-            String imagePath = pi.isImageCached() ? pi.imageCachePath() : pi.getRemotePath();
-            final Uri picUri = Uri.parse(imagePath);
+            ServerImage si = serverImages.get(i);
+            final ImageView iv = activity.findViewById(si.getImageViewID());
 
-            //glideLoadPic(picUri, i, ivs.get(i));
+            if(si.isImageCached()){
+                //si.setEditedLocalPath();
 
-            //Log.e("ABC", "cached : " + pi.isImageCached() + " path : " + imagePath );
+                iv.setImageDrawable(Drawable.createFromPath(si.imageCachePath()));
+            }else{
+
+                final Uri picUri = Uri.parse(si.getRemotePath());
+                Glide.with(context)
+                        .load(picUri)
+                        .asBitmap()
+                        .placeholder(R.drawable.progress_animation)
+                        .error(R.drawable.ic_error)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .fitCenter()
+                        .into(new SimpleTarget<Bitmap>(450,450) {
+                            @Override
+                            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                                super.onLoadFailed(e, errorDrawable);
+                                iv.setImageDrawable(errorDrawable);
+                                Log.e("LOGF", "onLoadFailed: -> " + e.getMessage() );
+                            }
 
 
+
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+                                iv.setImageBitmap(resource);
+
+                                sosApi.getBitmapCacheManager().saveBitmapToCache(resource, picUri.toString(), SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
+
+                            }
+                        });
+
+            }
+
+            Log.e("SIMG", si.toString() );
 
         }
     }
@@ -446,7 +545,7 @@ public class ServerImageManager {
 
                         Bundle b = new Bundle();
                         b.putInt(ServerImageManager.BUNDLE_KEY, idx);
-                        ServerImage pi = getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
+                        ServerImage pi = getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
                         //ImageView iv = findViewById(pi.getImageViewID());
                         iv.setImageBitmap(resource);
 
@@ -456,7 +555,7 @@ public class ServerImageManager {
                         /*String tag = SOS_API.GetPicExtTagByIndex(idx);
                         Bundle b = new Bundle();
                         b.putInt(ServerImageManager.BUNDLE_KEY, idx);
-                        ServerImage pi = productImageManager.getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
+                        ServerImage pi = productImageManager.getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
 
                         pi.setImageLoaded(true, localPath);
                         pi.setUniqueName(tag);
@@ -476,6 +575,14 @@ public class ServerImageManager {
 
         UploadAsyncTask uploadAsyncTask = new UploadAsyncTask(context, localPath, scriptPath, callbacks);
         uploadAsyncTask.execute();
+    }
+
+    public boolean isEditing() {
+        return editing;
+    }
+
+    public void setEditing(boolean editing) {
+        this.editing = editing;
     }
 
     public interface Callbacks{

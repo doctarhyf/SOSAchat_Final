@@ -313,9 +313,39 @@ public class BitmapCacheManager {
 
     }
 
-    public static void LoadBitmapIntoImageView(ImageView iv, Bitmap b) {
-        // TODO: 6/1/2018 PROPER BITMAP DECODING
+    public static void LoadBitmapIntoImageView(final ImageView iv, final Bitmap bmp) {
 
-        iv.setImageBitmap(b);
+        final int[] intrinsicSize = new int[]{0,0};
+
+        iv.post(new Runnable() {
+            @Override
+            public void run() {
+
+                intrinsicSize[0] = iv.getMeasuredWidth();
+                intrinsicSize[1] = iv.getMeasuredHeight();
+                Bitmap b = HM.DSBFBD(bmp, intrinsicSize);
+
+                iv.setImageBitmap(b);
+
+            }
+        });
+    }
+
+    public static void LoadBitmapFilePathIntoImageView(final ImageView iv, final String picturePath) {
+
+        final int[] intrinsicSize = new int[]{0,0};
+
+        iv.post(new Runnable() {
+            @Override
+            public void run() {
+
+                intrinsicSize[0] = iv.getMeasuredWidth();
+                intrinsicSize[1] = iv.getMeasuredHeight();
+                Bitmap b = HM.DSBFF(picturePath, intrinsicSize);
+
+                iv.setImageBitmap(b);
+
+            }
+        });
     }
 }

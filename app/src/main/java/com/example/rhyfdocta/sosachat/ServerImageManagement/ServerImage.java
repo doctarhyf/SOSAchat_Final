@@ -10,7 +10,7 @@ import java.io.File;
 public class ServerImage {
 
     private static final int NO_ID = -1;
-    private static final String NO_IMAGE_CACHE = "no_cache";
+    private static final String NO_IMAGE = "no_image";
     private Context context;
     private String localPath = null;
     private String remotePath = null;
@@ -23,11 +23,12 @@ public class ServerImage {
     private boolean imageLoaded = false;
     //private boolean imageCached = false;
     private String fileNameOnServer = null;
-    private boolean isNewFileToUploadLoaded = false;
+
     private String uniqueName = null;
     private String uploadToken = null;
     private String serverRootPath = null;
     private int cacheRootPathID = -1;
+    private String editedLocalPath = null;
 
     public ServerImage(Context context, int imageGalleryPriorityID, String serverRootPath, int cacheRootPathID){
 
@@ -43,14 +44,17 @@ public class ServerImage {
         String data = "\n========== PRODUCT IMAGE ==========\n";
         data = data.concat("GALLERY ID : " + imageGalleryPriorityID + "\n");
         data = data.concat("Local Path : " + localPath + "\n");
-        data = data.concat("Server Root Path : " + remotePath + "\n");
+        data = data.concat("Remote Path : " + remotePath + "\n");
         //data = data.concat("ON SERVER : " + onServer() + "\n");
+        data = data.concat("Image cached : " + isImageCached() + "\n");
+        data = data.concat("Image Cache Path : " + imageCachePath() + "\n");
+        data = data.concat("Image Edited : " + isImageEdited() + "\n");
+        data = data.concat("Image Edited Path : " + editedLocalPath + "\n");
         data = data.concat("File Size : " + imageSize() + " byte(s)\n");
         data = data.concat("Postfix : " + imagePostfix + "\n");
         data = data.concat("ImageViewID : " + imageViewID + "\n");
         data = data.concat("Image Loaded : " + imageLoaded + "\n");
         data = data.concat("Image Uploaded : " + getImageUploaded() + "\n");
-        data = data.concat("Image cached : " + isImageCached() + "\n");
         data = data.concat("FileName on SERVER : " + fileNameOnServer + "\n");
         data = data.concat("Token : " + uploadToken + "\n");
         data = data.concat("=====================================");
@@ -61,11 +65,11 @@ public class ServerImage {
     public boolean isImageCached() {
 
 
-        return !imageCachePath().equals(NO_IMAGE_CACHE);
+        return !imageCachePath().equals(NO_IMAGE);
     }
 
     public String imageCachePath() {
-        String cachePath = NO_IMAGE_CACHE;
+        String cachePath = NO_IMAGE;
 
 
         //String picName = uniqueName + imagePostfix;
@@ -187,13 +191,15 @@ public class ServerImage {
         this.imageUploaded = imageUploaded;
     }
 
-    public boolean isNewFileToUploadLoaded() {
-        return isNewFileToUploadLoaded;
+    public boolean isImageEdited() {
+        return (editedLocalPath != null) && (localPath == null);
     }
 
-    public void setNewFileToUploadLoaded(boolean newFileToUploadLoaded) {
-        isNewFileToUploadLoaded = newFileToUploadLoaded;
-    }
+    /*
+    public void setImageEdited(boolean imageEdited, String editedLocalPath) {
+        //this.imageEdited = imageEdited;
+        this.setEditedLocalPath(editedLocalPath);
+    }*/
 
     public boolean deleteLocalCache() {
         File file = new File(imageCachePath());
@@ -208,5 +214,13 @@ public class ServerImage {
 
     public boolean getImageUploaded() {
         return imageUploaded;
+    }
+
+    public String getEditedLocalPath() {
+        return editedLocalPath;
+    }
+
+    public void setEditedLocalPath(String editedLocalPath) {
+        this.editedLocalPath = editedLocalPath;
     }
 }

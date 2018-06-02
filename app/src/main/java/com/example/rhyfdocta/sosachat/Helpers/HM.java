@@ -120,11 +120,19 @@ public class HM extends HelperMethods {
     }
 
     public static Bitmap DSBFF(String picPath, int reqWidth, int reqHeight){
-        return decodeSampledBitmapFromFile(picPath, reqWidth, reqHeight);
+        return DecodeSampledBitmapFromFile(picPath, reqWidth, reqHeight);
     }
 
-    public static Bitmap DBFBD(Bitmap bitmap, int reqWidth, int reqHeight){
-        return decodeBitmapFromBitmapData(bitmap, reqWidth, reqHeight);
+    public static Bitmap DSBFF(String picPath, int[] size){
+        return DecodeSampledBitmapFromFile(picPath, size[0], size[1]);
+    }
+
+    public static Bitmap DSBFBD(Bitmap bitmap, int reqWidth, int reqHeight){
+        return DecodeSampledBitmapFromBitmapData(bitmap, reqWidth, reqHeight);
+    }
+
+    public static Bitmap DSBFBD(Bitmap bitmap, int[] size){
+        return DecodeSampledBitmapFromBitmapData(bitmap, size[0], size[1]);
     }
 
     public static void GIVS(ImageViewSizeListener listener, ImageView imageView) {

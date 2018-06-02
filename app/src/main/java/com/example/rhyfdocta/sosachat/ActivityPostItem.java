@@ -38,6 +38,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.SpinnerReselect;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
@@ -220,17 +221,19 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         List<ImageView> ivs = new ArrayList<>();
 
-        /*
+/*
         ivs.add(0, ivMainItemPic);
         ivs.add(1, ivPic1);
         ivs.add(2, ivPic2);
         ivs.add(3, ivPic3);*/
 
-        //serverImageManager.loadImagesForEdit(ivs);
+        //ivs.get(0).setImageResource(R.drawable.airtel_money);
+        //findViewById()
+        serverImageManager.loadImagesForEdit(this);
 
         Bundle b = new Bundle();
         b.putInt(ServerImageManager.BUNDLE_KEY, 0);
-        ServerImage pi = serverImageManager.getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
+        ServerImage pi = serverImageManager.getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
 
         Uri uri = pi.getRemoteOrCacheURI();
         //loadItemEditingOldPic(uri, 0);
@@ -310,7 +313,7 @@ public class ActivityPostItem extends AppCompatActivity implements
 
                         Bundle b = new Bundle();
                         b.putInt(ServerImageManager.BUNDLE_KEY, idx);
-                        ServerImage pi = serverImageManager.getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
+                        ServerImage pi = serverImageManager.getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
                         ImageView iv = findViewById(pi.getImageViewID());
                         iv.setImageBitmap(resource);
 
@@ -320,7 +323,7 @@ public class ActivityPostItem extends AppCompatActivity implements
                         /*String tag = SOS_API.GetPicExtTagByIndex(idx);
                         Bundle b = new Bundle();
                         b.putInt(ServerImageManager.BUNDLE_KEY, idx);
-                        ServerImage pi = serverImageManager.getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
+                        ServerImage pi = serverImageManager.getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
 
                         pi.setImageLoaded(true, localPath);
                         pi.setUniqueName(tag);
@@ -465,7 +468,12 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         //NotEmpty = NE
 
-        boolean isMainImageLoaded = serverImageManager.isImageLoaded(ivMainItemPic.getId());
+        boolean isMainImageLoaded = false;
+        if(itemModeEditing){
+            isMainImageLoaded = true;//serverImageManager.isImageEdited(ivMainItemPic.getId());
+        }else{
+            isMainImageLoaded = serverImageManager.isImageLoaded(ivMainItemPic.getId());
+        }
         boolean itemDescNE = !etItemDesc.getText().toString().isEmpty();
         boolean itemNameNE = !etItemName.getText().toString().isEmpty();
 
@@ -528,45 +536,13 @@ public class ActivityPostItem extends AppCompatActivity implements
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.msgChooseYourPictureSource))
                 .setView(viewDialog);
-               /* .setNegativeButton(getResources().getString(R.string.btnCancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-
-*/
-
-
-
-       /* AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(getResources().getString(R.string.msgChooseYourPictureSource))
-                .setSingleChoiceItems(sources, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        onPictureSourceSelected(which);
-
-                    }
-                })
-                .setNegativeButton(getResources().getString(R.string.btnCancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });*/
 
         alertDialogPictureSource = builder.create();
         alertDialogPictureSource.show();
 
 
 
-    }
-
-
-
-    public void dialogOnRowClick(View view){
-        Toast.makeText(this, "Dialog Row Clicked", Toast.LENGTH_SHORT).show();
     }
 
     private void onPictureSourceSelected(int which) {
@@ -721,41 +697,32 @@ public class ActivityPostItem extends AppCompatActivity implements
 
             Bundle bundle = new Bundle();
             bundle.putInt(ServerImageManager.BUNDLE_KEY, curImageView.getId());
-            ServerImage serverImage = serverImageManager.getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS,
+            ServerImage serverImage = serverImageManager.getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS,
                     bundle);
             curPI = serverImage;
 
             Log.e(TAG, "PICTYPE : " + serverImage.getImagePostfix() + ", IMAGE PATH GALLERY -> " + picturePath );
             cursor.close();
 
-            /*
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize=4;      // 1/8 of original image
-            Bitmap b = BitmapFactory.decodeFile(picturePath, options);*/
 
-            //reqSize = {300,300};
+            BitmapCacheManager.LoadBitmapFilePathIntoImageView(curImageView, picturePath);
 
 
+            if(itemModeEditing) {
+                serverImageManager.setImageEdited(curImageView.getId(), picturePath);
+            }else{
+                serverImageManager.setImageLoaded(curImageView.getId(), picturePath);
+            }
 
-            Bitmap b = HM.DSBFF(picturePath, reqSize[0], reqSize[1]);
-
-            // TODO: 11/16/17 COMPRESS ON BYTES COUNT THRESHOLD
-
-           //Log.e(TAG, "BYTES CT " + b.getByteCount());
-
-            curImageView.setImageBitmap(b);
-            serverImageManager.setImageLoaded(curImageView.getId(), picturePath);
-
-
-
-            //setItemPicAdded(curImageView.getId());
+            Log.e("CPI",  curPI.toString());
+            Log.e("CPI", serverImageManager.toString() );
         }
 
 
 
         if(requestCode == REQ_CAMERA && resultCode == RESULT_OK){
 
-            String path = SOS_API.GSAIPCP() + "/" + fileName;
+            String picturePath = SOS_API.GSAIPCP() + "/" + fileName;
 
             //curPicPath = path;
 
@@ -763,33 +730,26 @@ public class ActivityPostItem extends AppCompatActivity implements
 
             Bundle bundle = new Bundle();
             bundle.putInt(ServerImageManager.BUNDLE_KEY, curImageView.getId());
-            ServerImage serverImage = serverImageManager.getProductImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS,
+            ServerImage serverImage = serverImageManager.getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEVIEWS_IDS,
                     bundle);
             curPI = serverImage;
 
-            Log.e(TAG, "PICTYPE : " + serverImage.getImagePostfix() + ", IMAGE PATH CAMERA -> " + path );
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize=4;      // 1/8 of original image
-            Bitmap b = BitmapFactory.decodeFile(path, options);
+            //Log.e(TAG, "PICTYPE : " + serverImage.getImagePostfix() + ", IMAGE PATH CAMERA -> " + picturePath );
 
-            //reqSize = {300,300};
+            BitmapCacheManager.LoadBitmapFilePathIntoImageView(curImageView, picturePath);
 
+            if(itemModeEditing) {
+                serverImageManager.setImageEdited(curImageView.getId(), picturePath);
+            }else{
+                serverImageManager.setImageLoaded(curImageView.getId(), picturePath);
+            }
 
-            //Bitmap b = (Bitmap) data.getExtras().get("data");
-            //Bitmap b = HM.DSBFF(path, reqSize[0], reqSize[1]);
-
-            curImageView.setImageBitmap(b);
-            serverImageManager.setImageLoaded(curImageView.getId(), path);
-
-
-
-            //setItemPicAdded(curImageView.getId());
-
+            Log.e("CPI",  curPI.toString());
+            Log.e("CPI", serverImageManager.toString() );
 
         }
 
-        Log.e("CPI",  curPI.toString());
-        Log.e("CPI", serverImageManager.toString() );
+
 
 
         //NEW_ITEM_IMAGES_TYPES_AND_URLS.put(picType, curPicPath);
@@ -1079,79 +1039,8 @@ public class ActivityPostItem extends AppCompatActivity implements
             progressDialog.show();
 
             serverImageManager.setUploadToken(sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID));
-            serverImageManager.uploadAllImagesToServer(this);
+            serverImageManager.uploadAllImagesToServer(this, itemModeEditing);
 
-
-            //totalUploadProgress = progMain = prog1 = prog2 = prog3 = 0;
-            //data.getString(Product.KEY_PD_UNIQUE_NAME);
-/*
-            Bundle metaData = new Bundle();
-            metaData.putString(SOS_API.KEY_NEW_ITEM_IMG_TYPE, SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN);
-            String tag = SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN;
-            String fileName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) + SOS_API.KEY_ITEM_POST_FIX_MAIN_PIC;
-            String dirPath = Html.escapeHtml(SOS_API.DIR_NAME_PIX_ROOT + "/" + SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS + "/");
-
-            Log.e(TAG, "DPATH -> " + dirPath );*/
-
-            /*
-            curPicPath = NEW_ITEM_IMAGES_TYPES_AND_URLS.get(tag);
-            sosApi.uploadPicFile(
-                    this,
-                    curPicPath,
-                    fileName,
-                    dirPath,
-                    tag,
-                    metaData
-            );
-
-            if(imagesLoaded[1]){
-
-                tag = SOS_API.KEY_ITEM_POST_FIX_PIC_1;
-                fileName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) + tag;
-                curPicPath = NEW_ITEM_IMAGES_TYPES_AND_URLS.get(tag);
-
-                sosApi.uploadPicFile(
-                        this,
-                        curPicPath,
-                        fileName,
-                        dirPath,
-                        tag,
-                        metaData
-                );
-            }
-
-        if(imagesLoaded[2]){
-
-            tag = SOS_API.KEY_ITEM_POST_FIX_PIC_2;
-            fileName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) + tag;
-            curPicPath = NEW_ITEM_IMAGES_TYPES_AND_URLS.get(tag);
-
-            sosApi.uploadPicFile(
-                    this,
-                    curPicPath,
-                    fileName,
-                    dirPath,
-                    tag,
-                    metaData
-            );
-        }
-
-        if(imagesLoaded[3]){
-
-            tag = SOS_API.KEY_ITEM_POST_FIX_PIC_3;
-            fileName = sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) + tag;
-            curPicPath = NEW_ITEM_IMAGES_TYPES_AND_URLS.get(tag);
-
-            //REGISTER FILE IN DB
-            sosApi.uploadPicFile(
-                    this,
-                    curPicPath,
-                    fileName,
-                    dirPath,
-                    tag,
-                    metaData
-            );
-        }*/
 
 
     }

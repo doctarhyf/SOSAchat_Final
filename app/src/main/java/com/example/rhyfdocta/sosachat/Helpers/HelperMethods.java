@@ -543,7 +543,7 @@ public class HelperMethods {
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
-    public static Bitmap decodeSampledBitmapFromFile(String picturePath, int reqWidth, int reqHeight){
+    public static Bitmap DecodeSampledBitmapFromFile(String picturePath, int reqWidth, int reqHeight){
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -557,7 +557,7 @@ public class HelperMethods {
         return BitmapFactory.decodeFile(picturePath, options);
     }
 
-    public static Bitmap decodeBitmapFromBitmapData(Bitmap bitmap, int reqWidth, int reqHeight){
+    public static Bitmap DecodeSampledBitmapFromBitmapData(Bitmap bitmap, int reqWidth, int reqHeight){
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
 
