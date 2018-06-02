@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 
 import java.io.File;
+import java.util.Date;
 
 public class ServerImage {
 
@@ -43,23 +44,40 @@ public class ServerImage {
     public String toString() {
         String data = "\n========== PRODUCT IMAGE ==========\n";
         data = data.concat("GALLERY ID : " + imageGalleryPriorityID + "\n");
-        data = data.concat("Local Path : " + localPath + "\n");
-        data = data.concat("Remote Path : " + remotePath + "\n");
+        data = data.concat("LOCAL PATH : " + localPath + "\n");
+        data = data.concat("REMOTE PATH : " + remotePath + "\n");
         //data = data.concat("ON SERVER : " + onServer() + "\n");
-        data = data.concat("Image cached : " + isImageCached() + "\n");
-        data = data.concat("Image Cache Path : " + imageCachePath() + "\n");
-        data = data.concat("Image Edited : " + isImageEdited() + "\n");
-        data = data.concat("Image Edited Path : " + editedLocalPath + "\n");
-        data = data.concat("File Size : " + imageSize() + " byte(s)\n");
-        data = data.concat("Postfix : " + imagePostfix + "\n");
-        data = data.concat("ImageViewID : " + imageViewID + "\n");
-        data = data.concat("Image Loaded : " + imageLoaded + "\n");
-        data = data.concat("Image Uploaded : " + getImageUploaded() + "\n");
-        data = data.concat("FileName on SERVER : " + fileNameOnServer + "\n");
-        data = data.concat("Token : " + uploadToken + "\n");
+        data = data.concat("IMAGE CACHE : " + isImageCached() + "\n");
+        data = data.concat("IMAGE CACHE PATH : " + imageCachePath() + "\n");
+        data = data.concat("IMAGE EDITED : " + isImageEdited() + "\n");
+        data = data.concat("IMAGE EDITED PATH : " + editedLocalPath + "\n");
+        data = data.concat("FILE SIZE : " + imageSize() + " byte(s)\n");
+        data = data.concat("POSTFIX : " + imagePostfix + "\n");
+        data = data.concat("IMAGEVIEWID : " + imageViewID + "\n");
+        data = data.concat("IMAGE LOADED : " + imageLoaded + "\n");
+        data = data.concat("IMAGE UPLOADED : " + getImageUploaded() + "\n");
+        data = data.concat("FILENAME ON SERVER : " + fileNameOnServer + "\n");
+        data = data.concat("CACHE EXPIRED : " + cacheExpired() + "\n");
+        data = data.concat("CACHE SAVED DATE : " + cacheSavedDate().toString() + "\n");
+        data = data.concat("TOKEN : " + uploadToken + "\n");
         data = data.concat("=====================================");
 
         return data;
+    }
+
+    private Date cacheSavedDate() {
+        Date date = null;
+        File file = new File(imageCachePath());
+        if(file.exists()){
+            date = new Date(file.lastModified());
+        }
+        return date;
+    }
+
+    private boolean cacheExpired() {
+
+        boolean res = false;
+        return res;
     }
 
     public boolean isImageCached() {
