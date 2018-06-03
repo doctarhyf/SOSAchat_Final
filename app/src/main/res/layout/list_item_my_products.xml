@@ -18,8 +18,9 @@
         style="@style/styleIvItem"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_marginLeft="@dimen/genPadding"
-        app:srcCompat="@drawable/phantom_4" />
+        android:layout_marginLeft="@dimen/paddingNormal"
+        android:scaleType="center"
+        app:srcCompat="@drawable/progress_animation" />
 
     <LinearLayout
 
@@ -66,6 +67,9 @@
 "       android:orientation="vertical"
         android:layout_height="match_parent">
 
+
+
+
         <ImageView
 
             android:clickable="true"
@@ -95,7 +99,7 @@
         <ImageView
 
             android:clickable="true"
-
+            android:visibility="gone"
             android:id="@+id/ivSoldMyPd"
             android:layout_marginRight="0dp"
             android:layout_width="match_parent"

@@ -219,16 +219,6 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         Log.e("LED", "loadEditingData: un -> " + pdUniqueName );
 
-        List<ImageView> ivs = new ArrayList<>();
-
-/*
-        ivs.add(0, ivMainItemPic);
-        ivs.add(1, ivPic1);
-        ivs.add(2, ivPic2);
-        ivs.add(3, ivPic3);*/
-
-        //ivs.get(0).setImageResource(R.drawable.airtel_money);
-        //findViewById()
         serverImageManager.loadImagesForEdit(this);
 
         Bundle b = new Bundle();
@@ -258,89 +248,6 @@ public class ActivityPostItem extends AppCompatActivity implements
 
 
     }
-
-
-    private void loadItemEditingOldPic(final Uri picUri, final int idx) {
-
-
-        //imagesLoaded = new Boolean[]{true, true, true, true};
-
-
-        //String picMain = editingData.getString(SOS_API.KEY_PD_MAIN_PIC_URI);
-
-        /*String picName = un + picType;
-        final String url = SOS_API.DIR_PATH_PRODUCTS_PIX + picName ;
-        Uri picUri = Uri.parse(url);
-        Log.e("PICURI", "loadItemEditingOldPic: -> " + url + "\nUN : " + un );
-
-        final String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_PRODUCTS, picName);
-        if(BitmapCacheManager.FileExists(cachePath)){
-            picUri = Uri.fromFile(new File(cachePath));
-
-
-            Log.e(TAG, "KASH : -> " + picUri.toString() );
-
-            //Toast.makeText(this, "Loade from cache", Toast.LENGTH_SHORT).show();
-
-        }else{
-            Log.e(TAG, "NO_KASH -> " + picUri.toString() );
-            //Toast.makeText(this, "Loade from network", Toast.LENGTH_SHORT).show();
-        }*/
-
-        Log.e("DASTR", "loadItemEditingOldPic: -> " + picUri.toString() );
-
-        Glide.with(this)
-                .load(picUri)
-                .asBitmap()
-                .placeholder(R.drawable.progress_animation)
-                .error(R.drawable.ic_error)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .fitCenter()
-                .into(new SimpleTarget<Bitmap>(450,450) {
-
-                    @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        super.onLoadFailed(e, errorDrawable);
-                        Log.e("ERR", "onLoadFailed: -> " + e.getMessage() );
-                    }
-
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
-
-
-                        //String localPath = sosApi.getBitmapCacheManager().saveBitmapToCache(resource, url, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
-
-                        Bundle b = new Bundle();
-                        b.putInt(ServerImageManager.BUNDLE_KEY, idx);
-                        ServerImage pi = serverImageManager.getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
-                        ImageView iv = findViewById(pi.getImageViewID());
-                        iv.setImageBitmap(resource);
-
-                        //Log.e("PICURI", "onResourceReady: \n\n" + pi.toString() );
-                        //ITEM_IMAGEVIEWS_IDS_ARRAY.get(idx).setImageBitmap(resource);
-                        //imagesLoaded[idx] = true;
-                        /*String tag = SOS_API.GetPicExtTagByIndex(idx);
-                        Bundle b = new Bundle();
-                        b.putInt(ServerImageManager.BUNDLE_KEY, idx);
-                        ServerImage pi = serverImageManager.getServerImageByKey(ServerImageManager.KEY_GET_IMAGE_BY_IMAGEGALLERY_PRIORITY_ID, b);
-
-                        pi.setImageLoaded(true, localPath);
-                        pi.setUniqueName(tag);
-                        pi.setUploadToken(tag);
-
-                        Log.e("TAAR", "onResourceReady: -> \n\n" + pi.toString() );*/
-
-                        //NEW_ITEM_IMAGES_TYPES_AND_URLS.put(tag, cachePath);
-
-                        //Log.e(TAG, "onResourceReady: -> " + NEW_ITEM_IMAGES_TYPES_AND_URLS );
-
-                    }
-                });
-
-
-    }
-
 
 
     private void initGUI() {
@@ -394,8 +301,6 @@ public class ActivityPostItem extends AppCompatActivity implements
 
 
     }
-
-
 
     private void setSpinnerListeners() {
 

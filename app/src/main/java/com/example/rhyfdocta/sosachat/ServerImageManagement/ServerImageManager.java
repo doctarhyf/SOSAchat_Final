@@ -501,13 +501,8 @@ public class ServerImageManager {
                                 iv.setImageDrawable(errorDrawable);
                                 Log.e("LOGF", "onLoadFailed: -> " + e.getMessage() );
                             }
-
-
-
                             @Override
                             public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
-
-
                                 iv.setImageBitmap(resource);
 
                                 sosApi.getBitmapCacheManager().saveBitmapToCache(resource, picUri.toString(), SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);

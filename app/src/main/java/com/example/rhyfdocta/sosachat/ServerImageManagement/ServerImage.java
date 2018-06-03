@@ -70,6 +70,8 @@ public class ServerImage {
         File file = new File(imageCachePath());
         if(file.exists()){
             date = new Date(file.lastModified());
+        }else{
+            date = new Date(0);
         }
         return date;
     }

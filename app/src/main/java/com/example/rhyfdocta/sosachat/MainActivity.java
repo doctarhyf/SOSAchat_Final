@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
                 Bundle bundle = new Bundle();
                 bundle.putAll(pd.toBundle());
                 bundle.putAll(pd.getData());
-
+                //String desc = bundle.getString(Product.KEY_PD_DESC);
                 boolean itemIsMine = false;
 
                 if(bundle.getString(SOS_API.KEY_ACC_DATA_USER_ID).equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_USER_ID))){

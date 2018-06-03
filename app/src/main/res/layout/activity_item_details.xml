@@ -4,202 +4,202 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/svDetail"
+    android:background="@color/xlightGray"
     >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/genPadding"
+
     >
 
+    <android.support.v7.widget.CardView
 
-    <ImageView
+        style="@style/cardViewItemDetails">
+
+        <LinearLayout style="@style/llItemDetails">
+            <ImageView
         android:id="@+id/ivProdMainPic"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:padding="@dimen/genPadding"
-        android:scaleType="fitCenter"
+        android:minHeight="120dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/paddingNormal"
+        android:scaleType="center"
         app:srcCompat="@drawable/progress_animation" />
+            <TextView
+                    android:id="@+id/tvItemName"
+                    android:layout_width="match_parent"
+                    android:textSize="18sp"
+                    android:maxLines="2"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Item Name"
+                    android:textStyle="normal" />
+            <TextView
+                    android:id="@+id/tvItemPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textSize="26sp"
+                    android:textColor="@color/colorAccent"
+                    android:text="$300"
+                    android:textStyle="bold" />
+            <LinearLayout
 
-    <LinearLayout
+                android:id="@+id/llItemViewsCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            style="@style/tvItemDetailsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Item" />
-
-
-
-
-        <TextView
-            android:id="@+id/tvItemName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Item Name"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
+                <ImageView
+                    android:src="@android:drawable/ic_menu_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <TextView
 
-        <TextView
-
-            style="@style/tvItemDetailsLabel"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Price" />
+                    android:gravity="center_vertical"
+                    android:id="@+id/tvItemViewsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="0"
+                    android:textStyle="bold" />
 
 
-
-        <TextView
-            android:id="@+id/tvItemPrice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Vendor"
-            android:textStyle="bold" />
-
-
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-
-        android:id="@+id/llItemViewsCount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            style="@style/tvItemDetailsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Views" />
-
-        <TextView
-
-            android:id="@+id/tvItemViewsCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="0"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-
-        android:id="@+id/llVendorCont"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            style="@style/tvItemDetailsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Vendor" />
-
-        <TextView
-
-            android:id="@+id/tvItemVendor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold" />
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            style="@style/tvItemDetailsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Quality" />
-
-        <TextView
-
-            android:id="@+id/tvItemQuality"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textStyle="bold" />
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-
-        android:id="@+id/llDatePosted"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            style="@style/tvItemDetailsLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/tvLabelItemDatePosted" />
-
-        <TextView
-
-            android:id="@+id/tvDateItemPosted"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textStyle="bold" />
-
-
-
-    </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/tvItemDesc"
+        android:text="@string/lblAboutThisItem"
+        style="@style/labelPaneItemDetails" />
+
+    <android.support.v7.widget.CardView
+
+        style="@style/cardViewItemDetails">
+
+    <LinearLayout style="@style/llItemDetails">
+
+        <TableLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    style="@style/lblAboutIteem"
+                    android:text="@string/lblAboutThisItemType" />
+
+                <TextView
+                    android:id="@+id/tvItemType"
+                    style="@style/txtAboutItemCont"
+
+                    android:text="ITEM_TYPE" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/lblAboutThisItemCat"
+                    style="@style/lblAboutIteem" />
+
+                <TextView
+                    android:text="ITEM_CAT"
+                    android:id="@+id/tvItemCat"
+
+                    style="@style/txtAboutItemCont" />
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/lblAboutThisItemQuality"
+                    style="@style/lblAboutIteem" />
+                <TextView
+
+        android:id="@+id/tvItemQuality"
+                    android:text="Brand New"
+                    style="@style/txtAboutItemCont" />
+
+            </TableRow>
+
+            <TableRow>
+
+            <TextView
+                android:text="@string/lblAboutThisItemPostedDate"
+                style="@style/lblAboutIteem" />
+
+                <TextView
+                    android:text="5 day (s)"
+                    android:id="@+id/tvDateItemPosted"
+                    style="@style/txtAboutItemCont" />
+
+
+            </TableRow>
+
+
+
+            <TextView
+                android:id="@+id/tvItemDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+
+                android:text="Some details"
+                />
+
+
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+    <TextView
+        android:text="@string/lblAboutTheSeller"
+        style="@style/labelPaneItemDetails" />
+
+    <android.support.v7.widget.CardView
+
+        style="@style/cardViewItemDetails">
+
+    <LinearLayout style="@style/llItemDetails">
+
+    <TextView
+
+        android:id="@+id/tvItemVendor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minLines="5"
-        android:padding="@dimen/genPadding"
-        android:text="Some details"
-        />
+
+        android:text="\@doctarhyf"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+
+
+
+
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -224,15 +224,7 @@
 
     </LinearLayout>
 
-    <!--<Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="BUY"
-        android:textColor="@color/buy_btn_selector"
-        android:padding="@dimen/genPadding"
-        android:background="@drawable/color_state_buy_btn"
-        />
--->
+
 </LinearLayout>
 
     </ScrollView>

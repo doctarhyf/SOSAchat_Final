@@ -53,7 +53,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     private static final int KEY_CONTACT_BY_EMAIL = 2;
     private static final int KEY_CONTACT_BY_SOSDM = 3;
     Bundle itemDataBundle;
-    TextView tvItemName, tvItemPrice, tvDatePosted, tvItemVendor, tvItemDesc, tvItemQual, tvItemViewsCount;
+    TextView tvItemName, tvItemPrice, tvDatePosted, tvItemVendor, tvItemDesc, tvItemQual, tvItemViewsCount, tvItemCat, tvItemType;
     ImageView ivItemMainPic;
     Button btnAddToWishList, btnContactVendor;
     //final String[] contactChoices = new String[4];
@@ -69,7 +69,9 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     private String email;
     //private String vendorUID;
     boolean itemIsMine = false;
-    private LinearLayout llVendorCont, llItemViewsCount, llDateSold;
+    //private LinearLayout llVendorCont;
+    private LinearLayout llItemViewsCount;
+    //llDateSold;
     SOS_API sosApi;
     //private LinearLayout ;
 
@@ -118,7 +120,8 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
 
 
-
+        tvItemType = findViewById(R.id.tvItemType);
+        tvItemCat = findViewById(R.id.tvItemCat);
         tvItemName = (TextView) findViewById(R.id.tvItemName);
         tvItemPrice = (TextView) findViewById(R.id.tvItemPrice);
         tvItemVendor = (TextView) findViewById(R.id.tvItemVendor);
@@ -126,9 +129,9 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         tvItemDesc = (TextView) findViewById(R.id.tvItemDesc);
         tvItemQual = (TextView) findViewById(R.id.tvItemQuality);
         ivItemMainPic = (ImageView) findViewById(R.id.ivProdMainPic);
-        llVendorCont = (LinearLayout) findViewById(R.id.llVendorCont);
+        //llVendorCont = (LinearLayout) findViewById(R.id.llVendorCont);
         llItemViewsCount = (LinearLayout) findViewById(R.id.llItemViewsCount);
-        llDateSold = (LinearLayout) findViewById(R.id.llDatePosted);
+        //llDateSold = (LinearLayout) findViewById(R.id.llDatePosted);
         tvItemViewsCount = (TextView) findViewById(R.id.tvItemViewsCount);
         tvDatePosted = (TextView) findViewById(R.id.tvDateItemPosted);
 
@@ -210,7 +213,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         }else{
             btnAddToWishList.setVisibility(View.VISIBLE);
             btnContactVendor.setVisibility(View.VISIBLE);
-            llVendorCont.setVisibility(View.VISIBLE);
+            //llVendorCont.setVisibility(View.VISIBLE);
 
             //sosApi.updateItemViewsCount();
             // TODO: 1/4/2018 NEXT FEATURE USER PROFILE
@@ -253,9 +256,9 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         TextView tvSMS = customView.findViewById(R.id.tvContactVendorSMS);
         TextView tvEmail = customView.findViewById(R.id.tvContactVendorEmail);
 
-        tvMobile.setText(itemDataBundle.getString(SOS_API.KEY_ACC_DATA_MOBILE));
-        tvSMS.setText(itemDataBundle.getString(SOS_API.KEY_ACC_DATA_MOBILE));
-        tvEmail.setText(itemDataBundle.getString(SOS_API.KEY_ACC_DATA_EMAIL));
+        //tvMobile.setText(itemDataBundle.getString(SOS_API.KEY_ACC_DATA_MOBILE));
+        //tvSMS.setText(itemDataBundle.getString(SOS_API.KEY_ACC_DATA_MOBILE));
+        //tvEmail.setText(itemDataBundle.getString(SOS_API.KEY_ACC_DATA_EMAIL));
 
 
         rowContactByPhone.setOnClickListener(new View.OnClickListener() {
@@ -336,10 +339,14 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     }
 
 
+
+
     private void loadItemDataFromBundle( Bundle bundle) {
 
 
+
         tvItemName.setText(bundle.getString(Product.KEY_PD_NAME));
+
         tvItemPrice.setText(itemPrice);
         //tvItemVendor.setText("");
         tvItemDesc.setText(bundle.getString(Product.KEY_PD_DESC));
@@ -351,6 +358,8 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         tvItemViewsCount.setText(viewsCount);
 
         String qual = HM.GPQF(this, new Integer(bundle.getString(Product.KEY_PD_QUAL)).intValue());
+        tvItemCat.setText(bundle.getString(Product.KEY_PD_CAT));
+        tvItemType.setText(bundle.getString(Product.KEY_PD_TYPE));
 
 
         tvItemQual.setText(qual);

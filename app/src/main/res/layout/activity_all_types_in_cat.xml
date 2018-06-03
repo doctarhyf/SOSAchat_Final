@@ -8,7 +8,7 @@
 
     android:background="@color/colorPrimaryDark"
 
-    android:padding="@dimen/genPadding">
+    android:padding="@dimen/paddingNormal">
 
 
 

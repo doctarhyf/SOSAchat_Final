@@ -38,7 +38,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/genPadding"
+        android:layout_marginBottom="@dimen/paddingNormal"
         >
 
 
@@ -57,9 +57,9 @@
         <Button
             android:text="@string/search"
             android:onClick="startSearch"
-            android:paddingTop="@dimen/genPadding"
+            android:paddingTop="@dimen/paddingNormal"
             android:textStyle="bold"
-            android:paddingBottom="@dimen/genPadding"
+            android:paddingBottom="@dimen/paddingNormal"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
@@ -162,7 +162,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:padding="@dimen/genPadding"
+        android:padding="@dimen/paddingNormal"
         android:background="@drawable/botton_bg"
 
         >

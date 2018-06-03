@@ -14,7 +14,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/airtel_money"
         android:id="@+id/ivCatItem"
-        android:layout_marginLeft="@dimen/genPadding"
+        android:layout_marginLeft="@dimen/paddingNormal"
         />
 
 

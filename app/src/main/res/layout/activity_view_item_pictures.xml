@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:src="@drawable/shopping_1"
+        android:src="@drawable/progress_animation"
         android:id="@+id/ivmpMain"
         android:layout_margin="@dimen/dblGenPadding"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         />
 
 
@@ -34,18 +34,18 @@
 
             android:id="@+id/ivMorePic1"
             android:layout_marginRight="@dimen/dblGenPadding"
-            android:src="@drawable/mpesa"
+
             style="@style/ivItemMorePic" />
 
         <ImageView
             android:id="@+id/ivMorePic2"
-            android:src="@drawable/airtel_money"
+
             style="@style/ivItemMorePic" />
 
         <ImageView
             android:id="@+id/ivMorePic3"
             android:layout_marginLeft="@dimen/dblGenPadding"
-            android:src="@drawable/airtel_money"
+
             style="@style/ivItemMorePic" />
 
 

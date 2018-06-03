@@ -1,6 +1,7 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
@@ -136,6 +137,17 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
                 .skipMemoryCache(true)
                 .fitCenter()
                 .into(new SimpleTarget<Bitmap>(450,450) {
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+
+                        //Toast.makeText(ActivityViewItemPics.this, "Error : " + pixPath, Toast.LENGTH_LONG).show();
+                        iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        iv.setImageResource(R.drawable.ic_error);
+
+                    }
+
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 
@@ -180,57 +192,6 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
                 });
 
-        /*
-        Picasso.with(this)
-                .load(uri)
-                .error(R.drawable.ic_error)
-                .placeholder(R.drawable.progress_animation)
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .centerInside()
-                .resize(tw, th)
-                .into(iv, new Callback() {
-            @Override
-            public void onSuccess() {
-
-                if(iv.getId() == R.id.ivmpMain){
-                    registerForContextMenu(iv);
-
-                   iv.setOnTouchListener(new View.OnTouchListener() {
-                       @Override
-                       public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                           ImageView v = (ImageView) view;
-                           MotionEvent event = motionEvent;
-
-                           if(event.getAction() == 0){
-                               v.setAlpha(0.5f);
-
-                               Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                               vibrator.vibrate(100);
-                            }
-
-                           if(event.getAction() == 1 || event.getAction() == 3) {
-                               v.setAlpha(1f);
-                           }
-
-
-                           return false;
-                       }
-                   });
-
-
-                }else {
-
-                    iv.setOnTouchListener(ActivityViewItemPics.this);
-                }
-            }
-
-            @Override
-            public void onError() {
-                Log.e(TAG, "picasso pic error ActivityViewItemPics::loadPicsFromServer(). url -> " + picUri.toString() );
-            }
-        });*/
 
     }
 

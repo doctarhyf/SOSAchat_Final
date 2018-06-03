@@ -16,8 +16,9 @@
     <ImageView
         android:id="@+id/ivProd"
         style="@style/styleIvItem"
-        android:layout_marginLeft="@dimen/genPadding"
-        app:srcCompat="@drawable/phantom_4" />
+        android:layout_marginLeft="@dimen/paddingNormal"
+        android:scaleType="center"
+        app:srcCompat="@drawable/progress_animation" />
 
     <LinearLayout
             style="@style/padLeft"

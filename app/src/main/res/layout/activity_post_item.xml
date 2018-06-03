@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.example.rhyfdocta.sosachat.ActivityPostItem"
-    android:padding="@dimen/genPadding"
+    android:padding="@dimen/paddingNormal"
     android:weightSum="1">
 
 
@@ -53,7 +53,7 @@
         android:id="@+id/etNewItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/genPadding"
+        android:layout_marginTop="@dimen/paddingNormal"
         android:ems="10"
         android:hint="@string/hintNewItemName"
         android:inputType="textPersonName"
@@ -68,8 +68,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/genPadding"
-        android:paddingBottom="@dimen/genPadding"
+        android:paddingTop="@dimen/paddingNormal"
+        android:paddingBottom="@dimen/paddingNormal"
         >
 
         <EditText
@@ -100,12 +100,12 @@
         />
 
     <com.example.rhyfdocta.sosachat.Helpers.SpinnerReselect
-        android:layout_marginTop="@dimen/genPadding"
+        android:layout_marginTop="@dimen/paddingNormal"
         android:id="@+id/spNewItemCat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/genPadding"
-        android:paddingBottom="@dimen/genPadding"
+        android:paddingTop="@dimen/paddingNormal"
+        android:paddingBottom="@dimen/paddingNormal"
         android:entries="@array/newItemCat"
         />
 
@@ -118,12 +118,12 @@
     />
 
     <Spinner
-        android:layout_marginTop="@dimen/genPadding"
+        android:layout_marginTop="@dimen/paddingNormal"
         android:id="@+id/spNewItemType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/genPadding"
-        android:paddingBottom="@dimen/genPadding"
+        android:paddingTop="@dimen/paddingNormal"
+        android:paddingBottom="@dimen/paddingNormal"
 
         />
 
@@ -136,10 +136,10 @@
 
 
     <Spinner
-        android:layout_marginTop="@dimen/genPadding"
+        android:layout_marginTop="@dimen/paddingNormal"
         android:id="@+id/spNewItemQuality"
-        android:paddingTop="@dimen/genPadding"
-        android:paddingBottom="@dimen/genPadding"
+        android:paddingTop="@dimen/paddingNormal"
+        android:paddingBottom="@dimen/paddingNormal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/newItemQuality"
@@ -157,7 +157,7 @@
         android:id="@+id/etNewItemDesc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/genPadding"
+        android:layout_marginTop="@dimen/paddingNormal"
         android:layout_weight="4"
         android:ems="10"
         android:gravity="top"
@@ -184,7 +184,7 @@
             style="@style/styleIvNewItemPic"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:padding="@dimen/genPadding"
+            android:padding="@dimen/paddingNormal"
             android:scaleType="centerCrop"
             android:src="@color/sosBlue"
             app:srcCompat="@drawable/shopping_1" />
@@ -196,7 +196,7 @@
             style="@style/styleIvNewItemPic"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:padding="@dimen/genPadding"
+            android:padding="@dimen/paddingNormal"
             android:scaleType="centerCrop"
             android:src="@color/sosBlue" />
 
@@ -207,7 +207,7 @@
             style="@style/styleIvNewItemPic"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:padding="@dimen/genPadding"
+            android:padding="@dimen/paddingNormal"
             android:scaleType="centerCrop"
             android:src="@color/sosBlue" />
 
@@ -218,7 +218,7 @@
 
         android:text="@string/msgClickToChangePic"
         android:layout_width="match_parent"
-        android:padding="@dimen/genPadding"
+        android:padding="@dimen/paddingNormal"
         android:layout_height="wrap_content" />
 
 

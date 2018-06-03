@@ -7,6 +7,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/tvStyle</item>
         <item name="android:textColorHint">@color/colTextColorHintLogSignForm</item>
     </style>
 
@@ -14,12 +15,17 @@
 
 
     <style name="padTop">
-        <item name="android:paddingTop">@dimen/genPadding</item>
+        <item name="android:paddingTop">@dimen/paddingNormal</item>
 
     </style>
 
+    <style name="tvStyle" >
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="padBot">
-        <item name="android:paddingBottom">@dimen/genPadding</item>
+        <item name="android:paddingBottom">@dimen/paddingNormal</item>
 
     </style>
 
@@ -28,7 +34,7 @@
     </style>
 
     <style name="margTop">
-        <item name="android:layout_marginTop">@dimen/genPadding</item>
+        <item name="android:layout_marginTop">@dimen/paddingNormal</item>
 
     </style>
 
@@ -54,7 +60,7 @@
 
     <style name="styleSettingsLabel">
         <item name="android:gravity">right|center_vertical</item>
-        <item name="android:paddingRight">@dimen/genPadding</item>
+        <item name="android:paddingRight">@dimen/paddingNormal</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
 
@@ -72,8 +78,8 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:paddingTop">@dimen/genPadding</item>
-        <item name="android:paddingBottom">@dimen/genPadding</item>
+        <item name="android:paddingTop">@dimen/paddingNormal</item>
+        <item name="android:paddingBottom">@dimen/paddingNormal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
 
@@ -107,7 +113,7 @@
     </style>
 
     <style name="pad">
-        <item name="android:padding">@dimen/genPadding</item>
+        <item name="android:padding">@dimen/paddingNormal</item>
     </style>
 
     <style name="tvItemDetailsLabel" parent="pad">
@@ -118,13 +124,13 @@
 
     <style name="padLeft">
 
-        <item name="android:paddingLeft">@dimen/genPadding</item>
+        <item name="android:paddingLeft">@dimen/paddingNormal</item>
 
     </style>
 
     <style name="padTopBot">
-        <item name="android:paddingTop">@dimen/genPadding</item>
-        <item name="android:paddingBottom">@dimen/genPadding</item>
+        <item name="android:paddingTop">@dimen/paddingNormal</item>
+        <item name="android:paddingBottom">@dimen/paddingNormal</item>
     </style>
 
     <style name="allCatsStyle" parent="padTopBot">
@@ -194,7 +200,7 @@
     <style name="styleDialogRowCustomView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">@dimen/genPadding</item>
+        <item name="android:padding">@dimen/paddingNormal</item>
         <item name="android:paddingLeft">@dimen/dblGenPadding</item>
         <item name="android:clickable">true</item>
         <item name="android:background">@drawable/color_state_row_settings</item>
@@ -211,8 +217,8 @@
         <item name="android:textSize">16sp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">@dimen/genPadding</item>
-        <item name="android:paddingBottom">@dimen/genPadding</item>
+        <item name="android:paddingTop">@dimen/paddingNormal</item>
+        <item name="android:paddingBottom">@dimen/paddingNormal</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">0dp</item>
         <item name="android:background">#d8000000</item>
@@ -228,7 +234,8 @@
     </style>
 
     <style name="ivItemMorePic">
-        <item name="android:scaleType">centerCrop</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:src">@drawable/progress_animation</item>
         <item name="android:clickable">true</item>
         <item name="android:onClick">onIvPicClicked</item>
         <item name="android:layout_width">0dp</item>
@@ -237,8 +244,8 @@
     </style>
 
     <style name="tvHomeSectionsSeparator">
-        <item name="android:paddingTop">@dimen/genPadding</item>
-        <item name="android:paddingBottom">@dimen/genPadding</item>
+        <item name="android:paddingTop">@dimen/paddingNormal</item>
+        <item name="android:paddingBottom">@dimen/paddingNormal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">28sp</item>
@@ -248,7 +255,7 @@
 
     <style name="styleItemName">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">#000</item>
         <item name="android:textSize">22sp</item>
@@ -257,7 +264,7 @@
     <style name="styleItemPrice">
         <item name="android:textColor">@color/sosBlue</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">2</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
@@ -269,5 +276,39 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">#999</item>
         <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="labelPaneItemDetails">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_margin">@dimen/paddingNormal</item>
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="cardViewItemDetails">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="llItemDetails">
+        <item name="android:layout_margin">@dimen/paddingNormal</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="lblAboutIteem">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="txtAboutItemCont">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:textStyle">normal</item>
     </style>
 </resources>

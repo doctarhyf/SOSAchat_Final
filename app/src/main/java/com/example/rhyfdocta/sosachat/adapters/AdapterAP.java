@@ -2,6 +2,7 @@ package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -147,6 +148,20 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
                 .skipMemoryCache(true)
                 .fitCenter()
                 .into(new SimpleTarget<Bitmap>(400,400) {
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+
+                        holder.iv.setImageResource(R.drawable.ic_error);
+                    }
+
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        super.onLoadStarted(placeholder);
+                        holder.iv.setImageResource(R.drawable.progress_animation);
+                    }
+
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 

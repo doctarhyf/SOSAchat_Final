@@ -7,6 +7,7 @@
     <color name="sosLightBlue">#4d91d2ed</color>
     <color name="black">#000</color>
     <color name="gray">#afafaf</color>
+    <color name="grayDark">#717171</color>
     <color name="white">#fff</color>
     <color name="launchBG">#212121</color>
     <color name="blackTransparent">#9c000000</color>
@@ -19,4 +20,6 @@
     <color name="rowTransparantGray">#1eeeeeee</color>
     <color name="bgColFormLogSign">#ed131313</color>
     <color name="colTextColorHintLogSignForm">#616161</color>
+    <color name="lightGray">#eee</color>
+    <color name="xlightGray">#f4f9f9f9</color>
 </resources>

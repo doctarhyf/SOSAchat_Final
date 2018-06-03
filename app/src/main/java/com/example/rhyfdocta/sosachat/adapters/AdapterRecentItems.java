@@ -41,7 +41,10 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         TextView tvItemName;
         TextView tvItemPrice;
         TextView tvItemDate;
+        TextView tvType;
+        TextView tvCat;
         View layout;
+        TextView tvItemDesc;
 
         public ViewHolder(View view) {
             super(view);
@@ -50,6 +53,8 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
             tvItemName = (TextView) layout.findViewById(R.id.tvFeatProdName);
             tvItemPrice = (TextView) layout.findViewById(R.id.tvFeatProdPrice);
             tvItemDate = (TextView) layout.findViewById(R.id.tvFeatProdDate);
+            tvItemDesc = layout.findViewById(R.id.tvFeatProdDesc);
+
         }
     }
 
@@ -91,6 +96,8 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         holder.tvItemName.setText(pd.getPdName());
         holder.tvItemPrice.setText(HM.GIPB(context, R.string.priceToDiscuss, pd.getPdPrice(), pd.getPdCur()));
         holder.tvItemDate.setText(data.getString(SOS_API.KEY_ITEM_DATE_ADDED));
+        holder.tvItemDesc.setText(pd.getPdDesc());
+
 
 
 

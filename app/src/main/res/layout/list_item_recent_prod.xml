@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<android.support.v7.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
 
@@ -17,80 +17,83 @@
         android:background="@drawable/color_state_row_settings"
 
         android:orientation="horizontal"
-        android:padding="8dp">
+        >
 
 
         <ImageView
             android:id="@+id/ivFetProd"
             android:layout_width="@dimen/sizeImgRecentProdW"
             android:layout_height="@dimen/sizeImgRecentProdH"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             app:srcCompat="@drawable/progress_animation" />
 
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
 
+                android:lines="1"
                 android:id="@+id/tvFeatProdName"
                 style="@style/styleItemName"
-                android:text="Item" />
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="Item"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvFeatProdDesc"
+                style="@style/styleItemPrice"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:maxLines="2"
+
+                android:text="This is a small desc"
+                android:textColor="@color/grayDark"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toTopOf="@+id/tvFeatProdPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFeatProdName" />
 
             <TextView
                 android:id="@+id/tvFeatProdPrice"
                 style="@style/styleItemPrice"
-                android:text="220 $" />
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:text="220 $"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvFeatProdDate"
+                style="@style/styleItemPostAge"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="Item Price"
-                style="@style/styleItemPostAge" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFeatProdPrice" />
 
-        </LinearLayout>
-
-        <!--<ImageView
-        android:id="@+id/ivFetProd"
-        android:layout_marginLeft="@dimen/genPadding"
-        style="@style/styleIvFeatItem"
-        app:srcCompat="@drawable/phantom_4" />
+        </android.support.constraint.ConstraintLayout>
 
 
-
-    <LinearLayout
-            style="@style/padLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-
-                android:id="@+id/tvFeatProdName"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Item" />
-
-            <TextView
-                android:id="@+id/tvFeatProdPrice"
-                style="@style/featPriceTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Item Price" />
-
-        <TextView
-            android:id="@+id/tvFeatProdDate"
-            style="@style/featPriceTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Item Price" />
-
-        </LinearLayout>-->
 
 
     </LinearLayout>

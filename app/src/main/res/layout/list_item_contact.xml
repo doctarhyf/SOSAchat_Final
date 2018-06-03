@@ -18,7 +18,7 @@
         style="@style/styleIvItem"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_marginLeft="@dimen/genPadding"
+        android:layout_marginLeft="@dimen/paddingNormal"
         app:srcCompat="@drawable/rhyf_pp" />
 
     <LinearLayout

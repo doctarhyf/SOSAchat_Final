@@ -24,9 +24,9 @@
             android:id="@+id/ivWli"
             style="@style/styleIvItem"
             android:layout_width="@dimen/sizeImgRecentProdW"
-
+            android:scaleType="centerInside"
             android:layout_height="@dimen/sizeImgRecentProdH"
-            app:srcCompat="@drawable/phantom_4" />
+            app:srcCompat="@drawable/progress_animation" />
 
         <LinearLayout
 

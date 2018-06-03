@@ -380,5 +380,11 @@
     <string name="strMsgErrorGetttingID">There was an error getting a new unique ID for the new item</string>
     <string name="strTitleErrorGetttingID">Error get new unique ID</string>
     <string name="strNoProducts">No products posted yet.\\nTap POST NEW ITEM to post a new product.</string>
+    <string name="lblAboutThisItem">About This Item</string>
+    <string name="lblAboutThisItemQuality">Condition</string>
+    <string name="lblAboutThisItemPostedDate">Posted</string>
+    <string name="lblAboutTheSeller">About The Seller</string>
+    <string name="lblAboutThisItemCat">Category</string>
+    <string name="lblAboutThisItemType">Type</string>
 
 </resources>

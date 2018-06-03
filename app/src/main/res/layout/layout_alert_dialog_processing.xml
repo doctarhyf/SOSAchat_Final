@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="@dimen/genPadding"
+    android:padding="@dimen/paddingNormal"
     >
 
     <ProgressBar
@@ -14,7 +14,7 @@
         android:layout_weight="1" />
 
     <TextView
-        android:layout_marginLeft="@dimen/genPadding"
+        android:layout_marginLeft="@dimen/paddingNormal"
         android:id="@+id/tvAlertDialogProcessing"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

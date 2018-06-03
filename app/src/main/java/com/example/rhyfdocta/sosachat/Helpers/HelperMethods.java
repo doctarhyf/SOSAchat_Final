@@ -390,7 +390,7 @@ public class HelperMethods {
 
     public static String getProductQualityFromIndex(Context context, int i) {
         String[] qualities = HelperMethods.RGSA(context, R.array.newItemQuality);
-        String quality = qualities[new Integer(i).intValue()];
+        String quality = qualities[i];
         return  quality;
     }
 
