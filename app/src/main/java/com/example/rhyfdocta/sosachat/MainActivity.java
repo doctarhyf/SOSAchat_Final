@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             }
         });
 
-        /*adapterRecentItems = new AdapterRecentItems(this, recentProducts, new GlideBitmapLoaderCallbacks() {
+        /*adapterRecentItems = new AdapterRecentItems(this, recentProducts, new CallbacksBitmapLoading() {
             @Override
             public void onItemClicked(Product pd) {
                 //HM.T(MainActivity.this, pd.getPdName(), HM.TLL);

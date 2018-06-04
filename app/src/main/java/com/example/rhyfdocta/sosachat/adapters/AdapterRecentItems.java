@@ -60,7 +60,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
 
     private Context context;
     private List<Product> products;
-    //private GlideBitmapLoaderCallbacks glideBitmapLoaderCallbacks;
+    //private CallbacksBitmapLoading glideBitmapLoaderCallbacks;
     private SOS_API sosApi;
 
     public AdapterRecentItems(Context context, List<Product> products, Callbacks callBacks){

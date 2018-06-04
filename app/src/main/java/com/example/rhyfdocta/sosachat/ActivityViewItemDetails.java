@@ -22,21 +22,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
-import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 
 import org.json.JSONArray;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -44,7 +38,7 @@ import java.util.List;
  */
 
 public class ActivityViewItemDetails extends AppCompatActivity implements SOS_API.SOSApiListener,
-        GlideBitmapLoaderCallbacks {
+        BitmapCacheManager.CallbacksBitmapLoading {
 
 
     private static final String TAG = "Test Debug";
@@ -53,8 +47,9 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     private static final int KEY_CONTACT_BY_EMAIL = 2;
     private static final int KEY_CONTACT_BY_SOSDM = 3;
     Bundle itemDataBundle;
-    TextView tvItemName, tvItemPrice, tvDatePosted, tvItemVendor, tvItemDesc, tvItemQual, tvItemViewsCount, tvItemCat, tvItemType;
-    ImageView ivItemMainPic;
+    TextView tvItemName, tvItemPrice, tvDatePosted, tvItemDesc, tvItemQual, tvItemViewsCount, tvItemCat, tvItemType;
+    TextView tvSellerDislayName;
+    ImageView ivItemMainPic, ivSellerPP;
     Button btnAddToWishList, btnContactVendor;
     //final String[] contactChoices = new String[4];
     String phoneNumber;
@@ -77,6 +72,8 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
     private String itemPrice;
     private View customView;
+    private TextView tvSellerMobile;
+    private TextView tvSellerEmail;
     ;
 
 
@@ -119,13 +116,21 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
 
 
+        ivSellerPP = findViewById(R.id.ivSeller);
+
+        //tvSellerDisplayName = findViewById(R.id.);
+        //tvSellerEmail = findViewById(R.id.);
+        //tvSellerMobile = findViewById(R.id);
 
         tvItemType = findViewById(R.id.tvItemType);
         tvItemCat = findViewById(R.id.tvItemCat);
         tvItemName = (TextView) findViewById(R.id.tvItemName);
         tvItemPrice = (TextView) findViewById(R.id.tvItemPrice);
-        tvItemVendor = (TextView) findViewById(R.id.tvItemVendor);
-        //tvItemVendor.setUniqueName(R.id.TAG_USER_ID, itemDataBundle.getString(SOS_API.KEY_ACC_DATA_USER_ID));
+
+        tvSellerDislayName = (TextView) findViewById(R.id.tvSellerDislayName);
+        tvSellerMobile = (TextView) findViewById(R.id.tvSellerMobile);
+        tvSellerEmail = (TextView) findViewById(R.id.tvSellerEmail);
+
         tvItemDesc = (TextView) findViewById(R.id.tvItemDesc);
         tvItemQual = (TextView) findViewById(R.id.tvItemQuality);
         ivItemMainPic = (ImageView) findViewById(R.id.ivProdMainPic);
@@ -217,12 +222,12 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
             //sosApi.updateItemViewsCount();
             // TODO: 1/4/2018 NEXT FEATURE USER PROFILE
-            tvItemVendor.setClickable(false);
-            tvItemVendor.setOnClickListener(new View.OnClickListener() {
+            tvSellerDislayName.setClickable(false);
+            tvSellerDislayName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*Toast.makeText(getApplicationContext(),
-                            "Show " + tvItemVendor.getText().toString() +
+                            "Show " + tvSellerDislayName.getText().toString() +
                     "'s profile! ID : " + itemDataBundle.getString(SOS_API.KEY_ACC_DATA_USER_ID) , Toast.LENGTH_SHORT).show();*/
 
                     //showVendorsProfile(itemDataBundle);
@@ -235,6 +240,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
     }
 
+    // TODO: 6/4/2018 SHOW SELLER PROFILE
     private void showVendorsProfile(Bundle itemDataBundle) {
         Intent intent = new Intent(this, ActivityMyAccount.class);
         intent.putExtras(itemDataBundle);
@@ -348,10 +354,14 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         tvItemName.setText(bundle.getString(Product.KEY_PD_NAME));
 
         tvItemPrice.setText(itemPrice);
-        //tvItemVendor.setText("");
+        //tvSellerDislayName.setText("");
         tvItemDesc.setText(bundle.getString(Product.KEY_PD_DESC));
-        tvItemVendor.setText(bundle.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
-        if(itemIsMine) tvItemVendor.setText(HM.RGS(this, R.string.postedByMe));
+
+        tvSellerDislayName.setText(bundle.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
+        tvSellerEmail.setText(bundle.getString(SOS_API.KEY_ACC_DATA_EMAIL));
+        tvSellerMobile.setText(bundle.getString(SOS_API.KEY_ACC_DATA_MOBILE));
+
+        if(itemIsMine) tvSellerDislayName.setText(HM.RGS(this, R.string.postedByMe));
         tvDatePosted.setText(bundle.getString(SOS_API.KEY_ITEM_DATE_ADDED));
         String viewsCount = bundle.getString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT);
 
@@ -364,61 +374,36 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         tvItemQual.setText(qual);
 
-        //Loading picture
-        String itemsPixPath = SOS_API.DIR_PATH_PRODUCTS_PIX;
-
-        Uri picUri = Uri.parse(itemsPixPath.concat(bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg"));
-        //final String imgName = bundle.getString(Product.KEY_PD_UNIQUE_NAME);
-        final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
-        String picName = bundle.getString(Product.KEY_PD_UNIQUE_NAME);
-
-        /*Picasso.with(getApplicationContext()).load(picUri).error(R.drawable.ic_error)
-                .placeholder(R.drawable.progress_animation).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).centerInside().resize(450,450).into(ivItemMainPic, new Callback() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Overr ide
-            public void onError() {
-                Log.e("PICASSO  ", "onError: PICASSO ITEM DETAILS ERROR \nLink : " + picUri.toString() );
-            }
-        });*/
-
-        // TODO: 1/26/2018 LOAD PICTURES FROM CACHE
-        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS, picName + "_main.jpg");
-        if(BitmapCacheManager.FileExists(cachePath)){
-            picUri = Uri.fromFile(new File(cachePath));
+        String sellerDisplayName = bundle.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME);
+        String sellerEmail = bundle.getString(SOS_API.KEY_ACC_DATA_EMAIL);
+        String sellerMobile = bundle.getString(SOS_API.KEY_ACC_DATA_MOBILE);
 
 
-            Log.e(TAG, "PIC_PATH : -> " + picUri.toString() );
+        String remoteDirProductPix = SOS_API.DIR_PATH_PRODUCTS_PIX;
 
-            //Toast.makeText(this, "Loade from cache", Toast.LENGTH_SHORT).show();
+        String fileNameProductPix = bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
+        final String remotePathProductPix = remoteDirProductPix + fileNameProductPix;
 
-        }else{
-            Log.e(TAG, "NO_CACHE -> " + picUri.toString() );
-            //Toast.makeText(this, "Loade from network", Toast.LENGTH_SHORT).show();
-        }
+        BitmapCacheManager.GlideLoadPathIntoImageView(
+                this,
+                 remotePathProductPix,
+                fileNameProductPix,
+                BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PRODUCTS,
+                SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS, ivItemMainPic, this);
 
+        // TODO: 6/4/2018 LOAD SELLER PIC
+        String remoteDirPP = SOS_API.DIR_PATH_PP;
+        String fileNamePP = bundle.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
+        final String remotePathPP = remoteDirPP + fileNamePP;
 
-        Glide.with(this)
-                .load(picUri)
-                .asBitmap()
-                .placeholder(R.drawable.progress_animation)
-                .error(R.drawable.ic_error)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .fitCenter()
-                .into(new SimpleTarget<Bitmap>(450,450) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
-
-
-                        ActivityViewItemDetails.this.saveBitmapToLocalCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
-
-                        ivItemMainPic.setImageBitmap(resource);
-                    }
-                });
+        BitmapCacheManager.GlideLoadPathIntoImageView(this,
+                remotePathPP,
+                fileNamePP,
+                BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC,
+                SOS_API.DIR_NAME_PIX_CACHE_PROFILCE_PIC,
+                ivSellerPP,
+                this
+                );
 
 
 

@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -484,32 +485,38 @@ public class ActivityPostItem extends AppCompatActivity implements
     private void startCameraApp() {
 
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
 
-        if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                fireCameraIntent();
 
-            fireCameraIntent();
+            } else {
 
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+                requestPermissions(permissions, REQ_PERMISSION_CAMERA);
+
+            }
         }else{
-
-            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-            requestPermissions(permissions, REQ_PERMISSION_CAMERA);
-
+            fireCameraIntent();
         }
 
     }
 
     private void startGallery() {
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-        if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                fireGalleryIntent();
 
-            fireGalleryIntent();
+            } else {
 
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                requestPermissions(permissions, REQ_PERMISSION_GALLERY);
+
+            }
         }else{
-
-            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-            requestPermissions(permissions, REQ_PERMISSION_GALLERY);
-
+            fireGalleryIntent();
         }
 
 

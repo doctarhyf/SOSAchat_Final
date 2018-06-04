@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
-
+    android:padding="@dimen/paddingNormal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"

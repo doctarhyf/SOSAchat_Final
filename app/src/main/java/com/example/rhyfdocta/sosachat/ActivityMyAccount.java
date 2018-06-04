@@ -34,7 +34,6 @@ import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.UploadAsyncTask;
-import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
@@ -205,7 +204,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
         progressDialog.show();
     }
 
-    private class MyGlideBitmapLoaderCallbacks implements GlideBitmapLoaderCallbacks{
+    private class MyGlideBitmapLoaderCallbacks implements BitmapCacheManager.CallbacksBitmapLoading{
 
         private final Context context;
 

@@ -23,7 +23,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
-import com.example.rhyfdocta.sosachat.Interfaces.GlideBitmapLoaderCallbacks;
+
 import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 
@@ -241,7 +241,7 @@ public class ActivityLookingForView extends AppCompatActivity {
 
     }
 
-    private class MyGlideBitmapLoaderCallbacks implements GlideBitmapLoaderCallbacks {
+    private class MyGlideBitmapLoaderCallbacks implements BitmapCacheManager.CallbacksBitmapLoading {
 
         private final Context context;
 

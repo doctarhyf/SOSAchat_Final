@@ -3,12 +3,19 @@ package com.example.rhyfdocta.sosachat.Helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
+import com.example.rhyfdocta.sosachat.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -347,5 +354,58 @@ public class BitmapCacheManager {
 
             }
         });
+    }
+
+    public interface CallbacksBitmapLoading {
+        void onItemClicked(Product pd);
+        void saveBitmapToLocalCache(Bitmap bitmap, String picUrl, String dirName);
+    }
+
+    public static void GlideLoadPathIntoImageView(Context context, final String path, final String fileName, final int PIC_CACHE_ROOT_PATH_ID, final String DIR_NAME_PIX_CACHE, final ImageView iv, final CallbacksBitmapLoading callbacks) {
+
+        Uri picUri = Uri.parse(path);
+
+        String cachePath = BitmapCacheManager.GetImageCachePath(PIC_CACHE_ROOT_PATH_ID, fileName);
+        if(BitmapCacheManager.FileExists(cachePath)) {
+            picUri = Uri.fromFile(new File(cachePath));
+        }
+
+        final String finalPath = picUri.toString();
+
+        Glide.with(context)
+                .load(picUri)
+                .asBitmap()
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_error)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .fitCenter()
+                .into(new SimpleTarget<Bitmap>(450,450) {
+
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        super.onLoadStarted(placeholder);
+                        iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        iv.setImageResource(R.drawable.progress_animation);
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+
+                        iv.setImageResource(R.drawable.ic_error);
+                        e.printStackTrace();
+                        Log.e("LERR", "onLoadFailed: -> " + e.getMessage() + ", url : " + finalPath );
+                    }
+
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+                        callbacks.saveBitmapToLocalCache(resource, path, DIR_NAME_PIX_CACHE);
+
+                        iv.setImageBitmap(resource);
+                    }
+                });
     }
 }
