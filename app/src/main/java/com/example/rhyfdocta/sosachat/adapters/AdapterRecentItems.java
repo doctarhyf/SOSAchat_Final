@@ -81,7 +81,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
     public AdapterRecentItems.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.list_item_recent_prod, parent, false);
+        View view = layoutInflater.inflate(R.layout.list_item_recent_prod_horizontal, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

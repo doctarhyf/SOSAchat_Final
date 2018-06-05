@@ -20,6 +20,10 @@ public class ProductMyProducts extends ProductWishList {
 
     private Bundle dataBundle;
 
+    public ProductMyProducts(){
+
+    }
+
     public ProductMyProducts(String name, String price, String img, String cur, String cat, String qual, String desc, String dateStr){
         super(name, price, img, cur, cat, qual, desc,null);
         this.setDateStr(dateStr);

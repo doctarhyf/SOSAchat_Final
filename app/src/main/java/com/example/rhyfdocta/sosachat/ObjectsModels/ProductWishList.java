@@ -25,6 +25,10 @@ public class ProductWishList extends Product {
         this.dateAdded = dateAdded;
     }
 
+    public ProductWishList(){
+
+    }
+
     public String getPdUniqueNameFromIMG(){
         return getPdImg().split("_")[0] + "_" + getPdImg().split("_")[1];
     }

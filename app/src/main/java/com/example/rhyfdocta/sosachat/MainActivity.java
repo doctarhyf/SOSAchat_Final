@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         rvCats.setLayoutManager(layoutManagerCats);
 
         rvRecentItems = findViewById(R.id.rvRecentItems);
-        layoutManagerRecentItems = new LinearLayoutManager(this);
+        layoutManagerRecentItems = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvRecentItems.setLayoutManager(layoutManagerRecentItems);
 
         getSupportActionBar().setSubtitle(sosApi.GSV(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));//getResources().getString(R.string.moto));

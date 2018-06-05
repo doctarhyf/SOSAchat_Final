@@ -632,6 +632,24 @@ public class HelperMethods {
         return uri;
     }
 
+    public static void PutAllJSONIntoBundle(JSONObject jo, Bundle b) {
+
+        Iterator<String> iter = jo.keys();
+
+        while (iter.hasNext()){
+            String key = iter.next();
+            try{
+                String value = jo.getString(key);
+
+                b.putString(key, value);
+
+            }catch (JSONException e){
+                e.printStackTrace();
+                Log.e("JSON", "PutAllJSONIntoBundle: -> " + e.getMessage() );
+            }
+        }
+    }
+
     public static interface SpinnerLoaderListener {
         public void onLoadComplete();
     }

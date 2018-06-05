@@ -53,7 +53,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
     static class ViewHolderMyProduct {
 
-        TextView tvName, tvPriceNQual, tvDate;
+        TextView tvName, tvPriceNQual, tvDate, tvItemQual, tvItemPrice;
         ImageView ivRmPd, ivEditPd, ivSoldMyPd;
 
 
@@ -78,6 +78,8 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             viewHolderMyProduct.ivRmPd = (ImageView) view.findViewById(R.id.ivWli);
             viewHolderMyProduct.ivEditPd = (ImageView) view.findViewById(R.id.ivEditMyPd);
             viewHolderMyProduct.ivSoldMyPd = (ImageView) view.findViewById(R.id.ivSoldMyPd);
+            viewHolderMyProduct.tvItemQual = view.findViewById(R.id.tvItemQual);
+            viewHolderMyProduct.tvItemPrice = view.findViewById(R.id.tvItemPrice);
             view.setTag(viewHolderMyProduct);
 
 
@@ -94,7 +96,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
         //String[] currecnies = HelperMethods.RES_GET_SA(context, R.array.currencies);
 
 
-        String quality = HM.GPQF(context,new Integer(pd.getPdQual()).intValue());
+        String quality = pd.getPdQual();HM.GPQF(context,new Integer(pd.getPdQual()).intValue());
         String price = pd.getPdPrice().equals("-1") ? "" : pd.getPdPrice();
 
         //String price = HM.GIPB(context, R.string.priceToDiscuss, pd.getPdPrice(),pd.getPdCur());
@@ -110,7 +112,12 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
         Bundle d = pd.getDataBundle();
 
         viewHolderMyProduct.tvName.setText(pd.getPdName());
-        viewHolderMyProduct.tvPriceNQual.setText(priceNQual);
+        //viewHolderMyProduct.tvPriceNQual.setText(priceNQual);
+
+        viewHolderMyProduct.tvItemQual.setText(pd.getPdQual());
+        viewHolderMyProduct.tvItemPrice.setText(pd.getPdPrice());
+
+
         viewHolderMyProduct.tvDate.setText(d.getString(Product.KEY_PD_DATE_ADDED));
 
 

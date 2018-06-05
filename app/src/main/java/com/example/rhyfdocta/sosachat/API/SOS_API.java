@@ -833,7 +833,7 @@ public class SOS_API {
 
                                         Bundle b = new Bundle();
 
-
+                                        HelperMethods.PutAllJSONIntoBundle(jo,b);
                                         String dateStart = jo.getString(KEY_ITEM_DATE_ADDED);
 
                                         //HelperDate.DateDiff dateDiff = HelperDate.dateDiff(dateStart, dateEnd );//new Date().toString());
@@ -1188,6 +1188,7 @@ public class SOS_API {
                                     //Log.e(TAG, "date -> " + dateJson );
 
                                     Bundle b = new Bundle();
+                                    HelperMethods.PutAllJSONIntoBundle(jo, b);
                                     b.putString(KEY_ITEM_ID, jo.getString(KEY_ITEM_ID));
                                     b.putString(KEY_ITEM_ITEM_VIEWS_ACCOUNT, jo.getString(KEY_ITEM_ITEM_VIEWS_ACCOUNT));
                                     b.putString(KEY_ITEM_UNIQUE_NAME, jo.getString(KEY_ITEM_UNIQUE_NAME));
@@ -1206,6 +1207,8 @@ public class SOS_API {
                                     b.putString(Product.KEY_PD_DATE_ADDED, postedDate);
 
                                     pd.setDataBundle(b);
+
+
 
                                     allProducts.add(pd);
 
@@ -2161,7 +2164,7 @@ public class SOS_API {
                                     );
 
                                     Bundle data = new Bundle();
-
+                                    HelperMethods.PutAllJSONIntoBundle(jo, data);
 
                                     String dateStart = jo.getString(Product.KEY_PD_DATE_ADDED);
 

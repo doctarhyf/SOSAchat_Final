@@ -91,7 +91,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
         String[] qualities = HelperMethods.RGSA(context, R.array.newItemQuality);
         //String[] currecnies = HelperMethods.RGSA(context, R.array.currencies);
 
-        String quality = qualities[new Integer(pd.getPdQual()).intValue()];
+        String quality = qualities[Integer.parseInt(pd.getPdQual())];
         String price = HM.GIPB(context, R.string.priceToDiscuss, pd.getPdPrice(),pd.getPdCur());
 
         String priceNQual = price + " / " + quality;

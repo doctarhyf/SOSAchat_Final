@@ -38,7 +38,9 @@ public class Product {
         this.pdImg = pdImg;
     }
 
+    public Product(){
 
+    }
 
     public String getPdCur() {
         return pdCur;
