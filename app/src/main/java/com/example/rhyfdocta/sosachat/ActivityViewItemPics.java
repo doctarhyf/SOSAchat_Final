@@ -144,7 +144,7 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
                         //Toast.makeText(ActivityViewItemPics.this, "Error : " + pixPath, Toast.LENGTH_LONG).show();
                         iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                        iv.setImageResource(R.drawable.ic_error);
+                        iv.setImageResource(R.drawable.logo);
 
                     }
 
