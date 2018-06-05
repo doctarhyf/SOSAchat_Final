@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     //private static final int REQ_CODE_NO_INTERNET_CONNECTION = 2342;
     public static final String KEY_SOSACHAT_FOLDER = "sdcard/SOSAchat";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
+    private static final int MAIN_SLIDESHOW_FLIP_INTERVAL = 2500;
 
 
     EditText etSearch;
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     private String cachePicUrl;
     private String cacheDirName;
     private String searchKeyword;
+    private ViewFlipper vfMain;
     //BitmapCacheManager bitmapCacheManager;
 
 
@@ -104,7 +107,17 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             SOS_API.POST_MARSHMALLOW = true;
         }
 
-        //bitmapCacheManager = new BitmapCacheManager(this);
+        vfMain = findViewById(R.id.vfMain);
+        vfMain.setFlipInterval(MAIN_SLIDESHOW_FLIP_INTERVAL);
+        vfMain.setAutoStart(true);
+        vfMain.startFlipping();
+
+        HelperMethods.GetViewSize(new HelperMethods.CallbacksViewSize() {
+            @Override
+            public void onSizeFound(double[] size) {
+                Log.e(TAG, "onSizeFound: -> " + size );
+            }
+        }, vfMain);
 
         llPbLoadingRecentItems = findViewById(R.id.llPbLoadingRecentItems);
 

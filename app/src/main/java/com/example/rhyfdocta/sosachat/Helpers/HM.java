@@ -135,8 +135,8 @@ public class HM extends HelperMethods {
         return DecodeSampledBitmapFromBitmapData(bitmap, size[0], size[1]);
     }
 
-    public static void GIVS(ImageViewSizeListener listener, ImageView imageView) {
-         getImageViewSize(listener, imageView);
+    public static void GIVS(CallbacksViewSize listener, ImageView imageView) {
+         GetViewSize(listener, imageView);
     }
 
 

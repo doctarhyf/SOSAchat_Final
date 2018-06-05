@@ -13,5 +13,6 @@
     <dimen name="sizeImgRecentProdW">120dp</dimen>
     <dimen name="sizeImgRecentProdH">120dp</dimen>
     <dimen name="marginSimple">8dp</dimen>
+    <dimen name="heightMainSLideshow">220dp</dimen>
 
 </resources>

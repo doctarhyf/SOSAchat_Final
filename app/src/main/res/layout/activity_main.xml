@@ -24,14 +24,46 @@
     >
 
 
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:gravity="center"
         android:text="@string/welcomeMessage"
-        />
+        />-->
 
+    <ViewFlipper
+        android:id="@+id/vfMain"
+        android:paddingBottom="@dimen/paddingDouble"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightMainSLideshow">
+
+        <ImageView
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/salem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@drawable/airtel_money"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </ViewFlipper>
 
     <LinearLayout
         android:id="@+id/llContSearch"
@@ -48,7 +80,8 @@
             style="?attr/textAppearanceListItemSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_marginBottom="@dimen/paddingNormal"
+            android:layout_marginTop="@dimen/paddingNormal"
             android:hint="@string/searchMessage"
             android:maxLines="1"
             android:text="" />

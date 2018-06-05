@@ -288,6 +288,7 @@
 
     <style name="cardViewItemDetails">
         <item name="android:layout_width">match_parent</item>
+
         <item name="android:background">@color/white</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

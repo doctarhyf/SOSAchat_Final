@@ -344,9 +344,6 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         });
     }
 
-
-
-
     private void loadItemDataFromBundle( Bundle bundle) {
 
 
@@ -391,9 +388,11 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
                 BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PRODUCTS,
                 SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS, ivItemMainPic, this);
 
-        // TODO: 6/4/2018 LOAD SELLER PIC
+
         String remoteDirPP = SOS_API.DIR_PATH_PP;
         String fileNamePP = bundle.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
+        if(itemIsMine) fileNamePP = sosApi.GSV(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
+
         final String remotePathPP = remoteDirPP + fileNamePP;
 
         BitmapCacheManager.GlideLoadPathIntoImageView(this,
@@ -739,5 +738,10 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
 
         Log.e(TAG, "FILE EX : -> " + sosApi.getBitmapCacheManager().saveBitmapToCache(bitmap, picUrl,dirName));
+    }
+
+    public void showSellerProfile(View view) {
+
+        Log.e(TAG, "showSellerProfile: " );
     }
 }

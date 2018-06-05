@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
@@ -278,15 +277,15 @@ public class HelperMethods {
     }
 
 
-    public static void getImageViewSize(ImageViewSizeListener listener, final ImageView imageView) {
+    public static void GetViewSize(CallbacksViewSize listener, final View v) {
         //final Size size = new Size(0,0);
         final double[] dSize = new double[2];
 
-        imageView.post(new Runnable() {
+        v.post(new Runnable() {
             @Override
             public void run() {
-                dSize[0] = imageView.getWidth();
-                dSize[1] = imageView.getHeight();
+                dSize[0] = v.getWidth();
+                dSize[1] = v.getHeight();
             }
         });
 
@@ -637,7 +636,7 @@ public class HelperMethods {
         public void onLoadComplete();
     }
 
-    public static interface ImageViewSizeListener {
+    public static interface CallbacksViewSize {
         public void onSizeFound(double[] size);
     }
 }
