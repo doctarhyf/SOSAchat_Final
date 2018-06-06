@@ -225,12 +225,14 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
     private void ToggleImageViewFullScreen() {
         HorizontalScrollView hsvMorePics = findViewById(R.id.hsvMorePics);
 
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        //show full screen
         if(hsvMorePics.getVisibility() == View.VISIBLE){
             hsvMorePics.setVisibility(View.GONE);
             getSupportActionBar().hide();
             ivMain.setAlpha(1f);
 
-
+            attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
 
         }else{
@@ -238,8 +240,11 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
             getSupportActionBar().show();
             ivMain.setAlpha(1f);
 
+            attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
         }
+
+        getWindow().setAttributes(attrs);
     }
 
 
