@@ -21,34 +21,45 @@
 
 
 
-    <LinearLayout
+    <HorizontalScrollView
+        android:id="@+id/hsvMorePics"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/dblGenPadding"
-        android:layout_marginRight="@dimen/dblGenPadding"
+        android:layout_weight="2"
+        android:padding="@dimen/paddingNormal"
         >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            >
 
-        <ImageView
+            <ImageView
 
-            android:id="@+id/ivMorePic1"
-            android:layout_marginRight="@dimen/dblGenPadding"
-
-            style="@style/ivItemMorePic" />
-
-        <ImageView
-            android:id="@+id/ivMorePic2"
-
-            style="@style/ivItemMorePic" />
-
-        <ImageView
-            android:id="@+id/ivMorePic3"
-            android:layout_marginLeft="@dimen/dblGenPadding"
-
-            style="@style/ivItemMorePic" />
+                android:id="@+id/ivMorePicMain"
 
 
-    </LinearLayout>
+                style="@style/ivItemMorePic" />
+
+            <ImageView
+
+                android:id="@+id/ivMorePic1"
+
+
+                style="@style/ivItemMorePic" />
+
+            <ImageView
+                android:id="@+id/ivMorePic2"
+
+                style="@style/ivItemMorePic" />
+
+            <ImageView
+                android:id="@+id/ivMorePic3"
+
+
+                style="@style/ivItemMorePic" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 </LinearLayout>

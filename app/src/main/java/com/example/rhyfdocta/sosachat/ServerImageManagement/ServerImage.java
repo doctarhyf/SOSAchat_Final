@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
+import com.example.rhyfdocta.sosachat.R;
 
 import java.io.File;
 import java.util.Date;
@@ -13,6 +14,7 @@ public class ServerImage {
     private static final int NO_ID = -1;
     private static final String NO_IMAGE = "no_image";
     public static final String KEY_LAST_MOD_TIME = "img_mtime";
+    public static final int DRAWABLE_ID_NO_IMAGE = R.drawable.logo_invert;
     private Context context;
     private String localPath = null;
     private String remotePath = null;

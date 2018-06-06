@@ -11,6 +11,9 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,15 +24,18 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
+import com.example.rhyfdocta.sosachat.ServerImageManagement.ServerImage;
 
 import java.io.File;
+import java.util.Objects;
 
 public class ActivityViewItemPics extends AppCompatActivity implements View.OnTouchListener {
 
     private static final String TAG = "ACT_VIEW_IT_PIX";
+    private static final Integer TAG_OK = 101;
     Bundle itemBundle;
     SOS_API sosApi;
-    ImageView ivMain, ivp1, ivp2, ivp3;
+    ImageView ivMain, ivp1, ivp2, ivp3, ivMorePicMain;
     String title;
 
     @Override
@@ -40,15 +46,17 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         sosApi = new SOS_API(this);
 
         ivMain = (ImageView) findViewById(R.id.ivmpMain);
+        ivMorePicMain = findViewById(R.id.ivMorePicMain);
         ivp1 = (ImageView) findViewById(R.id.ivMorePic1);
         ivp2 = (ImageView) findViewById(R.id.ivMorePic2);
         ivp3 = (ImageView) findViewById(R.id.ivMorePic3);
 
 
         itemBundle = getIntent().getExtras();
+        assert itemBundle != null;
         title = itemBundle.getString(Product.KEY_PD_NAME);
 
-        getSupportActionBar().setTitle(title);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -78,12 +86,22 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         final Uri picUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + "_main.jpg");
         loadBitmapIntoImageView(picUri, uniqueName, picType, ivMain, tw, th);
 
+
+        tw = 300;//ivp1.getWidth();
+        th = 300;//ivp1.getHeight();
+        //picType = "_pic1.jpg";
+        final Uri picMainUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
+
+        loadBitmapIntoImageView(picMainUri, uniqueName, picType, ivMorePicMain, tw, th);
+
         tw = 300;//ivp1.getWidth();
         th = 300;//ivp1.getHeight();
         picType = "_pic1.jpg";
         final Uri pic1Uri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
 
         loadBitmapIntoImageView(pic1Uri, uniqueName, picType, ivp1, tw, th);
+
+
 
         /*tw = ivp2.getWidth();
         th = ivp2.getHeight();*/
@@ -144,7 +162,11 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
                         //Toast.makeText(ActivityViewItemPics.this, "Error : " + pixPath, Toast.LENGTH_LONG).show();
                         iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                        iv.setImageResource(R.drawable.logo);
+                        iv.setImageResource(ServerImage.DRAWABLE_ID_NO_IMAGE);
+                        iv.setTag(ServerImage.DRAWABLE_ID_NO_IMAGE);
+                        iv.setEnabled(false);
+                        iv.setVisibility(View.GONE);
+
 
                     }
 
@@ -155,9 +177,12 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
                         sosApi.getBitmapCacheManager().saveBitmapToCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
 
                         iv.setImageBitmap(resource);
+                        iv.setTag(TAG_OK);
+                        iv.setEnabled(true);
+                        iv.setVisibility(View.VISIBLE);
 
                         if(iv.getId() == R.id.ivmpMain){
-                            registerForContextMenu(iv);
+                            //registerForContextMenu(iv);
 
                             iv.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
@@ -171,6 +196,8 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
                                         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                                         vibrator.vibrate(100);
+
+                                        ToggleImageViewFullScreen();
                                     }
 
                                     if(event.getAction() == 1 || event.getAction() == 3) {
@@ -195,6 +222,26 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
     }
 
+    private void ToggleImageViewFullScreen() {
+        HorizontalScrollView hsvMorePics = findViewById(R.id.hsvMorePics);
+
+        if(hsvMorePics.getVisibility() == View.VISIBLE){
+            hsvMorePics.setVisibility(View.GONE);
+            getSupportActionBar().hide();
+            ivMain.setAlpha(1f);
+
+
+
+
+        }else{
+            hsvMorePics.setVisibility(View.VISIBLE);
+            getSupportActionBar().show();
+            ivMain.setAlpha(1f);
+
+
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -211,18 +258,14 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         return true;
     }
 
-    public void onIvPicClicked(View view){
 
-        //Toast.makeText(this, "ITEM PIC", Toast.LENGTH_SHORT).show();
-
-        final ImageView iv = (ImageView) view;
-
-
-    }
 
     private void loadPic(ImageView iv) {
 
-        ivMain.setImageDrawable(iv.getDrawable());
+        if(iv.getTag() != Integer.valueOf(ServerImage.DRAWABLE_ID_NO_IMAGE)) {
+            ivMain.setImageDrawable(iv.getDrawable());
+            ivMain.setAlpha(1f);
+        }
 
     }
 
@@ -285,6 +328,10 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
 
                         switch (v.getId()){
+                            case R.id.ivMorePicMain:
+                                loadPic(ivMorePicMain);
+                                break;
+
                             case R.id.ivMorePic1:
 
                                 //Toast.makeText(getApplicationContext(), "PIC1", Toast.LENGTH_SHORT).show();

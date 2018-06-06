@@ -387,7 +387,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         //Log.e("FAAKK", "REMOTE MTIME MAIN : " + remoteMTimeL   );
 
-        BitmapCacheManager.GlideLoadPathIntoImageView(
+        BitmapCacheManager.GlideUniversalLoaderLoadPathIntoImageView(
                 this,
                  remotePathProductPix,
                 remoteMTimeL,
@@ -408,7 +408,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         //Log.e("FAAKK", "REMOTE MTIME PP : " + remoteMTimePPL   );
 
-        BitmapCacheManager.GlideLoadPathIntoImageView(this,
+        BitmapCacheManager.GlideUniversalLoaderLoadPathIntoImageView(this,
                 remotePathPP,
                 remoteMTimePPL, fileNamePP,
                 BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC,

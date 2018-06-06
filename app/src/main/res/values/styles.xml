@@ -238,8 +238,8 @@
         <item name="android:src">@drawable/progress_animation</item>
         <item name="android:clickable">true</item>
         <item name="android:onClick">onIvPicClicked</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_marginRight">@dimen/paddingNormal</item>
         <item name="android:layout_height">match_parent</item>
     </style>
 

@@ -367,9 +367,10 @@ public class BitmapCacheManager {
         void saveBitmapToLocalCache(Bitmap bitmap, String picUrl, String dirName);
     }
 
-    public static void GlideLoadPathIntoImageView(Context context, final String path, long remoteMTime, final String fileName, final int PIC_CACHE_ROOT_PATH_ID, final String DIR_NAME_PIX_CACHE, final ImageView iv, final CallbacksBitmapLoading callbacks) {
+    public static void GlideUniversalLoaderLoadPathIntoImageView(Context context, final String path, long remoteMTime, final String fileName, final int PIC_CACHE_ROOT_PATH_ID, final String DIR_NAME_PIX_CACHE, final ImageView iv, final CallbacksBitmapLoading callbacks) {
 
         Uri picUri = Uri.parse(path);
+        boolean shouldUpdateCache = false;
         //remoteMTime *= 1000;
 
         String cachePath = BitmapCacheManager.GetImageCachePath(PIC_CACHE_ROOT_PATH_ID, fileName);
@@ -389,20 +390,23 @@ public class BitmapCacheManager {
                 Log.e("FAAKK", "REMOTE DATE : " + formattedDateRemote );
                 Log.e("FAAKK", "CACHE DATE : " + formattedDateCache );
                 long diff = (dateRemote.getTime() - dateCache.getTime());
-                boolean shouldUpdateCache =  diff > 0;
+                shouldUpdateCache =  diff > 0;
                 Log.e("FAAKK", "REM - CACHE : " +  diff);
+
 
                 if(shouldUpdateCache) {
                     BitmapCacheManager.DeleteCacheFile(PIC_CACHE_ROOT_PATH_ID,fileName);
+                }else{
+                    picUri = Uri.fromFile(new File(cachePath));
                 }
 
-            Log.e(TAG, "GlideLoadPathIntoImageView: " );
+            Log.e(TAG, "GlideUniversalLoaderLoadPathIntoImageView: " );
 
 
             //Log.e("FAAKK", "REMOTE - CACHE " + (remoteMTime - cacheMTime) );
 
 
-            picUri = Uri.fromFile(new File(cachePath));
+
         }
 
         final String finalPath = picUri.toString();
