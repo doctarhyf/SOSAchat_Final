@@ -102,17 +102,17 @@ public class SOS_API {
     public static final String IMAGE_UPLOAD_FORM_NAME = "uploaded_file";
 
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.18/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.8/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.88.18/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.18/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.18/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.88.18/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.88.18/sosachat/";
+    public static String API_URL = "http://192.168.1.8/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.8/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.8/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.8/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.1.8/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -233,9 +233,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.88.18/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.18/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.18/sosachat/img/products/";
+    public static String API_URL = "http://192.168.1.8/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.8/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.8/sosac hat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */

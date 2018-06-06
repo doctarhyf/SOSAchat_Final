@@ -9,6 +9,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:descendantFocusability="beforeDescendants"
+    android:background="@color/lightGray"
     android:focusableInTouchMode="true"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,18 +24,29 @@
 
     >
 
-
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tvNoConn"
+        android:text="@string/msgNoNetworkTitle"
         android:gravity="center"
-        android:text="@string/welcomeMessage"
-        />-->
+        android:background="@color/red"
+        android:textColor="@color/white"
+        android:padding="@dimen/paddingNormal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+
+        android:text="@string/tvNewsLabel"
+        android:id="@+id/titleNews"
+
+        style="@style/tvHomeSectionsSeparator" />
 
     <ViewFlipper
+        android:background="@color/white"
         android:id="@+id/vfMain"
-        android:paddingBottom="@dimen/paddingDouble"
+
         android:layout_width="match_parent"
         android:layout_height="@dimen/heightMainSLideshow">
 
@@ -65,9 +77,18 @@
 
     </ViewFlipper>
 
+    <TextView
+
+        android:text="@string/tvSearchLabel"
+        android:id="@+id/titleSearch"
+
+        style="@style/tvHomeSectionsSeparator" />
+
     <LinearLayout
+        android:background="@color/white"
         android:id="@+id/llContSearch"
         android:orientation="vertical"
+        android:padding="@dimen/paddingNormal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/paddingNormal"
@@ -88,13 +109,13 @@
 
 
         <Button
+            android:id="@+id/btnSearch"
             android:text="@string/search"
             android:onClick="startSearch"
             android:paddingTop="@dimen/paddingNormal"
             android:textStyle="bold"
             android:paddingBottom="@dimen/paddingNormal"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+
             android:layout_width="match_parent"
             android:textColor="@color/col_stat_search_btn_txt"
             android:background="@drawable/color_state_search_btn"
@@ -126,8 +147,8 @@
 
     <LinearLayout
         android:id="@+id/contRecentItems"
-        style="@style/padTopBot"
-
+        android:orientation="vertical"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -169,6 +190,7 @@
         />
 
     <LinearLayout
+        android:background="@color/white"
         android:id="@+id/contFeatCats"
         style="@style/padTopBot"
         android:orientation="vertical"
@@ -185,18 +207,23 @@
     </LinearLayout>
 
 
+    <TextView
 
+        android:text="@string/tvExchRates"
+        android:id="@+id/titleExRates"
+        style="@style/tvHomeSectionsSeparator" />
 
 
     <LinearLayout
+
         android:id="@+id/footer"
         android:visibility="gone"
-        android:layout_marginTop="16dp"
+
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:padding="@dimen/paddingNormal"
-        android:background="@drawable/botton_bg"
+        android:background="@color/white"
 
         >
 

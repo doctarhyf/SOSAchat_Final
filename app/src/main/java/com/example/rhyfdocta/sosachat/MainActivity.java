@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     private String searchKeyword;
     private ViewFlipper vfMain;
     //BitmapCacheManager bitmapCacheManager;
+    private TextView tvNoConn;
 
 
     @Override
@@ -106,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             SOS_API.POST_MARSHMALLOW = true;
         }
+
+        tvNoConn = findViewById(R.id.tvNoConn);
 
         vfMain = findViewById(R.id.vfMain);
         vfMain.setFlipInterval(MAIN_SLIDESHOW_FLIP_INTERVAL);
@@ -145,21 +150,16 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
         // TODO: 11/10/17 REACTI VATE NO NETWORK ACTIVITY AFTER TEST
 
-        /*
-        if(isOnline() == false){
 
 
-            Intent intent = new Intent(this, ActivityNoNetwork.class);
-            startActivityForResult(intent, REQ_CODE_NO_INTERNET_CONNECTION);
-            //pbLoadingFeatItems.setVisibility(View.GONE);
-            alertDialogProcessing.dismiss();
-            return;
-        }*/
-
-        //alertDialogProcessing.dismiss();
 
         initFeaturedCategories();
-        loadRecentItems();
+
+        //if(SOS_API.isOnline(this)) {
+            loadRecentItems();
+        //}else{
+            //toggleNoConnGUI(false);
+       // }
 
 
         rootView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -187,14 +187,39 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         showMessage("Details", msg);*/
 
 
-        //sosApi.getSessionData();
-
-
         if(getIntent().getBooleanExtra(SOS_API.KEY_USER_IS_ADMIN, false)){
             HM.T(this, 100, HM.TLS);
         }
 
 
+    }
+
+    private void toggleNoConnGUI(boolean connected) {
+
+        LinearLayout llFeatCats = findViewById(R.id.contFeatCats);
+        TextView tvLatestItems = findViewById(R.id.titleLatestItems);
+        TextView tvAllCats = findViewById(R.id.titleAllCategories);
+        Button btnSearch = findViewById(R.id.btnSearch);
+        if(connected){
+            tvAllCats.setVisibility(View.VISIBLE);
+            tvNoConn.setVisibility(View.GONE);
+            llFeatCats.setVisibility(View.VISIBLE);
+            tvLatestItems.setVisibility(View.VISIBLE);
+            footer.setVisibility(View.VISIBLE);
+            btnSearch.setEnabled(true);
+
+            //llPbLoadingRecentItems.setVisibility(View.GONE);
+        }else{
+            btnSearch.setEnabled(false);
+            tvAllCats.setVisibility(View.GONE);
+            tvNoConn.setVisibility(View.VISIBLE);
+            llFeatCats.setVisibility(View.GONE);
+            tvLatestItems.setVisibility(View.GONE);
+            footer.setVisibility(View.GONE);
+            //llPbLoadingRecentItems.setVisibility(View.GONE);
+        }
+
+        llPbLoadingRecentItems.setVisibility(View.GONE);
     }
 
     @Override
@@ -321,7 +346,8 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         rvRecentItems.setLayoutParams(layoutParams);
 
         alertDialogProcessing.dismiss();
-        footer.setVisibility(View.VISIBLE);
+        //footer.setVisibility(View.VISIBLE);
+        toggleNoConnGUI(true);
 
         if(refreshing == true){
             refreshing = false;
@@ -373,6 +399,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             //pbLoadingFeatItems.setVisibility(View.VISIBLE);
             alertDialogProcessing.show();
             footer.setVisibility(View.GONE);
+            //toggleNoConnGUI(fa);
 
         }
 
@@ -403,7 +430,8 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
         @Override
         public void onRecentItemsEmpty() {
-            llPbLoadingRecentItems.setVisibility(View.GONE);
+            //llPbLoadingRecentItems.setVisibility(View.GONE);
+            toggleNoConnGUI(false);
             //Toast.makeText(MainActivity.this, "onRecentItemsEmpty", Toast.LENGTH_SHORT).show();
             String msg = HM.RGS(MainActivity.this, R.string.dgMsgNoRecentItemsPosted) ;
             String btnExposeItem = HM.RGS(MainActivity.this, R.string.btnExposeItem);
@@ -433,14 +461,16 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
             Log.e(TAG, "onNetworkError: Message -> " + msg );
             sosApi.TADRWM(true, MainActivity.this.getResources().getString(R.string.msgServerUnreachable));
             alertDialogProcessing.hide();
-            llPbLoadingRecentItems.setVisibility(View.GONE);
+            //llPbLoadingRecentItems.setVisibility(View.GONE);
+            toggleNoConnGUI(false);
         }
 
         @Override
         public void onParseJsonError(String s) {
             sosApi.TADRWM(true, "onParseJsonError:\nJSON : " + s);
             alertDialogProcessing.hide();
-            llPbLoadingRecentItems.setVisibility(View.GONE);
+            //llPbLoadingRecentItems.setVisibility(View.GONE);
+            toggleNoConnGUI(false);
         }
     }
 
@@ -649,6 +679,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         if(networkError){
             sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this, R.string.msgErrorInternetConnection));
             alertDialogProcessing.hide();
+
             return;
         }
 
