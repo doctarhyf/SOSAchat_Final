@@ -75,6 +75,13 @@ public class SOS_API {
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC1 = "_pic1.jpg";
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC2 = "_pic2.jpg";
     public static final String KEY_NEW_ITEM_IMG_TYPE_PIC3 = "_pic3.jpg";
+
+    public static final String KEY_PRODUCT_IMAGE_POST_FIX_MAIN = "_main";
+    public static final String KEY_PRODUCT_IMAGE_POST_FIX_PIC1 = "_pic1";
+    public static final String KEY_PRODUCT_IMAGE_POST_FIX_PIC2 = "_pic2";
+    public static final String KEY_PRODUCT_IMAGE_POST_FIX_PIC3 = "_pic3";
+    public static final String KEY_PRODUCT_IMAGE_POST_FIX_LOGGEDIN_USER = "_loggedin_user";
+
     public static final String TRUE = "true";
     public static final String ACTION_UPLOAD_PRODUCT_IMAGE_FILE = "uploadProductImageFile";
     public static final String KEY_NEW_ITEM_IMG_TYPE = "imageType";
@@ -95,17 +102,17 @@ public class SOS_API {
     public static final String IMAGE_UPLOAD_FORM_NAME = "uploaded_file";
 
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.9/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.18/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.1.9/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.1.9/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.9/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.1.9/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.1.9/sosachat/";
+    public static String API_URL = "http://192.168.88.18/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.88.18/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.18/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.88.18/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.88.18/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -226,9 +233,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.1.9/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.1.9/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.9/sosachat/img/products/";
+    public static String API_URL = "http://192.168.88.18/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.88.18/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.18/sosachat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -1073,7 +1080,7 @@ public class SOS_API {
                                                 jo.getString(Product.KEY_PD_UNIQUE_NAME));
 
                                         Bundle b = new Bundle();
-
+                                        HelperMethods.PutAllJSONIntoBundle(jo,b);
 
                                         String dateStart = jo.getString(KEY_ITEM_DATE_ADDED);
 
@@ -1091,6 +1098,7 @@ public class SOS_API {
                                         b.putString(KEY_ACC_DATA_DISPLAY_NAME, jo.getString(KEY_ACC_DATA_DISPLAY_NAME));
                                         b.putString(KEY_ACC_DATA_EMAIL, jo.getString(KEY_ACC_DATA_EMAIL));
                                         b.putString(KEY_ACC_DATA_MOBILE, jo.getString(KEY_ACC_DATA_MOBILE));
+
 
                                         String desc = jo.getString(Product.KEY_PD_DESC);
                                         String cat = jo.getString(Product.KEY_PD_CAT);

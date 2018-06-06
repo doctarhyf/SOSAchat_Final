@@ -28,6 +28,7 @@ import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
+import com.example.rhyfdocta.sosachat.ServerImageManagement.ServerImage;
 
 import org.json.JSONArray;
 
@@ -378,12 +379,18 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         String remoteDirProductPix = SOS_API.DIR_PATH_PRODUCTS_PIX;
 
+
         String fileNameProductPix = bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
         final String remotePathProductPix = remoteDirProductPix + fileNameProductPix;
+        String remoteMTime = bundle.getString(ServerImage.KEY_LAST_MOD_TIME + SOS_API.KEY_PRODUCT_IMAGE_POST_FIX_MAIN);
+        long remoteMTimeL = Long.parseLong(remoteMTime);
+
+        //Log.e("FAAKK", "REMOTE MTIME MAIN : " + remoteMTimeL   );
 
         BitmapCacheManager.GlideLoadPathIntoImageView(
                 this,
                  remotePathProductPix,
+                remoteMTimeL,
                 fileNameProductPix,
                 BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PRODUCTS,
                 SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS, ivItemMainPic, this);
@@ -395,9 +402,15 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         final String remotePathPP = remoteDirPP + fileNamePP;
 
+        String remoteMTimePP = bundle.getString(ServerImage.KEY_LAST_MOD_TIME + SOS_API.KEY_PRODUCT_IMAGE_POST_FIX_LOGGEDIN_USER);
+        long remoteMTimePPL = Long.parseLong(remoteMTimePP);
+
+
+        //Log.e("FAAKK", "REMOTE MTIME PP : " + remoteMTimePPL   );
+
         BitmapCacheManager.GlideLoadPathIntoImageView(this,
                 remotePathPP,
-                fileNamePP,
+                remoteMTimePPL, fileNamePP,
                 BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC,
                 SOS_API.DIR_NAME_PIX_CACHE_PROFILCE_PIC,
                 ivSellerPP,

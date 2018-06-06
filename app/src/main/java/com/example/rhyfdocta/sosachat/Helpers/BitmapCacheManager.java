@@ -17,10 +17,16 @@ import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.R;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by Franvanna on 1/21/2018.
@@ -361,12 +367,41 @@ public class BitmapCacheManager {
         void saveBitmapToLocalCache(Bitmap bitmap, String picUrl, String dirName);
     }
 
-    public static void GlideLoadPathIntoImageView(Context context, final String path, final String fileName, final int PIC_CACHE_ROOT_PATH_ID, final String DIR_NAME_PIX_CACHE, final ImageView iv, final CallbacksBitmapLoading callbacks) {
+    public static void GlideLoadPathIntoImageView(Context context, final String path, long remoteMTime, final String fileName, final int PIC_CACHE_ROOT_PATH_ID, final String DIR_NAME_PIX_CACHE, final ImageView iv, final CallbacksBitmapLoading callbacks) {
 
         Uri picUri = Uri.parse(path);
+        //remoteMTime *= 1000;
 
         String cachePath = BitmapCacheManager.GetImageCachePath(PIC_CACHE_ROOT_PATH_ID, fileName);
         if(BitmapCacheManager.FileExists(cachePath)) {
+
+            File cacheFile = new File(cachePath);
+            long cacheMTime = cacheFile.lastModified();
+
+
+                Date dateCache = new Date(cacheMTime);
+                Date dateRemote = new Date(remoteMTime * 1000);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss Z");
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+                String formattedDateCache = simpleDateFormat.format(dateCache);
+                String formattedDateRemote = simpleDateFormat.format(dateRemote);
+
+                Log.e("FAAKK", "REMOTE DATE : " + formattedDateRemote );
+                Log.e("FAAKK", "CACHE DATE : " + formattedDateCache );
+                long diff = (dateRemote.getTime() - dateCache.getTime());
+                boolean shouldUpdateCache =  diff > 0;
+                Log.e("FAAKK", "REM - CACHE : " +  diff);
+
+                if(shouldUpdateCache) {
+                    BitmapCacheManager.DeleteCacheFile(PIC_CACHE_ROOT_PATH_ID,fileName);
+                }
+
+            Log.e(TAG, "GlideLoadPathIntoImageView: " );
+
+
+            //Log.e("FAAKK", "REMOTE - CACHE " + (remoteMTime - cacheMTime) );
+
+
             picUri = Uri.fromFile(new File(cachePath));
         }
 

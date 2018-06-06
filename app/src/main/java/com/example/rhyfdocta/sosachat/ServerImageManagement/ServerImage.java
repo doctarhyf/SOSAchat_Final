@@ -12,6 +12,7 @@ public class ServerImage {
 
     private static final int NO_ID = -1;
     private static final String NO_IMAGE = "no_image";
+    public static final String KEY_LAST_MOD_TIME = "img_mtime";
     private Context context;
     private String localPath = null;
     private String remotePath = null;
