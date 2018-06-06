@@ -43,7 +43,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
         lvInquiries = findViewById(R.id.lvInquiries);
 
         sosApi = new SOS_API(this);
-        sosApi.loadAllLookingFors(this);
+        sosApi.loadLookingFors(this, -1);
 
 
         inquiries = new ArrayList<>();
@@ -64,7 +64,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
                 break;
 
             case R.id.menuInqRefresh:
-                sosApi.loadAllLookingFors(this);
+                sosApi.loadLookingFors(this,-1);
                 tvError.setVisibility(View.GONE);
                 pb.setVisibility(View.VISIBLE);
                 lvInquiries.setVisibility(View.GONE);

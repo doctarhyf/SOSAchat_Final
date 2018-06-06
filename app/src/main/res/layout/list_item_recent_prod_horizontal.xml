@@ -43,8 +43,7 @@
                 style="@style/styleItemName"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:maxLines="3"
-
+                android:lines="2"
                 android:text="Item"
                 android:textColor="@color/black"
                 android:textSize="18sp"

@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +25,7 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +36,12 @@ import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.HomeCategoryItem;
+import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.adapters.AdapterHomeCategories;
+import com.example.rhyfdocta.sosachat.adapters.AdapterLookingFor;
 import com.example.rhyfdocta.sosachat.adapters.AdapterRecentItems;
 
 import org.json.JSONArray;
@@ -51,7 +53,8 @@ import java.util.List;
 
 import static com.example.rhyfdocta.sosachat.API.SOS_API.REQ_PERMISSION_SAVE_BITMAP;
 
-public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiListener {
+public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiListener,
+AdapterLookingFor.CallBacks{
 
     public static final String TAG = "SOSAchatTAG" ;
     private static final int REQ_CODE = 1001;
@@ -100,15 +103,32 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
     private ViewFlipper vfMain;
     //BitmapCacheManager bitmapCacheManager;
     private TextView tvNoConn;
+    private AdapterLookingFor adapterLookingFor;
+    private ArrayList<LookingFor> lookingFors;
+    //private RecyclerView.LayoutManager layoutManagerLookingfor;
+    private ListView lvLookifor;
+    private TextView tvMsgLookingFor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sosApi = new SOS_API(this);
+
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             SOS_API.POST_MARSHMALLOW = true;
         }
+
+        tvMsgLookingFor = findViewById(R.id.tvMsgLookingFor);
+        sosApi.loadLookingFors(this, 5);
+        lookingFors = new ArrayList<>();
+
+        lvLookifor = findViewById(R.id.lvLookingfor);
+        adapterLookingFor = new AdapterLookingFor(this, lookingFors, this);
+        lvLookifor.setAdapter(adapterLookingFor);
+
 
         tvNoConn = findViewById(R.id.tvNoConn);
 
@@ -126,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
 
         llPbLoadingRecentItems = findViewById(R.id.llPbLoadingRecentItems);
 
-        sosApi = new SOS_API(this);
+
 
         rvCats = findViewById(R.id.rvCats);
         layoutManagerCats = new GridLayoutManager(this,2);
@@ -192,6 +212,43 @@ public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiLis
         }
 
 
+    }
+
+    @Override
+    public void onLookingForsLoaded(ArrayList<LookingFor> inquiries) {
+        lookingFors = inquiries;
+
+
+        if(inquiries.size() == 0){
+            lvLookifor.setVisibility(View.GONE);
+            tvMsgLookingFor.setVisibility(View.VISIBLE);
+            tvMsgLookingFor.setText("No lookingfors posted yet");
+        }else{
+            lvLookifor.setVisibility(View.VISIBLE);
+            tvMsgLookingFor.setVisibility(View.GONE);
+            adapterLookingFor = new AdapterLookingFor(this, inquiries, this);
+
+            lvLookifor.setAdapter(adapterLookingFor);
+
+        }
+
+        adapterLookingFor.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLookingForsLoadError(boolean isNetworkError, String message) {
+        Log.e(TAG, "onLookingForsLoadError: -> " + message );
+        lvLookifor.setVisibility(View.GONE);
+        tvMsgLookingFor.setVisibility(View.VISIBLE);
+        tvMsgLookingFor.setText(message);
+    }
+
+    @Override
+    public void onLookingForsEmpty() {
+        Log.e(TAG, "onLookingForsEmpty: " );
+        lvLookifor.setVisibility(View.GONE);
+        tvMsgLookingFor.setVisibility(View.VISIBLE);
+        tvMsgLookingFor.setText("No lookingfors posted yet");
     }
 
     private void toggleNoConnGUI(boolean connected) {

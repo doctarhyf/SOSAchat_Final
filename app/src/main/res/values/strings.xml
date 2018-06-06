@@ -389,5 +389,6 @@
     <string name="tvSearchLabel">Search SOSAchat </string>
     <string name="tvNewsLabel"><![CDATA[News & Deals]]></string>
     <string name="tvExchRates">Exchage Rates</string>
+    <string name="tvLookingfors">Latest Lookingfors</string>
 
 </resources>

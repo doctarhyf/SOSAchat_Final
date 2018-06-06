@@ -956,10 +956,16 @@ public class SOS_API {
         Log.e(TAG, "deletePP: " );
     }
 
-    public void loadAllLookingFors(final AdapterLookingFor.CallBacks callBacks) {
+    public void loadLookingFors(final AdapterLookingFor.CallBacks callBacks, int size) {
+
 
         String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES + "&uid=" + getSessionVar(KEY_ACC_DATA_ID);
-        Log.e(TAG, "loadRecentItems: url -> " + url );
+
+        if(size != -1){
+            url = url.concat("&limit=" + size);
+        }
+
+        Log.e("L4Z", "url -> " + url );
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -984,7 +990,7 @@ public class SOS_API {
                                     lookingFor.setPosterName(object.getString(LookingFor.KEY_POSTERNAME));
 
                                     Bundle data = new Bundle();
-
+                                    HelperMethods.PutAllJSONIntoBundle(object, data);
                                     data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
                                     data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
                                     data.putString(LookingFor.KEY_DATETIME, object.getString(LookingFor.KEY_DATETIME));
