@@ -87,6 +87,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
         sosApi = new SOS_API(this);
 
         progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(HM.RGS(this, R.string.pbMsgUpdatingPP));
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setCancelable(true);
         //HM.GADP(this, HM.getStringResource(this, R.string.pbMsgUpdatingPP),false);
@@ -95,12 +96,12 @@ public class ActivityMyAccount extends AppCompatActivity implements
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ivProfilePic = (ImageView) findViewById(R.id.ivSettingsPP);
-        tvDisplayName = (TextView) findViewById(R.id.tvDisplayName);
-        tvAccType = (TextView) findViewById(R.id.tvAccType);
-        tvCity = (TextView) findViewById(R.id.tvCity);
-        tvMobile = (TextView) findViewById(R.id.tvMobile);
-        tvEmail = (TextView) findViewById(R.id.tvEmail);
+        ivProfilePic = findViewById(R.id.ivSettingsPP);
+        tvDisplayName = findViewById(R.id.tvDisplayName);
+        tvAccType = findViewById(R.id.tvAccType);
+        tvCity = findViewById(R.id.tvCity);
+        tvMobile = findViewById(R.id.tvMobile);
+        tvEmail = findViewById(R.id.tvEmail);
 
 
 

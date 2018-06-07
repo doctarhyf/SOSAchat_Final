@@ -45,11 +45,11 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
         public ViewHolder(View view){
             super(view);
             layout = view;
-            tvName = (TextView) view.findViewById(R.id.tvWliName);
-            tvPriceNQual = (TextView) view.findViewById(R.id.tvWliPriceNQual);
-            tvDate = (TextView) view.findViewById(R.id.tvWliDate);
-            iv = (ImageView) view.findViewById(R.id.ivWli);
-            ivAddToFavorite = (ImageView)view.findViewById(R.id.ivAddToFavorite);
+            tvName = view.findViewById(R.id.tvWliName);
+            tvPriceNQual = view.findViewById(R.id.tvWliPriceNQual);
+            tvDate = view.findViewById(R.id.tvWliDate);
+            iv = view.findViewById(R.id.ivWli);
+            ivAddToFavorite = view.findViewById(R.id.ivAddToFavorite);
 
         }
     }
@@ -189,7 +189,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
             }
         });
 
-        ImageView ivAddToFavorite = (ImageView) view.findViewById(R.id.ivAddToFavorite);
+        ImageView ivAddToFavorite = view.findViewById(R.id.ivAddToFavorite);
         ivAddToFavorite.setOnClickListener(new View.OnClickListener() {
 
             @Override

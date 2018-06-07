@@ -31,7 +31,7 @@ public class ActivityNoNetwork extends AppCompatActivity {
 
         getSupportActionBar().setTitle(getResources().getString(R.string.msgNoNetworkTitle));
 
-        pbRetryConn = (ProgressBar) findViewById(R.id.pbRetryNetwork);
+        pbRetryConn = findViewById(R.id.pbRetryNetwork);
 
     }
 

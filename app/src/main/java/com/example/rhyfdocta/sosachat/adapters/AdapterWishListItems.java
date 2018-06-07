@@ -61,10 +61,10 @@ public class AdapterWishListItems extends ArrayAdapter<ProductWishList> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item_wishlist, null);
             viewHolderWishListItem = new ViewHolderWishListItem();
-            viewHolderWishListItem.tvName = (TextView) view.findViewById(R.id.tvWliName);
-            viewHolderWishListItem.tvPriceNQual = (TextView) view.findViewById(R.id.tvWliPriceNQual);
-            viewHolderWishListItem.tvDate = (TextView) view.findViewById(R.id.tvWliDate);
-            viewHolderWishListItem.iv = (ImageView) view.findViewById(R.id.ivWli);
+            viewHolderWishListItem.tvName = view.findViewById(R.id.tvWliName);
+            viewHolderWishListItem.tvPriceNQual = view.findViewById(R.id.tvWliPriceNQual);
+            viewHolderWishListItem.tvDate = view.findViewById(R.id.tvWliDate);
+            viewHolderWishListItem.iv = view.findViewById(R.id.ivWli);
             view.setTag(viewHolderWishListItem);
 
 
@@ -115,7 +115,7 @@ public class AdapterWishListItems extends ArrayAdapter<ProductWishList> {
             }
         });
 
-        ImageView ivRmFromWli = (ImageView) view.findViewById(R.id.ivRmFromWli);
+        ImageView ivRmFromWli = view.findViewById(R.id.ivRmFromWli);
         ivRmFromWli.setOnClickListener(new View.OnClickListener() {
 
             @Override

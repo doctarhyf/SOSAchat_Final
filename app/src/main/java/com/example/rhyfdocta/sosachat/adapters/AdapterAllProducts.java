@@ -65,11 +65,11 @@ public class AdapterAllProducts extends ArrayAdapter<ProductMyProducts> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item_all_products, null);
             viewHolderWishListItem = new ViewHolderWishListItem();
-            viewHolderWishListItem.tvName = (TextView) view.findViewById(R.id.tvWliName);
-            viewHolderWishListItem.tvPriceNQual = (TextView) view.findViewById(R.id.tvWliPriceNQual);
-            viewHolderWishListItem.tvDate = (TextView) view.findViewById(R.id.tvWliDate);
-            viewHolderWishListItem.iv = (ImageView) view.findViewById(R.id.ivWli);
-            viewHolderWishListItem.ivAddToFavorite = (ImageView)view.findViewById(R.id.ivAddToFavorite);
+            viewHolderWishListItem.tvName = view.findViewById(R.id.tvWliName);
+            viewHolderWishListItem.tvPriceNQual = view.findViewById(R.id.tvWliPriceNQual);
+            viewHolderWishListItem.tvDate = view.findViewById(R.id.tvWliDate);
+            viewHolderWishListItem.iv = view.findViewById(R.id.ivWli);
+            viewHolderWishListItem.ivAddToFavorite = view.findViewById(R.id.ivAddToFavorite);
             view.setTag(viewHolderWishListItem);
 
 
@@ -123,7 +123,7 @@ public class AdapterAllProducts extends ArrayAdapter<ProductMyProducts> {
             }
         });
 
-        ImageView ivAddToFavorite = (ImageView) view.findViewById(R.id.ivAddToFavorite);
+        ImageView ivAddToFavorite = view.findViewById(R.id.ivAddToFavorite);
         ivAddToFavorite.setOnClickListener(new View.OnClickListener() {
 
             @Override

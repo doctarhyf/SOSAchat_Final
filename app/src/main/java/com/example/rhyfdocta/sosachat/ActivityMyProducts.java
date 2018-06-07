@@ -8,9 +8,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -68,11 +70,11 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
 
 
-        progressBar = (ProgressBar) findViewById(R.id.pbMyProducts);
+        progressBar = findViewById(R.id.pbMyProducts);
         products = new ArrayList<>();
         queue = Volley.newRequestQueue(this);
-        lvMyProducts = (ListView) findViewById(R.id.lvMyProducts);
-        tvEmptyList = (TextView) findViewById(R.id.tvEmptyList);
+        lvMyProducts = findViewById(R.id.lvMyProducts);
+        tvEmptyList = findViewById(R.id.tvEmptyList);
         sosApi = new SOS_API(this);
 
         loadMyProductsData();
@@ -97,7 +99,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
             String btnNwItem = HM.RGS(ctx, R.string.btnNewItem);
 
 
-            sosApi.DWPNB(this, true, msg, btnNwItem,
+            SOS_API.DWPNB(this, true, msg, btnNwItem,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -215,11 +217,32 @@ public class ActivityMyProducts extends AppCompatActivity implements
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //Log.e(TAG, "removeFromWishList: " );
-                        //Toast.makeText(AdapterMyProducts.this, "Item Removed", Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(ActivityMyProducts.this, "Item Removed", Toast.LENGTH_SHORT).show();
-                        sosApi.removeProduct(ActivityMyProducts.this,pd);
-                        Log.e(TAG, "onClick:" );
+
+                        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                        View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+                        final EditText etpwd = v.findViewById(R.id.etDgPassword);
+
+                        new AlertDialog.Builder(ActivityMyProducts.this)
+                                //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                                .setView(v)
+                                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
+
+                                            sosApi.removeProduct(ActivityMyProducts.this,pd);
+
+                                        }else{
+                                            Toast.makeText(ActivityMyProducts.this, HM.RGS(ActivityMyProducts.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("CANCEL", null).show();
+
+
+
+
+
 
                     }
                 })
@@ -237,20 +260,54 @@ public class ActivityMyProducts extends AppCompatActivity implements
     }
 
     @Override
-    public void onItemEditClicked(ProductMyProducts pd, Uri picUri) {
-        Intent intent = new Intent(this, ActivityPostItem.class);
+    public void onItemEditClicked(final ProductMyProducts pd, final Uri picUri) {
 
-        Bundle b = new Bundle(pd.toBundle());
-        b.putString(Product.KEY_PD_PIC_URI, picUri.toString());
-        b.putBoolean(SOS_API.KEY_ITEM_IS_MINE, true);
-        b.putBoolean(SOS_API.KEY_ITEM_MODE_EDITING, true);
-        b.putAll(pd.getDataBundle());
 
-        //String test = b.getString(SOS_API.KEY_ITEM_ID);
 
-        intent.putExtras(b);
-        Log.e(TAG, "onItemEditClicked: data -> " + b.toString() );
-        startActivity(intent);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+        final EditText etpwd = v.findViewById(R.id.etDgPassword);
+
+        new AlertDialog.Builder(this)
+                //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                .setView(v)
+                .setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
+
+
+                            Intent intent = new Intent(ActivityMyProducts.this, ActivityPostItem.class);
+
+                            Bundle b = new Bundle(pd.toBundle());
+                            b.putString(Product.KEY_PD_PIC_URI, picUri.toString());
+                            b.putBoolean(SOS_API.KEY_ITEM_IS_MINE, true);
+                            b.putBoolean(SOS_API.KEY_ITEM_MODE_EDITING, true);
+                            b.putAll(pd.getDataBundle());
+
+                            //String test = b.getString(SOS_API.KEY_ITEM_ID);
+
+                            intent.putExtras(b);
+                            Log.e(TAG, "onItemEditClicked: data -> " + b.toString() );
+                            startActivity(intent);
+
+
+                        }else{
+                            Toast.makeText(ActivityMyProducts.this, HM.RGS(ActivityMyProducts.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .setNegativeButton("CANCEL", null).show();
+
+
+
+
+
+
+
+
+
+
     }
 
     @Override
@@ -368,16 +425,22 @@ public class ActivityMyProducts extends AppCompatActivity implements
     }
 
     @Override
-    public void onRemoveProductResult(Bundle b) {
+    public void onRemoveProductResult(final Bundle b) {
+
+
+
+
+
+
 
 
         if(b.getString(SOS_API.JSON_KEY_RESULT).equals(SOS_API.JSON_RESULT_SUCCESS)){
             // TODO: 12/4/17 MAKE LAZY DELET, AVOID SERVER RELOAD
             loadMyProductsData();
-            Log.e(TAG, "onRemoveProductResult: SHUD CALL load again. data -> " + b.toString() );
-            Toast.makeText(this, HM.getStringResource(this, R.string.msgProductRemoved), Toast.LENGTH_SHORT).show();
+            //Log.e(TAG, "onRemoveProductResult: SHUD CALL load again. data -> " + b.toString() );
+            Toast.makeText(ActivityMyProducts.this, HM.getStringResource(ActivityMyProducts.this, R.string.msgProductRemoved), Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(this, HM.getStringResource(this, R.string.msgProductRemovedError), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityMyProducts.this, HM.getStringResource(ActivityMyProducts.this, R.string.msgProductRemovedError), Toast.LENGTH_SHORT).show();
         }
 
     }

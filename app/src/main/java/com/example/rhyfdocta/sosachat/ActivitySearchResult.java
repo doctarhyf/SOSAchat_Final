@@ -58,9 +58,9 @@ public class ActivitySearchResult extends AppCompatActivity implements SOS_API.S
         //TextView tv = (TextView) findViewById(R.id.textView);
         //tv.setText(getIntent().getStringExtra("Q"));
 
-        clLoadingResult = (ConstraintLayout) findViewById(R.id.clLoadingResults);
-        lvItemsSearchResult = (ListView) findViewById(R.id.lvItemsSearchResult);
-        tvLoadingSearchResultError = (TextView) findViewById(R.id.tvLoadingSearchResultError);
+        clLoadingResult = findViewById(R.id.clLoadingResults);
+        lvItemsSearchResult = findViewById(R.id.lvItemsSearchResult);
+        tvLoadingSearchResultError = findViewById(R.id.tvLoadingSearchResultError);
 
 
 

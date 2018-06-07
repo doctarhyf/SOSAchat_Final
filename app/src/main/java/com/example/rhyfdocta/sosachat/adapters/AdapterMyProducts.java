@@ -72,12 +72,12 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item_my_products, null);
             viewHolderMyProduct = new ViewHolderMyProduct();
-            viewHolderMyProduct.tvName = (TextView) view.findViewById(R.id.tvWliName);
-            viewHolderMyProduct.tvPriceNQual = (TextView) view.findViewById(R.id.tvWliPriceNQual);
-            viewHolderMyProduct.tvDate = (TextView) view.findViewById(R.id.tvWliDate);
-            viewHolderMyProduct.ivRmPd = (ImageView) view.findViewById(R.id.ivWli);
-            viewHolderMyProduct.ivEditPd = (ImageView) view.findViewById(R.id.ivEditMyPd);
-            viewHolderMyProduct.ivSoldMyPd = (ImageView) view.findViewById(R.id.ivSoldMyPd);
+            viewHolderMyProduct.tvName = view.findViewById(R.id.tvWliName);
+            viewHolderMyProduct.tvPriceNQual = view.findViewById(R.id.tvWliPriceNQual);
+            viewHolderMyProduct.tvDate = view.findViewById(R.id.tvWliDate);
+            viewHolderMyProduct.ivRmPd = view.findViewById(R.id.ivWli);
+            viewHolderMyProduct.ivEditPd = view.findViewById(R.id.ivEditMyPd);
+            viewHolderMyProduct.ivSoldMyPd = view.findViewById(R.id.ivSoldMyPd);
             viewHolderMyProduct.tvItemQual = view.findViewById(R.id.tvItemQual);
             viewHolderMyProduct.tvItemPrice = view.findViewById(R.id.tvItemPrice);
             view.setTag(viewHolderMyProduct);
@@ -198,7 +198,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             }
         });
 
-        ImageView ivRmFromWli = (ImageView) view.findViewById(R.id.ivRmFromWli);
+        ImageView ivRmFromWli = view.findViewById(R.id.ivRmFromWli);
         ivRmFromWli.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -207,7 +207,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             }
         });
 
-        ImageView ivEditPd = (ImageView) view.findViewById(R.id.ivEditMyPd);
+        ImageView ivEditPd = view.findViewById(R.id.ivEditMyPd);
         ivEditPd.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -216,7 +216,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             }
         });
 
-        ImageView ivSoldMyPd = (ImageView) view.findViewById(R.id.ivSoldMyPd);
+        ImageView ivSoldMyPd = view.findViewById(R.id.ivSoldMyPd);
         ivSoldMyPd.setOnClickListener(new View.OnClickListener() {
 
             @Override

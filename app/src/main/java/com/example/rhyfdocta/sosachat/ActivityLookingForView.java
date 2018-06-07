@@ -1,6 +1,7 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -42,6 +43,9 @@ public class ActivityLookingForView extends AppCompatActivity {
     private MyGlideBitmapLoaderCallbacks glideBitmapLoaderCallbacks;
     private String phoneNumber;
     private String email;
+    private boolean mine = false;
+    private Button btnDelL4;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,7 @@ public class ActivityLookingForView extends AppCompatActivity {
 
             phoneNumber = data.getString(SOS_API.KEY_ACC_DATA_MOBILE);
             email = data.getString(SOS_API.KEY_ACC_DATA_EMAIL);
-
+            mine = data.getBoolean(LookingFor.KEY_IS_MINE, false);
             updateGUI();
             initDialogContact();
 
@@ -90,9 +94,9 @@ public class ActivityLookingForView extends AppCompatActivity {
         TextView tvSMS = customView.findViewById(R.id.tvContactVendorSMS);
         TextView tvEmail = customView.findViewById(R.id.tvContactVendorEmail);
 
-        tvMobile.setText(data.getString(SOS_API.KEY_ACC_DATA_MOBILE));
-        tvSMS.setText(data.getString(SOS_API.KEY_ACC_DATA_MOBILE));
-        tvEmail.setText(data.getString(SOS_API.KEY_ACC_DATA_EMAIL));
+        tvMobile.setText(HM.RGS(this, R.string.contactPhoneCall));//data.getString(SOS_API.KEY_ACC_DATA_MOBILE));
+        tvSMS.setText(HM.RGS(this, R.string.contactSMS));
+        tvEmail.setText(HM.RGS(this, R.string.contactEmail));
 
 
         rowContactByPhone.setOnClickListener(new View.OnClickListener() {
@@ -197,7 +201,7 @@ public class ActivityLookingForView extends AppCompatActivity {
         tvDatePosted.setText((String) lookingFor.getProperty(LookingFor.KEY_DATETIME));
         tvDesc.setText(lookingFor.getMessage());
 
-        String ppName = (String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
+        String ppName = lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
 
         String path = SOS_API.DIR_PATH_PP + ppName ;//+ "?ts=" + HM.getTimeStamp();//accDataBundle.get(SOS_API.KEY_ACC_DATA_ACC_PIC_NAME);
 
@@ -239,6 +243,47 @@ public class ActivityLookingForView extends AppCompatActivity {
                     }
                 });
 
+
+        if(mine){
+            btnContact.setVisibility(View.GONE);
+            btnDelL4.setVisibility(View.VISIBLE);
+        }else{
+            btnDelL4.setVisibility(View.GONE);
+            btnContact.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public void deleteLookingFor(View view) {
+
+        final String id = data.getString(LookingFor.KEY_ID_LOOKINGFOR);
+        new AlertDialog.Builder(this)
+                .setTitle(String.format(HM.RGS(this, R.string.strQDeleLooking4), title))
+                .setMessage(HM.RGS(this, R.string.msgDelLooking4))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sosApi.deleteLookingFor(new SOS_API.CallbacksDelLookingFor() {
+                            @Override
+                            public void onDeleteLookingSuccess() {
+                                Intent intent = new Intent(ActivityLookingForView.this, ActivityLookingFor.class);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onDeleteLookingForFailure(String message) {
+                                String title = HM.RGS(ActivityLookingForView.this, R.string.titleError);
+                                String errMsg = HM.RGS(ActivityLookingForView.this, R.string.msgFailedDeleteL4);
+                                HM.GADWMAT(ActivityLookingForView.this,title,errMsg, true, true);
+                                Log.e("L4", "onDeleteLookingForFailure: " + message );
+                            }
+                        }, id);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
+
+
     }
 
     private class MyGlideBitmapLoaderCallbacks implements BitmapCacheManager.CallbacksBitmapLoading {
@@ -272,6 +317,15 @@ public class ActivityLookingForView extends AppCompatActivity {
         ivPp = findViewById(R.id.ivInqPp);
         btnContact = findViewById(R.id.btnInqContact);
         tvDesc = findViewById(R.id.tvInqDesc);
+        btnDelL4 = findViewById(R.id.btnDelL4);
+
+        if(mine){
+            btnContact.setVisibility(View.GONE);
+            btnDelL4.setVisibility(View.VISIBLE);
+        }else{
+            btnDelL4.setVisibility(View.GONE);
+            btnContact.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

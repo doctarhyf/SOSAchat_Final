@@ -50,7 +50,7 @@ public class FragmentContactsList extends Fragment implements
 
 
     public interface FragmentContactsListListener{
-        public void onItemClicked(Contact contact);
+        void onItemClicked(Contact contact);
     }
 
     FragmentContactsListListener listListener;
@@ -176,8 +176,8 @@ public class FragmentContactsList extends Fragment implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_msgs_contacts_list,null);
 
-        lvContactsList = (ListView) view.findViewById(R.id.lvContactsList);
-        tvContactsListEmpty = (TextView)view.findViewById(R.id.tvContactsListEmpty);
+        lvContactsList = view.findViewById(R.id.lvContactsList);
+        tvContactsListEmpty = view.findViewById(R.id.tvContactsListEmpty);
         return view;
     }
 

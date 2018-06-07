@@ -50,11 +50,11 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        pbWli = (ProgressBar) findViewById(R.id.pbWli);
+        pbWli = findViewById(R.id.pbWli);
         products = new ArrayList<>();
         queue = Volley.newRequestQueue(this);
-        lvWli = (ListView) findViewById(R.id.lvWli);
-        tvEmptyWli = (TextView) findViewById(R.id.tvEmptyWli);
+        lvWli = findViewById(R.id.lvWli);
+        tvEmptyWli = findViewById(R.id.tvEmptyWli);
 
         sosApi.loadWishListData(this);
 

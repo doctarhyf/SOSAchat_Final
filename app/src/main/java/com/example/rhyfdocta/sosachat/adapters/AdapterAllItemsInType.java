@@ -143,9 +143,9 @@ public class AdapterAllItemsInType extends RecyclerView.Adapter<AdapterAllItemsI
         return list.size();
     }
 
-    public static interface ListenerItemsInType{
-        public void onItemClicked(Product pd);
-        public void onItemAddToWishlistClicked(Product pd);
+    public interface ListenerItemsInType{
+        void onItemClicked(Product pd);
+        void onItemAddToWishlistClicked(Product pd);
     }
 
 

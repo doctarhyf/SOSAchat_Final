@@ -66,8 +66,8 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.layout_item_type, null);
             viewHolderCatItem = new ViewHolderCatItem();
-            viewHolderCatItem.tv = (TextView) view.findViewById(R.id.tvCatName);
-            viewHolderCatItem.iv = (ImageView) view.findViewById(R.id.ivCatItem);
+            viewHolderCatItem.tv = view.findViewById(R.id.tvCatName);
+            viewHolderCatItem.iv = view.findViewById(R.id.ivCatItem);
             view.setTag(viewHolderCatItem);
 
 

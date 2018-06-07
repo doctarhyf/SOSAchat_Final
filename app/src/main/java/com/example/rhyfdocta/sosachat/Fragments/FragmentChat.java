@@ -72,11 +72,7 @@ public class FragmentChat extends Fragment {
                     chatMessages.add(chatMessage);
                     adapter.notifyDataSetChanged();
                     editText.setText("");
-                    if (isMine) {
-                        isMine = false;
-                    } else {
-                        isMine = true;
-                    }
+                    isMine = !isMine;
                 }
             }
         });
@@ -90,9 +86,9 @@ public class FragmentChat extends Fragment {
         Log.e(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.frag_msgs_chat,null);
 
-        listView = (ListView) view.findViewById(R.id.list_msg);
+        listView = view.findViewById(R.id.list_msg);
         btnSend = view.findViewById(R.id.btn_chat_send);
-        editText = (EditText) view.findViewById(R.id.msg_type);
+        editText = view.findViewById(R.id.msg_type);
 
 
 

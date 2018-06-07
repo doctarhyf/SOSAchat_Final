@@ -54,14 +54,14 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        tvAllProductsLoadingError = (TextView) findViewById(R.id.tvAllProductsLoadingError);
-        tvAllProductsEmptyList = (TextView) findViewById(R.id.tvAllProductsEmptyList);
-        pbAllProducts = (ProgressBar) findViewById(R.id.pbAllProducts);
+        tvAllProductsLoadingError = findViewById(R.id.tvAllProductsLoadingError);
+        tvAllProductsEmptyList = findViewById(R.id.tvAllProductsEmptyList);
+        pbAllProducts = findViewById(R.id.pbAllProducts);
         //btnLoadMore = (Button) findViewById(R.id.btnLoadMore);
 
         //lv = (ListView) findViewById(R.id.rvAllProducts);
         recyclerView = findViewById(R.id.rvAllProducts);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);//this);
         recyclerView.setLayoutManager(layoutManager);
 
         sosApi = new SOS_API(this);

@@ -390,5 +390,15 @@
     <string name="tvNewsLabel"><![CDATA[News & Deals]]></string>
     <string name="tvExchRates">Exchage Rates</string>
     <string name="tvLookingfors">Latest Lookingfors</string>
+    <string name="pbMsgPostingNewItem">Posting new item ...</string>
+    <string name="swOnShowMyLookingFor">Show only mine</string>
+    <string name="swOnShowOthersLookingfor">Show others</string>
+    <string name="btnDeleteLookingFor">DELETE</string>
+    <string name="titleError">Error</string>
+    <string name="msgFailedDeleteL4">Failed to delete looking for, try again later.</string>
+    <string name="strQDeleLooking4">Delete %1$s ?</string>
+    <string name="msgDelLooking4">Are you sure you wanna delete this looking for? There is no undo.</string>
+    <string name="dgTitleInputPassword">Input Password</string>
+    <string name="tmsgPwdNotCorrect">Password not correct! Please try again!</string>
 
 </resources>

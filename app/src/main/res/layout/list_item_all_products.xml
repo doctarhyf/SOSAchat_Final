@@ -3,7 +3,7 @@
     android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/paddingHalf"
     android:elevation="4dp"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
@@ -17,13 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/color_state_row_settings"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
 
         <ImageView
             android:id="@+id/ivWli"
             style="@style/styleIvItem"
-            android:layout_width="@dimen/sizeImgRecentProdW"
+            android:layout_width="match_parent"
             android:scaleType="centerInside"
             android:layout_height="@dimen/sizeImgRecentProdH"
             app:srcCompat="@drawable/progress_animation" />
@@ -32,17 +32,17 @@
 
             style="@style/padLeft"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/marginSimple"
+
             android:orientation="vertical">
 
             <TextView
                 style="@style/styleItemName"
                 android:id="@+id/tvWliName"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
                 android:text="Item"
 
                 android:textColor="@color/black"
@@ -67,11 +67,10 @@
 
             android:id="@+id/ivAddToFavorite"
 
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="0dp"
-            android:layout_weight="1"
+
+
             android:clickable="true"
             android:src="@android:drawable/ic_input_add"
             android:tint="@color/black" />

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -78,22 +79,22 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
         swAutorefreshRecentItems.setChecked(sosApi.GSV(SOS_API.KEY_AUTOREFRESH_RECENT_ITEMS).equals("true"));
 
 
-        tvAccSetFullName = (TextView) findViewById(R.id.accSetFullName);
-        tvAccSetEmail = (TextView) findViewById(R.id.accSetEmail);
-        tvAccSetCompany = (TextView) findViewById(R.id.accSetCompany);
-        tvAccSetMobile = (TextView) findViewById(R.id.accSetMobile);
-        tvAccSetLocation = (TextView) findViewById(R.id.accSetLocation);
+        tvAccSetFullName = findViewById(R.id.accSetFullName);
+        tvAccSetEmail = findViewById(R.id.accSetEmail);
+        tvAccSetCompany = findViewById(R.id.accSetCompany);
+        tvAccSetMobile = findViewById(R.id.accSetMobile);
+        tvAccSetLocation = findViewById(R.id.accSetLocation);
 
-        etOldPassword = (EditText) findViewById(R.id.etOldPassword);
-        etNewPassword = (EditText) findViewById(R.id.etNewPassword);
-        etReNewPassword = (EditText) findViewById(R.id.etReNewPassword);
+        etOldPassword = findViewById(R.id.etOldPassword);
+        etNewPassword = findViewById(R.id.etNewPassword);
+        etReNewPassword = findViewById(R.id.etReNewPassword);
 
-        cbShowMyEmail = (CheckBox) findViewById(R.id.cbShowMyEmail);
-        cbShowMyMobile = (CheckBox) findViewById(R.id.cbShowMyMobile);
-        cbShowMyAddress = (CheckBox) findViewById(R.id.cbShowMyAddress);
+        cbShowMyEmail = findViewById(R.id.cbShowMyEmail);
+        cbShowMyMobile = findViewById(R.id.cbShowMyMobile);
+        cbShowMyAddress = findViewById(R.id.cbShowMyAddress);
 
-        btnDelMyAccount = (Button) findViewById(R.id.btnDelMyAcc);
-        btnUpdateMyPassword = (Button) findViewById(R.id.btnUpdateMyPassword);
+        btnDelMyAccount = findViewById(R.id.btnDelMyAcc);
+        btnUpdateMyPassword = findViewById(R.id.btnUpdateMyPassword);
 
         //llPasswordMismatch = (LinearLayout) findViewById(R.id.llPasswordsMismatch);
 
@@ -198,8 +199,26 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        deleteMyAccount();
-                        //Log.e(TAG, "ON POSITIVE BTN " );
+                        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                        View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+                        final EditText etpwd = v.findViewById(R.id.etDgPassword);
+
+                        new AlertDialog.Builder(ActivityAccountSettings.this)
+                                //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                                .setView(v)
+                                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
+                                            deleteMyAccount();
+                                        }else{
+                                            Toast.makeText(ActivityAccountSettings.this, HM.RGS(ActivityAccountSettings.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("CANCEL", null).show();
+
+
 
                     }
                 });

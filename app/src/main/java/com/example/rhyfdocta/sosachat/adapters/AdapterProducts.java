@@ -60,9 +60,9 @@ public class AdapterProducts extends ArrayAdapter<Product> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item_prod, null);
             viewHolderProduct = new ViewHolderProduct();
-            viewHolderProduct.tvProdName = (TextView) view.findViewById(R.id.tvProdName);
-            viewHolderProduct.tvProdPrive = (TextView) view.findViewById(R.id.tvProdPrice);
-            viewHolderProduct.ivProd = (ImageView) view.findViewById(R.id.ivProd);
+            viewHolderProduct.tvProdName = view.findViewById(R.id.tvProdName);
+            viewHolderProduct.tvProdPrive = view.findViewById(R.id.tvProdPrice);
+            viewHolderProduct.ivProd = view.findViewById(R.id.ivProd);
             view.setTag(viewHolderProduct);
 
 

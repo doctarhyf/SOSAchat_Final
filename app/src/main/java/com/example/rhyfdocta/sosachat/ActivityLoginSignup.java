@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -58,24 +60,24 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
         cbTermsAndCond = findViewById(R.id.cbSignupAgreeTerms);
 
-        ivLogo = (ImageView) findViewById(R.id.ivWelcomLogo);
-        tvWelcomeMsg = (TextView) findViewById(R.id.tvWelcomeMsg);
+        ivLogo = findViewById(R.id.ivWelcomLogo);
+        tvWelcomeMsg = findViewById(R.id.tvWelcomeMsg);
 
-        btnShowLoginForm = (TextView) findViewById(R.id.tvShowLoginForm);
-        btnShowSignupForm = (TextView) findViewById(R.id.tvShowSignupForm);
+        btnShowLoginForm = findViewById(R.id.tvShowLoginForm);
+        btnShowSignupForm = findViewById(R.id.tvShowSignupForm);
 
-        loginForm = (LinearLayout) findViewById(R.id.formLogin);
-        signupForm = (LinearLayout) findViewById(R.id.formSignup);
+        loginForm = findViewById(R.id.formLogin);
+        signupForm = findViewById(R.id.formSignup);
 
-        etUsername = (EditText) findViewById(R.id.etUsername);
-        etPassword = (EditText) findViewById(R.id.etPassword);
+        etUsername = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.etPassword);
 
-        etSuDisplayName = (EditText) findViewById(R.id.etSignupDisplayName);
-        etSuFullName = (EditText) findViewById(R.id.etSignupFullName);
-        etSuEmail = (EditText) findViewById(R.id.etSignupEmail);
-        etSuMobile = (EditText) findViewById(R.id.etSignupMobile);
-        etSuPassword = (EditText) findViewById(R.id.etSignupPassword);
-        etSuLocation = (EditText) findViewById(R.id.etSignupLocation);
+        etSuDisplayName = findViewById(R.id.etSignupDisplayName);
+        etSuFullName = findViewById(R.id.etSignupFullName);
+        etSuEmail = findViewById(R.id.etSignupEmail);
+        etSuMobile = findViewById(R.id.etSignupMobile);
+        etSuPassword = findViewById(R.id.etSignupPassword);
+        etSuLocation = findViewById(R.id.etSignupLocation);
 
         getSupportActionBar().hide();
 
@@ -96,6 +98,42 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
         }, 3000);
 
 
+        etUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+
+                sosApi.SSV(SOS_API.KEY_LAST_USERNAME, text);
+                Log.e("L4", "afterTextChanged: -> " + sosApi.GSV(SOS_API.KEY_LAST_USERNAME) );
+            }
+        });
+
+        String lun = sosApi.GSV(SOS_API.KEY_LAST_USERNAME);
+        if(!lun.equals(SOS_API.KEY_SESSION_DATA_EMPTY)) etUsername.setText(lun);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String lun = sosApi.GSV(SOS_API.KEY_LAST_USERNAME);
+        if(!lun.equals(SOS_API.KEY_SESSION_DATA_EMPTY)) etUsername.setText(lun);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        String lun = sosApi.GSV(SOS_API.KEY_LAST_USERNAME);
+        if(!lun.equals(SOS_API.KEY_SESSION_DATA_EMPTY)) etUsername.setText(lun);
     }
 
     //private TextView tvAlertDialogResponse;

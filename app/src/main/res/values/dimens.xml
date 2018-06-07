@@ -16,5 +16,6 @@
     <dimen name="heightMainSLideshow">220dp</dimen>
     <dimen name="sizeImgRecentProdHL">180dp</dimen>
     <dimen name="sizeHomeLookingFor">40dp</dimen>
+    <dimen name="paddingHalf">4dp</dimen>
 
 </resources>

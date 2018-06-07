@@ -45,11 +45,11 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
         sosApi = new SOS_API(this);
 
-        ivMain = (ImageView) findViewById(R.id.ivmpMain);
+        ivMain = findViewById(R.id.ivmpMain);
         ivMorePicMain = findViewById(R.id.ivMorePicMain);
-        ivp1 = (ImageView) findViewById(R.id.ivMorePic1);
-        ivp2 = (ImageView) findViewById(R.id.ivMorePic2);
-        ivp3 = (ImageView) findViewById(R.id.ivMorePic3);
+        ivp1 = findViewById(R.id.ivMorePic1);
+        ivp2 = findViewById(R.id.ivMorePic2);
+        ivp3 = findViewById(R.id.ivMorePic3);
 
 
         itemBundle = getIntent().getExtras();

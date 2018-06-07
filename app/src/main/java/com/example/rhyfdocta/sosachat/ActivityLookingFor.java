@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
@@ -27,11 +29,26 @@ public class ActivityLookingFor extends AppCompatActivity implements
     private SOS_API sosApi;
     private ProgressBar pb;
     private TextView tvError;
+    private  boolean mine = false;
+    private Switch swOnlyMyLookingfor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_inquiries);
+        setContentView(R.layout.activity_lookingfors);
+
+        swOnlyMyLookingfor = findViewById(R.id.swOnlyMyLookingfor);
+
+        swOnlyMyLookingfor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                mine = isChecked;
+                lvInquiries.setVisibility(View.GONE);
+                pb.setVisibility(View.VISIBLE);
+                sosApi.loadLookingFors(ActivityLookingFor.this, mine,  -1);
+            }
+        });
 
         pb = findViewById(R.id.pbInqList);
         tvError = findViewById(R.id.tvInqListError);
@@ -43,7 +60,16 @@ public class ActivityLookingFor extends AppCompatActivity implements
         lvInquiries = findViewById(R.id.lvInquiries);
 
         sosApi = new SOS_API(this);
-        sosApi.loadLookingFors(this, -1);
+
+        Bundle extras= getIntent().getExtras();
+
+        if(extras!= null){
+            mine = extras.getBoolean(LookingFor.KEY_IS_MINE, false);
+        }
+
+        swOnlyMyLookingfor.setChecked(mine);
+
+        sosApi.loadLookingFors(this, mine,  -1);
 
 
         inquiries = new ArrayList<>();
@@ -64,7 +90,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
                 break;
 
             case R.id.menuInqRefresh:
-                sosApi.loadLookingFors(this,-1);
+                sosApi.loadLookingFors(this, mine,-1);
                 tvError.setVisibility(View.GONE);
                 pb.setVisibility(View.VISIBLE);
                 lvInquiries.setVisibility(View.GONE);
@@ -142,7 +168,9 @@ public class ActivityLookingFor extends AppCompatActivity implements
         Intent intent = new Intent(this, ActivityLookingForView.class);
 
         Bundle data = new Bundle();
+
         data.putAll(lookingFor.toBundle());
+        data.putBoolean(LookingFor.KEY_IS_MINE, mine);
         intent.putExtras(data);
         startActivity(intent);
     }

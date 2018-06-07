@@ -47,8 +47,8 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        etInqTitle = (EditText) findViewById(R.id.etInqTitle);
-        etInqDesc = (EditText) findViewById(R.id.etInqDesc);
+        etInqTitle = findViewById(R.id.etInqTitle);
+        etInqDesc = findViewById(R.id.etInqDesc);
     }
 
     @Override

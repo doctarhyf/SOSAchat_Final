@@ -16,11 +16,13 @@ import android.os.Build;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -159,12 +161,13 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMessage(HM.RGS(this, R.string.pbMsgPostingNewItem));
         progressDialog.setCancelable(false);
 
 
 
 
-        svActivityExposeitem = (ScrollView) findViewById(R.id.svActivityExposeitem);
+        svActivityExposeitem = findViewById(R.id.svActivityExposeitem);
 
         getSupportActionBar().setTitle(subtitle);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -253,34 +256,34 @@ public class ActivityPostItem extends AppCompatActivity implements
 
     private void initGUI() {
 
-        btnExposeItem = (Button) findViewById(R.id.btnExposeItem);
+        btnExposeItem = findViewById(R.id.btnExposeItem);
 
 
 
-        ivMainItemPic = (ImageView) findViewById(R.id.ivNewItemMainPic);
-
-
-
-
-        ivPic1 = (ImageView) findViewById(R.id.ivNewItemPic1);
-        ivPic2 = (ImageView) findViewById(R.id.ivNewItemPic2);
-        ivPic3 = (ImageView) findViewById(R.id.ivNewItemPic3);
+        ivMainItemPic = findViewById(R.id.ivNewItemMainPic);
 
 
 
 
+        ivPic1 = findViewById(R.id.ivNewItemPic1);
+        ivPic2 = findViewById(R.id.ivNewItemPic2);
+        ivPic3 = findViewById(R.id.ivNewItemPic3);
 
-        etItemDesc = (EditText) findViewById(R.id.etNewItemDesc);
-        etItemName = (EditText) findViewById(R.id.etNewItemName);
-        etItemPrice = (EditText) findViewById(R.id.etNewItemPrice);
 
-        spCur = (Spinner) findViewById(R.id.spCur);
 
-        spQual = (Spinner) findViewById(R.id.spNewItemQuality);
-        spCat = (SpinnerReselect) findViewById(R.id.spNewItemCat);
-        spType = (Spinner) findViewById(R.id.spNewItemType);
 
-        cbAcceptTerms = (CheckBox) findViewById(R.id.cbAcceptTerms);
+
+        etItemDesc = findViewById(R.id.etNewItemDesc);
+        etItemName = findViewById(R.id.etNewItemName);
+        etItemPrice = findViewById(R.id.etNewItemPrice);
+
+        spCur = findViewById(R.id.spCur);
+
+        spQual = findViewById(R.id.spNewItemQuality);
+        spCat = findViewById(R.id.spNewItemCat);
+        spType = findViewById(R.id.spNewItemType);
+
+        cbAcceptTerms = findViewById(R.id.cbAcceptTerms);
 
         //setSpinnerListeners();
 
@@ -560,8 +563,17 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File file = getCameraPictureFile();
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+
+        }else{
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(ActivityPostItem.this,
+                    BuildConfig.APPLICATION_ID + ".provider", file));
+        }
+
+
         startActivityForResult(intent, REQ_CAMERA);
+
 
     }
 
@@ -941,17 +953,44 @@ public class ActivityPostItem extends AppCompatActivity implements
         progressDialog.dismiss();
         btnExposeItem.setEnabled(false);
         toggleImageViews(false);
-        sosApi.exposeItem(this, data);
+
+
+
+        sosApi.exposeItem(ActivityPostItem.this, data);
+
     }
 
     private void uploadImageToServer() {
 
+
+
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+        final EditText etpwd = v.findViewById(R.id.etDgPassword);
+
+        new AlertDialog.Builder(ActivityPostItem.this)
+                //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                .setView(v)
+                .setPositiveButton("POST", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
+
+                            progressDialog.show();
+
+                            serverImageManager.setUploadToken(sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID));
+                            serverImageManager.uploadAllImagesToServer(ActivityPostItem.this, itemModeEditing);
+
+                        }else{
+                            Toast.makeText(ActivityPostItem.this, HM.RGS(ActivityPostItem.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .setNegativeButton("CANCEL", null).show();
+
             //to remove
             //progressDialog.setCancelable(true);
-            progressDialog.show();
 
-            serverImageManager.setUploadToken(sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID));
-            serverImageManager.uploadAllImagesToServer(this, itemModeEditing);
 
 
 

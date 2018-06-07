@@ -49,10 +49,10 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         public ViewHolder(View view) {
             super(view);
             layout = view;
-            ivItemPic = (ImageView) layout.findViewById(R.id.ivFetProd);
-            tvItemName = (TextView) layout.findViewById(R.id.tvFeatProdName);
-            tvItemPrice = (TextView) layout.findViewById(R.id.tvFeatProdPrice);
-            tvItemDate = (TextView) layout.findViewById(R.id.tvFeatProdDate);
+            ivItemPic = layout.findViewById(R.id.ivFetProd);
+            tvItemName = layout.findViewById(R.id.tvFeatProdName);
+            tvItemPrice = layout.findViewById(R.id.tvFeatProdPrice);
+            tvItemDate = layout.findViewById(R.id.tvFeatProdDate);
             tvItemDesc = layout.findViewById(R.id.tvFeatProdDesc);
 
         }

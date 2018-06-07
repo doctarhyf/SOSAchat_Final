@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_weight="4"
             android:layout_height="wrap_content"
-            android:padding="@dimen/paddingNormal"
+            android:padding="@dimen/paddingHalf"
             android:text="Inquiry"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -40,7 +40,7 @@
 
             <ImageView
                 android:src="@drawable/arrow_right"
-                android:layout_marginTop="@dimen/paddingNormal"
+                android:layout_marginTop="@dimen/paddingHalf"
                 android:layout_marginEnd="@dimen/paddingNormal"
                 android:layout_width="28dp"
                 android:layout_height="28dp" />
@@ -48,12 +48,13 @@
         </LinearLayout>
 
         <TextView
-            android:lines="1"
+            android:maxLines="2"
+            android:lines="2"
             android:id="@+id/tvPreviewLookingfor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="This is a preview ..."
+            android:padding="@dimen/paddingHalf"
+            android:text="This is a preview, This is a preview, This is a preview, This is a preview, This is a preview, "
             android:textColor="@color/grayDark"
             android:textSize="16sp"
             />
@@ -65,7 +66,7 @@
 
             android:id="@+id/tvInqPostedBy"
             android:layout_width="wrap_content"
-            android:padding="@dimen/paddingNormal"
+            android:padding="@dimen/paddingHalf"
             android:layout_height="wrap_content"
             android:text="Docta Rhyf"
             android:textColor="@color/colorPrimaryDark"
@@ -74,11 +75,11 @@
             android:lines="1"
             android:id="@+id/tvInqDate"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="5 days"
             android:gravity="right"
-            android:layout_marginEnd="@dimen/paddingNormal"
+            android:padding="@dimen/paddingHalf"
             android:textColor="@color/red"
             />
 

@@ -130,7 +130,7 @@ public class UploadAsyncTask extends AsyncTask<Void, Integer, String> {
     protected void onProgressUpdate(Integer... progress) {
         // Update process
         //this.progressDialog.setProgress((int) progress[0]);
-        callbacks.onProgress((int) progress[0]);
+        callbacks.onProgress(progress[0]);
 
     }
 }

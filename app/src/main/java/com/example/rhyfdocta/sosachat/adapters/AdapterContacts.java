@@ -49,11 +49,11 @@ public class AdapterContacts extends ArrayAdapter<Contact> {
 
             //view = inflater.inflate(R.)
             viewHolderWishListItem = new ViewHolderContactItem();
-            viewHolderWishListItem.tvChatMsgFromName = (TextView) view.findViewById(R.id.tvChatMsgFromName);
-            viewHolderWishListItem.tvChatMsgLastMsg = (TextView) view.findViewById(R.id.tvChatMsgLastMsg);
-            viewHolderWishListItem.tvChatMsgLastMsgDate = (TextView) view.findViewById(R.id.tvChatMsgLastMsgDate);
-            viewHolderWishListItem.ivChatMsg = (ImageView) view.findViewById(R.id.ivChatMsg);
-            viewHolderWishListItem.ivRmChatMsg = (ImageView) view.findViewById(R.id.ivRmChatMsg);
+            viewHolderWishListItem.tvChatMsgFromName = view.findViewById(R.id.tvChatMsgFromName);
+            viewHolderWishListItem.tvChatMsgLastMsg = view.findViewById(R.id.tvChatMsgLastMsg);
+            viewHolderWishListItem.tvChatMsgLastMsgDate = view.findViewById(R.id.tvChatMsgLastMsgDate);
+            viewHolderWishListItem.ivChatMsg = view.findViewById(R.id.ivChatMsg);
+            viewHolderWishListItem.ivRmChatMsg = view.findViewById(R.id.ivRmChatMsg);
             view.setTag(viewHolderWishListItem);
 
 
@@ -101,12 +101,12 @@ public class AdapterContacts extends ArrayAdapter<Contact> {
         private TextView msg;
 
         public ViewHolder(View v) {
-            msg = (TextView) v.findViewById(R.id.txt_msg);
+            msg = v.findViewById(R.id.txt_msg);
         }
     }
 
-    public static interface ContactsListener{
-        public void onContactClicked(Contact contact);
+    public interface ContactsListener{
+        void onContactClicked(Contact contact);
 
         void onRemoveContactClicked(Contact contact);
     }

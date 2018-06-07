@@ -17,6 +17,8 @@ public class LookingFor implements Serializable {
     public static final String KEY_PATH_PP = "path_pp";
     public static final Object NO_VALUE = "NO_VALUE";
     public static final String KEY_MTIME_PP = "mtime_pp";
+    public static final String KEY_IS_MINE = "isMine";
+    public static final String KEY_ID_LOOKINGFOR = "inq_id";
     private String title;
     private String message;
     private String dateTime;

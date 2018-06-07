@@ -650,11 +650,11 @@ public class HelperMethods {
         }
     }
 
-    public static interface SpinnerLoaderListener {
-        public void onLoadComplete();
+    public interface SpinnerLoaderListener {
+        void onLoadComplete();
     }
 
-    public static interface CallbacksViewSize {
-        public void onSizeFound(double[] size);
+    public interface CallbacksViewSize {
+        void onSizeFound(double[] size);
     }
 }

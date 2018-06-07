@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rhyfdocta.sosachat.ActivityLookingForView;
 import com.example.rhyfdocta.sosachat.ActivityNoNetwork;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
@@ -100,19 +101,21 @@ public class SOS_API {
     public static final String SERVER_REL_ROOT_DIR_PATH_PROFILE_PICTURES = "img/pp/";
     public static final String ACTION_UPLOAD_IMAGE = "uploadImage";
     public static final String IMAGE_UPLOAD_FORM_NAME = "uploaded_file";
+    private static final String ACTION_DELETE_LOOKING_FOR = "dell4";
+    public static final String KEY_LAST_USERNAME = "luname";
 
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.88.18/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.5/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.88.18/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.18/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.18/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.88.18/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.88.18/sosachat/";
+    public static String API_URL = "http://192.168.1.5/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.5/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.5/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.5/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.1.5/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -233,9 +236,9 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.88.18/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.88.18/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.88.18/sosac hat/img/products/";
+    public static String API_URL = "http://192.168.1.5/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.5/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.5/sosac hat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
     /img/users/";
     */
@@ -243,11 +246,7 @@ public class SOS_API {
     public static  boolean isOnline(Context context){
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnectedOrConnecting()){
-            return true;
-        }else{
-            return false;
-        }
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 
     private  SharedPreferences preferences;
@@ -672,6 +671,40 @@ public class SOS_API {
         context.startActivity(intent);
     }
 
+    public void deleteLookingFor(final CallbacksDelLookingFor callbacksDelLookingFor, String id) {
+
+        String url = SOS_API.API_URL + "act=" + ACTION_DELETE_LOOKING_FOR + "&iid=" + id + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        if(s.equals(TRUE)){
+                            callbacksDelLookingFor.onDeleteLookingSuccess();
+                        }else{
+                            callbacksDelLookingFor.onDeleteLookingForFailure(s);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        callbacksDelLookingFor.onDeleteLookingForFailure(volleyError.getMessage());
+                    }
+                }
+        );
+
+        Volley.newRequestQueue(context).add(request);
+
+    }
+
+    public interface CallbacksDelLookingFor{
+        void onDeleteLookingSuccess();
+        void onDeleteLookingForFailure(String message);
+    }
+
     public interface CallbacksUniqueID{
         void onUniqueIDLoaded(String un);
         void onError(String error);
@@ -763,7 +796,7 @@ public class SOS_API {
         ){
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
 
@@ -956,13 +989,13 @@ public class SOS_API {
         Log.e(TAG, "deletePP: " );
     }
 
-    public void loadLookingFors(final AdapterLookingFor.CallBacks callBacks, int size) {
+    public void loadLookingFors(final AdapterLookingFor.CallBacks callBacks, boolean mine, int limit) {
 
 
         String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES + "&uid=" + getSessionVar(KEY_ACC_DATA_ID);
-
-        if(size != -1){
-            url = url.concat("&limit=" + size);
+        if(mine) { url = url.concat("&mine"); };
+        if(limit != -1){
+            url = url.concat("&limit=" + limit);
         }
 
         Log.e("L4Z", "url -> " + url );
@@ -1846,7 +1879,7 @@ public class SOS_API {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
 
                 Map<String, String> params = new HashMap<>();
 
@@ -2089,9 +2122,9 @@ public class SOS_API {
     }
 
     public interface ListenerItemsWishlist {
-        public void onItemAddedSuccess();
-        public void onItemAddedError(String msg);
-        public void onNetworkError(String msg);
+        void onItemAddedSuccess();
+        void onItemAddedError(String msg);
+        void onNetworkError(String msg);
 
         void onItemRemoveError(Bundle pd);
 
@@ -2340,7 +2373,7 @@ public class SOS_API {
 
     public static String ACTION_LOAD_ITEMS_IN_TYPE = "loadItemsInType";
 
-    public static interface CallBacksItemsInTypes {
+    public interface CallBacksItemsInTypes {
 
         void onItemsInTypeLoaded(List<Product> prods);
         void onNoProdsInType();

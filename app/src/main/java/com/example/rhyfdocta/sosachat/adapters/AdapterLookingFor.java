@@ -62,7 +62,7 @@ public class AdapterLookingFor extends ArrayAdapter<LookingFor> {
         final String pathPP = (String) lookingFor.getValue(LookingFor.KEY_PATH_PP);
         String mtime = (String) lookingFor.getValue(LookingFor.KEY_MTIME_PP);
         long mtimel = mtime == null || mtime.isEmpty() ? 0 : Long.parseLong(mtime);
-        String fileName = (String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
+        String fileName = lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
 
 
         BitmapCacheManager.GlideUniversalLoaderLoadPathIntoImageView(

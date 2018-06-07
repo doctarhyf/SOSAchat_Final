@@ -123,7 +123,7 @@ AdapterLookingFor.CallBacks{
         }
 
         tvMsgLookingFor = findViewById(R.id.tvMsgLookingFor);
-        sosApi.loadLookingFors(this, 3);
+        sosApi.loadLookingFors(this, false, 5);
         lookingFors = new ArrayList<>();
 
         lvLookifor = findViewById(R.id.lvLookingfor);
@@ -173,9 +173,9 @@ AdapterLookingFor.CallBacks{
 
         //requestQueue = Volley.newRequestQueue(this);
         alertDialogProcessing = HelperMethods.getAlertDialogProcessingWithMessage(this, HelperMethods.getStringResource(this, R.string.pbMsgRefreshing), false);
-        rootView = (ScrollView) findViewById(R.id.rootView);
-        etSearch = (EditText) findViewById(R.id.etSearch);
-        footer = (LinearLayout) findViewById(R.id.footer);
+        rootView = findViewById(R.id.rootView);
+        etSearch = findViewById(R.id.etSearch);
+        footer = findViewById(R.id.footer);
         inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         //featProdRootView = (LinearLayout) findViewById(R.id.featProdCont);
 
@@ -463,7 +463,7 @@ AdapterLookingFor.CallBacks{
             @Override
             public void run() {
                 //Do something after 1000ms
-                int scrollY = ((TextView) findViewById(R.id.titleLatestItems)).getTop();
+                int scrollY = findViewById(R.id.titleLatestItems).getTop();
                 rootView.smoothScrollBy(0, scrollY);
             }
         }, 100);
@@ -666,11 +666,33 @@ AdapterLookingFor.CallBacks{
 
         if(item.getItemId() == R.id.menuLogout){
 
-            sosApi.logout();
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+            final EditText etpwd = v.findViewById(R.id.etDgPassword);
 
-            Intent intent = new Intent(this, ActivityLoginSignup.class);
-            startActivity(intent);
-            FIRST_LAUNCH = true;
+            new AlertDialog.Builder(this)
+                    //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                    .setView(v)
+                    .setPositiveButton("LOGOUT", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
+
+                                sosApi.logout();
+
+                                Intent intent = new Intent(MainActivity.this, ActivityLoginSignup.class);
+                                startActivity(intent);
+                                FIRST_LAUNCH = true;
+
+                            }else{
+                                Toast.makeText(MainActivity.this, HM.RGS(MainActivity.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton("CANCEL", null).show();
+
+
+
 
         }
 

@@ -67,9 +67,9 @@ public class ActivityViewAllItemsInType extends AppCompatActivity implements Ada
 
         //queue = Volley.newRequestQueue(this);
 
-        tvNoItemsInCat = (TextView) findViewById(R.id.tvNoItems);
+        tvNoItemsInCat = findViewById(R.id.tvNoItems);
 
-        ivCatSplash = (ImageView) findViewById(R.id.ivCatSplash);
+        ivCatSplash = findViewById(R.id.ivCatSplash);
         //lvProds = (ListView) findViewById(R.id.lvProds);
 
 

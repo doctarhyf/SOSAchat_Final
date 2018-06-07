@@ -75,7 +75,6 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     private View customView;
     private TextView tvSellerMobile;
     private TextView tvSellerEmail;
-    ;
 
 
     @Override
@@ -110,8 +109,8 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         contactChoices[3] = res.getString(R.string.contactSOSDM);*/
 
 
-        btnAddToWishList = (Button) findViewById(R.id.btnAddToWishList);
-        btnContactVendor = (Button) findViewById(R.id.btnContactVendor);
+        btnAddToWishList = findViewById(R.id.btnAddToWishList);
+        btnContactVendor = findViewById(R.id.btnContactVendor);
 
         setUpBtnsListeners();
 
@@ -125,21 +124,21 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
         tvItemType = findViewById(R.id.tvItemType);
         tvItemCat = findViewById(R.id.tvItemCat);
-        tvItemName = (TextView) findViewById(R.id.tvItemName);
-        tvItemPrice = (TextView) findViewById(R.id.tvItemPrice);
+        tvItemName = findViewById(R.id.tvItemName);
+        tvItemPrice = findViewById(R.id.tvItemPrice);
 
-        tvSellerDislayName = (TextView) findViewById(R.id.tvSellerDislayName);
-        tvSellerMobile = (TextView) findViewById(R.id.tvSellerMobile);
-        tvSellerEmail = (TextView) findViewById(R.id.tvSellerEmail);
+        tvSellerDislayName = findViewById(R.id.tvSellerDislayName);
+        tvSellerMobile = findViewById(R.id.tvSellerMobile);
+        tvSellerEmail = findViewById(R.id.tvSellerEmail);
 
-        tvItemDesc = (TextView) findViewById(R.id.tvItemDesc);
-        tvItemQual = (TextView) findViewById(R.id.tvItemQuality);
-        ivItemMainPic = (ImageView) findViewById(R.id.ivProdMainPic);
+        tvItemDesc = findViewById(R.id.tvItemDesc);
+        tvItemQual = findViewById(R.id.tvItemQuality);
+        ivItemMainPic = findViewById(R.id.ivProdMainPic);
         //llVendorCont = (LinearLayout) findViewById(R.id.llVendorCont);
-        llItemViewsCount = (LinearLayout) findViewById(R.id.llItemViewsCount);
+        llItemViewsCount = findViewById(R.id.llItemViewsCount);
         //llDateSold = (LinearLayout) findViewById(R.id.llDatePosted);
-        tvItemViewsCount = (TextView) findViewById(R.id.tvItemViewsCount);
-        tvDatePosted = (TextView) findViewById(R.id.tvDateItemPosted);
+        tvItemViewsCount = findViewById(R.id.tvItemViewsCount);
+        tvDatePosted = findViewById(R.id.tvDateItemPosted);
 
         itemPrice = HM.GIPB(this, R.string.priceToDiscuss, itemDataBundle.getString(Product.KEY_PD_PRICE), itemDataBundle.getString(Product.KEY_PD_CUR));
 

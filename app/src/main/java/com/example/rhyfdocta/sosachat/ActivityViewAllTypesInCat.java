@@ -53,13 +53,13 @@ public class ActivityViewAllTypesInCat extends AppCompatActivity implements Adap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_types_in_cat);
 
-        tvError = (TextView) findViewById(R.id.tvTypesErrorLoading);
+        tvError = findViewById(R.id.tvTypesErrorLoading);
 
         sosApi = new SOS_API(this);
 
         catPicPath = SOS_API.DIR_PATH_CATEGORIES;
 
-        pb = (ProgressBar) findViewById(R.id.pbAllCats);
+        pb = findViewById(R.id.pbAllCats);
         lv =  findViewById(R.id.mylist);
 
         Intent intent = getIntent();
