@@ -15,5 +15,6 @@
     <dimen name="marginSimple">8dp</dimen>
     <dimen name="heightMainSLideshow">220dp</dimen>
     <dimen name="sizeImgRecentProdHL">180dp</dimen>
+    <dimen name="sizeHomeLookingFor">40dp</dimen>
 
 </resources>

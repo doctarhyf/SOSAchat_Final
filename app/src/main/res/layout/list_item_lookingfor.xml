@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:src="@drawable/salem"
+        android:layout_width="@dimen/sizeHomeLookingFor"
+        android:scaleType="centerCrop"
+        android:id="@+id/ivLookingFor"
+        android:layout_margin="@dimen/paddingNormal"
+        android:layout_height="@dimen/sizeHomeLookingFor" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:lines="1"
+            android:textStyle="bold"
+            android:id="@+id/tvTitleLookingfor"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/paddingNormal"
+            android:text="Inquiry"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+           />
+
+
+
+            <ImageView
+                android:src="@drawable/arrow_right"
+                android:layout_marginTop="@dimen/paddingNormal"
+                android:layout_marginEnd="@dimen/paddingNormal"
+                android:layout_width="28dp"
+                android:layout_height="28dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:lines="1"
+            android:id="@+id/tvPreviewLookingfor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="This is a preview ..."
+            android:textColor="@color/grayDark"
+            android:textSize="16sp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+
+            android:id="@+id/tvInqPostedBy"
+            android:layout_width="wrap_content"
+            android:padding="@dimen/paddingNormal"
+            android:layout_height="wrap_content"
+            android:text="Docta Rhyf"
+            android:textColor="@color/colorPrimaryDark"
+            />
+        <TextView
+            android:lines="1"
+            android:id="@+id/tvInqDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="5 days"
+            android:gravity="right"
+            android:layout_marginEnd="@dimen/paddingNormal"
+            android:textColor="@color/red"
+            />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -122,12 +123,23 @@ AdapterLookingFor.CallBacks{
         }
 
         tvMsgLookingFor = findViewById(R.id.tvMsgLookingFor);
-        sosApi.loadLookingFors(this, 5);
+        sosApi.loadLookingFors(this, 3);
         lookingFors = new ArrayList<>();
 
         lvLookifor = findViewById(R.id.lvLookingfor);
         adapterLookingFor = new AdapterLookingFor(this, lookingFors, this);
         lvLookifor.setAdapter(adapterLookingFor);
+
+        lvLookifor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LookingFor lookingFor = lookingFors.get(position);
+
+                Intent intent = new Intent(MainActivity.this, ActivityLookingForView.class);
+                intent.putExtras(lookingFor.toBundle());
+                startActivity(intent);
+            }
+        });
 
 
         tvNoConn = findViewById(R.id.tvNoConn);
@@ -257,7 +269,16 @@ AdapterLookingFor.CallBacks{
         TextView tvLatestItems = findViewById(R.id.titleLatestItems);
         TextView tvAllCats = findViewById(R.id.titleAllCategories);
         Button btnSearch = findViewById(R.id.btnSearch);
+        TextView tvTitleExRate = findViewById(R.id.titleExRates);
+        TextView tvLatesL4s = findViewById(R.id.titleLookingFors);
+        LinearLayout llLooking4 = findViewById(R.id.llLookingfors);
+
+
         if(connected){
+
+            tvTitleExRate.setVisibility(View.VISIBLE);
+            tvLatesL4s.setVisibility(View.VISIBLE);
+            llLooking4.setVisibility(View.VISIBLE);
             tvAllCats.setVisibility(View.VISIBLE);
             tvNoConn.setVisibility(View.GONE);
             llFeatCats.setVisibility(View.VISIBLE);
@@ -267,6 +288,9 @@ AdapterLookingFor.CallBacks{
 
             //llPbLoadingRecentItems.setVisibility(View.GONE);
         }else{
+            tvTitleExRate.setVisibility(View.GONE);
+            tvLatesL4s.setVisibility(View.GONE);
+            llLooking4.setVisibility(View.GONE);
             btnSearch.setEnabled(false);
             tvAllCats.setVisibility(View.GONE);
             tvNoConn.setVisibility(View.VISIBLE);

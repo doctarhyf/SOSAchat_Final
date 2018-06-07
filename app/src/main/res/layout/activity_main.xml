@@ -27,7 +27,7 @@
     <TextView
         android:visibility="gone"
         android:id="@+id/tvNoConn"
-        android:text="@string/msgNoNetworkTitle"
+        android:text="@string/msgServerUnreachable"
         android:gravity="center"
         android:background="@color/red"
         android:textColor="@color/white"
