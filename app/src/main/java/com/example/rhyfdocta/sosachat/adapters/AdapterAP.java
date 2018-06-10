@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +26,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.R;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -205,7 +207,14 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
         return list.size();
     }
 
-    
+    public void setFilter(List<ProductMyProducts> filtered_list){
+
+        list = new ArrayList<>();
+        list.addAll(filtered_list);
+
+        notifyDataSetChanged();
+
+    }
 
     public interface ListenerAllProducts {
         void onItemClicked(ProductMyProducts pd, Uri picUri);
