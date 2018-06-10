@@ -19,9 +19,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,7 +69,8 @@ AdapterLookingFor.CallBacks{
     //private static final int REQ_CODE_NO_INTERNET_CONNECTION = 2342;
     public static final String KEY_SOSACHAT_FOLDER = "sdcard/SOSAchat";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
-    private static final int MAIN_SLIDESHOW_FLIP_INTERVAL = 2500;
+    private static final int MAIN_SLIDESHOW_FLIP_INTERVAL = 3000;
+    private static final long SLIDE_SHOW_IMAGE_DURATION = 700;
 
 
     EditText etSearch;
@@ -109,6 +113,7 @@ AdapterLookingFor.CallBacks{
     //private RecyclerView.LayoutManager layoutManagerLookingfor;
     private ListView lvLookifor;
     private TextView tvMsgLookingFor;
+    private float startX;
 
 
     @Override
@@ -148,6 +153,47 @@ AdapterLookingFor.CallBacks{
         vfMain.setFlipInterval(MAIN_SLIDESHOW_FLIP_INTERVAL);
         vfMain.setAutoStart(true);
         vfMain.startFlipping();
+
+        Animation imgAnimationIn = AnimationUtils.loadAnimation(
+                this,
+                android.R.anim.slide_in_left
+        );
+        imgAnimationIn.setDuration(SLIDE_SHOW_IMAGE_DURATION);
+        vfMain.setInAnimation(imgAnimationIn);
+
+        Animation imgAnimationOut = AnimationUtils.loadAnimation(
+                this,
+                android.R.anim.slide_out_right
+        );
+        imgAnimationIn.setDuration(SLIDE_SHOW_IMAGE_DURATION);
+        vfMain.setOutAnimation(imgAnimationOut);
+
+        vfMain.setOnTouchListener(new View.OnTouchListener() {
+                                  @Override
+                                  public boolean onTouch(View view, MotionEvent event) {
+                                      int action = event.getActionMasked();
+                                      switch (action) {
+                                          case MotionEvent.ACTION_DOWN:
+                                              startX = event.getX();
+                                              break;
+                                          case MotionEvent.ACTION_UP:
+                                              float endX = event.getX();
+                                              float endY = event.getY();
+//swipe right
+                                              if (startX < endX) {
+                                                  MainActivity.this.vfMain.showNext();
+                                              }
+//swipe left
+                                              if (startX > endX) {
+                                                  MainActivity.this.vfMain.showPrevious();
+                                              }
+                                              break;
+                                      }
+
+                                      return true;
+                                  }
+                              });
+
 
         HelperMethods.GetViewSize(new HelperMethods.CallbacksViewSize() {
             @Override
@@ -222,6 +268,7 @@ AdapterLookingFor.CallBacks{
         if(getIntent().getBooleanExtra(SOS_API.KEY_USER_IS_ADMIN, false)){
             HM.T(this, 100, HM.TLS);
         }
+
 
 
     }
@@ -605,13 +652,18 @@ AdapterLookingFor.CallBacks{
         searchKeyword = etSearch.getText().toString().trim();
         //Toast.makeText(this, q, Toast.LENGTH_SHORT).show();
 
+        /*
         if(searchKeyword.length() > 0) {
 
             sosApi.search(this,searchKeyword);
 
         }else{
             Toast.makeText(this, "Please write something!", Toast.LENGTH_SHORT).show();
-        }
+        }*/
+
+        Intent intent = new Intent(this, ActivityViewAllProducts.class);
+        //intent.putExtra(SOS_API.SEARCH_Q, searchKeyword);
+        startActivity(intent);
     }
 
     @Override
@@ -624,6 +676,8 @@ AdapterLookingFor.CallBacks{
     public boolean onOptionsItemSelected(MenuItem item) {
 
         //Toast.makeText(this, "Menu clicked", Toast.LENGTH_SHORT).show();
+
+
 
         if(item.getItemId() == R.id.menuAbout){
             showMessage(getResources().getString(R.string.aboutSOS), getResources().getString(R.string.aboutMessage));

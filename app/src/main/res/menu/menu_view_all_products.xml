@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <item
+        android:id="@+id/action_search_all_products"
+        android:title="@string/titleSearch"
+        android:icon="@android:drawable/ic_menu_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView"
+        />
 
     <item
 
@@ -11,6 +18,8 @@
         android:id="@+id/menuViewAllProductsRefresh"
         android:icon="@android:drawable/ic_menu_rotate"
         android:title="@string/menuViewAllProductsRefresh"/>
+
+
 
 
 

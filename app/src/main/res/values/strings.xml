@@ -400,5 +400,12 @@
     <string name="msgDelLooking4">Are you sure you wanna delete this looking for? There is no undo.</string>
     <string name="dgTitleInputPassword">Input Password</string>
     <string name="tmsgPwdNotCorrect">Password not correct! Please try again!</string>
+    <string name="strMe">Me</string>
+    <string name="btnEditLookingFor">EDIT</string>
+    <string name="strSampleDesc">Sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc sample desc</string>
+    <string name="strEditL4">EDIT</string>
+    <string name="strDelL4">DELETE</string>
+    <string name="strContactL4">CONTACT</string>
+    <string name="titleSearch">Search</string>
 
 </resources>

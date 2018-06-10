@@ -10,9 +10,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +35,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 public class ActivityLookingForView extends AppCompatActivity {
 
     private LookingFor lookingFor;
-    private TextView tvPosterName, tvPhone, tvEmail, tvTitle, tvDesc, tvDatePosted, tvInqPriority;
+    private TextView tvPosterName, tvTitle, tvDesc, tvDatePosted, tvInqPriority;
     private Button btnContact;
     private ImageView ivPp;
     private String title;
@@ -45,12 +49,13 @@ public class ActivityLookingForView extends AppCompatActivity {
     private String email;
     private boolean mine = false;
     private Button btnDelL4;
+    private Button btnEditL4;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inquiry_view);
+        setContentView(R.layout.activity_lookingfor_view);
 
         sosApi = new SOS_API(this);
         glideBitmapLoaderCallbacks = new MyGlideBitmapLoaderCallbacks(this);
@@ -78,6 +83,36 @@ public class ActivityLookingForView extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lookingfor_view, menu);
+
+        if(!mine){
+
+            for(int i = 0; i < menu.size(); i++){
+                MenuItem item = menu.getItem(i);
+                if(item.getItemId() == R.id.menuEditL4 || item.getItemId() == R.id.menuDelL4){
+                    item.setVisible(false);
+                }else if(item.getItemId() == R.id.menuContactL4){
+                    item.setVisible(true);
+                }
+            }
+
+        }else {
+
+            for(int i = 0; i < menu.size(); i++){
+                MenuItem item = menu.getItem(i);
+                if(item.getItemId() == R.id.menuEditL4 || item.getItemId() == R.id.menuDelL4){
+                    item.setVisible(true);
+                }else if(item.getItemId() == R.id.menuContactL4){
+                    item.setVisible(false);
+                }
+            }
+        }
+
+        return true;
     }
 
     private void initDialogContact(){
@@ -193,8 +228,8 @@ public class ActivityLookingForView extends AppCompatActivity {
     private void updateGUI() {
         title  = lookingFor.getTitle();
         tvPosterName.setText((String) lookingFor.getProperty(LookingFor.KEY_POSTERNAME));
-        tvPhone.setText((String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE));
-        tvEmail.setText((String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_EMAIL));
+        //tvPhone.setText((String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE));
+        //tvEmail.setText((String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_EMAIL));
         tvInqPriority.setText((String) lookingFor.getProperty(LookingFor.KEY_INQUIRY_RATING));
         // TODO: 5/16/2018 ADD STR TO RESOURCE
         tvTitle.setText(title);
@@ -254,34 +289,90 @@ public class ActivityLookingForView extends AppCompatActivity {
 
     }
 
-    public void deleteLookingFor(View view) {
+    public void onDeleteLookingFor(View view) {
+
+        deleteLookingFor();
+
+
+    }
+
+    private void deleteLookingFor() {
 
         final String id = data.getString(LookingFor.KEY_ID_LOOKINGFOR);
+
+
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+        final EditText etpwd = v.findViewById(R.id.etDgPassword);
+
         new AlertDialog.Builder(this)
-                .setTitle(String.format(HM.RGS(this, R.string.strQDeleLooking4), title))
-                .setMessage(HM.RGS(this, R.string.msgDelLooking4))
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                .setView(v)
+                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        sosApi.deleteLookingFor(new SOS_API.CallbacksDelLookingFor() {
-                            @Override
-                            public void onDeleteLookingSuccess() {
-                                Intent intent = new Intent(ActivityLookingForView.this, ActivityLookingFor.class);
-                                startActivity(intent);
-                            }
+                        if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
 
-                            @Override
-                            public void onDeleteLookingForFailure(String message) {
-                                String title = HM.RGS(ActivityLookingForView.this, R.string.titleError);
-                                String errMsg = HM.RGS(ActivityLookingForView.this, R.string.msgFailedDeleteL4);
-                                HM.GADWMAT(ActivityLookingForView.this,title,errMsg, true, true);
-                                Log.e("L4", "onDeleteLookingForFailure: " + message );
-                            }
-                        }, id);
+                            sosApi.deleteLookingFor(new SOS_API.CallbacksDelLookingFor() {
+                                @Override
+                                public void onDeleteLookingSuccess() {
+                                    Intent intent = new Intent(ActivityLookingForView.this, ActivityLookingFor.class);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onDeleteLookingForFailure(String message) {
+                                    String title = HM.RGS(ActivityLookingForView.this, R.string.titleError);
+                                    String errMsg = HM.RGS(ActivityLookingForView.this, R.string.msgFailedDeleteL4);
+                                    HM.GADWMAT(ActivityLookingForView.this,title,errMsg, true, true);
+                                    Log.e("L4", "onDeleteLookingForFailure: " + message );
+                                }
+                            }, id);
+
+                        }else{
+                            Toast.makeText(ActivityLookingForView.this, HM.RGS(ActivityLookingForView.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                        }
                     }
                 })
-                .setNegativeButton(android.R.string.no, null).show();
+                .setNegativeButton("CANCEL", null).show();
+
+
+
+    }
+
+    public void onEditLookingFor(View view) {
+
+        editLookingFor();
+    }
+
+    private void editLookingFor() {
+
+        final String id = data.getString(LookingFor.KEY_ID_LOOKINGFOR);
+
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+        final EditText etpwd = v.findViewById(R.id.etDgPassword);
+
+        new AlertDialog.Builder(this)
+                //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                .setView(v)
+                .setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
+
+                            Intent intent = new Intent(ActivityLookingForView.this, ActivityNewLookingFor.class);
+                            intent.putExtras(lookingFor.toBundle());
+                            intent.putExtra(LookingFor.KEY_EDITING, true);
+                            startActivity(intent);
+
+                        }else{
+                            Toast.makeText(ActivityLookingForView.this, HM.RGS(ActivityLookingForView.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .setNegativeButton("CANCEL", null).show();
+
 
 
     }
@@ -309,24 +400,29 @@ public class ActivityLookingForView extends AppCompatActivity {
 
     private void initGUI() {
         tvInqPriority = findViewById(R.id.tvInqPriority);
-        tvPosterName = findViewById(R.id.tvInqPostername);
-        tvPhone = findViewById(R.id.tvInqPosterPhone);
-        tvEmail = findViewById(R.id.tvInqPosterEmail);
+        tvPosterName = findViewById(R.id.tvL4PosterName);
+        //tvPhone = findViewById(R.id.tvInqPosterPhone);
+        //tvEmail = findViewById(R.id.tvInqPosterEmail);
         tvDatePosted = findViewById(R.id.tvInqPostedTime);
         tvTitle = findViewById(R.id.tvInqTitle);
         ivPp = findViewById(R.id.ivInqPp);
         btnContact = findViewById(R.id.btnInqContact);
         tvDesc = findViewById(R.id.tvInqDesc);
         btnDelL4 = findViewById(R.id.btnDelL4);
+        btnEditL4 = findViewById(R.id.btnEditl4);
 
         if(mine){
             btnContact.setVisibility(View.GONE);
             btnDelL4.setVisibility(View.VISIBLE);
+            btnEditL4.setVisibility(View.VISIBLE);
         }else{
             btnDelL4.setVisibility(View.GONE);
             btnContact.setVisibility(View.VISIBLE);
+            btnEditL4.setVisibility(View.GONE);
         }
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -334,6 +430,18 @@ public class ActivityLookingForView extends AppCompatActivity {
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
+                break;
+
+            case R.id.menuEditL4:
+                editLookingFor();
+                break;
+
+            case R.id.menuDelL4:
+                deleteLookingFor();
+                break;
+
+            case R.id.menuContactL4:
+                alertContactChoice.show();
                 break;
         }
 

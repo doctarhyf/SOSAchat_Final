@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
+import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
@@ -30,6 +31,9 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
     SOS_API sosApi;
     private Button btn;
     private AlertDialog dialogProcessing;
+    private Bundle data = null;
+    private LookingFor lookingFor = null;
+    private RatingBar rbInqPriority;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,26 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
 
         etInqTitle = findViewById(R.id.etInqTitle);
         etInqDesc = findViewById(R.id.etInqDesc);
+        rbInqPriority = findViewById(R.id.rbInqPriority);
+
+        data = getIntent().getExtras();
+
+        if(data != null){
+            boolean editing = data.getBoolean(LookingFor.KEY_EDITING, false);
+
+            if(editing){
+                loadEditingData();
+            }
+        }
+    }
+
+    private void loadEditingData() {
+        lookingFor = new LookingFor(data);
+
+        etInqTitle.setText((String) lookingFor.getProperty(LookingFor.KEY_TITLE));
+        etInqDesc.setText((String) lookingFor.getProperty(LookingFor.KEY_DESC));
+        rbInqPriority.setRating(Float.parseFloat((String) lookingFor.getProperty(LookingFor.KEY_PRIORITY)));
+
     }
 
     @Override

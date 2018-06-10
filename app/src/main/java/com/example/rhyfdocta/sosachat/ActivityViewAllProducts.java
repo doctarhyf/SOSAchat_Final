@@ -1,13 +1,17 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,31 +28,42 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.adapters.AdapterAP;
 import com.example.rhyfdocta.sosachat.adapters.AdapterAllProducts;
 
+
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityViewAllProducts extends AppCompatActivity implements SOS_API.SOSApiListener, AdapterAP.ListenerAllProducts {
+public class ActivityViewAllProducts extends AppCompatActivity implements
+        SOS_API.SOSApiListener,
+        AdapterAP.ListenerAllProducts,
+        SearchView.OnQueryTextListener,
+        SOS_API.CallbacksSearch
+{
 
     private static final String TAG = "TAG_VIEW_ALL";
     List<ProductMyProducts> products;
     SOS_API sosApi;
+    private String q;
+
     //AdapterAllProducts adapter;
     //ListView lv;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter adapter;
+    AdapterAP adapter;
     TextView tvAllProductsEmptyList;
     ProgressBar pbAllProducts;
     TextView tvAllProductsLoadingError;
     Button btnLoadMore;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_products);
 
-
+        toolbar = findViewById(R.id.toolbar_all_items);
+        setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle("View All Products");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -74,16 +89,14 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
 
         sosApi.loadAllProducts(this, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_USER_ID));
 
+        Bundle data = getIntent().getExtras();
+
+        if(data != null){
+            q = data.getString(SOS_API.SEARCH_Q, "");
+        }
+
+
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.menu_view_all_products, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
 
 
     @Override
@@ -297,5 +310,59 @@ public class ActivityViewAllProducts extends AppCompatActivity implements SOS_AP
     public void onItemFavorite(ProductMyProducts pd, Uri picUri) {
 
         Toast.makeText(this, "Will be added to favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_view_all_products, menu);
+
+
+        MenuItem menuItem = menu.findItem(R.id.action_search_all_products);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        /*if(!q.equals("")) {
+            searchView.setIconified(false);
+            onQueryTextChange(q);
+        }*/
+
+        searchView.setOnQueryTextListener(this);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+
+
+
+        newText = newText.toLowerCase();
+        ArrayList<ProductMyProducts> newList = new ArrayList<>();
+
+        for(ProductMyProducts product : products){
+            String pdTitle = product.getPdName().toLowerCase();
+            String pdDesc = product.getPdDesc().toLowerCase();
+
+            if(pdTitle.contains(newText) || pdDesc.contains(newText)){
+                newList.add(product);
+            }
+        }
+
+        adapter.setFilter(newList);
+
+        //sosApi.searchq(this, newText, this);
+
+        return true;
+    }
+
+    @Override
+    public void onSearchResult(Context context, List<ProductMyProducts> products) {
+
     }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        app:showAsAction="always"
+        android:id="@+id/menuContactL4"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="@string/strContactL4" />
+
+    <item
+        android:id="@+id/menuEditL4"
+        app:showAsAction="ifRoom
+"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/strEditL4" />
+
+    <item
+        app:showAsAction="ifRoom"
+        android:id="@+id/menuDelL4"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/strDelL4" />
+
+
+
+
+
+
+</menu>

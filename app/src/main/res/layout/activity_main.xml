@@ -109,6 +109,7 @@
 
 
         <Button
+
             android:id="@+id/btnSearch"
             android:text="@string/search"
             android:onClick="startSearch"

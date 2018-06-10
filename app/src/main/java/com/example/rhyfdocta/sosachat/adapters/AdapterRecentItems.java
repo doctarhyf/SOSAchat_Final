@@ -95,10 +95,11 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
 
         holder.tvItemName.setText(pd.getPdName());
         holder.tvItemPrice.setText(HM.GIPB(context, R.string.priceToDiscuss, pd.getPdPrice(), pd.getPdCur()));
-        holder.tvItemDate.setText(data.getString(SOS_API.KEY_ITEM_DATE_ADDED));
+
+        String itemDate = data.getString(SOS_API.KEY_ITEM_DATE_ADDED);
+
+        holder.tvItemDate.setText(itemDate);
         holder.tvItemDesc.setText(pd.getPdDesc());
-
-
 
 
         final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdUniqueName() + "_main.jpg";

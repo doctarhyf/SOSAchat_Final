@@ -9,6 +9,9 @@
     tools:context="com.example.rhyfdocta.sosachat.ActivityWishlist">
 
 
+    <include
+        layout="@layout/toolbar_all_products"
+        />
 
 
     <android.support.v7.widget.RecyclerView

@@ -19,14 +19,25 @@ public class LookingFor implements Serializable {
     public static final String KEY_MTIME_PP = "mtime_pp";
     public static final String KEY_IS_MINE = "isMine";
     public static final String KEY_ID_LOOKINGFOR = "inq_id";
+    public static final String KEY_EDITING = "editing";
+    public static final String KEY_PRIORITY = "inq_rating";
     private String title;
     private String message;
     private String dateTime;
     private String posterName;
     private Bundle data = new Bundle();
 
+
     public LookingFor(){
 
+    }
+
+    public boolean isMine(){
+        return data.getBoolean(KEY_IS_MINE, false);
+    }
+
+    public void setIsMine(boolean mine){
+        data.putBoolean(KEY_IS_MINE, mine);
     }
 
     public LookingFor(Bundle data){

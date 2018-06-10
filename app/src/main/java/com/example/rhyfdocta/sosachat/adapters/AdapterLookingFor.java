@@ -55,7 +55,13 @@ public class AdapterLookingFor extends ArrayAdapter<LookingFor> {
         ImageView iv = convertView.findViewById(R.id.ivLookingFor);
 
         tvTitle.setText(HelperMethods.UCFirst(lookingFor.getTitle()));
-        tvPostedBy.setText(HM.UCF(lookingFor.getPosterName()));
+
+        String postedBy = HM.UCF(lookingFor.getPosterName());
+
+        if(lookingFor.isMine()){
+            postedBy = HM.RGS(context, R.string.strMe);
+        }
+        tvPostedBy.setText(postedBy);
         tvDate.setText(lookingFor.getDateTime());
         tvPreview.setText(lookingFor.getMessage());
 

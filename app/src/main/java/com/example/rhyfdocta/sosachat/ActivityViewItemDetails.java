@@ -358,7 +358,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         tvSellerEmail.setText(bundle.getString(SOS_API.KEY_ACC_DATA_EMAIL));
         tvSellerMobile.setText(bundle.getString(SOS_API.KEY_ACC_DATA_MOBILE));
 
-        if(itemIsMine) tvSellerDislayName.setText(HM.RGS(this, R.string.postedByMe));
+        if(itemIsMine) tvSellerDislayName.setText(HM.RGS(this, R.string.strMe));
         tvDatePosted.setText(bundle.getString(SOS_API.KEY_ITEM_DATE_ADDED));
         String viewsCount = bundle.getString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT);
 

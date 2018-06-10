@@ -61,7 +61,7 @@ public class SOS_API {
     public static final String DIR_NAME_PIX_CACHE_HOME_TYPES_IN_CATS = "typesInCats";
     public static final String DIR_NAME_PIX_CACHE_PRODUCTS = "products";
     public static final String DIR_NAME_PIX_CACHE_PROFILCE_PIC = "pp";
-    private static final String ACTION_LOAD_ALL_INQUIRIES = "checkAllInquiries";
+    public static final String ACTION_LOAD_ALL_INQUIRIES = "checkAllInquiries";
     public static final String TAG = "SA_DBG";
     public static final int KEY_CONTACT_BY_PHONE = 250;
     public static final int KEY_CONTACT_BY_SMS = 251;
@@ -87,35 +87,37 @@ public class SOS_API {
     public static final String ACTION_UPLOAD_PRODUCT_IMAGE_FILE = "uploadProductImageFile";
     public static final String KEY_NEW_ITEM_IMG_TYPE = "imageType";
     public static final String DIR_NAME_PIX_ROOT = "img";
-    private static final String ACTION_GET_UNIQUE_ID = "getUniqueId";
+    public static final String ACTION_GET_UNIQUE_ID = "getUniqueId";
     public static final float IMAGEVIEW_ALPHA_DISABLED = .5f;
     public static final float IMAGEVIEW_ALPHA_ENABLED = 1f;
     public static final String KEY_NEW_ITEM_UNIQUE_ID = "uniqueID";
     public static final String KEY_ITEM_POST_FIX_PIC_1 = "_pic1.jpg";
     public static final String KEY_ITEM_POST_FIX_PIC_2 = "_pic2.jpg";
     public static final String KEY_ITEM_POST_FIX_PIC_3 = "_pic3.jpg";
-    private static final int KEY_ITEM_PIC_IDX_MAIN = 0;
-    private static final int KEY_ITEM_PIC_IDX_P1 = 1;
-    private static final int KEY_ITEM_PIC_IDX_P2 = 2;
-    private static final int KEY_ITEM_PIC_IDX_P3 = 3;
+    public static final int KEY_ITEM_PIC_IDX_MAIN = 0;
+    public static final int KEY_ITEM_PIC_IDX_P1 = 1;
+    public static final int KEY_ITEM_PIC_IDX_P2 = 2;
+    public static final int KEY_ITEM_PIC_IDX_P3 = 3;
     public static final String SERVER_REL_ROOT_DIR_PATH_PROFILE_PICTURES = "img/pp/";
     public static final String ACTION_UPLOAD_IMAGE = "uploadImage";
     public static final String IMAGE_UPLOAD_FORM_NAME = "uploaded_file";
-    private static final String ACTION_DELETE_LOOKING_FOR = "dell4";
+    public static final String ACTION_DELETE_LOOKING_FOR = "dell4";
     public static final String KEY_LAST_USERNAME = "luname";
+    public static final String TIME_STAMP = "timeStamp";
+    public static final String SEARCH_Q = "q";
 
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.5/sosachat/img/cats/";
+    public static final String DIR_PATH_CAT_PIX = "http://192.168.1.6/sosachat/img/cats/";
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://192.168.1.5/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.1.5/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.5/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.1.5/sosachat/img/pp/";
-    public static String ROOT_URL = "http://192.168.1.5/sosachat/";
+    public static String API_URL = "http://192.168.1.6/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.6/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.6/sosachat/img/products/";
+    public static String DIR_PATH_PP = "http://192.168.1.6/sosachat/img/pp/";
+    public static String ROOT_URL = "http://192.168.1.6/sosachat/";
     public static String DIR_PATH_TYPES = "img/types/";
 
 
@@ -127,11 +129,11 @@ public class SOS_API {
     public static final String ACTION_LOAD_CHAT_CONTACTS = "loadChatContacts";
     public static final String ACTION_LOGIN = "login";
     public static final String LOGIN_SUCCESS = "true";
-    //private static final String TAG = "SOS_API";
-    private static final String SHARED_PREF_NAME = "sosSharedPref";
-    private static final String KEY_USERNAME = "username";
-    private static final String KEY_PASSWORD = "password";
-    private static final String KEY_NO_USERNAME = "no_username";
+    //public static final String TAG = "SOS_API";
+    public static final String SHARED_PREF_NAME = "sosSharedPref";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_NO_USERNAME = "no_username";
     public static final String ACTION_LOAD_ACC_DATA = "loadAccData";
 
     public static final String KEY_ACC_DATA_DISPLAY_NAME = "user_display_name";
@@ -173,10 +175,10 @@ public class SOS_API {
     public static final String JSON_KEY_DATA = "jsonData";
     public static final String KEY_ITEM_PRICE_TO_DISCUSS = "pdPriceToDiscuss";
     public static final String KEY_ITEM_TYPE = "pdType";
-    private static final String ACTION_EXPOSE_ITEM = "exposeItem";
-    private static final String ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES = "loadAllCatsAndTypes";
-    private static final String KEY_ITEMS_CATS_AND_TYPES = "itemsCatsAndTypes";
-    private static final String KEY_PREF_EMPTY = "prefEmpty";
+    public static final String ACTION_EXPOSE_ITEM = "exposeItem";
+    public static final String ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES = "loadAllCatsAndTypes";
+    public static final String KEY_ITEMS_CATS_AND_TYPES = "itemsCatsAndTypes";
+    public static final String KEY_PREF_EMPTY = "prefEmpty";
     public static final String KEY_ITEM_CATEGORY_NAME = "it_cat_name";
     public static final String KEY_ITEM_CATEGORY_ID = "it_cat_id";
     public static final String KEY_ITEM_CATEGORY_PIC = "it_cat_pic";
@@ -202,15 +204,15 @@ public class SOS_API {
     public static final String ACTION_SEARCH_ITEMS = "search";
     public static final String KEY_ITEMS_SEARCH_RESULT_IDS = "itemsResultIds";
     public static final String ACTION_LOAD_ITEM_TYPES_FROM_CAT_ID = "loadItemsTypes";
-    private static final String KEY_ITEM_TYPES = "itemTypes";
+    public static final String KEY_ITEM_TYPES = "itemTypes";
     public static final int RESULT_LOAD_IMAGE = 1340;
     public static final int REQ_CAMERA = 1341;
     public static final int REQ_PERMISSION_SAVE_BITMAP = 1342;
     public static final int REQ_PERMISSION_GALLERY = 1343;
-    private static final String KEY_PROFILE_PIC_DATA = "ppData";
-    private static final String ACTION_UPLOAD_PP = "uploadPP";
+    public static final String KEY_PROFILE_PIC_DATA = "ppData";
+    public static final String ACTION_UPLOAD_PP = "uploadPP";
     public static final String KEY_ACC_DATA_MOBILE_HASH = "user_mobile_hash";
-    private static final String ACTION_UPDATE_ITEM = "updItem";
+    public static final String ACTION_UPDATE_ITEM = "updItem";
     public static final String KEY_PD_MAIN_PIC_URI = "pdUri";
     public static final String KEY_POSTFIX_PIC_MAIN = "_main.jpg";
     public static final String KEY_POSTFIX_PIC_1 = "_pic1.jpg";
@@ -222,7 +224,7 @@ public class SOS_API {
     public static final String KEY_ITEMS_CATEGORY_TYPES = "cat_types";
 
 
-    //private static final String ACTION_LOAD_ITEMS_TYPES = "loadItemsTypes";
+    //public static final String ACTION_LOAD_ITEMS_TYPES = "loadItemsTypes";
 
 
     public static String KEY_ITEM_NAME = "itemName";
@@ -236,11 +238,11 @@ public class SOS_API {
     private AlertDialog alertDialogResults;
     
     /*
-    public static String API_URL = "http://192.168.1.5/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://192.168.1.5/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.5/sosac hat/img/products/";
+    public static String API_URL = "http://192.168.1.6/sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "http://192.168.1.6/sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "http://192.168.1.6/sosac hat/img/products/";
     public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
-    /img/users/";
+    /img/users/"; 
     */
 
     public static  boolean isOnline(Context context){
@@ -1019,20 +1021,40 @@ public class SOS_API {
 
                                     lookingFor.setTitle(object.getString(LookingFor.KEY_TITLE));
                                     lookingFor.setMessage(object.getString(LookingFor.KEY_DESC));
-                                    lookingFor.setDateTime(object.getString(LookingFor.KEY_DATETIME));
+                                    
                                     lookingFor.setPosterName(object.getString(LookingFor.KEY_POSTERNAME));
 
                                     Bundle data = new Bundle();
                                     HelperMethods.PutAllJSONIntoBundle(object, data);
+
+                                    String dateStart = object.getString(LookingFor.KEY_DATETIME);
+                                    
+                                    String postedDate = HM.CLDTAS(context,
+                                            HelperDate.getLongDateFromDateStr(dateStart), HelperDate.getCurrentLondDate());//dateDiff.toSocialFormat();//HM.FD(dateDiff, dateStart);
+                                    
+                                    
+                                    lookingFor.setDateTime(postedDate);
+                                    data.putString(LookingFor.KEY_DATETIME, postedDate);
+                                    data.putString(TIME_STAMP, object.getString(LookingFor.KEY_DATETIME));
+                                    data.putString(LookingFor.KEY_DATETIME, postedDate);
+                                    /*
                                     data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
                                     data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
                                     data.putString(LookingFor.KEY_DATETIME, object.getString(LookingFor.KEY_DATETIME));
                                     data.putString(SOS_API.KEY_ACC_DATA_MOBILE_HASH, object.getString(SOS_API.KEY_ACC_DATA_MOBILE_HASH));
                                     data.putString(LookingFor.KEY_INQUIRY_RATING, object.getString(LookingFor.KEY_INQUIRY_RATING));
                                     data.putString(SOS_API.KEY_ACC_DATA_MOBILE, object.getString(SOS_API.KEY_ACC_DATA_MOBILE));
-                                    data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));
+                                    data.putString(SOS_API.KEY_ACC_DATA_EMAIL, object.getString(SOS_API.KEY_ACC_DATA_EMAIL));*/
 
                                     lookingFor.setData(data);
+
+                                    String l4uid = object.getString(SOS_API.KEY_ACC_DATA_USER_ID);
+
+                                    if(l4uid.equals(GSV(SOS_API.KEY_ACC_DATA_USER_ID))){
+                                        lookingFor.setIsMine(true);
+                                    }
+
+                                    
                                     inquiries.add(lookingFor);
 
                                 }
@@ -1490,6 +1512,15 @@ public class SOS_API {
 
         Volley.newRequestQueue(context).add(request);
 
+    }
+
+    public void searchq(final Context context, String q, final CallbacksSearch callbacksSearch){
+
+
+    }
+
+    public interface CallbacksSearch{
+        void onSearchResult(Context context, List<ProductMyProducts> products);
     }
 
     public void search(final  SOSApiListener listener, String q) {
