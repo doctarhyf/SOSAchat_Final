@@ -216,6 +216,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
                                         }
                                     }
                                 })
+                                .setCancelable(false)
                                 .setNegativeButton("CANCEL", null).show();
 
 

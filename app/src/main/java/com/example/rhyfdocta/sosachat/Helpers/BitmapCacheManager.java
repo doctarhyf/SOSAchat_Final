@@ -41,6 +41,8 @@ public class BitmapCacheManager {
     public static final int PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC = 201;
     public static final int PIC_CACHE_ROOT_PATH_ID_ITEMS_CATEGORIES = 202;
     public static final int PIC_CACHE_ROOT_PATH_ID_ITEMS_TYPES_IN_CATEGORIES = 203;
+    public static final int RES_ID_PROGRESS_ANIMATION = R.drawable.progress_animation;
+    public static final int RES_ID_IMAGE_LOAD_ERROR = R.drawable.ic_no_photo;
 
     //public static final int PIC_CACHE_ROOT_PATH_ID_PRODUCTS = ;
 
@@ -425,14 +427,15 @@ public class BitmapCacheManager {
                     public void onLoadStarted(Drawable placeholder) {
                         super.onLoadStarted(placeholder);
                         iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                        iv.setImageResource(R.drawable.progress_animation);
+                        iv.setImageResource(BitmapCacheManager.RES_ID_PROGRESS_ANIMATION);
                     }
 
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         super.onLoadFailed(e, errorDrawable);
 
-                        iv.setImageResource(R.drawable.ic_error);
+                        iv.setEnabled(false);
+                        iv.setImageResource(BitmapCacheManager.RES_ID_IMAGE_LOAD_ERROR);
                         e.printStackTrace();
                         Log.e("LERR", "onLoadFailed: -> " + e.getMessage() + ", url : " + finalPath );
                     }
@@ -443,6 +446,7 @@ public class BitmapCacheManager {
 
                         callbacks.saveBitmapToLocalCache(resource, path, DIR_NAME_PIX_CACHE);
 
+                        iv.setEnabled(true);
                         iv.setImageBitmap(resource);
                     }
                 });

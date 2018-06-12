@@ -2,6 +2,7 @@ package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -177,12 +178,32 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
                 .skipMemoryCache(true)
                 .centerCrop()
                 .into(new SimpleTarget<Bitmap>(400,400) {
+
+
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        super.onLoadStarted(placeholder);
+
+                        viewHolderMyProduct.ivRmPd.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        viewHolderMyProduct.ivRmPd.setImageResource(BitmapCacheManager.RES_ID_PROGRESS_ANIMATION);
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+
+                        viewHolderMyProduct.ivRmPd.setScaleType(ImageView.ScaleType.CENTER);
+                        viewHolderMyProduct.ivRmPd.setImageResource(BitmapCacheManager.RES_ID_IMAGE_LOAD_ERROR);
+                        viewHolderMyProduct.ivRmPd.setEnabled(false);
+                    }
+
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 
 
                         sosApi.getBitmapCacheManager().saveBitmapToCache(resource, picUri.toString(), SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
 
+                        viewHolderMyProduct.ivRmPd.setEnabled(true);
                         viewHolderMyProduct.ivRmPd.setImageBitmap(resource);
                     }
                 });

@@ -2,6 +2,7 @@ package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -129,12 +130,32 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
                 .skipMemoryCache(true)
                 .fitCenter()
                 .into(new SimpleTarget<Bitmap>(SOS_API.IMG_W_ADP_RECENT_ITEMS,SOS_API.IMG_H_ADP_RECENT_ITEMS) {
+
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        super.onLoadStarted(placeholder);
+
+                        holder.ivItemPic.setScaleType(ImageView.ScaleType.CENTER);
+                        holder.ivItemPic.setImageResource(BitmapCacheManager.RES_ID_PROGRESS_ANIMATION);
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+
+                        holder.ivItemPic.setEnabled(false);
+                        holder.ivItemPic.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        holder.ivItemPic.setImageResource(BitmapCacheManager.RES_ID_IMAGE_LOAD_ERROR);
+
+                    }
+
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 
 
                         sosApi.getBitmapCacheManager().saveBitmapToCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS);
 
+                        holder.ivItemPic.setEnabled(true);
                         holder.ivItemPic.setImageBitmap(resource);
                     }
                 });

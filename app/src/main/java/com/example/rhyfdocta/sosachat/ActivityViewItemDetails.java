@@ -382,7 +382,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         String fileNameProductPix = bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
         final String remotePathProductPix = remoteDirProductPix + fileNameProductPix;
         String remoteMTime = bundle.getString(ServerImage.KEY_LAST_MOD_TIME + SOS_API.KEY_PRODUCT_IMAGE_POST_FIX_MAIN);
-        long remoteMTimeL = Long.parseLong(remoteMTime);
+        long remoteMTimeL = remoteMTime.equals(SOS_API.FALSE) ? 0 : Long.parseLong(remoteMTime);
 
         //Log.e("FAAKK", "REMOTE MTIME MAIN : " + remoteMTimeL   );
 
@@ -402,7 +402,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         final String remotePathPP = remoteDirPP + fileNamePP;
 
         String remoteMTimePP = bundle.getString(ServerImage.KEY_LAST_MOD_TIME + SOS_API.KEY_PRODUCT_IMAGE_POST_FIX_LOGGEDIN_USER);
-        long remoteMTimePPL = Long.parseLong(remoteMTimePP);
+        long remoteMTimePPL = remoteMTimePP.equals(SOS_API.FALSE) ? 0 : Long.parseLong(remoteMTimePP);
 
 
         //Log.e("FAAKK", "REMOTE MTIME PP : " + remoteMTimePPL   );

@@ -237,6 +237,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
                                         }
                                     }
                                 })
+                                .setCancelable(false)
                                 .setNegativeButton("CANCEL", null).show();
 
 
@@ -297,6 +298,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
                         }
                     }
                 })
+                .setCancelable(false)
                 .setNegativeButton("CANCEL", null).show();
 
 

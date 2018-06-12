@@ -10,7 +10,7 @@
 
 
     <include
-        layout="@layout/toolbar_all_products"
+        layout="@layout/toolbar"
         />
 
 

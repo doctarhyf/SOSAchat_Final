@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
@@ -978,6 +979,9 @@ public class ActivityPostItem extends AppCompatActivity implements
 
                             progressDialog.show();
 
+                            //Message msg = new Message();
+                            //progressDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", msg);
+
                             serverImageManager.setUploadToken(sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID));
                             serverImageManager.uploadAllImagesToServer(ActivityPostItem.this, itemModeEditing);
 
@@ -986,6 +990,7 @@ public class ActivityPostItem extends AppCompatActivity implements
                         }
                     }
                 })
+                .setCancelable(false)
                 .setNegativeButton("CANCEL", null).show();
 
             //to remove

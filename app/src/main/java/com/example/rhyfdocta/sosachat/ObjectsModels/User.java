@@ -4,6 +4,9 @@ import android.os.Bundle;
 
 public class User {
 
+    public static final String COL_SEX = "user_sex";
+    public static final String COL_SEX_M = "m";
+    public static final String COL_SEX_F = "f";
     private Bundle data;
 
     public User(){

@@ -155,13 +155,16 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         super.onLoadFailed(e, errorDrawable);
 
-                        holder.iv.setImageResource(R.drawable.ic_error);
+                        holder.iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        holder.iv.setImageResource(BitmapCacheManager.RES_ID_IMAGE_LOAD_ERROR);
+                        holder.iv.setEnabled(false);
                     }
 
                     @Override
                     public void onLoadStarted(Drawable placeholder) {
                         super.onLoadStarted(placeholder);
-                        holder.iv.setImageResource(R.drawable.progress_animation);
+                        holder.iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        holder.iv.setImageResource(BitmapCacheManager.RES_ID_PROGRESS_ANIMATION);
                     }
 
                     @Override
@@ -171,7 +174,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
                         //callbacks.onBitmapShouldBeSaved(resource, homeCategoryItem.getImageUrl());
                         sosApi.getBitmapCacheManager().saveBitmapToCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS );
 
-
+                        holder.iv.setEnabled(true);
                         holder.iv.setImageBitmap(resource);
 
                         //callbacks.onItemClicked(homeCategoryItem);

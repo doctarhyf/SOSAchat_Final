@@ -377,8 +377,9 @@ public class ServerImageManager {
 
                         if(progress == 100){
                             si.setImageUploaded(true);
-                            updateTotalProgress(si, progress);
+
                         }
+                        updateTotalProgress(si, progress);
                         callbacks.onProducImageManagerProgress(si, progress, getTotalProgress());
                     }
 

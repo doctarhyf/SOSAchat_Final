@@ -1,10 +1,14 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
@@ -21,21 +25,25 @@ import java.util.ArrayList;
 
 public class ActivityLookingFor extends AppCompatActivity implements
         AdapterLookingFor.CallBacks,
-        AdapterView.OnItemClickListener{
+        AdapterView.OnItemClickListener, SearchView.OnQueryTextListener {
 
     ListView lvInquiries;
     AdapterLookingFor adapterLookingFor;
-    private ArrayList<LookingFor> inquiries;
+    private ArrayList<LookingFor> looking4s;
     private SOS_API sosApi;
     private ProgressBar pb;
     private TextView tvError;
     private  boolean mine = false;
     private Switch swOnlyMyLookingfor;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lookingfors);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         swOnlyMyLookingfor = findViewById(R.id.swOnlyMyLookingfor);
 
@@ -72,10 +80,10 @@ public class ActivityLookingFor extends AppCompatActivity implements
         sosApi.loadLookingFors(this, mine,  -1);
 
 
-        inquiries = new ArrayList<>();
-        //inquiries.add(new LookingFor("Poster Name","null","My inquiry", "Them details"));
+        looking4s = new ArrayList<>();
+        //looking4s.add(new LookingFor("Poster Name","null","My inquiry", "Them details"));
 
-        adapterLookingFor = new AdapterLookingFor(this, inquiries, this);
+        adapterLookingFor = new AdapterLookingFor(this, looking4s, this);
         lvInquiries.setAdapter(adapterLookingFor);
 
         lvInquiries.setOnItemClickListener(this);
@@ -109,14 +117,23 @@ public class ActivityLookingFor extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_inq_list, menu);
+        getMenuInflater().inflate(R.menu.menu_looking4s, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        /*if(!q.equals("")) {
+            searchView.setIconified(false);
+            onQueryTextChange(q);
+        }*/
+
+        searchView.setOnQueryTextListener(this);
 
         return true;
     }
 
     @Override
     public void onLookingForsLoaded(ArrayList<LookingFor> inquiries) {
-        this.inquiries = inquiries;
+        this.looking4s = inquiries;
         adapterLookingFor = new AdapterLookingFor(this, inquiries, this);
         //adapterLookingFor.notifyAll();
         lvInquiries.setAdapter(adapterLookingFor);
@@ -164,7 +181,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        LookingFor lookingFor = inquiries.get(position);
+        LookingFor lookingFor = looking4s.get(position);
         Intent intent = new Intent(this, ActivityLookingForView.class);
 
         Bundle data = new Bundle();
@@ -173,5 +190,35 @@ public class ActivityLookingFor extends AppCompatActivity implements
         data.putBoolean(LookingFor.KEY_IS_MINE, mine);
         intent.putExtras(data);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        filterAdapter(query);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        filterAdapter(newText);
+
+        return true;
+    }
+
+    private void filterAdapter(String newText) {
+        newText = newText.toLowerCase();
+        ArrayList<LookingFor> newList = new ArrayList<>();
+
+        for(LookingFor lookingFor : looking4s){
+            String title = (String) lookingFor.getProperty(LookingFor.KEY_TITLE);
+            String msg = (String) lookingFor.getProperty(LookingFor.KEY_DESC);
+
+            if(title.toLowerCase().contains(newText) || msg.toLowerCase().contains(newText)){
+                newList.add(lookingFor);
+            }
+        }
+
+        adapterLookingFor.setFilter(newList);
     }
 }

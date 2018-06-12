@@ -18,9 +18,11 @@ import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
+import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterLookingFor extends ArrayAdapter<LookingFor> {
 
@@ -67,7 +69,7 @@ public class AdapterLookingFor extends ArrayAdapter<LookingFor> {
 
         final String pathPP = (String) lookingFor.getValue(LookingFor.KEY_PATH_PP);
         String mtime = (String) lookingFor.getValue(LookingFor.KEY_MTIME_PP);
-        long mtimel = mtime == null || mtime.isEmpty() ? 0 : Long.parseLong(mtime);
+        long mtimel = mtime == null || mtime.isEmpty() || mtime.equals(SOS_API.FALSE) ? 0 : Long.parseLong(mtime);
         String fileName = lookingFor.getProperty(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
 
 
@@ -94,6 +96,15 @@ public class AdapterLookingFor extends ArrayAdapter<LookingFor> {
         );
 
         return convertView;
+    }
+
+    public void setFilter(ArrayList<LookingFor> filtered_list){
+
+        inquiries = new ArrayList<>();
+        inquiries.addAll(filtered_list);
+
+        notifyDataSetChanged();
+
     }
 
     public interface CallBacks {

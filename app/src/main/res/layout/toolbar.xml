@@ -6,7 +6,7 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     app:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:id="@+id/toolbar_all_items"
+    android:id="@+id/toolbar"
     >
 
 

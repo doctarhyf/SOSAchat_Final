@@ -743,6 +743,7 @@ AdapterLookingFor.CallBacks{
                             }
                         }
                     })
+                    .setCancelable(false)
                     .setNegativeButton("CANCEL", null).show();
 
 

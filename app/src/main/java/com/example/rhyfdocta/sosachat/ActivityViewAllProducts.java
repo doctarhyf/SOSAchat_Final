@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +23,6 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.adapters.AdapterAP;
-import com.example.rhyfdocta.sosachat.adapters.AdapterAllProducts;
 
 
 import org.json.JSONArray;
@@ -42,7 +38,7 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
 {
 
     private static final String TAG = "TAG_VIEW_ALL";
-    List<ProductMyProducts> products;
+    List<ProductMyProducts> products = new ArrayList<>();
     SOS_API sosApi;
     private String q;
 
@@ -62,7 +58,7 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_products);
 
-        toolbar = findViewById(R.id.toolbar_all_items);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle("View All Products");
@@ -75,9 +71,11 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
         //btnLoadMore = (Button) findViewById(R.id.btnLoadMore);
 
         //lv = (ListView) findViewById(R.id.rvAllProducts);
+        adapter = new AdapterAP(this, products, this);
         recyclerView = findViewById(R.id.rvAllProducts);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);//this);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
         sosApi = new SOS_API(this);
 
@@ -109,11 +107,12 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
                 break;
 
             case R.id.menuViewAllProductsRefresh:
-                /*
+
+
                 tvAllProductsEmptyList.setVisibility(View.GONE);
                 pbAllProducts.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
-                sosApi.loadAllProducts(this, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_USER_ID));*/
+                sosApi.loadAllProducts(this, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_USER_ID));
                 break;
         }
 
@@ -189,6 +188,7 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
     @Override
     public void onLoadAllProductsResult(List<ProductMyProducts> allProducts) {
 
+        products.clear();
 
         //Log.e(TAG, "onLoadAllProductsResult: " + allProducts.size() );
         if(allProducts.size() > 0) {
@@ -199,10 +199,10 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
             recyclerView.setVisibility(View.VISIBLE);
             //btnLoadMore.setVisibility(View.VISIBLE);
 
-            products = allProducts;
-            //adapter.notifyDataSetChanged();
-            adapter = new AdapterAP(this, allProducts, this);
-            recyclerView.setAdapter(adapter);
+
+            products.addAll(allProducts);
+            adapter.notifyDataSetChanged();
+            //recyclerView.setAdapter(adapter);
         }else{
 
             tvAllProductsEmptyList.setVisibility(View.VISIBLE);
@@ -232,6 +232,7 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
     public void onLoadAllProductsError(String message) {
 
         //Toast.makeText(this, "Load products error, please try again later", Toast.LENGTH_SHORT).show();
+        products.clear();
         tvAllProductsEmptyList.setVisibility(View.GONE);
         //tvAllProductsEmptyList.setText(getResources().getString(R.string.msgServerUnreachable));
         pbAllProducts.setVisibility(View.GONE);
@@ -318,7 +319,7 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
         getMenuInflater().inflate(R.menu.menu_view_all_products, menu);
 
 
-        MenuItem menuItem = menu.findItem(R.id.action_search_all_products);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         /*if(!q.equals("")) {
             searchView.setIconified(false);
@@ -333,7 +334,8 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
     @Override
     public boolean onQueryTextSubmit(String query) {
 
-        return false;
+        filterAdapter(query);
+        return true;
     }
 
     @Override
@@ -342,6 +344,14 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
 
 
 
+        filterAdapter(newText);
+
+
+
+        return true;
+    }
+
+    private void filterAdapter(String newText) {
         newText = newText.toLowerCase();
         ArrayList<ProductMyProducts> newList = new ArrayList<>();
 
@@ -355,10 +365,6 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
         }
 
         adapter.setFilter(newList);
-
-        //sosApi.searchq(this, newText, this);
-
-        return true;
     }
 
     @Override
