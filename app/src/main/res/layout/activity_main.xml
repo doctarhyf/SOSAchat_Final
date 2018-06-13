@@ -25,6 +25,8 @@
     >
 
     <TextView
+        android:clickable="true"
+        android:onClick="showDebug"
         android:visibility="gone"
         android:id="@+id/tvNoConn"
         android:text="@string/msgServerUnreachable"

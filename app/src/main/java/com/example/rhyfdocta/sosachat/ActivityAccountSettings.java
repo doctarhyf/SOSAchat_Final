@@ -8,12 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -29,6 +32,8 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ActivityAccountSettings extends AppCompatActivity implements SOS_API.SOSApiListener, TextWatcher {
 
@@ -45,13 +50,22 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
     Switch swAutorefreshRecentItems;
     private TextView tvErrorNewPasswordCharCheckFailed;
 
+    private TextView tvSets;
+    //private TextView tvHostDBGDialog;
+    //private String dbgDebugTitle = "DEBUG";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
 
         sosApi = new SOS_API(this);
+
+
+
         res = getResources();
+
+        //tvHostDBGDialog = new TextView(this);
 
         getSupportActionBar().setTitle(res.getString(R.string.accSettings));
         getSupportActionBar().setSubtitle("");
@@ -61,11 +75,30 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
         prepareGUI();
         loadAccData();
 
+
         sessionPwd = sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_PASSWORD);
 
     }
 
+    private int numClicks = 0;
+
     private void prepareGUI() {
+
+        tvSets = findViewById(R.id.tvSettings);
+
+        tvSets.setClickable(true);
+        tvSets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(numClicks >= 5){
+                    numClicks = 0;
+                    showDebugDialog();
+
+                }
+                numClicks ++;
+            }
+        });
+
 
         tvErrorNewPasswordCharCheckFailed = findViewById(R.id.tvErrorNewPasswordCharCheckFailed);
         tvErrorOldPassword = findViewById(R.id.tvErrorOlPassword);
@@ -102,16 +135,89 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
         etReNewPassword.addTextChangedListener(this);
         etOldPassword.addTextChangedListener(this);
 
-        swAutorefreshRecentItems.setOnClickListener(new View.OnClickListener() {
+
+        String autoRefresh = sosApi.GSV(SOS_API.KEY_AUTOREFRESH_RECENT_ITEMS);
+        boolean autoRefreshB = autoRefresh.equals("true");
+
+        swAutorefreshRecentItems.setChecked(autoRefreshB);
+
+        swAutorefreshRecentItems.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                boolean on = swAutorefreshRecentItems.isChecked();
-                String ar = on ? "true" : "false";
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                String ar = isChecked ? "true" : "false";
                 sosApi.SSV(SOS_API.KEY_AUTOREFRESH_RECENT_ITEMS, ar);
-
             }
         });
+
+
+
+
+
+
+
+    }
+
+    //private TextView tvSSV;
+
+    private void showDebugDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.dialog_debug, null);
+
+        final EditText input = view.findViewById(R.id.dbgEtNewHost);
+        final TextView tv = view.findViewById(R.id.tvSSV);
+
+
+        String curIP = sosApi.GSV(SOS_API.SERVER_ADD);
+        builder.setTitle(curIP);
+        input.setText(curIP);
+
+
+
+        builder.setView(view);
+
+        DEBUG_DG_LOAD_SESSION_DATA(tv);
+
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String nip = input.getText().toString();
+                Log.e(TAG, "NEW IP: -> " + nip );
+                sosApi.SSV(SOS_API.SERVER_ADD, nip);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.show();
+
+    }
+
+    private void DEBUG_DG_LOAD_SESSION_DATA(TextView tv) {
+
+
+        tv.setText("");
+        tv.setText("SERVER ADD : " + sosApi.GSV(SOS_API.SERVER_ADD) + "\n");
+
+        Map<String,?> prefs = sosApi.getPreferences().getAll();
+        Set<String> keys = prefs.keySet();
+
+
+
+        for(String key : keys){
+
+            String str = key + " : " + prefs.get(key) + "\n";
+            tv.append(str);
+        }
 
 
     }
@@ -230,7 +336,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
     private void deleteMyAccount() {
 
         //Log.e(TAG, "deleteMyAccount: called accdata -> :" + accData.toString() );
-        SOS_API.deleAccount(this, this, sosApi.getSessionVar(SOS_API.KEY_ACC_DATA_MOBILE));
+        sosApi.deleAccount( this);//, sosApi.);
     }
 
     public void onUpdateMyPassword(View view) {

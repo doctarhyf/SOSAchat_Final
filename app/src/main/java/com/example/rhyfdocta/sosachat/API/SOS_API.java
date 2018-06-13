@@ -13,14 +13,12 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.rhyfdocta.sosachat.ActivityLookingForView;
 import com.example.rhyfdocta.sosachat.ActivityNoNetwork;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
@@ -106,23 +104,24 @@ public class SOS_API {
     public static final String TIME_STAMP = "timeStamp";
     public static final String SEARCH_Q = "q";
     public static final String FALSE = "false";
+    public static final String SERVER_ADD = "serverAdd";
 
     public static boolean POST_MARSHMALLOW = false;
-    public static final String DIR_PATH_CAT_PIX = "http://jmtinvestment.com/sosachat/img/cats/";
+
     
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
 
-    public static String API_URL = "http://jmtinvestment.com/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://jmtinvestment.com/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://jmtinvestment.com/sosachat/img/products/";
-    public static String DIR_PATH_PP = "http://jmtinvestment.com/sosachat/img/pp/";
-    public static String ROOT_URL = "http://jmtinvestment.com/sosachat/";
+    public static final String DIR_PATH_CAT_PIX = "sosachat/img/cats/";
+    public static String API_URL = "sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "sosachat/img/";
+    public static String DIR_PATH_PRODUCTS_PIX = "sosachat/img/products/";
+    public static String DIR_PATH_PP = "sosachat/img/pp/";
+    public static String ROOT_URL = "sosachat/";
+
     public static String DIR_PATH_TYPES = "img/types/";
-
-
     public static final String ACTION_LOAD_FEATURED_ITEMS = "loadFeatItems";
     public static final String ACTION_LOAD_CATEGORY_CARS = "loadCatCars";
     public static final String ACTION_LOAD_CATEGORY_ELECTRONICS = "loadCatElec";
@@ -239,14 +238,6 @@ public class SOS_API {
     public static String KEY_ITEM_CATEGORY = "itemCategory";
     private AlertDialog alertDialogResults;
 
-    /*
-    public static String API_URL = "http://jmtinvestment.com/sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "http://jmtinvestment.com/sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "http://jmtinvestment.com/sosac hat/img/products/";
-    public static String DIR_PATH_PP = "http://192.168.88.30 /sosachat
-    /img/users/"; 
-    */
-
     public static  boolean isOnline(Context context){
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -262,7 +253,7 @@ public class SOS_API {
         this.context = context;
         setBitmapCacheManager(new BitmapCacheManager(context));
         preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        editor = preferences.edit();
+        editor = getPreferences().edit();
         setupAlertDialogResponse();
         //SSV(KEY_NEW_ITEM_UNIQUE_ID, null);
 
@@ -369,7 +360,7 @@ public class SOS_API {
 
 
 
-        String username = preferences.getString(KEY_ACC_DATA_MOBILE, KEY_NO_USERNAME);
+        String username = getPreferences().getString(KEY_ACC_DATA_MOBILE, KEY_NO_USERNAME);
         //String password = preferences.getString(KEY_PASSWORD, KEY_PASSWORD);
 
         if(!username.equalsIgnoreCase(KEY_NO_USERNAME) ){
@@ -387,7 +378,7 @@ public class SOS_API {
 
 
 
-        String loginURL = SOS_API.API_URL + "act=" + ACTION_LOGIN + "&username=" + username + "&password=" + password;
+        String loginURL = GetServerAddress() + SOS_API.API_URL + "act=" + ACTION_LOGIN + "&username=" + username + "&password=" + password;
 
        Log.e(TAG, "login:url -> " + loginURL );
 
@@ -457,11 +448,15 @@ public class SOS_API {
 
     }
 
+    private String GetServerAddress() {
+        return "http://" + GSV(SERVER_ADD) + "/";
+    }
+
     public static  Object[] keys;
 
     public String getSessionVar(String key){
 
-        return preferences.getString(key, KEY_SESSION_DATA_EMPTY);
+        return getPreferences().getString(key, KEY_SESSION_DATA_EMPTY);
     }
 
     public void setSessionVar(String key, String val){
@@ -518,7 +513,7 @@ public class SOS_API {
 
         //Log.e(TAG, "bundle -> " + data.toString() );
 
-        String url = SOS_API.API_URL + "act=" + ACTION_SIGNUP;
+        String url =GSA() + API_URL + "act=" + ACTION_SIGNUP;
 
 
 
@@ -603,10 +598,15 @@ public class SOS_API {
 
     }
 
-    public static void deleAccount(Context context, final SOSApiListener sosApiListener, String mobile) {
+    private String GSA() {
+        return GetServerAddress();
+    }
+
+    public void deleAccount(final SOSApiListener sosApiListener) {
 
 
-        String url = API_URL + "act=" + ACTION_DELETE_ACCOUNT + "&" + KEY_ACC_DATA_MOBILE + "=" + mobile;
+        final String mobile = GSV(SOS_API.KEY_ACC_DATA_MOBILE);
+        String url = GSA() + API_URL + "act=" + ACTION_DELETE_ACCOUNT + "&" + KEY_ACC_DATA_MOBILE + "=" + mobile;
        //Log.e(TAG, "deleAccount: url -> " + url );
 
         StringRequest request = new StringRequest(
@@ -647,7 +647,7 @@ public class SOS_API {
     }
 
     public void getNewItemUniqueId(final CallbacksUniqueID callbacksUniqueID){
-        String url = SOS_API.API_URL + "act=" + ACTION_GET_UNIQUE_ID;
+        String url =GSA() + API_URL + "act=" + ACTION_GET_UNIQUE_ID;
         StringRequest request = new StringRequest(
                 Request.Method.POST,
                 url,
@@ -677,7 +677,7 @@ public class SOS_API {
 
     public void deleteLookingFor(final CallbacksDelLookingFor callbacksDelLookingFor, String id) {
 
-        String url = SOS_API.API_URL + "act=" + ACTION_DELETE_LOOKING_FOR + "&iid=" + id + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+        String url =GSA() + API_URL + "act=" + ACTION_DELETE_LOOKING_FOR + "&iid=" + id + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -704,6 +704,10 @@ public class SOS_API {
 
     }
 
+    public SharedPreferences getPreferences() {
+        return preferences;
+    }
+
     public interface CallbacksDelLookingFor{
         void onDeleteLookingSuccess();
         void onDeleteLookingForFailure(String message);
@@ -720,7 +724,7 @@ public class SOS_API {
         //Log.e(TAG, "exposeItem: data -> " + data.toString() );
         //String pdUniqueName = data.getString("");
 
-        String url = SOS_API.API_URL;
+        String url =GSA() + API_URL;
         String itemId = data.getString(KEY_ITEM_ID);
         final boolean itemUpdating = itemId != null;
 
@@ -834,7 +838,7 @@ public class SOS_API {
 
     public void loadMyProducts(final ListenerLoadMyProducts listener){
 
-        String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_MY_PRODUCTS +
+        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_MY_PRODUCTS +
                 "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
 
         Log.e(TAG, "myproducs url : " + url );
@@ -930,7 +934,7 @@ public class SOS_API {
 
     /*public void uploadPicFile(final CallbacksImageFileUpload callbacksImageFileUpload, String filePath, String fileName, String dirPath, final String tag, final Bundle metaData) {
 
-        String url = API_URL + "act=" + ACTION_UPLOAD_PRODUCT_IMAGE_FILE + "&dirPath=" + dirPath + "&fname=" + fileName;
+        String url =GSA() + API_URL + "act=" + ACTION_UPLOAD_PRODUCT_IMAGE_FILE + "&dirPath=" + dirPath + "&fname=" + fileName;
         final Bundle data = new Bundle(metaData);
 
         UploadAsyncTask uploadAsyncTask = new UploadAsyncTask(
@@ -996,7 +1000,7 @@ public class SOS_API {
     public void loadLookingFors(final AdapterLookingFor.CallBacks callBacks, boolean mine, int limit) {
 
 
-        String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES + "&uid=" + getSessionVar(KEY_ACC_DATA_ID);
+        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES + "&uid=" + getSessionVar(KEY_ACC_DATA_ID);
         if(mine) { url = url.concat("&mine"); };
         if(limit != -1){
             url = url.concat("&limit=" + limit);
@@ -1102,7 +1106,7 @@ public class SOS_API {
 
     public void loadRecentItems(final ListenerLoadRecentItems listener) {
 
-        String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_FEATURED_PRODUCTS + "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
+        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_FEATURED_PRODUCTS + "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
         Log.e(TAG, "loadRecentItems: url -> " + url );
 
 
@@ -1213,7 +1217,7 @@ public class SOS_API {
 
         final List<ProductMyProducts> allProducts = new ArrayList<>();
         allProducts.clear();
-        String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_PRODUCTS + "&uid=" + uid ;
+        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_PRODUCTS + "&uid=" + uid ;
 
         Log.e(TAG, "loadAllProducts: url -> " + url );
 
@@ -1319,7 +1323,7 @@ public class SOS_API {
 
 
         String userid = getSessionVar(KEY_ACC_DATA_USER_ID);
-        String url = API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&setName=" + settingKey + "&newVal=" + newValue +
+        String url =GSA() + API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&setName=" + settingKey + "&newVal=" + newValue +
                 "&user_id=" + userid;
 
        //Log.e(TAG, "updateSignleSetting: url -> " + url );
@@ -1355,7 +1359,7 @@ public class SOS_API {
 
     public void updateUserPassword(final OnUpdatePasswordListenerm listener, final String newPassword){
 
-        String url = API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&newVal=" + newPassword +
+        String url =GSA() + API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&newVal=" + newPassword +
                 "&" + KEY_ACC_DATA_USER_ID + "=" + GSV(KEY_ACC_DATA_USER_ID) + "&setName=" + KEY_ACC_DATA_PASSWORD;
 
         Log.e(TAG, "updateUserPassword: url -> " + url );
@@ -1416,7 +1420,7 @@ public class SOS_API {
         String myid = getSessionVar(KEY_ACC_DATA_USER_ID);
 
         String uniqueName = pd.getPdUniqueNameFromIMG();
-        String url = SOS_API.API_URL + "act=" + ACTION_REMOVE_PRODUCT + "&unq=" + uniqueName + "&myid=" + myid ;
+        String url =GSA() + API_URL + "act=" + ACTION_REMOVE_PRODUCT + "&unq=" + uniqueName + "&myid=" + myid ;
 
        //Log.e(TAG, "removeProduct: url -> " + url );
 
@@ -1461,7 +1465,7 @@ public class SOS_API {
         title = Uri.encode(title);
         desc = Uri.encode(desc);
 
-        String url = API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating;
+        String url =GSA() + API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating;
         Log.e(TAG, "postInquiry: url -> " + url );
         StringRequest request = new StringRequest(
                 url,
@@ -1489,7 +1493,7 @@ public class SOS_API {
 
     public void updateItemViewsCount(final SOSApiListener listener, String itemId) {
 
-        String url = API_URL + "act=" + ACTTION_UPDATE_ITEM_VIEWS_COUNT + "&itemid=" + itemId;
+        String url =GSA() + API_URL + "act=" + ACTTION_UPDATE_ITEM_VIEWS_COUNT + "&itemid=" + itemId;
        //Log.e(TAG, "updateItemViewsCount: url -> " + url );
         StringRequest request = new StringRequest(
                 url,
@@ -1531,7 +1535,7 @@ public class SOS_API {
         String uid = getSessionVar(KEY_ACC_DATA_USER_ID);
         final List<ProductMyProducts> allProducts = new ArrayList<>();
         allProducts.clear();
-        String url = SOS_API.API_URL + "act=" + ACTION_SEARCH_ITEMS + "&uid=" + uid + "&q=" + q;
+        String url =GSA() + API_URL + "act=" + ACTION_SEARCH_ITEMS + "&uid=" + uid + "&q=" + q;
 
        //Log.e(TAG, "search url : " + url );
 
@@ -1647,7 +1651,7 @@ public class SOS_API {
 
     public void loadSearchResultItems(final SOSApiListener listener, String ids) {
 
-        String url = API_URL + "act=loadSearchRes&ids=" + ids;
+        String url =GSA() + API_URL + "act=loadSearchRes&ids=" + ids;
 
        //Log.e(TAG, "loadSearchResultItems: url -> " + url );
 
@@ -1859,7 +1863,7 @@ public class SOS_API {
 
     public void uploadProfilePic(final SOSApiListener listener, final String imgStr) {
 
-        String url = API_URL + "act=" + ACTION_UPLOAD_PP + "&mobile=" + GSV(KEY_ACC_DATA_MOBILE);
+        String url =GSA() + API_URL + "act=" + ACTION_UPLOAD_PP + "&mobile=" + GSV(KEY_ACC_DATA_MOBILE);
        //Log.e("UPDPP", "uploadProfilePic: -> " + url );
 
         StringRequest request = new StringRequest(
@@ -1928,10 +1932,10 @@ public class SOS_API {
 
     public void loadCatTypeNames(SOSApiListener listener, String catId, String typeId) {
 
-        if(preferences.getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY).equals(KEY_PREF_EMPTY)) {
+        if(getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY).equals(KEY_PREF_EMPTY)) {
 
 
-            /*String url = API_URL + "act=" + ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES;
+            /*String url =GSA() + API_URL + "act=" + ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES;
 
             //Log.e(TAG, "loadItemsCatsAndTypes: url -> " + url );
 
@@ -1974,7 +1978,7 @@ public class SOS_API {
 
         }else{
             try {
-                String s = preferences.getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY);
+                String s = getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY);
                 JSONArray cats = new JSONArray(s);
 
                 if (cats.length() > 0) {
@@ -2042,7 +2046,7 @@ public class SOS_API {
 
         // TODO: 12/26/2017 TO MOVE IN SOS API CLASS
 
-        String url = SOS_API.API_URL + "act=" + SOS_API.ACTION_LOAD_ITEM_TYPES_FROM_CAT_ID + "&catId=" + id;
+        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ITEM_TYPES_FROM_CAT_ID + "&catId=" + id;
         Log.e(TAG, "loadCatData: -> " + url );
 
         StringRequest request = new StringRequest(
@@ -2125,7 +2129,7 @@ public class SOS_API {
 
         String wid = itemData.getString(SOS_API.KEY_ITEM_ID);
         //final String itemName = itemData.getString(Product.KEY_PD_NAME);
-        String url = SOS_API.API_URL + "act=" + ACTION_REMOVE_ITEM_FROM_WISHLIST + "&wid=" + wid + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+        String url =GSA() + API_URL + "act=" + ACTION_REMOVE_ITEM_FROM_WISHLIST + "&wid=" + wid + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
 
         Log.e(TAG, "removeItemFromWishlist: url -> " + url );
 
@@ -2166,7 +2170,7 @@ public class SOS_API {
 
     public void addItemToWishlist(final ListenerItemsWishlist listener, String itemId) {
 
-        String url = SOS_API.API_URL + "act=" + ACTION_ADD_ITEM_TO_WISHLIST + "&uid=" +
+        String url =GSA() + API_URL + "act=" + ACTION_ADD_ITEM_TO_WISHLIST + "&uid=" +
                 GSV(KEY_ACC_DATA_USER_ID) + "&wid=" + itemId;
 
         Log.e(TAG, "addItemToWishlist: url -> " + url );
@@ -2209,7 +2213,7 @@ public class SOS_API {
 
 
 
-        String url = SOS_API.API_URL + "act=" + ACTTION_LOAD_WISH_LIST + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+        String url =GSA() + API_URL + "act=" + ACTTION_LOAD_WISH_LIST + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
         //Log.e(TAG, "wishlist: url -> " + url );
 
         StringRequest requestItems = new StringRequest(
@@ -2340,10 +2344,10 @@ public class SOS_API {
     public void loadItemsCatsAndTypes(final SOSApiListener listener){
 
 
-        if(preferences.getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY).equals(KEY_PREF_EMPTY)) {
+        if(getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY).equals(KEY_PREF_EMPTY)) {
 
 
-            String url = API_URL + "act=" + ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES;
+            String url =GSA() + API_URL + "act=" + ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES;
 
            //Log.e(TAG, "loadItemsCatsAndTypes: url -> " + url );
 
@@ -2386,7 +2390,7 @@ public class SOS_API {
 
         }else{
             try {
-                String s = preferences.getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY);
+                String s = getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY);
                 JSONArray jsonArray = new JSONArray(s);
 
                 if (jsonArray.length() > 0) {
@@ -2421,7 +2425,7 @@ public class SOS_API {
 
 
 
-        String url = SOS_API.API_URL + "act=" + ACTION_LOAD_ITEMS_IN_TYPE + "&typeId=" + typeId;
+        String url =GSA() + API_URL + "act=" + ACTION_LOAD_ITEMS_IN_TYPE + "&typeId=" + typeId;
         Log.e(TAG, "loadItemsInType: url -> " + url );
 
         Log.e(TAG, "onResponse: \nurl : " + url );
@@ -2516,7 +2520,7 @@ public class SOS_API {
 
         // TODO: 12/1/17 EMPTY SESSION INPHP
 
-        String url = API_URL + "act=" + ACTION_LOGOUT + "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
+        String url =GSA() + API_URL + "act=" + ACTION_LOGOUT + "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
 
        //Log.e(TAG, "logout: url -> " + url );
 

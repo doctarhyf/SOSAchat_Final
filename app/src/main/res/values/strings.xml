@@ -407,5 +407,6 @@
     <string name="strDelL4">DELETE</string>
     <string name="strContactL4">CONTACT</string>
     <string name="titleSearch">Search</string>
+    <string name="dgTitleDBG">DEBUG PANEL</string>
 
 </resources>

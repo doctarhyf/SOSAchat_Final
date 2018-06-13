@@ -54,6 +54,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.example.rhyfdocta.sosachat.API.SOS_API.REQ_PERMISSION_SAVE_BITMAP;
 
@@ -122,6 +124,8 @@ AdapterLookingFor.CallBacks{
         setContentView(R.layout.activity_main);
 
         sosApi = new SOS_API(this);
+
+        sosApi.SSV(SOS_API.SERVER_ADD, "192.168.88.16");
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             SOS_API.POST_MARSHMALLOW = true;
@@ -538,6 +542,82 @@ AdapterLookingFor.CallBacks{
         sosApi.loadRecentItems(new LoadRecentItemsListener());
 
         Log.e(TAG, "loadRecentItems: RES_MAIN" );
+
+
+    }
+
+    private int dbgCount = 0;
+
+    public void showDebug(View view) {
+
+        if(dbgCount >= 5){
+            dbgCount = 0;
+            showDebugDialog();
+        }
+
+        dbgCount ++;
+    }
+
+
+
+    private void showDebugDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.dialog_debug, null);
+
+        final EditText input = view.findViewById(R.id.dbgEtNewHost);
+        final TextView tv = view.findViewById(R.id.tvSSV);
+
+
+        String curIP = sosApi.GSV(SOS_API.SERVER_ADD);
+        builder.setTitle(curIP);
+        input.setText(curIP);
+
+
+
+        builder.setView(view);
+
+        DEBUG_DG_LOAD_SESSION_DATA(tv);
+
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String nip = input.getText().toString();
+                Log.e(TAG, "NEW IP: -> " + nip );
+                sosApi.SSV(SOS_API.SERVER_ADD, nip);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.show();
+
+    }
+
+    private void DEBUG_DG_LOAD_SESSION_DATA(TextView tv) {
+
+
+        tv.setText("");
+        tv.setText("SERVER ADD : " + sosApi.GSV(SOS_API.SERVER_ADD) + "\n");
+
+        Map<String,?> prefs = sosApi.getPreferences().getAll();
+        Set<String> keys = prefs.keySet();
+
+
+
+        for(String key : keys){
+
+            String str = key + " : " + prefs.get(key) + "\n";
+            tv.append(str);
+        }
 
 
     }
