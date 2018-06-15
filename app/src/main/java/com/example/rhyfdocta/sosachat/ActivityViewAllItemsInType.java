@@ -184,7 +184,7 @@ public class ActivityViewAllItemsInType extends AppCompatActivity implements Ada
         String msg = getResources().getString(R.string.msgErrorInternetConnection ) + "\n" + "Error message : " + message;
         //Toast.makeText(this, getResources().getString(R.string.msgNoProdInCat), Toast.LENGTH_SHORT).show();
         //Log.e(TAG, "onNoProdsInType: \n" +  msg);
-        sosApi.TADRWM(true, msg);
+        sosApi.TADRWM(ActivityViewAllItemsInType.this,true, msg);
         recyclerView.setVisibility(View.GONE);
         tvNoItemsInCat.setVisibility(View.VISIBLE);
 

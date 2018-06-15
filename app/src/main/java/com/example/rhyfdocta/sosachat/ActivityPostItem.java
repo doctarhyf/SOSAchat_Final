@@ -301,7 +301,7 @@ public class ActivityPostItem extends AppCompatActivity implements
         if(!SOS_API.isOnline(this)){
             btnExposeItem.setEnabled(false);
 
-            sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this, R.string.msgErrorInternetConnection));
+            sosApi.toggleAlertDialogResponseWithMessage(ActivityPostItem.this,true, HM.RGS(this, R.string.msgErrorInternetConnection));
         }
 
 

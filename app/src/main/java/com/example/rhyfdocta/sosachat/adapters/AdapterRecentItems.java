@@ -22,6 +22,7 @@ import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import java.io.File;
 import java.util.List;
@@ -69,7 +70,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         this.context = context;
         this.products = products;
         this.callbacks = callBacks;
-        sosApi = new SOS_API(context);
+        sosApi = SOSApplication.getInstance().getSosApi();
 
 
     }
@@ -103,7 +104,7 @@ public class AdapterRecentItems extends RecyclerView.Adapter<AdapterRecentItems.
         holder.tvItemDesc.setText(pd.getPdDesc());
 
 
-        final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdUniqueName() + "_main.jpg";
+        final String pixPath = sosApi.GSA() + SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdUniqueName() + "_main.jpg";
         Uri picUri = Uri.parse(pixPath);
 
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 /**
  * Created by Franvanna on 12/22/2017.
@@ -53,7 +54,7 @@ public class HomeCategoryItem {
         this.image = image;
         this.catId = catId;
 
-        this.image = SOS_API.DIR_PATH_CAT_PIX + this.image + ".jpg";
+        this.image = SOSApplication.GSA() + SOS_API.DIR_PATH_CAT_PIX + this.image + ".jpg";
 
         Log.e(TAG, "HomeCategoryItem: imgpath -> " + this.image );
     }

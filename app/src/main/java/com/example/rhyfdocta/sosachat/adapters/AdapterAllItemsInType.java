@@ -15,6 +15,7 @@ import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class AdapterAllItemsInType extends RecyclerView.Adapter<AdapterAllItemsI
     public AdapterAllItemsInType(Context context, List<Product> list, ListenerItemsInType listener){
         this.list = list;
         this.listener = listener;
-        sosApi = new SOS_API(context);
+        sosApi = SOSApplication.getInstance().getSosApi();
     }
 
     @Override
@@ -83,7 +84,7 @@ public class AdapterAllItemsInType extends RecyclerView.Adapter<AdapterAllItemsI
 
         holder.tvPriceNQual.setText(priceNQual);
 
-        final Uri picUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + pd.getData().getString(SOS_API.KEY_ITEM_UNIQUE_NAME) + "_main.jpg");
+        final Uri picUri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + pd.getData().getString(SOS_API.KEY_ITEM_UNIQUE_NAME) + "_main.jpg");
 
         Picasso.with(context)
                 .load(picUri)

@@ -25,6 +25,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import java.io.File;
 import java.util.List;
@@ -49,13 +50,13 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
         this.context = context;
         this.objects = objects;
         this.callBacks = callBacks;
-        this.sosApi = new SOS_API(context);
+        this.sosApi = SOSApplication.getInstance().getSosApi();
     }
 
     static class ViewHolderMyProduct {
 
         TextView tvName, tvPriceNQual, tvDate, tvItemQual, tvItemPrice;
-        ImageView ivRmPd, ivEditPd, ivSoldMyPd;
+        ImageView ivRmPd, ivEditPd, ivSoldMyPd, ivInfo;
 
 
     }
@@ -73,6 +74,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item_my_products, null);
             viewHolderMyProduct = new ViewHolderMyProduct();
+            viewHolderMyProduct.ivInfo = view.findViewById(R.id.ivProdMenu);
             viewHolderMyProduct.tvName = view.findViewById(R.id.tvWliName);
             viewHolderMyProduct.tvPriceNQual = view.findViewById(R.id.tvWliPriceNQual);
             viewHolderMyProduct.tvDate = view.findViewById(R.id.tvWliDate);
@@ -125,7 +127,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
         //final Uri picUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg");
 
-        String pixPath = SOS_API.DIR_PATH_CATEGORIES + "products/" + d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
+        String pixPath = sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
         Uri uri = Uri.parse(pixPath);
 
 
@@ -219,6 +221,14 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             }
         });
 
+        ImageView ivInfo = view.findViewById(R.id.ivProdMenu);
+        ivInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBacks.onItemInfoClicked(pd, picUri);
+            }
+        });
+
         ImageView ivRmFromWli = view.findViewById(R.id.ivRmFromWli);
         ivRmFromWli.setOnClickListener(new View.OnClickListener() {
 
@@ -259,5 +269,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
         void onItemEditClicked(ProductMyProducts pd, Uri picUri);
 
         void onItemSoldClicked(ProductMyProducts pd, Uri picUri);
+
+        void onItemInfoClicked(ProductMyProducts pd, Uri picUri);
     }
 }

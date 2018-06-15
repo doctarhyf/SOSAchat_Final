@@ -24,6 +24,7 @@ import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
     public AdapterAP(Context context, List<ProductMyProducts> list, ListenerAllProducts listener){
         this.list = list;
         this.listener = listener;
-        sosApi = new SOS_API(context);
+        sosApi = SOSApplication.getInstance().getSosApi();
     }
 
     @Override
@@ -104,7 +105,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
 
         //////////////////////////////////////////////////
 
-        final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdImg();
+        final String pixPath = sosApi.GSA() + SOS_API.DIR_PATH_PRODUCTS_PIX + pd.getPdImg();
         Uri uri = Uri.parse(pixPath);
 
 

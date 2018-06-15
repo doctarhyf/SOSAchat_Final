@@ -20,6 +20,7 @@ import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import java.io.File;
 import java.util.List;
@@ -45,7 +46,7 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
         this.context = context;
         this.objects = objects;
         this.callBacks = callBacks;
-        this.sosApi = new SOS_API(context);
+        this.sosApi = SOSApplication.getInstance().getSosApi();
     }
 
     static class ViewHolderCatItem{

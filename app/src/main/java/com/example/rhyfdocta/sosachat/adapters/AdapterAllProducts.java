@@ -17,6 +17,7 @@ import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -42,7 +43,7 @@ public class AdapterAllProducts extends ArrayAdapter<ProductMyProducts> {
         this.context = context;
         this.objects = objects;
         this.callBacks = callBacks;
-        sosApi = new SOS_API(this.context);
+        sosApi = SOSApplication.getInstance().getSosApi();
     }
 
     static class ViewHolderWishListItem {
@@ -97,7 +98,7 @@ public class AdapterAllProducts extends ArrayAdapter<ProductMyProducts> {
         viewHolderWishListItem.tvPriceNQual.setText(priceNQual);
         viewHolderWishListItem.tvDate.setText(pd.getDataBundle().getString(Product.KEY_PD_DATE_ADDED));
 
-        final Uri picUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + pd.getDataBundle().getString(SOS_API.KEY_ITEM_UNIQUE_NAME) + "_main.jpg");
+        final Uri picUri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + pd.getDataBundle().getString(SOS_API.KEY_ITEM_UNIQUE_NAME) + "_main.jpg");
         //Log.e(TAG, "FUCK " + picUri.toString());
         Picasso.with(context).load(picUri).centerCrop().error(R.drawable.ic_error)
                 .placeholder(R.drawable.progress_animation).resize(400, 400).into(viewHolderWishListItem.iv, new Callback() {

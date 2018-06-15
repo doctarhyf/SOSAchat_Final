@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,7 @@ public class AdapterLookingFor extends ArrayAdapter<LookingFor> {
         this.context = context;
         this.inquiries = inquiries;
         this.callBacks = callBacks;
-        this.sosApi = new SOS_API(context);
+        this.sosApi = SOSApplication.getInstance().getSosApi();
     }
 
     @NonNull
@@ -94,6 +96,8 @@ public class AdapterLookingFor extends ArrayAdapter<LookingFor> {
                 }
 
         );
+
+        Log.e("PATHPP", "PP -> " + pathPP );
 
         return convertView;
     }

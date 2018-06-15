@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -38,6 +39,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.ServerImageManagement.ServerImageManager;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import org.json.JSONArray;
 
@@ -307,7 +309,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
 
         String ppName = sosApi.GSV(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
 
-        String path = SOS_API.DIR_PATH_PP + ppName ;//+ "?ts=" + HM.getTimeStamp();//accDataBundle.get(SOS_API.KEY_ACC_DATA_ACC_PIC_NAME);
+        String path = sosApi.GSA() + SOS_API.DIR_PATH_PP + ppName ;//+ "?ts=" + HM.getTimeStamp();//accDataBundle.get(SOS_API.KEY_ACC_DATA_ACC_PIC_NAME);
 
 
         String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_PROFILE_PIC, ppName);
@@ -343,7 +345,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         super.onLoadFailed(e, errorDrawable);
                         ivProfilePic.setImageResource(R.drawable.ic_error);
-                        sosApi.TADRWM(true, HM.RGS(ActivityMyAccount.this, R.string.msgFailedToLoadPP));
+                        sosApi.TADRWM(ActivityMyAccount.this,true, HM.RGS(ActivityMyAccount.this, R.string.msgFailedToLoadPP));
                     }
                 });
 
@@ -505,7 +507,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
         //sosApi.uploadProfilePic(this,imgStr);
         String serverFileName = sosApi.GSV(SOS_API.KEY_ACC_DATA_MOBILE_HASH) + ".jpg";
         String serverRelRootDir = SOS_API.SERVER_REL_ROOT_DIR_PATH_PROFILE_PICTURES;
-        String scriptPath = SOS_API.API_URL + "act=" + SOS_API.ACTION_UPLOAD_IMAGE + "&" +
+        String scriptPath = SOSApplication.GSA() + SOS_API.API_URL + "act=" + SOS_API.ACTION_UPLOAD_IMAGE + "&" +
                 ServerImageManager.KEY_REQ_SERVER_FILE_NAME + "=" + serverFileName + "&" +
                 ServerImageManager.KEY_REQ_REL_ROOT_DIR+ "=" + serverRelRootDir;
 
@@ -564,16 +566,17 @@ public class ActivityMyAccount extends AppCompatActivity implements
     private void startCameraApp() {
 
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
 
-        if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                fireCameraIntent();
 
-            fireCameraIntent();
+            } else {
 
-        }else{
+                String[] permissions = {Manifest.permission.CAMERA};
+                requestPermissions(permissions, SOS_API.REQ_PERMISSION_SAVE_BITMAP);
 
-            String[] permissions = { Manifest.permission.CAMERA};
-            requestPermissions(permissions, SOS_API.REQ_PERMISSION_SAVE_BITMAP);
-
+            }
         }
 
     }

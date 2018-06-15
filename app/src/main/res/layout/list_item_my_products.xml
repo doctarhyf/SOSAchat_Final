@@ -17,7 +17,7 @@
         android:id="@+id/ivWli"
         style="@style/styleIvItem"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:layout_marginLeft="@dimen/paddingNormal"
         android:scaleType="center"
         app:srcCompat="@drawable/progress_animation" />
@@ -26,7 +26,7 @@
 
         style="@style/padLeft"
         android:layout_width="0dp"
-        android:layout_weight="3"
+        android:layout_weight="8"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -75,18 +75,22 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="18dp"
         android:layout_weight="1
 "       android:orientation="vertical"
+        android:gravity="center"
         android:layout_height="match_parent">
 
-
-
+        <ImageView
+            android:id="@+id/ivProdMenu"
+            android:src="@android:drawable/ic_menu_info_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <ImageView
 
             android:clickable="true"
-
+            android:visibility="gone"
             android:id="@+id/ivRmFromWli"
             android:layout_marginRight="0dp"
             android:layout_width="match_parent"
@@ -97,7 +101,7 @@
             android:src="@android:drawable/ic_menu_delete" />
 
         <ImageView
-
+            android:visibility="gone"
             android:clickable="true"
 
             android:id="@+id/ivEditMyPd"

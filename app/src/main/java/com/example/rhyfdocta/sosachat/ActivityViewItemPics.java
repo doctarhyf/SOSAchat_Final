@@ -83,21 +83,21 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
         String uniqueName = itemBundle.getString(Product.KEY_PD_IMG).split("_")[0] + "_" +
                 itemBundle.getString(Product.KEY_PD_IMG).split("_")[1];
-        final Uri picUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + "_main.jpg");
+        final Uri picUri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + "_main.jpg");
         loadBitmapIntoImageView(picUri, uniqueName, picType, ivMain, tw, th);
 
 
         tw = 300;//ivp1.getWidth();
         th = 300;//ivp1.getHeight();
         //picType = "_pic1.jpg";
-        final Uri picMainUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
+        final Uri picMainUri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
 
         loadBitmapIntoImageView(picMainUri, uniqueName, picType, ivMorePicMain, tw, th);
 
         tw = 300;//ivp1.getWidth();
         th = 300;//ivp1.getHeight();
         picType = "_pic1.jpg";
-        final Uri pic1Uri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
+        final Uri pic1Uri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
 
         loadBitmapIntoImageView(pic1Uri, uniqueName, picType, ivp1, tw, th);
 
@@ -106,14 +106,14 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
         /*tw = ivp2.getWidth();
         th = ivp2.getHeight();*/
         picType = "_pic2.jpg";
-        final Uri pic2Uri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
+        final Uri pic2Uri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
 
         loadBitmapIntoImageView(pic2Uri, uniqueName, picType, ivp2, tw, th);
 
         /*tw = ivp3.getWidth();
         th = ivp3.getHeight();*/
         picType = "_pic3.jpg";
-        final Uri pic3Uri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
+        final Uri pic3Uri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + uniqueName + picType);
         loadBitmapIntoImageView(pic3Uri, uniqueName, picType, ivp3, tw, th);
 
 
@@ -121,12 +121,12 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
 
     private void loadBitmapIntoImageView(final Uri picUri, String uniqueName, String picType, final ImageView iv, int tw, int th) {
 
-        String itemsPixPath = SOS_API.DIR_PATH_PRODUCTS_PIX;
+        String itemsPixPath = sosApi.GSA() + SOS_API.DIR_PATH_PRODUCTS_PIX;
         Uri uri = picUri;
 
         //Uri picUri = Uri.parse(itemsPixPath.concat(bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg"));
         //final String imgName = bundle.getString(Product.KEY_PD_UNIQUE_NAME);
-        final String pixPath = SOS_API.DIR_PATH_PRODUCTS_PIX + uniqueName + picType;
+        final String pixPath = sosApi.GSA() + SOS_API.DIR_PATH_PRODUCTS_PIX + uniqueName + picType;
         String picName = uniqueName;
 
         String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS, picName + picType);

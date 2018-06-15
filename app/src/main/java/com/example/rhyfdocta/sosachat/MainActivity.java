@@ -47,6 +47,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.adapters.AdapterHomeCategories;
 import com.example.rhyfdocta.sosachat.adapters.AdapterLookingFor;
 import com.example.rhyfdocta.sosachat.adapters.AdapterRecentItems;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,9 +124,9 @@ AdapterLookingFor.CallBacks{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sosApi = new SOS_API(this);
+        sosApi = SOSApplication.getInstance().getSosApi();//new SOS_API(this);
 
-        sosApi.SSV(SOS_API.SERVER_ADD, "192.168.88.16");
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             SOS_API.POST_MARSHMALLOW = true;
@@ -303,7 +304,7 @@ AdapterLookingFor.CallBacks{
         Log.e(TAG, "onLookingForsLoadError: -> " + message );
         lvLookifor.setVisibility(View.GONE);
         tvMsgLookingFor.setVisibility(View.VISIBLE);
-        tvMsgLookingFor.setText(message);
+        tvMsgLookingFor.setText(HM.RGS(this, R.string.msgErrorLoadingLookingFors));
     }
 
     @Override
@@ -667,7 +668,7 @@ AdapterLookingFor.CallBacks{
         public void onNetworkError(String msg) {
             //Toast.makeText(MainActivity.this, "onNetworkError", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "onNetworkError: Message -> " + msg );
-            sosApi.TADRWM(true, MainActivity.this.getResources().getString(R.string.msgServerUnreachable));
+            sosApi.TADRWM(MainActivity.this, true, MainActivity.this.getResources().getString(R.string.msgServerUnreachable));
             alertDialogProcessing.hide();
             //llPbLoadingRecentItems.setVisibility(View.GONE);
             toggleNoConnGUI(false);
@@ -675,7 +676,7 @@ AdapterLookingFor.CallBacks{
 
         @Override
         public void onParseJsonError(String s) {
-            sosApi.TADRWM(true, "onParseJsonError:\nJSON : " + s);
+            sosApi.TADRWM(MainActivity.this, true, "onParseJsonError:\nJSON : " + s);
             alertDialogProcessing.hide();
             //llPbLoadingRecentItems.setVisibility(View.GONE);
             toggleNoConnGUI(false);
@@ -915,7 +916,7 @@ AdapterLookingFor.CallBacks{
 
 
         if(networkError){
-            sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this, R.string.msgErrorInternetConnection));
+            sosApi.toggleAlertDialogResponseWithMessage(MainActivity.this, true, HM.RGS(this, R.string.msgErrorInternetConnection));
             alertDialogProcessing.hide();
 
             return;
@@ -926,7 +927,7 @@ AdapterLookingFor.CallBacks{
         this.recentProducts = featureProducts;
         if(featureProducts.size() == 0){
 
-            sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this, R.string.msgNoRecentItems));
+            sosApi.toggleAlertDialogResponseWithMessage(MainActivity.this, true, HM.RGS(this, R.string.msgNoRecentItems));
 
 
             footer.setVisibility(View.VISIBLE);

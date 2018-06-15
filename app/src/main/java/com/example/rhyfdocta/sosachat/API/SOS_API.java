@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 
+//import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
@@ -31,6 +32,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.adapters.AdapterLookingFor;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +61,7 @@ public class SOS_API {
     public static final String DIR_NAME_PIX_CACHE_HOME_TYPES_IN_CATS = "typesInCats";
     public static final String DIR_NAME_PIX_CACHE_PRODUCTS = "products";
     public static final String DIR_NAME_PIX_CACHE_PROFILCE_PIC = "pp";
-    public static final String ACTION_LOAD_ALL_INQUIRIES = "checkAllInquiries";
+    public static final String ACTION_LOAD_ALL_LOOKINGFORS = "checkAllInquiries";
     public static final String TAG = "SA_DBG";
     public static final int KEY_CONTACT_BY_PHONE = 250;
     public static final int KEY_CONTACT_BY_SMS = 251;
@@ -105,6 +107,7 @@ public class SOS_API {
     public static final String SEARCH_Q = "q";
     public static final String FALSE = "false";
     public static final String SERVER_ADD = "serverAdd";
+    private static final String RES_EMPTY = "resEmpty";
 
     public static boolean POST_MARSHMALLOW = false;
 
@@ -292,6 +295,7 @@ public class SOS_API {
 
     private void setupAlertDialogResponse() {
 
+        /*
         AlertDialog.Builder builder;
 
 
@@ -301,7 +305,7 @@ public class SOS_API {
         //tvAlertDialogResponse = (TextView) view.findViewById(R.id.tvAlertDialogResponse);
         //builder.setView(view);
         alertDialogResults = builder.create();
-        //alertDialogResults.setCancelable(false);
+        //alertDialogResults.setCancelable(false);*/
 
 
 
@@ -330,7 +334,18 @@ public class SOS_API {
 
     }
 
-    public void toggleAlertDialogResponseWithMessage(boolean show, String message){
+    public void toggleAlertDialogResponseWithMessage(Context context, boolean show, String message){
+
+        AlertDialog.Builder builder;
+
+
+        builder =new AlertDialog.Builder(context)
+                .setPositiveButton("OK",null);
+        //View view = getLayoutInflater().inflate(R.layout.layout_alert_dialog_load_response,null);
+        //tvAlertDialogResponse = (TextView) view.findViewById(R.id.tvAlertDialogResponse);
+        //builder.setView(view);
+        alertDialogResults = builder.create();
+        //alertDialogResults.setCancelable(false);
 
         if(message != null){
             alertDialogResults.setMessage(message);
@@ -346,8 +361,8 @@ public class SOS_API {
 
     }
 
-    public void TADRWM(boolean show, String msg){
-        toggleAlertDialogResponseWithMessage(show, msg);
+    public void TADRWM(Context context, boolean show, String msg){
+        toggleAlertDialogResponseWithMessage(context, show, msg);
     }
 
     public boolean isLoggedIn(){
@@ -443,12 +458,13 @@ public class SOS_API {
 
 
 
-        Volley.newRequestQueue(context).add(request);
+        //SOSApplication.getInstance().addToRequestQueue(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
 
     }
 
-    private String GetServerAddress() {
+    public String GetServerAddress() {
         return "http://" + GSV(SERVER_ADD) + "/";
     }
 
@@ -477,10 +493,19 @@ public class SOS_API {
         return getSessionVar(key);
     }
 
+    private void SSD(Bundle data){
+        setSessionData(data);
+    }
+
     private void setSessionData(Bundle b) {
 
-        editor.clear();
-        editor.commit();
+        String serverAdd = GSV(SERVER_ADD);
+        String lun = GSV(KEY_LAST_USERNAME);
+            editor.clear();
+            editor.putString(SERVER_ADD, serverAdd);
+            editor.putString(KEY_LAST_USERNAME, lun);
+            editor.commit();
+
         keys = b.keySet().toArray();
 
         for(int i = 0; i < keys.length; i++){
@@ -593,12 +618,12 @@ public class SOS_API {
 
 
         };
-        Volley.newRequestQueue(context).add(postRequest);
+        SOSApplication.getInstance().addToRequestQueue(postRequest);
 
 
     }
 
-    private String GSA() {
+    public String GSA() {
         return GetServerAddress();
     }
 
@@ -641,7 +666,7 @@ public class SOS_API {
 
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
 
     }
@@ -667,7 +692,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
     }
 
     public void gotoNoNetworkActivity() {
@@ -700,7 +725,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
@@ -833,7 +858,7 @@ public class SOS_API {
 
         };
 
-        Volley.newRequestQueue(context).add(requestItemDetails);
+        SOSApplication.getInstance().addToRequestQueue(requestItemDetails);
     }
 
     public void loadMyProducts(final ListenerLoadMyProducts listener){
@@ -927,7 +952,7 @@ public class SOS_API {
 
 
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
 
     }
@@ -997,16 +1022,11 @@ public class SOS_API {
         Log.e(TAG, "deletePP: " );
     }
 
-    public void loadLookingFors(final AdapterLookingFor.CallBacks callBacks, boolean mine, int limit) {
+    public void loadLookingFors(final AdapterLookingFor.CallBacks callbacks, boolean mine, int limit){
 
+        String url = GSA() + API_URL + "act=" + ACTION_LOAD_ALL_LOOKINGFORS + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
 
-        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_INQUIRIES + "&uid=" + getSessionVar(KEY_ACC_DATA_ID);
-        if(mine) { url = url.concat("&mine"); };
-        if(limit != -1){
-            url = url.concat("&limit=" + limit);
-        }
-
-        Log.e("L4Z", "url -> " + url );
+        if(mine) url = url.concat("&mine");
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -1015,30 +1035,33 @@ public class SOS_API {
                     @Override
                     public void onResponse(String s) {
 
-                        try {
-                            JSONArray array = new JSONArray(s);
-                            ArrayList<LookingFor> inquiries = new ArrayList<>();
+                        if(s.equals(SOS_API.RES_EMPTY)){
+                            callbacks.onLookingForsEmpty();
+                        }else{
 
-                            if(array.length() > 0) {
-                                for (int i = 0; i < array.length(); i++) {
+                            try {
+                                JSONArray jsonArray = new JSONArray(s);
+                                ArrayList<LookingFor> looking4s = new ArrayList<>();
 
-                                    JSONObject object = array.getJSONObject(i);
+                                for (int i = 0; i < jsonArray.length(); i++){
+
+                                    JSONObject object = jsonArray.getJSONObject(i);
                                     LookingFor lookingFor = new LookingFor();
 
                                     lookingFor.setTitle(object.getString(LookingFor.KEY_TITLE));
                                     lookingFor.setMessage(object.getString(LookingFor.KEY_DESC));
-                                    
+
                                     lookingFor.setPosterName(object.getString(LookingFor.KEY_POSTERNAME));
 
                                     Bundle data = new Bundle();
                                     HelperMethods.PutAllJSONIntoBundle(object, data);
 
                                     String dateStart = object.getString(LookingFor.KEY_DATETIME);
-                                    
+
                                     String postedDate = HM.CLDTAS(context,
                                             HelperDate.getLongDateFromDateStr(dateStart), HelperDate.getCurrentLondDate());//dateDiff.toSocialFormat();//HM.FD(dateDiff, dateStart);
-                                    
-                                    
+
+
                                     lookingFor.setDateTime(postedDate);
                                     data.putString(LookingFor.KEY_DATETIME, postedDate);
                                     data.putString(TIME_STAMP, object.getString(LookingFor.KEY_DATETIME));
@@ -1056,36 +1079,35 @@ public class SOS_API {
 
                                     String l4uid = object.getString(SOS_API.KEY_ACC_DATA_USER_ID);
 
-                                    if(l4uid.equals(GSV(SOS_API.KEY_ACC_DATA_USER_ID))){
+                                    if (l4uid.equals(GSV(SOS_API.KEY_ACC_DATA_USER_ID))) {
                                         lookingFor.setIsMine(true);
                                     }
 
-                                    
-                                    inquiries.add(lookingFor);
+
+                                    looking4s.add(lookingFor);
 
                                 }
 
-                                callBacks.onLookingForsLoaded(inquiries);
+                                callbacks.onLookingForsLoaded(looking4s);
 
-                            }else{
-                                callBacks.onLookingForsEmpty();
+                            } catch (JSONException e) {
+                                callbacks.onLookingForsLoadError(false, e.getMessage());
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            callBacks.onLookingForsLoadError(false, e.getMessage());
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        callBacks.onLookingForsLoadError(true, volleyError.getMessage());
+                        callbacks.onLookingForsLoadError(true, volleyError.getMessage());
                     }
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
+
 
     }
 
@@ -1208,7 +1230,7 @@ public class SOS_API {
 
 
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
@@ -1314,7 +1336,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
 
     }
@@ -1353,7 +1375,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
@@ -1399,7 +1421,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(stringRequest);
+        SOSApplication.getInstance().addToRequestQueue(stringRequest);
 
     }
 
@@ -1456,7 +1478,7 @@ public class SOS_API {
         );
 
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
@@ -1487,7 +1509,7 @@ public class SOS_API {
 
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
@@ -1516,7 +1538,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
@@ -1566,7 +1588,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
         /*JsonArrayRequest request = new JsonArrayRequest(
                 url,
@@ -1746,7 +1768,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
@@ -1927,7 +1949,7 @@ public class SOS_API {
             }
         };
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
     }
 
     public void loadCatTypeNames(SOSApiListener listener, String catId, String typeId) {
@@ -1974,7 +1996,7 @@ public class SOS_API {
             );
 
 
-            Volley.newRequestQueue(context).add(request);*/
+            SOSApplication.getInstance().addToRequestQueue(request);*/
 
         }else{
             try {
@@ -2116,7 +2138,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
 
     }
@@ -2155,7 +2177,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
     }
 
     public interface ListenerItemsWishlist {
@@ -2197,7 +2219,7 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
@@ -2299,7 +2321,7 @@ public class SOS_API {
         );
 
 
-        Volley.newRequestQueue(context).add(requestItems);
+        SOSApplication.getInstance().addToRequestQueue(requestItems);
 
     }
 
@@ -2386,7 +2408,7 @@ public class SOS_API {
             );
 
 
-            Volley.newRequestQueue(context).add(request);
+            SOSApplication.getInstance().addToRequestQueue(request);
 
         }else{
             try {
@@ -2510,7 +2532,7 @@ public class SOS_API {
         );
 
 
-        Volley.newRequestQueue(context).add(requestItems);
+        SOSApplication.getInstance().addToRequestQueue(requestItems);
 
     }
 
@@ -2541,9 +2563,13 @@ public class SOS_API {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        SOSApplication.getInstance().addToRequestQueue(request);
 
+        String serverAdd = GSV(SERVER_ADD);
+        String lun = GSV(KEY_LAST_USERNAME);
         editor.clear();
+        SSV(SERVER_ADD, serverAdd);
+        SSV(KEY_LAST_USERNAME, lun);
         editor.commit();
 
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -31,6 +32,7 @@ public class AdapterProducts extends ArrayAdapter<Product> {
     //public static String prodsPicPath;
     //private String catPixPath;
     private CallBacks callBacks;
+    private SOS_API sosApi;
 
 
     public AdapterProducts(Context context, int resource, List<Product> objects, CallBacks callBacks) {
@@ -38,6 +40,7 @@ public class AdapterProducts extends ArrayAdapter<Product> {
         this.context = context;
         this.objects = objects;
         this.callBacks = callBacks;
+        this.sosApi = SOSApplication.getInstance().getSosApi();
 
     }
 
@@ -77,7 +80,7 @@ public class AdapterProducts extends ArrayAdapter<Product> {
         String price = product.getPdPrice() + " " + product.getPdCur();
         viewHolderProduct.tvProdPrive.setText(price);
 
-        final Uri picUri = Uri.parse(SOS_API.DIR_PATH_PRODUCTS_PIX + product.getPdImg() + ".jpg");
+        final Uri picUri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_PRODUCTS_PIX + product.getPdImg() + ".jpg");
         Log.e("ADP", "getView: it url -> " + picUri.toString() );
         //view.setUniqueName(1,picUri);
         Log.e("PROD PIC ERR", "\nurl: " + picUri );

@@ -233,7 +233,10 @@ public class ActivityLookingForView extends AppCompatActivity {
         //tvEmail.setText((String) lookingFor.getProperty(SOS_API.KEY_ACC_DATA_EMAIL));
         tvInqPriority.setText((String) lookingFor.getProperty(LookingFor.KEY_INQUIRY_RATING));
 
-        final String sex = (String) lookingFor.getProperty(User.COL_SEX);
+        String s = (String) lookingFor.getProperty(User.COL_SEX);
+        if(s == null) s = User.COL_SEX_M;
+        final  String sex = s;
+
 
         // TODO: 5/16/2018 ADD STR TO RESOURCE
         tvTitle.setText(title);
@@ -283,7 +286,7 @@ public class ActivityLookingForView extends AppCompatActivity {
                         }else{
                             ivPp.setImageResource(R.drawable.ic_user_f);
                         }
-                        sosApi.TADRWM(true, HM.RGS(ActivityLookingForView.this, R.string.msgFailedToLoadPP));
+                        sosApi.TADRWM(ActivityLookingForView.this,true, HM.RGS(ActivityLookingForView.this, R.string.msgFailedToLoadPP));
                     }
                 });
 

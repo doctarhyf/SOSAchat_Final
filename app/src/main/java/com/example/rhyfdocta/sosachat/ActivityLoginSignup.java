@@ -1,5 +1,6 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -27,6 +29,8 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SOSApiListener {
 
@@ -40,6 +44,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
     SOS_API sosApi;
     ScrollView svRoot;
     ImageView ivLauncher;
+    private int dbgCount = 0;
 
 
     @Override
@@ -57,6 +62,13 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
 
         sosApi = new SOS_API(this);
+
+        String serverAdd = sosApi.GSV(SOS_API.SERVER_ADD);
+
+        if(serverAdd.equals("") || serverAdd.equals(SOS_API.KEY_SESSION_DATA_EMPTY)){
+            sosApi.SSV(SOS_API.SERVER_ADD, "jmtinvestment.com");
+        }
+
 
         cbTermsAndCond = findViewById(R.id.cbSignupAgreeTerms);
 
@@ -162,6 +174,80 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
     private AlertDialog alertDialogProcessing;
 
+    public void showDebug(View view) {
+
+        if(dbgCount >= 5){
+            dbgCount = 0;
+            showDebugDialog();
+        }
+
+        dbgCount ++;
+    }
+
+
+
+    private void showDebugDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.dialog_debug, null);
+
+        final EditText input = view.findViewById(R.id.dbgEtNewHost);
+        final TextView tv = view.findViewById(R.id.tvSSV);
+
+
+        String curIP = sosApi.GSV(SOS_API.SERVER_ADD);
+        builder.setTitle(curIP);
+        input.setText(curIP);
+
+
+
+        builder.setView(view);
+
+        DEBUG_DG_LOAD_SESSION_DATA(tv);
+
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String nip = input.getText().toString();
+                Log.e(TAG, "NEW IP: -> " + nip );
+                sosApi.SSV(SOS_API.SERVER_ADD, nip);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.show();
+
+    }
+
+    private void DEBUG_DG_LOAD_SESSION_DATA(TextView tv) {
+
+
+        tv.setText("");
+        tv.setText("SERVER ADD : " + sosApi.GSV(SOS_API.SERVER_ADD) + "\n");
+
+        Map<String,?> prefs = sosApi.getPreferences().getAll();
+        Set<String> keys = prefs.keySet();
+
+
+
+        for(String key : keys){
+
+            String str = key + " : " + prefs.get(key) + "\n";
+            tv.append(str);
+        }
+
+
+    }
+
     public void login(View view) {
 
         Boolean isOnline = SOS_API.isOnline(this);
@@ -179,12 +265,12 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
             }else{
                 alertDialogProcessing.hide();
                 String msg = HM.RGS(this,R.string.msgInvalideEmailOrPhone);
-                sosApi.toggleAlertDialogResponseWithMessage(true, msg);
+                sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true, msg);
                 //Toast.makeText(this, , Toast.LENGTH_SHORT).show();
             }
         }else{
             alertDialogProcessing.hide();
-            sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this, R.string.msgErrorInternetConnection));
+            sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true, HM.RGS(this, R.string.msgErrorInternetConnection));
         }
 
 
@@ -205,7 +291,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
         if(!cbTermsAndCond.isChecked()){
 
-            sosApi.TADRWM(true, HM.RGS(this, R.string.msgNeedToAgreeTerms));
+            sosApi.TADRWM(ActivityLoginSignup.this,true, HM.RGS(this, R.string.msgNeedToAgreeTerms));
 
             return;
         }
@@ -235,7 +321,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
             sosApi.signup(this, data);
         }else{
 
-            sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this,R.string.msgInvalideEmailOrPhone ));
+            sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true, HM.RGS(this,R.string.msgInvalideEmailOrPhone ));
         }
 
 
@@ -280,7 +366,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
         } else {
             alertDialogProcessing.hide();
            String msg =  HM.RGS(this, R.string.msgLoginFailed);
-           sosApi.toggleAlertDialogResponseWithMessage(true,msg);
+           sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
         }
 
     }
@@ -308,7 +394,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
         }else{
             String msg = HM.RGS(this, R.string.msgFailedSignup);
-            sosApi.toggleAlertDialogResponseWithMessage(true,msg);
+            sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
         }
 
 

@@ -408,5 +408,11 @@
     <string name="strContactL4">CONTACT</string>
     <string name="titleSearch">Search</string>
     <string name="dgTitleDBG">DEBUG PANEL</string>
+    <string name="msgErrorLoadingLookingFors">Error loading lookingfors!</string>
+    <string name="strDelete">DELETE</string>
+    <string name="strEdit">EDIT</string>
+    <string name="strPublish">PUBLISH</string>
+    <string name="strCancel">CANCEL</string>
+    <string name="strOK">OK</string>
 
 </resources>

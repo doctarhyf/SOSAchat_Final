@@ -376,7 +376,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         String sellerMobile = bundle.getString(SOS_API.KEY_ACC_DATA_MOBILE);
 
 
-        String remoteDirProductPix = SOS_API.DIR_PATH_PRODUCTS_PIX;
+        String remoteDirProductPix = sosApi.GSA() + SOS_API.DIR_PATH_PRODUCTS_PIX;
 
 
         String fileNameProductPix = bundle.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
@@ -507,12 +507,12 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
             @Override
             public void onItemAddedError(String msg) {
-                sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(ActivityViewItemDetails.this, R.string.msgErrorAddingWishlistItem));
+                sosApi.toggleAlertDialogResponseWithMessage(ActivityViewItemDetails.this,true, HM.RGS(ActivityViewItemDetails.this, R.string.msgErrorAddingWishlistItem));
             }
 
             @Override
             public void onNetworkError(String msg) {
-                sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(ActivityViewItemDetails.this, R.string.msgErrorInternetConnection));
+                sosApi.toggleAlertDialogResponseWithMessage(ActivityViewItemDetails.this,true, HM.RGS(ActivityViewItemDetails.this, R.string.msgErrorInternetConnection));
 
             }
 

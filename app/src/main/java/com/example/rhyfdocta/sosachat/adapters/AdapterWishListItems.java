@@ -17,6 +17,7 @@ import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
 import com.example.rhyfdocta.sosachat.R;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -33,6 +34,7 @@ public class AdapterWishListItems extends ArrayAdapter<ProductWishList> {
     Context context;
     List<ProductWishList> objects;
     private CallBacks callBacks;
+    private SOS_API sosApi;
 
 
     public AdapterWishListItems(Context context, int resource, List<ProductWishList> objects, CallBacks callBacks) {
@@ -40,6 +42,7 @@ public class AdapterWishListItems extends ArrayAdapter<ProductWishList> {
         this.context = context;
         this.objects = objects;
         this.callBacks = callBacks;
+        this.sosApi = SOSApplication.getInstance().getSosApi();
     }
 
     static class ViewHolderWishListItem {
@@ -90,7 +93,7 @@ public class AdapterWishListItems extends ArrayAdapter<ProductWishList> {
         viewHolderWishListItem.tvPriceNQual.setText(priceNQual);
         viewHolderWishListItem.tvDate.setText(d.getString(Product.KEY_PD_DATE_ADDED));
 
-        final Uri picUri = Uri.parse(SOS_API.DIR_PATH_CATEGORIES + "products/" + d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg");
+        final Uri picUri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg");
         Picasso.with(context).load(picUri).error(R.drawable.ic_error)
                 .placeholder(R.drawable.progress_animation).centerCrop().resize(400, 400).into(viewHolderWishListItem.iv, new Callback() {
             @Override

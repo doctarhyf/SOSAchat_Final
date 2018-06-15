@@ -354,7 +354,7 @@ public class ServerImageManager {
         //Log.e("UPD", "uploadImageFile: ..." );
 
 
-        String serverPath = SOS_API.API_URL + "act=" + SOS_API.ACTION_UPLOAD_PRODUCT_IMAGE_FILE + "&fn=" + fileNameOnServer;
+        String serverPath = sosApi.GSA() + SOS_API.API_URL + "act=" + SOS_API.ACTION_UPLOAD_PRODUCT_IMAGE_FILE + "&fn=" + fileNameOnServer;
         //final Bundle data = new Bundle(metaData);
 
         Log.e("SPATH", "uploadImageFile: -> " + serverPath );
@@ -419,6 +419,7 @@ public class ServerImageManager {
         );
 
         uploadAsyncTask.execute();
+
     }
 
     private void initTotalProgress() {

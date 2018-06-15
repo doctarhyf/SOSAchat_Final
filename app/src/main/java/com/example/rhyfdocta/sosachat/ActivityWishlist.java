@@ -147,7 +147,7 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
 
     @Override
     public void onErrorLoadWishList(String message) {
-        sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this, R.string.msgErrorInternetConnection));
+        sosApi.toggleAlertDialogResponseWithMessage(ActivityWishlist.this,true, HM.RGS(this, R.string.msgErrorInternetConnection));
 
         lvWli.setVisibility(View.GONE);
         tvEmptyWli.setText(getResources().getString(R.string.msgServerUnreachable));
@@ -208,14 +208,14 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
 
     @Override
     public void onItemRemoveError(Bundle pd) {
-        sosApi.toggleAlertDialogResponseWithMessage(true, HM.RGS(this, R.string.msgErrorAddingWishlistItem));
+        sosApi.toggleAlertDialogResponseWithMessage(ActivityWishlist.this,true, HM.RGS(this, R.string.msgErrorAddingWishlistItem));
     }
 
     @Override
     public void onItemRemoveSuccess(Bundle pd) {
         String msg = HM.RGS(this, R.string.msgItemRemoveToWishlistSuccess);
         msg = String.format(msg, pd.getString(Product.KEY_PD_NAME));
-        sosApi.toggleAlertDialogResponseWithMessage(true, msg);
+        sosApi.toggleAlertDialogResponseWithMessage(ActivityWishlist.this,true, msg);
         sosApi.loadWishListData(this);
 
 

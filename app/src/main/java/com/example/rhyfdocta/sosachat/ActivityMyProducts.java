@@ -7,12 +7,14 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -122,7 +124,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
         public void onNetworkError(String msg) {
             String netEr = HM.RGS(this, R.string.msgServerUnreachable );
             //msg = netEr + ":\n" + msg;
-            sosApi.TADRWM(true, netEr);
+            sosApi.TADRWM(ActivityMyProducts.this,true, netEr);
             progressBar.setVisibility(View.INVISIBLE);
             tvEmptyList.setText(netEr);
             tvEmptyList.setVisibility(View.VISIBLE);
@@ -131,7 +133,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
         @Override
         public void onParseJsonError(String s) {
             s = "JSON ERROR :\n" + s;
-            sosApi.TADRWM(true, s);
+            sosApi.TADRWM(ActivityMyProducts.this,true, s);
             tvEmptyList.setText(s);
             progressBar.setVisibility(View.INVISIBLE);
             tvEmptyList.setVisibility(View.VISIBLE);
@@ -315,6 +317,55 @@ public class ActivityMyProducts extends AppCompatActivity implements
     @Override
     public void onItemSoldClicked(ProductMyProducts pd, Uri picUri) {
         Toast.makeText(this, "On Item : " + pd.getPdName() + " sold!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemInfoClicked(final  ProductMyProducts pd,final Uri picUri) {
+
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.dialog_item_info, null);
+
+        TextView tvTitle = view.findViewById(R.id.tvDialogItemInfoTitle);
+        tvTitle.setText(pd.getPdName());
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this)
+
+                .setView(view)
+                .setNegativeButton(HM.RGS(this, R.string.strCancel), null);
+
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        View infoRempProd = view.findViewById(R.id.infoRemProd);
+        infoRempProd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ActivityMyProducts.this.onItemRemoveClicked(pd, picUri);
+                alertDialog.dismiss();
+            }
+        });
+
+        View infoEditProd = view.findViewById(R.id.infoEditProd);
+        infoEditProd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ActivityMyProducts.this.onItemEditClicked(pd, picUri);
+                alertDialog.dismiss();
+            }
+        });
+
+        View infoPublishProd = view.findViewById(R.id.infoPublishProd);
+        infoPublishProd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ActivityMyProducts.this.onItemSoldClicked(pd, picUri);
+                alertDialog.dismiss();
+            }
+        });
     }
 
     @Override
