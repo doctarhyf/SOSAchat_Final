@@ -414,5 +414,9 @@
     <string name="strPublish">PUBLISH</string>
     <string name="strCancel">CANCEL</string>
     <string name="strOK">OK</string>
+    <string name="strWaiting">WAITING</string>
+    <string name="strUpublished">UNPUBLISHED</string>
+    <string name="strPublished">PUBLISHED</string>
+    <string name="strDenied">DENIED</string>
 
 </resources>

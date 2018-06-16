@@ -22,4 +22,6 @@
     <color name="colTextColorHintLogSignForm">#616161</color>
     <color name="lightGray">#eee</color>
     <color name="xlightGray">#f4f9f9f9</color>
+    <color name="yellow">#c1be13</color>
+    <color name="green">#0d690d</color>
 </resources>

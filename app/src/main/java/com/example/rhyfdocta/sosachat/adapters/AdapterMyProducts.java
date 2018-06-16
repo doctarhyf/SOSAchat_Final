@@ -1,6 +1,7 @@
 package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import com.example.rhyfdocta.sosachat.R;
 import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,7 +57,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
     static class ViewHolderMyProduct {
 
-        TextView tvName, tvPriceNQual, tvDate, tvItemQual, tvItemPrice;
+        TextView tvName, tvPriceNQual, tvDate, tvItemQual, tvItemPrice, tvStatUnpublished, tvStatWaiting, tvStatPublished, tvStatDenied;
         ImageView ivRmPd, ivEditPd, ivSoldMyPd, ivInfo;
 
 
@@ -66,8 +68,12 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
+        final ProductMyProducts pd = objects.get(position);
+        Bundle d = pd.getDataBundle();
         View view = convertView;
         final ViewHolderMyProduct viewHolderMyProduct;
+
+        String stat = d.getString(Product.KEY_PD_STAT);
 
         if (view == null) {
 
@@ -83,6 +89,20 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             viewHolderMyProduct.ivSoldMyPd = view.findViewById(R.id.ivSoldMyPd);
             viewHolderMyProduct.tvItemQual = view.findViewById(R.id.tvItemQual);
             viewHolderMyProduct.tvItemPrice = view.findViewById(R.id.tvItemPrice);
+            viewHolderMyProduct.tvStatUnpublished = view.findViewById(R.id.tvProdStatUnpublished);
+            viewHolderMyProduct.tvStatWaiting = view.findViewById(R.id.tvProdStatWaiting);
+            viewHolderMyProduct.tvStatPublished = view.findViewById(R.id.tvProdStatPublished);
+            viewHolderMyProduct.tvStatDenied = view.findViewById(R.id.tvProdStatDenied);
+
+            ArrayList<View> labels = new ArrayList<>(4);
+            labels.add(0, viewHolderMyProduct.tvStatUnpublished);
+            labels.add(1, viewHolderMyProduct.tvStatWaiting);
+
+            labels.add(2, viewHolderMyProduct.tvStatPublished);
+            labels.add(3, viewHolderMyProduct.tvStatDenied);
+            togglePDStatLabels(stat, labels);
+
+
             view.setTag(viewHolderMyProduct);
 
 
@@ -93,7 +113,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
 
 
-        final ProductMyProducts pd = objects.get(position);
+
 
 
         //String[] currecnies = HelperMethods.RES_GET_SA(context, R.array.currencies);
@@ -112,13 +132,13 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             priceNQual = pd.getPdPrice() + " " + pd.getPdCur() + " / " + quality;
         }
 
-        Bundle d = pd.getDataBundle();
+
 
         viewHolderMyProduct.tvName.setText(pd.getPdName());
         //viewHolderMyProduct.tvPriceNQual.setText(priceNQual);
 
         viewHolderMyProduct.tvItemQual.setText(pd.getPdQual());
-        viewHolderMyProduct.tvItemPrice.setText(pd.getPdPrice());
+        viewHolderMyProduct.tvItemPrice.setText(d.getString(Product.KEY_PD_PRICE) + " " + d.getString(Product.KEY_PD_CUR));
 
 
         viewHolderMyProduct.tvDate.setText(d.getString(Product.KEY_PD_DATE_ADDED));
@@ -260,6 +280,19 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
         return view;
 
+
+    }
+
+    private void togglePDStatLabels(String stat, ArrayList<View> labels) {
+
+        int stati = Integer.parseInt(stat);
+
+        for(int i = 0; i < 4; i ++){
+            labels.get(i).setVisibility(View.GONE);
+
+        }
+
+        labels.get(stati).setVisibility(View.VISIBLE);
 
     }
 

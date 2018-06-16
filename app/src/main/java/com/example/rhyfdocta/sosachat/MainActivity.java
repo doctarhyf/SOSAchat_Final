@@ -639,8 +639,8 @@ AdapterLookingFor.CallBacks{
 
         @Override
         public void onRecentItemsEmpty() {
-            //llPbLoadingRecentItems.setVisibility(View.GONE);
-            toggleNoConnGUI(false);
+            llPbLoadingRecentItems.setVisibility(View.GONE);
+            //toggleNoConnGUI(false);
             //Toast.makeText(MainActivity.this, "onRecentItemsEmpty", Toast.LENGTH_SHORT).show();
             String msg = HM.RGS(MainActivity.this, R.string.dgMsgNoRecentItemsPosted) ;
             String btnExposeItem = HM.RGS(MainActivity.this, R.string.btnExposeItem);

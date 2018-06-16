@@ -13,6 +13,8 @@ public class Product {
     public static final String KEY_PD_DATE_ADDED = "pdDateAdded";
     public static final String KEY_PD_DATE_SOLD = "pdDateSold";
     public static final String KEY_PD_UNIQUE_ID = "un";
+    public static final String KEY_PD_STAT = "pdStat";
+    public static final int PD_STAT_UNPUBLISHED = 0;
 
     public String getPdName() {
         return pdName;

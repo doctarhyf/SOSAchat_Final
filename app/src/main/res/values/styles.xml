@@ -326,4 +326,13 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
+    <style name="prodStat">
+        <item name="android:padding">@dimen/paddingHalf</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:background">@color/yellow</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>
