@@ -4,17 +4,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.adapters.AdapterMyProducts;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import org.json.JSONArray;
 
@@ -37,7 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityMyProducts extends AppCompatActivity implements
-    AdapterMyProducts.CallBacks, SOS_API.SOSApiListener, SOS_API.ListenerLoadMyProducts
+    AdapterMyProducts.CallBacks, SOS_API.SOSApiListener, SOS_API.ListenerLoadMyProducts,
+        SearchView.OnQueryTextListener
 {
 
 
@@ -53,11 +56,15 @@ public class ActivityMyProducts extends AppCompatActivity implements
     boolean newItemPosted = false;
     SOS_API sosApi;
     String itemUniqueName;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_products);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         itemUniqueName = intent.getStringExtra(SOS_API.KEY_ITEM_UNIQUE_NAME);
@@ -77,7 +84,11 @@ public class ActivityMyProducts extends AppCompatActivity implements
         queue = Volley.newRequestQueue(this);
         lvMyProducts = findViewById(R.id.lvMyProducts);
         tvEmptyList = findViewById(R.id.tvEmptyList);
-        sosApi = new SOS_API(this);
+        sosApi = SOSApplication.getInstance().getSosApi();//new SOS_API(this);
+
+        adapterMyProducts = new AdapterMyProducts(this, R.layout.list_item_my_products, products, this);
+        lvMyProducts.setAdapter(adapterMyProducts);
+
 
         loadMyProductsData();
     }
@@ -154,13 +165,18 @@ public class ActivityMyProducts extends AppCompatActivity implements
     private void loadItems(List<ProductMyProducts> products) {
 
         //Log.e(TAG, "loadItems: " );
-        this.products = products;
+
+
+
+        this.products.clear();
+
+        this.products.addAll(products);
+
         getSupportActionBar().setSubtitle(products.size() + " item(s).");
 
 
 
-        adapterMyProducts = new AdapterMyProducts(this, R.layout.list_item_my_products, products, this);
-        lvMyProducts.setAdapter(adapterMyProducts);
+        adapterMyProducts.notifyDataSetChanged();
 
 
         tvEmptyList.setVisibility(View.GONE);
@@ -176,6 +192,9 @@ public class ActivityMyProducts extends AppCompatActivity implements
             newItemPosted = false;
         }
 
+        if(products.size() == 0 ){
+            onMyProductsEmpty();
+        }
 
 
     }
@@ -187,6 +206,16 @@ public class ActivityMyProducts extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_my_products, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        /*if(!q.equals("")) {
+            searchView.setIconified(false);
+            onQueryTextChange(q);
+        }*/
+
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -328,6 +357,10 @@ public class ActivityMyProducts extends AppCompatActivity implements
         TextView tvTitle = view.findViewById(R.id.tvDialogItemInfoTitle);
         tvTitle.setText(pd.getPdName());
 
+        //View viewPublish = view.findViewById(R.id.)
+
+
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this)
 
                 .setView(view)
@@ -366,6 +399,16 @@ public class ActivityMyProducts extends AppCompatActivity implements
                 alertDialog.dismiss();
             }
         });
+
+        String stat = pd.getDataBundle().getString(Product.KEY_PD_STAT);
+        int stati = Integer.parseInt(stat);
+
+        if(stati == Product.PD_STAT_PUBLISHED || stati == Product.PD_STAT_DENIED || stati == Product.PD_STAT_WAITING){
+            infoPublishProd.setVisibility(View.GONE);
+            infoEditProd.setVisibility(View.GONE);
+        }
+
+
     }
 
     @Override
@@ -489,7 +532,9 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
         if(b.getString(SOS_API.JSON_KEY_RESULT).equals(SOS_API.JSON_RESULT_SUCCESS)){
             // TODO: 12/4/17 MAKE LAZY DELET, AVOID SERVER RELOAD
-            loadMyProductsData();
+            //loadMyProductsData();
+            adapterMyProducts.removeProductFromAdapter(b.getInt(Product.KEY_PD_ADAPTER_POSITION));
+            //adapterMyProducts.notifyDataSetChanged();
             //Log.e(TAG, "onRemoveProductResult: SHUD CALL load again. data -> " + b.toString() );
             Toast.makeText(ActivityMyProducts.this, HM.getStringResource(ActivityMyProducts.this, R.string.msgProductRemoved), Toast.LENGTH_SHORT).show();
         }else{
@@ -552,5 +597,33 @@ public class ActivityMyProducts extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         loadMyProductsData();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        filterAdapter(query);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        filterAdapter(newText);
+        return true;
+    }
+
+    private void filterAdapter(String newText) {
+        newText = newText.toLowerCase();
+        ArrayList<ProductMyProducts> newList = new ArrayList<>();
+
+        for(ProductMyProducts product : products){
+            String pdTitle = product.getPdName().toLowerCase();
+            String pdDesc = product.getPdDesc().toLowerCase();
+
+            if(pdTitle.contains(newText) || pdDesc.contains(newText)){
+                newList.add(product);
+            }
+        }
+
+        adapterMyProducts.setFilter(newList);
     }
 }

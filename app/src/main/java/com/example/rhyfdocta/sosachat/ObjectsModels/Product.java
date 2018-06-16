@@ -15,6 +15,10 @@ public class Product {
     public static final String KEY_PD_UNIQUE_ID = "un";
     public static final String KEY_PD_STAT = "pdStat";
     public static final int PD_STAT_UNPUBLISHED = 0;
+    public static final int PD_STAT_WAITING = 1;
+    public static final int PD_STAT_PUBLISHED = 2;
+    public static final int PD_STAT_DENIED = 3;
+    public static final String KEY_PD_ADAPTER_POSITION = "adpPosition";
 
     public String getPdName() {
         return pdName;
@@ -75,7 +79,7 @@ public class Product {
         this.data = data;
     }
 
-    private Bundle data;
+    private Bundle data =  new Bundle( );
 
     public String getPdUniqueName() {
         return pdUniqueName;

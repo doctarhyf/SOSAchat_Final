@@ -74,6 +74,7 @@
             android:parentActivityName=".ActivityMyAccount" />
         <activity
             android:name=".ActivityMyProducts"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ActivityMyAccount" />
         <activity
             android:name=".ActivityMessages"

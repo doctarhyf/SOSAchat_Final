@@ -51,6 +51,7 @@ import com.example.rhyfdocta.sosachat.ServerImageManagement.ServerImageManager;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -134,7 +135,7 @@ public class ActivityPostItem extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_item);
-        sosApi = new SOS_API(this);
+        sosApi = SOSApplication.getInstance().getSosApi();//new SOS_API(this);
 
 
         Intent intent = getIntent();
@@ -189,7 +190,7 @@ public class ActivityPostItem extends AppCompatActivity implements
     private void setupPictureImageManager() {
         int[] ids = new int[]{ivMainItemPic.getId(), ivPic1.getId(), ivPic2.getId(), ivPic3.getId()};
         String[] postfixes = new String[]{SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN,SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC1,SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC2, SOS_API.KEY_NEW_ITEM_IMG_TYPE_PIC3};
-        String PRODUCTS_IMAGES_SERVER_ROOT_PATH = SOS_API.ROOT_URL + SOS_API.DIR_NAME_PIX_ROOT + "/" + SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS+ "/";
+        String PRODUCTS_IMAGES_SERVER_ROOT_PATH = sosApi.GSA() + SOS_API.ROOT_URL + SOS_API.DIR_NAME_PIX_ROOT + "/" + SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS+ "/";
         serverImageManager = new ServerImageManager(this, ids, postfixes,4, PRODUCTS_IMAGES_SERVER_ROOT_PATH);
         if(itemModeEditing) serverImageManager.setUploadToken(pdUniqueName);
 

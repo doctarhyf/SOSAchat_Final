@@ -215,7 +215,7 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
     public void onItemRemoveSuccess(Bundle pd) {
         String msg = HM.RGS(this, R.string.msgItemRemoveToWishlistSuccess);
         msg = String.format(msg, pd.getString(Product.KEY_PD_NAME));
-        sosApi.toggleAlertDialogResponseWithMessage(ActivityWishlist.this,true, msg);
+        sosApi.toggleAlertDialogResponseWithMessage(ActivityWishlist.this, true, msg);
         sosApi.loadWishListData(this);
 
 

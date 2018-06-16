@@ -1437,11 +1437,11 @@ public class SOS_API {
         return getSOSAchatItemPixCameraPath();
     }
 
-    public void removeProduct(final SOSApiListener listener, ProductWishList pd) {
+    public void removeProduct(final SOSApiListener listener, final ProductWishList pd) {
 
         String myid = getSessionVar(KEY_ACC_DATA_USER_ID);
 
-        String uniqueName = pd.getPdUniqueNameFromIMG();
+        final String uniqueName = pd.getPdUniqueNameFromIMG();
         String url =GSA() + API_URL + "act=" + ACTION_REMOVE_PRODUCT + "&unq=" + uniqueName + "&myid=" + myid ;
 
        //Log.e(TAG, "removeProduct: url -> " + url );
@@ -1455,6 +1455,8 @@ public class SOS_API {
                     public void onResponse(String s) {
 
                         Bundle b = new Bundle();
+                        b.putInt(Product.KEY_PD_ADAPTER_POSITION, pd.getData().getInt(Product.KEY_PD_ADAPTER_POSITION));
+                        b.putString(Product.KEY_PD_UNIQUE_NAME, uniqueName);
                         if(s.equals(JSON_RESULT_SUCCESS)) {
 
                             b.putString(JSON_KEY_RESULT, JSON_RESULT_SUCCESS);
@@ -2236,7 +2238,7 @@ public class SOS_API {
 
 
         String url =GSA() + API_URL + "act=" + ACTTION_LOAD_WISH_LIST + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
-        //Log.e(TAG, "wishlist: url -> " + url );
+        Log.e(TAG, "wishlist: url -> " + url );
 
         StringRequest requestItems = new StringRequest(
                 url,

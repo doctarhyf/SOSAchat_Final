@@ -488,6 +488,9 @@ public class ServerImageManager {
             }else{
 
                 final Uri picUri = Uri.parse(si.getRemotePath());
+
+                Log.e("RPATH", "loadImagesForEdit: -> " + si.getRemotePath() );
+
                 Glide.with(context)
                         .load(picUri)
                         .asBitmap()

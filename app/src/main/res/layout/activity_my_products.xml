@@ -9,7 +9,9 @@
     tools:context="com.example.rhyfdocta.sosachat.ActivityWishlist">
 
 
-
+    <include
+        layout="@layout/toolbar"
+        />
 
     <ListView
         android:visibility="gone"

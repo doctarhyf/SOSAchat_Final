@@ -55,6 +55,19 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
         this.sosApi = SOSApplication.getInstance().getSosApi();
     }
 
+    public void removeProductFromAdapter(int position) {
+        objects.remove(position);
+        notifyDataSetChanged();
+    }
+
+
+
+    public void setFilter(ArrayList<ProductMyProducts> newList) {
+        objects = new ArrayList<>();
+        objects.addAll(newList);
+        notifyDataSetChanged();
+    }
+
     static class ViewHolderMyProduct {
 
         TextView tvName, tvPriceNQual, tvDate, tvItemQual, tvItemPrice, tvStatUnpublished, tvStatWaiting, tvStatPublished, tvStatDenied;
@@ -63,13 +76,18 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
     }
 
-
+    @Override
+    public int getCount() {
+        return objects.size();
+    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         final ProductMyProducts pd = objects.get(position);
+
         Bundle d = pd.getDataBundle();
+        pd.getData().putInt(Product.KEY_PD_ADAPTER_POSITION, position);
         View view = convertView;
         final ViewHolderMyProduct viewHolderMyProduct;
 
