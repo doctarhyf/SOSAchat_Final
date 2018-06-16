@@ -22,6 +22,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.HomeCategoryItem;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.adapters.AdapterTypesItem;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import com.squareup.picasso.Clear;
 import com.squareup.picasso.Picasso;
 
@@ -55,9 +56,9 @@ public class ActivityViewAllTypesInCat extends AppCompatActivity implements Adap
 
         tvError = findViewById(R.id.tvTypesErrorLoading);
 
-        sosApi = new SOS_API(this);
+        sosApi = SOSApplication.getInstance().getSosApi();//new SOS_API(this);
 
-        catPicPath = SOS_API.DIR_PATH_CATEGORIES;
+        catPicPath = sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES;
 
         pb = findViewById(R.id.pbAllCats);
         lv =  findViewById(R.id.mylist);
@@ -77,7 +78,7 @@ public class ActivityViewAllTypesInCat extends AppCompatActivity implements Adap
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        queue = Volley.newRequestQueue(this);
+        queue = SOSApplication.getInstance().getRequestQueue();//Volley.newRequestQueue(this);
 
 
 

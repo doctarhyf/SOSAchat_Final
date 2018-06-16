@@ -22,6 +22,7 @@ import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
 import com.example.rhyfdocta.sosachat.adapters.AdapterAllItemsInType;
 import com.example.rhyfdocta.sosachat.adapters.AdapterAllProducts;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -56,7 +57,7 @@ public class ActivityViewAllItemsInType extends AppCompatActivity implements Ada
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_items_in_category);
 
-        sosApi = new SOS_API(this);
+        sosApi = SOSApplication.getInstance().getSosApi();//new SOS_API(this);
         recyclerView = findViewById(R.id.rvItemsInType);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

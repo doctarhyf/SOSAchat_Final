@@ -2,6 +2,7 @@ package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -128,6 +129,23 @@ public class AdapterTypesItem extends ArrayAdapter<TypesItem> {
                 .skipMemoryCache(true)
                 .fitCenter()
                 .into(new SimpleTarget<Bitmap>(400,400) {
+
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        super.onLoadStarted(placeholder);
+
+                        viewHolderCatItem.iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        viewHolderCatItem.iv.setImageResource(R.drawable.progress_animation);
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+
+                        viewHolderCatItem.iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        viewHolderCatItem.iv.setImageResource(R.drawable.no_image);
+                    }
+
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
 

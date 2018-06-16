@@ -2095,7 +2095,7 @@ public class SOS_API {
 
                                     String id = type.getString(TypesItem.KEY_TYPE_ITEM_ID);
                                     String name = type.getString(TypesItem.KEY_TYPE_ITEM_NAME);
-                                    String imgPath = ROOT_URL + DIR_PATH_TYPES + type.getString(TypesItem.KEY_TYPE_ITEM_IMG_PATH);
+                                    String imgPath = GSA() + ROOT_URL + DIR_PATH_TYPES + type.getString(TypesItem.KEY_TYPE_ITEM_IMG_PATH);
 
                                     TypesItem typeItem = new TypesItem(id, name, imgPath);
 

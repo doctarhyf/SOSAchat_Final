@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:src="@drawable/salem"
+        android:src="@drawable/ic_error"
         android:layout_width="@dimen/sizeHomeLookingFor"
         android:scaleType="centerCrop"
         android:id="@+id/ivLookingFor"
