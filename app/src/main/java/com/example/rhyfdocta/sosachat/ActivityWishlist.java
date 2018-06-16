@@ -1,8 +1,14 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +36,7 @@ import java.util.List;
 public class ActivityWishlist extends AppCompatActivity implements AdapterWishListItems.CallBacks, SOS_API.ListenerOnWishlistItemsLoaded, SOS_API.ListenerItemsWishlist {
 
     private static final String TAG = "ACT WL";
+    private static final String CHANNEL_ID = "chanID";
     List<ProductWishList> products;
     AdapterWishListItems adapterWishListItems;
     ListView lvWli;
@@ -126,7 +133,10 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
         pbWli.setVisibility(View.GONE);
 
 
+
     }
+
+
 
 
 
