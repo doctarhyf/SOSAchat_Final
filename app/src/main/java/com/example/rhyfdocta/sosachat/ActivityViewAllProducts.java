@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
@@ -308,9 +307,36 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
     }
 
     @Override
-    public void onItemFavorite(ProductMyProducts pd, Uri picUri) {
+    public void onItemAddedToFavorite(final ProductMyProducts pd, Uri picUri) {
 
-        Toast.makeText(this, "Will be added to favorites", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Will be added to favorites", Toast.LENGTH_SHORT).show();
+        sosApi.addItemToWishlist(new SOS_API.ListenerItemsWishlist() {
+            @Override
+            public void onItemAddedSuccess() {
+                String msg = "The item " + pd.getPdName() + " has been added to your wishlist!";
+                sosApi.TADRWM(ActivityViewAllProducts.this, true,msg);
+            }
+
+            @Override
+            public void onItemAddedError(String msg) {
+
+            }
+
+            @Override
+            public void onNetworkError(String msg) {
+
+            }
+
+            @Override
+            public void onItemRemoveError(Bundle pd) {
+
+            }
+
+            @Override
+            public void onItemRemoveSuccess(Bundle pd) {
+
+            }
+        }, pd.getDataBundle().getString(SOS_API.KEY_ITEM_ID));
     }
 
     @Override

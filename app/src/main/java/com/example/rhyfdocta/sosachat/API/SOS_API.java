@@ -19,7 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.rhyfdocta.sosachat.ActivityNoNetwork;
 import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
@@ -1460,6 +1459,7 @@ public class SOS_API {
                         if(s.equals(JSON_RESULT_SUCCESS)) {
 
                             b.putString(JSON_KEY_RESULT, JSON_RESULT_SUCCESS);
+                            b.putInt(Product.KEY_PD_ADAPTER_POSITION, pd.getData().getInt(Product.KEY_PD_ADAPTER_POSITION));
 
                         }else{
                             b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);

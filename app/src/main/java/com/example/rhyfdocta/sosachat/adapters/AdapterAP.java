@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -200,7 +199,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
 
             @Override
             public void onClick(View v) {
-                listener.onItemFavorite(pd, picUri);
+                listener.onItemAddedToFavorite(pd, picUri);
             }
         });
 
@@ -222,7 +221,7 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
 
     public interface ListenerAllProducts {
         void onItemClicked(ProductMyProducts pd, Uri picUri);
-        void onItemFavorite(ProductMyProducts pd, Uri picUri);
+        void onItemAddedToFavorite(ProductMyProducts pd, Uri picUri);
 
 
     }

@@ -1,7 +1,6 @@
 package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -63,7 +62,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
 
     public void setFilter(ArrayList<ProductMyProducts> newList) {
-        objects = new ArrayList<>();
+        objects.clear();
         objects.addAll(newList);
         notifyDataSetChanged();
     }

@@ -185,6 +185,8 @@ public class ActivityPostItem extends AppCompatActivity implements
 
 
         //toggleImageViews(SOS_API.isOnline(this));
+
+        Log.e("XXX", "onCreatePI(),  UN : " + pdUniqueName );
     }
 
     private void setupPictureImageManager() {
@@ -689,6 +691,7 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         switch (item.getItemId()){
             case android.R.id.home:
+                resetProductUniqueID();
                 finish();
                 break;
 
@@ -838,12 +841,14 @@ public class ActivityPostItem extends AppCompatActivity implements
         }
 
 
-        prepareDataBundle();
+
 
         if(!SOS_API.isOnline(this)){
             sosApi.gotoNoNetworkActivity();
         }else if(itemModeEditing){
             sosApi.SSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID, pdUniqueName);
+            Log.e("XXX", "exposeItem(), UN -> " + pdUniqueName );
+
             uploadImageToServer();
         }
         else{
@@ -962,9 +967,23 @@ public class ActivityPostItem extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        resetProductUniqueID();
+    }
+
+    private void resetProductUniqueID() {
+
+        Log.e("XXX", "resetProductUniqueID: " );
+        sosApi.SSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID, SOS_API.KEY_SESSION_DATA_EMPTY);
+
+    }
+
     private void uploadImageToServer() {
 
-
+        prepareDataBundle();
 
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);

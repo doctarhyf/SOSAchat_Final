@@ -485,11 +485,12 @@ public class ServerImageManager {
                 //si.setEditedLocalPath();
 
                 iv.setImageDrawable(Drawable.createFromPath(si.imageCachePath()));
+                Log.e("XXX", "loadImagesForEdit: path : " + si.imageCachePath() );
             }else{
 
                 final Uri picUri = Uri.parse(si.getRemotePath());
 
-                Log.e("RPATH", "loadImagesForEdit: -> " + si.getRemotePath() );
+                Log.e("XXX", "loadImagesForEdit: -> " + si.getRemotePath() );
 
                 Glide.with(context)
                         .load(picUri)

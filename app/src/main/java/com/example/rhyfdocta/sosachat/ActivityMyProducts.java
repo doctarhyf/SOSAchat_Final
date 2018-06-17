@@ -177,6 +177,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
 
         adapterMyProducts.notifyDataSetChanged();
+        getSupportActionBar().setSubtitle(products.size() + " Item(s)");
 
 
         tvEmptyList.setVisibility(View.GONE);
@@ -531,11 +532,11 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
 
         if(b.getString(SOS_API.JSON_KEY_RESULT).equals(SOS_API.JSON_RESULT_SUCCESS)){
-            // TODO: 12/4/17 MAKE LAZY DELET, AVOID SERVER RELOAD
-            //loadMyProductsData();
-            adapterMyProducts.removeProductFromAdapter(b.getInt(Product.KEY_PD_ADAPTER_POSITION));
-            //adapterMyProducts.notifyDataSetChanged();
-            //Log.e(TAG, "onRemoveProductResult: SHUD CALL load again. data -> " + b.toString() );
+
+            //adapterMyProducts.removeProductFromAdapter(b.getInt(Product.KEY_PD_ADAPTER_POSITION));
+            //getSupportActionBar().setSubtitle(products.size() + "item(s)");
+            loadMyProductsData();
+
             Toast.makeText(ActivityMyProducts.this, HM.getStringResource(ActivityMyProducts.this, R.string.msgProductRemoved), Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(ActivityMyProducts.this, HM.getStringResource(ActivityMyProducts.this, R.string.msgProductRemovedError), Toast.LENGTH_SHORT).show();

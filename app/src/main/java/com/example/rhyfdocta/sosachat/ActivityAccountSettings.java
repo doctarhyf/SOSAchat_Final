@@ -28,6 +28,7 @@ import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
+import com.example.rhyfdocta.sosachat.debug.SOSDebug;
 
 import org.json.JSONArray;
 
@@ -92,7 +93,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
             public void onClick(View v) {
                 if(numClicks >= 5){
                     numClicks = 0;
-                    showDebugDialog();
+                    SOSDebug.showDebugDialog(ActivityAccountSettings.this);
 
                 }
                 numClicks ++;
@@ -160,6 +161,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
 
     //private TextView tvSSV;
 
+    /*
     private void showDebugDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -220,7 +222,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
         }
 
 
-    }
+    }*/
 
     private void loadAccData() {
 

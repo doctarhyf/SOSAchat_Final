@@ -25,6 +25,7 @@ import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
+import com.example.rhyfdocta.sosachat.debug.SOSDebug;
 
 import org.json.JSONArray;
 
@@ -178,7 +179,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
         if(dbgCount >= 5){
             dbgCount = 0;
-            showDebugDialog();
+            SOSDebug.showDebugDialog(this);
         }
 
         dbgCount ++;
@@ -186,6 +187,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
 
 
+    /*
     private void showDebugDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -246,7 +248,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
         }
 
 
-    }
+    }*/
 
     public void login(View view) {
 
