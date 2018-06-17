@@ -2538,7 +2538,11 @@ public class SOS_API {
 
     }
 
-    public  void logout(){
+    public interface CallbacksLogout {
+        public void onLogoutResult(final boolean logoutSuccess);
+    }
+
+    public  void logout(final CallbacksLogout callbacks){
 
 
 
@@ -2553,7 +2557,9 @@ public class SOS_API {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                       //Log.e(TAG, "onResponse: logout resp -> " + s );
+                       Log.e("XXX", "onResponse: logout resp -> " + s );
+
+                        callbacks.onLogoutResult(s.equals(TRUE));
 
                     }
                 },
@@ -2561,6 +2567,7 @@ public class SOS_API {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Log.d(TAG, "onError logout restp ->  " + volleyError.getMessage() );
+                        callbacks.onLogoutResult(false);
                     }
                 }
         );

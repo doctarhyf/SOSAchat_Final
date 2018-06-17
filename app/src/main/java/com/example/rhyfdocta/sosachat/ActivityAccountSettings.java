@@ -36,7 +36,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ActivityAccountSettings extends AppCompatActivity implements SOS_API.SOSApiListener, TextWatcher {
+public class ActivityAccountSettings extends AppCompatActivity implements SOS_API.SOSApiListener, TextWatcher,
+SOS_API.CallbacksLogout{
 
     private static final String TAG = "DBG";
     Resources res;
@@ -436,7 +437,7 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
         if (result == true) {
             String text = HelperMethods.getStringResource(this, R.string.msgAccoutDeletedSuccess);
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-            sosApi.logout();
+            sosApi.logout(ActivityAccountSettings.this);
         } else {
             String text = HelperMethods.getStringResource(this, R.string.msgAccoutDeletedFailure);
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
@@ -620,4 +621,14 @@ public class ActivityAccountSettings extends AppCompatActivity implements SOS_AP
     }
 
 
+    @Override
+    public void onLogoutResult(boolean logoutSuccess) {
+        if(logoutSuccess){
+            Intent intent = new Intent(ActivityAccountSettings.this, ActivityLoginSignup.class);
+            startActivity(intent);
+            MainActivity.FIRST_LAUNCH = true;
+        }else{
+            Toast.makeText(this, "Failed to logout, check network connection!", Toast.LENGTH_LONG).show();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -60,7 +61,9 @@ import java.util.List;
 import static com.example.rhyfdocta.sosachat.API.SOS_API.REQ_PERMISSION_SAVE_BITMAP;
 
 public class MainActivity extends AppCompatActivity implements SOS_API.SOSApiListener,
-AdapterLookingFor.CallBacks{
+AdapterLookingFor.CallBacks,
+        SOS_API.CallbacksLogout
+{
 
     public static final String TAG = "SOSAchatTAG" ;
     private static final int REQ_CODE = 1001;
@@ -98,7 +101,7 @@ AdapterLookingFor.CallBacks{
     private RecyclerView.Adapter adapterCats;
     private RecyclerView.LayoutManager layoutManagerCats;
     SOS_API sosApi;
-    private static boolean FIRST_LAUNCH = true;
+    public static boolean FIRST_LAUNCH = true;
     private RecyclerView rvRecentItems;
     private RecyclerView.Adapter adapterRecentItems;
     private RecyclerView.LayoutManager layoutManagerRecentItems;
@@ -559,6 +562,17 @@ AdapterLookingFor.CallBacks{
         dbgCount ++;
     }
 
+    @Override
+    public void onLogoutResult(boolean logoutSuccess) {
+
+        if(logoutSuccess){
+            Intent intent = new Intent(MainActivity.this, ActivityLoginSignup.class);
+            startActivity(intent);
+            FIRST_LAUNCH = true;
+        }else{
+            Toast.makeText(this, "Failed to logout, check network connection!", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     private class LoadRecentItemsListener implements SOS_API.ListenerLoadRecentItems{
@@ -751,11 +765,16 @@ AdapterLookingFor.CallBacks{
                         public void onClick(DialogInterface dialog, int which) {
                             if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
 
-                                sosApi.logout();
 
-                                Intent intent = new Intent(MainActivity.this, ActivityLoginSignup.class);
-                                startActivity(intent);
-                                FIRST_LAUNCH = true;
+                                ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+                                progressDialog.setTitle("Logging out");
+                                progressDialog.setMessage("Please wait ...");
+                                progressDialog.setCancelable(false);
+                                progressDialog.show();
+
+                                sosApi.logout(MainActivity.this);
+
+
 
                             }else{
                                 Toast.makeText(MainActivity.this, HM.RGS(MainActivity.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
