@@ -63,13 +63,18 @@ public class SOSApplication extends Application {
         return sosApi;
     }
 
-    public ProgressDialog GUPD(Context context, String title, String message){
-        return getUndefinedProgressDialog(context, title, message);
+    public ProgressDialog GUPD(boolean forceContext, Context context, String title, String message){
+        return getUndefinedProgressDialog(forceContext, context, title, message);
     }
 
-    public ProgressDialog getUndefinedProgressDialog(Context context, String title, String message){
+    public ProgressDialog getUndefinedProgressDialog(boolean forceContext, Context context, String title, String message){
+
 
         if(progressDialog == null){
+            progressDialog = new ProgressDialog(context);
+        }
+
+        if(forceContext){
             progressDialog = new ProgressDialog(context);
         }
 

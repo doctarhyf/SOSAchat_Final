@@ -107,6 +107,7 @@ public class SOS_API {
     public static final String FALSE = "false";
     public static final String SERVER_ADD = "serverAdd";
     private static final String RES_EMPTY = "resEmpty";
+    private static final String ACTION_CLEAR_WISHLIST = "clearWishlist";
 
     public static boolean POST_MARSHMALLOW = false;
 
@@ -730,6 +731,36 @@ public class SOS_API {
 
     public SharedPreferences getPreferences() {
         return preferences;
+    }
+
+
+
+    public void clearWishList(final  CallbacksWishlist callbacks) {
+
+
+        String url = GSA() + API_URL + "act=" + ACTION_CLEAR_WISHLIST + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        callbacks.onWishlistClearResult(s.equals(TRUE), null);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        callbacks.onWishlistClearResult(false, volleyError.getMessage());
+                    }
+                }
+        );
+
+        SOSApplication.GI().addToRequestQueue(request);
+
     }
 
     public interface CallbacksDelLookingFor{
@@ -2225,15 +2256,17 @@ public class SOS_API {
 
     }
 
-    public  interface ListenerOnWishlistItemsLoaded {
+    public  interface CallbacksWishlist {
          void onWishLisItemsLoaded(List<ProductWishList> wishlistItems);
 
          void onNoItemsInWishlist();
 
         void onErrorLoadWishList(String message);
+
+        void onWishlistClearResult(boolean success, String message);
     }
 
-    public void loadWishListData(final ListenerOnWishlistItemsLoaded listener) {
+    public void loadWishListData(final CallbacksWishlist callbacks) {
 
 
 
@@ -2298,17 +2331,17 @@ public class SOS_API {
 
                                 }
 
-                                listener.onWishLisItemsLoaded(prods);
+                                callbacks.onWishLisItemsLoaded(prods);
 
 
 
                             }else{
-                                listener.onNoItemsInWishlist();
+                                callbacks.onNoItemsInWishlist();
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            listener.onNoItemsInWishlist();
+                            callbacks.onNoItemsInWishlist();
                         }
 
 
@@ -2317,7 +2350,7 @@ public class SOS_API {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        listener.onErrorLoadWishList(volleyError.getMessage());
+                        callbacks.onErrorLoadWishList(volleyError.getMessage());
                     }
                 }
         );
@@ -2559,7 +2592,21 @@ public class SOS_API {
                     public void onResponse(String s) {
                        Log.e("XXX", "onResponse: logout resp -> " + s );
 
-                        callbacks.onLogoutResult(s.equals(TRUE));
+                       boolean success = s.equals(TRUE);
+
+
+                        if(success){
+                            String serverAdd = GSV(SERVER_ADD);
+                            String lun = GSV(KEY_LAST_USERNAME);
+                            String autorefresh = GSV(KEY_AUTOREFRESH_RECENT_ITEMS);
+                            editor.clear();
+                            SSV(SERVER_ADD, serverAdd);
+                            SSV(KEY_LAST_USERNAME, lun);
+                            SSV(KEY_AUTOREFRESH_RECENT_ITEMS, autorefresh);
+                            editor.commit();
+                        }
+
+                        callbacks.onLogoutResult(success);
 
                     }
                 },
@@ -2574,12 +2621,7 @@ public class SOS_API {
 
         SOSApplication.getInstance().addToRequestQueue(request);
 
-        String serverAdd = GSV(SERVER_ADD);
-        String lun = GSV(KEY_LAST_USERNAME);
-        editor.clear();
-        SSV(SERVER_ADD, serverAdd);
-        SSV(KEY_LAST_USERNAME, lun);
-        editor.commit();
+
 
     }
 

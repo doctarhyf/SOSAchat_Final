@@ -31,7 +31,10 @@ import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityWishlist extends AppCompatActivity implements AdapterWishListItems.CallBacks, SOS_API.ListenerOnWishlistItemsLoaded, SOS_API.ListenerItemsWishlist {
+public class ActivityWishlist extends AppCompatActivity implements
+        AdapterWishListItems.CallBacks,
+        SOS_API.CallbacksWishlist,
+        SOS_API.ListenerItemsWishlist {
 
     private static final String TAG = "ACT WL";
     private static final String CHANNEL_ID = "chanID";
@@ -125,7 +128,7 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
 
                                             String title = "Deleting ...";
                                             String message = "Please wait ...";
-                                            SOSApplication.GI().GUPD(ActivityWishlist.this, title, message).show();
+                                            SOSApplication.GI().GUPD(true,ActivityWishlist.this, title, message).show();
 
 
 
@@ -210,6 +213,25 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
     }
 
     @Override
+    public void onWishlistClearResult(boolean success, String message) {
+
+        if(success){
+
+            Toast.makeText(this, "Wishlist cleared successfully!", Toast.LENGTH_SHORT).show();
+
+            sosApi.loadWishListData(this);
+
+        }else{
+
+            Toast.makeText(this, "Error clearing wishlist\nError : " + message, Toast.LENGTH_SHORT).show();
+
+
+        }
+
+        SOSApplication.GI().DPD();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         Intent intent;
@@ -218,15 +240,67 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
             finish();
         }
 
-        if(item.getItemId() == R.menu.menu_wishlist){
-            emptyWishList();
+        if(item.getItemId() == R.id.menuClearWishList){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle("Clear Wishlist")
+                    .setMessage("Are you sure you wanna clear your wishlist?")
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            clearWishlist();
+                        }
+                    })
+                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+
+                    builder.show();
+
+
         }
 
         return true;
     }
 
-    private void emptyWishList() {
-        Toast.makeText(this, "Will empty wishlist", Toast.LENGTH_SHORT).show();
+    private void clearWishlist() {
+
+
+
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+        final EditText etpwd = v.findViewById(R.id.etDgPassword);
+
+        new AlertDialog.Builder(this)
+                //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                .setView(v)
+                .setPositiveButton("LOGOUT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
+
+
+                            SOSApplication.GI().getUndefinedProgressDialog(true,ActivityWishlist.this,
+                                    "Clearing wishlist ...", null).show();
+
+
+                            sosApi.clearWishList(ActivityWishlist.this);
+
+
+
+                        }else{
+                            Toast.makeText(ActivityWishlist.this, HM.RGS(ActivityWishlist.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .setCancelable(false)
+                .setNegativeButton("CANCEL", null).show();
+
+
     }
 
     @Override
@@ -277,4 +351,6 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
 
 
     }
+
+
 }

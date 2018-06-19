@@ -62,7 +62,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
 
 
     public void setFilter(ArrayList<ProductMyProducts> newList) {
-        objects.clear();
+        objects = new ArrayList<>();
         objects.addAll(newList);
         notifyDataSetChanged();
     }

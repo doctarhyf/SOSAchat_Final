@@ -99,7 +99,7 @@
     <string name="setRowTxtAccountSettings">Account Settings</string>
     <string name="menuResetExposeForm">RESET FORM</string>
     <string name="toastMsgFormReset">Form as been reset</string>
-    <string name="menuEmptyWishList">EMPTY WISHLIST</string>
+    <string name="menuClearWishList">CLEAR WISHLIST</string>
     <string name="setRowTxtMessages">Messages</string>
 
 
