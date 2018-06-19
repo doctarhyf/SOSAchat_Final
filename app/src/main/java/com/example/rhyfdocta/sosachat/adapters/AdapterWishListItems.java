@@ -1,6 +1,8 @@
 package com.example.rhyfdocta.sosachat.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
@@ -21,6 +28,7 @@ import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -57,7 +65,7 @@ public class AdapterWishListItems extends ArrayAdapter<ProductWishList> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         View view = convertView;
-        ViewHolderWishListItem viewHolderWishListItem;
+        final ViewHolderWishListItem viewHolderWishListItem;
 
         if (view == null) {
 
@@ -93,6 +101,7 @@ public class AdapterWishListItems extends ArrayAdapter<ProductWishList> {
         viewHolderWishListItem.tvPriceNQual.setText(priceNQual);
         viewHolderWishListItem.tvDate.setText(d.getString(Product.KEY_PD_DATE_ADDED));
 
+        /*
         final Uri picUri = Uri.parse(sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg");
         Picasso.with(context).load(picUri).error(R.drawable.ic_error)
                 .placeholder(R.drawable.progress_animation).centerCrop().resize(400, 400).into(viewHolderWishListItem.iv, new Callback() {
@@ -105,7 +114,69 @@ public class AdapterWishListItems extends ArrayAdapter<ProductWishList> {
             public void onError() {
                 Log.e("PICASSO AdapterTypesItem", "onError: ");
             }
-        });
+        });*/
+
+        final String pixPath = sosApi.GSA() + SOS_API.DIR_PATH_CATEGORIES + "products/" + d.getString(Product.KEY_PD_UNIQUE_NAME) + "_main.jpg";
+        Uri uri = Uri.parse(pixPath);
+
+
+        String cachePath = BitmapCacheManager.GetImageCachePath(BitmapCacheManager.PIC_CACHE_ROOT_PATH_ID_RECENT_ITEMS, pd.getPdImg());
+        if(BitmapCacheManager.FileExists(cachePath)){
+            uri = Uri.fromFile(new File(cachePath));
+
+
+            Log.e(TAG, "PIC_PATH : -> " + uri.toString() );
+
+            //Toast.makeText(context, "Loade from cache", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Log.e(TAG, "NO_CACHE -> " + uri.toString() );
+            //Toast.makeText(context, "Loade from network", Toast.LENGTH_SHORT).show();
+        }
+
+        final Uri picUri = uri;
+
+
+        Glide.with(context)
+                .load(uri)
+                .asBitmap()
+                .error(R.drawable.ic_error)
+                .placeholder(R.drawable.progress_animation)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .fitCenter()
+                .into(new SimpleTarget<Bitmap>(400,400) {
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+
+                        viewHolderWishListItem.iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        viewHolderWishListItem.iv.setImageResource(BitmapCacheManager.RES_ID_IMAGE_LOAD_ERROR);
+                        viewHolderWishListItem.iv.setEnabled(false);
+                    }
+
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        super.onLoadStarted(placeholder);
+                        viewHolderWishListItem.iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        viewHolderWishListItem.iv.setImageResource(BitmapCacheManager.RES_ID_PROGRESS_ANIMATION);
+                    }
+
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)  {
+
+
+                        //callbacks.onBitmapShouldBeSaved(resource, homeCategoryItem.getImageUrl());
+                        sosApi.getBitmapCacheManager().saveBitmapToCache(resource, pixPath, SOS_API.DIR_NAME_PIX_CACHE_PRODUCTS );
+
+                        viewHolderWishListItem.iv.setEnabled(true);
+                        viewHolderWishListItem.iv.setImageBitmap(resource);
+
+                        //callbacks.onItemClicked(homeCategoryItem);
+                    }
+                });
+
 
 
         view.setOnClickListener(new View.OnClickListener() {

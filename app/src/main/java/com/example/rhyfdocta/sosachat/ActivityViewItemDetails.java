@@ -553,12 +553,12 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
             }
 
             @Override
-            public void onItemRemoveError(Bundle pd) {
+            public void onWishlistItemRemoveError(Bundle pd) {
 
             }
 
             @Override
-            public void onItemRemoveSuccess(Bundle pd) {
+            public void onWishlistItemRemoveSuccess(Bundle pd) {
 
             }
 

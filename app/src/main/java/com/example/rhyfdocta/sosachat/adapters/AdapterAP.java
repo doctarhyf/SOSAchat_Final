@@ -124,22 +124,6 @@ public class AdapterAP extends RecyclerView.Adapter<AdapterAP.ViewHolder> {
 
         final Uri picUri = uri;
 
-        /*
-        Picasso.with(context)
-                .load(picUri)
-                .centerCrop()
-                .error(R.drawable.ic_error)
-                .placeholder(R.drawable.progress_animation).resize(400, 400).into(holder.iv, new Callback() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onError() {
-                Log.e("SOSAchat", "onError: ");
-            }
-        });*/
 
         Glide.with(context)
                 .load(uri)

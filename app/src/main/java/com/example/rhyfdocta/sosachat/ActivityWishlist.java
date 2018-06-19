@@ -1,5 +1,6 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,9 +8,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductWishList;
 import com.example.rhyfdocta.sosachat.adapters.AdapterWishListItems;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +44,15 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
     ProgressBar pbWli;
     SOS_API sosApi;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wish_list);
 
-        sosApi = new SOS_API(this);
+        sosApi = SOSApplication.getInstance().getSosApi();
+
+
 
         getSupportActionBar().setTitle(getResources().getString(R.string.menuWishList));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -82,7 +89,13 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
     @Override
     public void onItemRemoveClicked(final ProductWishList pd, Uri picUri) {
 
-        //String title = String.format(getResources().getString(R.string.titleRemoveFromWishList), pd.getPdName());
+
+
+
+
+
+        ////////////////
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.titleRemoveFromWishList, pd.getPdName()))
@@ -91,12 +104,49 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //Log.e(TAG, "removeFromWishList: " );
-                        Toast.makeText(ActivityWishlist.this, "Item Removed", Toast.LENGTH_SHORT).show();
-                        //sosApi.removeItemFromWishList(pd.getPd)
-                        Bundle d = pd.toBundle();
-                        d.putAll(pd.getData());
-                        sosApi.removeItemFromWishlist(ActivityWishlist.this, d);
+
+
+
+
+                        /////////////
+
+                        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                        View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
+                        final EditText etpwd = v.findViewById(R.id.etDgPassword);
+
+                        new AlertDialog.Builder(ActivityWishlist.this)
+                                //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
+                                .setView(v)
+                                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
+
+
+                                            String title = "Deleting ...";
+                                            String message = "Please wait ...";
+                                            SOSApplication.GI().GUPD(ActivityWishlist.this, title, message).show();
+
+
+
+
+                                            //sosApi.removeItemFromWishList(pd.getPd)
+                                            Bundle d = pd.toBundle();
+                                            d.putAll(pd.getData());
+                                            sosApi.removeItemFromWishlist(ActivityWishlist.this, d);
+
+
+
+                                        }else{
+                                            Toast.makeText(ActivityWishlist.this, HM.RGS(ActivityWishlist.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                })
+                                .setCancelable(false)
+                                .setNegativeButton("CANCEL", null).show();
+
+
+                        /////////////
 
                     }
                 })
@@ -211,16 +261,19 @@ public class ActivityWishlist extends AppCompatActivity implements AdapterWishLi
     }
 
     @Override
-    public void onItemRemoveError(Bundle pd) {
+    public void onWishlistItemRemoveError(Bundle pd) {
+        SOSApplication.GI().DPD();
         sosApi.toggleAlertDialogResponseWithMessage(ActivityWishlist.this,true, HM.RGS(this, R.string.msgErrorAddingWishlistItem));
     }
 
     @Override
-    public void onItemRemoveSuccess(Bundle pd) {
+    public void onWishlistItemRemoveSuccess(Bundle pd) {
         String msg = HM.RGS(this, R.string.msgItemRemoveToWishlistSuccess);
         msg = String.format(msg, pd.getString(Product.KEY_PD_NAME));
         sosApi.toggleAlertDialogResponseWithMessage(ActivityWishlist.this, true, msg);
         sosApi.loadWishListData(this);
+
+        SOSApplication.GI().DPD();
 
 
     }

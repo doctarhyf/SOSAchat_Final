@@ -328,12 +328,12 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
             }
 
             @Override
-            public void onItemRemoveError(Bundle pd) {
+            public void onWishlistItemRemoveError(Bundle pd) {
 
             }
 
             @Override
-            public void onItemRemoveSuccess(Bundle pd) {
+            public void onWishlistItemRemoveSuccess(Bundle pd) {
 
             }
         }, pd.getDataBundle().getString(SOS_API.KEY_ITEM_ID));

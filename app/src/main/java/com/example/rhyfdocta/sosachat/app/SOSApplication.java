@@ -1,6 +1,9 @@
 package com.example.rhyfdocta.sosachat.app;
 
 import android.app.Application;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.pm.PackageManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +21,8 @@ public class SOSApplication extends Application {
 
     private RequestQueue mRequestQueue;
 
+    private ProgressDialog progressDialog;
+
     private static SOSApplication mInstance;
 
     private SOS_API sosApi;
@@ -32,6 +37,20 @@ public class SOSApplication extends Application {
         return getInstance().getSosApi().GSA();
     }
 
+    public static synchronized SOSApplication GI(){
+        return getInstance();
+    }
+
+    public void dissmissProgressDialog(){
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    public void DPD(){
+        dissmissProgressDialog();
+    }
+
     public static synchronized SOSApplication getInstance(){
         return mInstance;
     }
@@ -43,6 +62,32 @@ public class SOSApplication extends Application {
 
         return sosApi;
     }
+
+    public ProgressDialog GUPD(Context context, String title, String message){
+        return getUndefinedProgressDialog(context, title, message);
+    }
+
+    public ProgressDialog getUndefinedProgressDialog(Context context, String title, String message){
+
+        if(progressDialog == null){
+            progressDialog = new ProgressDialog(context);
+        }
+
+        progressDialog.setCancelable(false);
+
+        progressDialog.setTitle(title);
+
+        if(message != null){
+            progressDialog.setMessage(message);
+        }
+
+
+
+        return progressDialog;
+
+    }
+
+
 
     public RequestQueue getRequestQueue(){
         if(mRequestQueue == null){

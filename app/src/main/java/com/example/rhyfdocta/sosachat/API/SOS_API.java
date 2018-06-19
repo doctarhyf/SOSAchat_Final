@@ -2164,9 +2164,9 @@ public class SOS_API {
                     public void onResponse(String s) {
 
                         if(s.equals(JSON_RESULT_FAILURE)){
-                            listener.onItemRemoveError(itemData);
+                            listener.onWishlistItemRemoveError(itemData);
                         }else{
-                            listener.onItemRemoveSuccess(itemData);
+                            listener.onWishlistItemRemoveSuccess(itemData);
                         }
 
                     }
@@ -2187,9 +2187,9 @@ public class SOS_API {
         void onItemAddedError(String msg);
         void onNetworkError(String msg);
 
-        void onItemRemoveError(Bundle pd);
+        void onWishlistItemRemoveError(Bundle pd);
 
-        void onItemRemoveSuccess(Bundle pd);
+        void onWishlistItemRemoveSuccess(Bundle pd);
     }
 
     public void addItemToWishlist(final ListenerItemsWishlist listener, String itemId) {
