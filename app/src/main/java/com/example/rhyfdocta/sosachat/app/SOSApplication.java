@@ -27,6 +27,8 @@ public class SOSApplication extends Application {
 
     private SOS_API sosApi;
 
+    private Context lastProgressDialogContext = null;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -43,6 +45,7 @@ public class SOSApplication extends Application {
 
     public void dissmissProgressDialog(){
         if(progressDialog != null) {
+            progressDialog.hide();
             progressDialog.dismiss();
         }
     }
@@ -63,20 +66,35 @@ public class SOSApplication extends Application {
         return sosApi;
     }
 
-    public ProgressDialog GUPD(boolean forceContext, Context context, String title, String message){
-        return getUndefinedProgressDialog(forceContext, context, title, message);
+    public ProgressDialog GUPD(Context context, String title, String message){
+        return getUndefinedProgressDialog(context, title, message);
     }
 
-    public ProgressDialog getUndefinedProgressDialog(boolean forceContext, Context context, String title, String message){
+    public ProgressDialog getUndefinedProgressDialog(Context context, String title, String message){
 
 
         if(progressDialog == null){
-            progressDialog = new ProgressDialog(context);
+
+            if(context != null) {
+
+                if(lastProgressDialogContext == null){
+                    lastProgressDialogContext = context;
+
+                }else {
+                    if(lastProgressDialogContext != context) lastProgressDialogContext = context;
+                }
+
+
+
+            }else{
+                if(lastProgressDialogContext != null) {
+                    lastProgressDialogContext = getApplicationContext();
+                }
+            }
+
+            progressDialog = new ProgressDialog(lastProgressDialogContext);
         }
 
-        if(forceContext){
-            progressDialog = new ProgressDialog(context);
-        }
 
         progressDialog.setCancelable(false);
 

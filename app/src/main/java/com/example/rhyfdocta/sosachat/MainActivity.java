@@ -572,6 +572,8 @@ AdapterLookingFor.CallBacks,
         }else{
             Toast.makeText(this, "Failed to logout, check network connection!", Toast.LENGTH_LONG).show();
         }
+
+        SOSApplication.GI().DPD();
     }
 
 

@@ -74,11 +74,15 @@
     </android.support.v7.widget.CardView>
 
     <TextView
-        android:text="@string/lblAboutThisItem"
+        android:visibility="gone"
+        android:id="@+id/tvItemStats"
+        android:tag="@string/tagItemStats"
+        android:text="@string/lblItemStats"
         style="@style/labelPaneItemDetails" />
 
     <android.support.v7.widget.CardView
-
+        android:visibility="gone"
+        android:id="@+id/cvItemStats"
         style="@style/cardViewItemDetails">
 
     <LinearLayout style="@style/llItemDetails">
@@ -94,76 +98,144 @@
 
                 <TextView
                     style="@style/lblAboutIteem"
-                    android:text="@string/lblAboutThisItemType" />
+                    android:text="@string/lblCurStat" />
 
                 <TextView
-                    android:id="@+id/tvItemType"
-                    style="@style/txtAboutItemCont"
+                    android:id="@+id/tvItemCurStat"
+                    style="@style/prodStat"
 
-                    android:text="ITEM_TYPE" />
+                    android:text="NOT PUBLISHED" />
 
             </TableRow>
 
-            <TableRow>
-
-                <TextView
-                    android:text="@string/lblAboutThisItemCat"
-                    style="@style/lblAboutIteem" />
-
-                <TextView
-                    android:text="ITEM_CAT"
-                    android:id="@+id/tvItemCat"
-
-                    style="@style/txtAboutItemCont" />
+            <TableRow
+                android:gravity="center"
+                >
 
 
-            </TableRow>
+                <Button
 
-            <TableRow>
+                    android:onClick="onClickPublish"
+                    android:paddingLeft="@dimen/paddingNormal"
+                    android:paddingRight="@dimen/paddingNormal"
+                    android:background="@drawable/color_state_search_btn"
+                    android:textColor="@drawable/color_state_search_btn"
+                    android:layout_margin="@dimen/paddingNormal"
+                    android:id="@+id/btnPusblishItem"
+                    android:text="@string/strPublish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-                <TextView
-                    android:text="@string/lblAboutThisItemQuality"
-                    style="@style/lblAboutIteem" />
-                <TextView
-
-        android:id="@+id/tvItemQuality"
-                    android:text="Brand New"
-                    style="@style/txtAboutItemCont" />
-
-            </TableRow>
-
-            <TableRow>
-
-            <TextView
-                android:text="@string/lblAboutThisItemPostedDate"
-                style="@style/lblAboutIteem" />
-
-                <TextView
-                    android:text="5 day (s)"
-                    android:id="@+id/tvDateItemPosted"
-                    style="@style/txtAboutItemCont" />
+                    />
 
 
             </TableRow>
 
 
 
-            <TextView
-                android:id="@+id/tvItemDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="false"
-                android:textSize="16sp"
-                android:textColor="@color/black"
 
-                android:text="Some details"
-                />
+
+
 
 
 
         </TableLayout>
 
     </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:text="@string/lblAboutThisItem"
+        style="@style/labelPaneItemDetails" />
+
+    <android.support.v7.widget.CardView
+
+        style="@style/cardViewItemDetails">
+
+        <LinearLayout style="@style/llItemDetails">
+
+            <TableLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        style="@style/lblAboutIteem"
+                        android:text="@string/lblAboutThisItemType" />
+
+                    <TextView
+                        android:id="@+id/tvItemType"
+                        style="@style/txtAboutItemCont"
+
+                        android:text="ITEM_TYPE" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="@string/lblAboutThisItemCat"
+                        style="@style/lblAboutIteem" />
+
+                    <TextView
+                        android:text="ITEM_CAT"
+                        android:id="@+id/tvItemCat"
+
+                        style="@style/txtAboutItemCont" />
+
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="@string/lblAboutThisItemQuality"
+                        style="@style/lblAboutIteem" />
+                    <TextView
+
+                        android:id="@+id/tvItemQuality"
+                        android:text="Brand New"
+                        style="@style/txtAboutItemCont" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="@string/lblAboutThisItemPostedDate"
+                        style="@style/lblAboutIteem" />
+
+                    <TextView
+                        android:text="5 day (s)"
+                        android:id="@+id/tvDateItemPosted"
+                        style="@style/txtAboutItemCont" />
+
+
+                </TableRow>
+
+
+
+                <TextView
+                    android:id="@+id/tvItemDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+
+                    android:text="Some details"
+                    />
+
+
+
+            </TableLayout>
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

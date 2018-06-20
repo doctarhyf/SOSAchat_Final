@@ -420,5 +420,8 @@
     <string name="strDenied">DENIED</string>
     <string name="channel_name">my_not_channel</string>
     <string name="channel_description">my_chanel_desc</string>
+    <string name="lblItemStats">Item Status</string>
+    <string name="tagItemStats">itemStats</string>
+    <string name="lblCurStat">Current Stat :</string>
 
 </resources>

@@ -80,6 +80,8 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
         return objects.size();
     }
 
+
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -284,12 +286,12 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
             }
         });
 
-        ImageView ivSoldMyPd = view.findViewById(R.id.ivSoldMyPd);
-        ivSoldMyPd.setOnClickListener(new View.OnClickListener() {
+        ImageView ivPublish = view.findViewById(R.id.ivSoldMyPd);
+        ivPublish.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                callBacks.onItemSoldClicked(pd, picUri);
+                callBacks.onItemPublishClicked(pd, picUri);
             }
         });
 
@@ -318,7 +320,7 @@ public class AdapterMyProducts extends ArrayAdapter<ProductMyProducts> {
         void onItemRemoveClicked(ProductWishList pd, Uri picUri);
         void onItemEditClicked(ProductMyProducts pd, Uri picUri);
 
-        void onItemSoldClicked(ProductMyProducts pd, Uri picUri);
+        void onItemPublishClicked(ProductMyProducts pd, Uri picUri);
 
         void onItemInfoClicked(ProductMyProducts pd, Uri picUri);
     }

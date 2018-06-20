@@ -108,6 +108,7 @@ public class SOS_API {
     public static final String SERVER_ADD = "serverAdd";
     private static final String RES_EMPTY = "resEmpty";
     private static final String ACTION_CLEAR_WISHLIST = "clearWishlist";
+    private static final String ACTION_PUBLISH_ITEM = "publishItem";
 
     public static boolean POST_MARSHMALLOW = false;
 
@@ -391,14 +392,9 @@ public class SOS_API {
 
     public  void login(final SOSApiListener SOSApiListener, final String username, final String password) {
 
-
-
         String loginURL = GetServerAddress() + SOS_API.API_URL + "act=" + ACTION_LOGIN + "&username=" + username + "&password=" + password;
 
-       Log.e(TAG, "login:url -> " + loginURL );
-
-
-
+        Log.e(TAG, "login:url -> " + loginURL );
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -761,6 +757,56 @@ public class SOS_API {
 
         SOSApplication.GI().addToRequestQueue(request);
 
+    }
+
+    public interface CallbacksProduct {
+        void onItemPublishResult(int resultCode, String resultData);
+    }
+
+
+
+
+
+    public void publishItem(final CallbacksProduct callBacksProduct, String itemID) {
+
+        String url = GSA() + API_URL + "act=" + ACTION_PUBLISH_ITEM + "&itid=" + itemID;
+
+        Log.e(TAG, "publishItem: -> " + url );
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        try {
+
+                            Log.e(TAG, "onResponse: -> " + s );
+                            JSONObject object = new JSONObject(s);
+                            int resCode = object.getInt(NETWORK_RESULT_CODES.KEY_RESULT_CODE);
+                            String data = object.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
+
+                            callBacksProduct.onItemPublishResult(resCode, data);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, "onResponse: Exception -> " + e.getMessage() );
+
+                            callBacksProduct.onItemPublishResult(NETWORK_RESULT_CODES.RESULT_CODE_EXCEPTION, e.getMessage());
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                }
+        );
+
+        SOSApplication.GI().addToRequestQueue(request);
     }
 
     public interface CallbacksDelLookingFor{

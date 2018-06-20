@@ -76,28 +76,28 @@
         <TextView
             android:id="@+id/tvProdStatUnpublished"
             android:text="@string/strUpublished"
-            android:background="@color/gray"
+
             style="@style/prodStat" />
 
         <TextView
             android:visibility="gone"
             android:id="@+id/tvProdStatWaiting"
             android:text="@string/strWaiting"
-            style="@style/prodStat" />
+            style="@style/prodStat.waiting" />
 
         <TextView
             android:visibility="gone"
             android:id="@+id/tvProdStatPublished"
             android:text="@string/strPublished"
-            android:background="@color/green"
-            style="@style/prodStat" />
+
+            style="@style/prodStat.published" />
 
         <TextView
             android:visibility="gone"
             android:id="@+id/tvProdStatDenied"
             android:text="@string/strDenied"
-            android:background="@color/red"
-            style="@style/prodStat" />
+
+            style="@style/prodStat.denied" />
 
     </LinearLayout>
 

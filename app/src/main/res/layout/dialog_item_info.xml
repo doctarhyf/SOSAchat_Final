@@ -83,6 +83,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:clickable="true"
+        android:visibility="gone"
         android:id="@+id/infoPublishProd"
         android:layout_width="match_parent"
         android:background="@drawable/color_state_row_settings"

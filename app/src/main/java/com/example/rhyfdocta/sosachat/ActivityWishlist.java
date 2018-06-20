@@ -128,7 +128,7 @@ public class ActivityWishlist extends AppCompatActivity implements
 
                                             String title = "Deleting ...";
                                             String message = "Please wait ...";
-                                            SOSApplication.GI().GUPD(true,ActivityWishlist.this, title, message).show();
+                                            SOSApplication.GI().GUPD(ActivityWishlist.this, title, message).show();
 
 
 
@@ -284,7 +284,7 @@ public class ActivityWishlist extends AppCompatActivity implements
                         if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
 
 
-                            SOSApplication.GI().getUndefinedProgressDialog(true,ActivityWishlist.this,
+                            SOSApplication.GI().getUndefinedProgressDialog(ActivityWishlist.this,
                                     "Clearing wishlist ...", null).show();
 
 

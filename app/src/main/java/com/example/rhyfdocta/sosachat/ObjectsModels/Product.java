@@ -2,6 +2,8 @@ package com.example.rhyfdocta.sosachat.ObjectsModels;
 
 import android.os.Bundle;
 
+import com.example.rhyfdocta.sosachat.R;
+
 /**
  * Created by rhyfdocta on 11/10/17.
  */
@@ -19,6 +21,7 @@ public class Product {
     public static final int PD_STAT_PUBLISHED = 2;
     public static final int PD_STAT_DENIED = 3;
     public static final String KEY_PD_ADAPTER_POSITION = "adpPosition";
+
 
     public String getPdName() {
         return pdName;
@@ -69,6 +72,11 @@ public class Product {
     private String pdImg;
     private String pdCur;
     private String pdCat;
+
+    public static int COLOR_ID_STAT_UNPUBLISHED = R.color.gray;
+    public static int COLOR_ID_STAT_WAITING = R.color.yellow;
+    public static int COLOR_ID_STAT_PUBLISHED = R.color.green;
+    public static int COLOR_ID_STAT_DENIED = R.color.red;
 
 
     public Bundle getData() {

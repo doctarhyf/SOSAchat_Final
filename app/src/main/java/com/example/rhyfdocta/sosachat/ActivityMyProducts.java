@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rhyfdocta.sosachat.API.NETWORK_RESULT_CODES;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
@@ -154,6 +156,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
     public void  loadMyProductsData(){
 
         products.clear();
+
         sosApi.loadMyProducts(this);
         //Log.e(TAG, "loadMyProductsData: ON RESUME -->>" );
 
@@ -345,8 +348,28 @@ public class ActivityMyProducts extends AppCompatActivity implements
     }
 
     @Override
-    public void onItemSoldClicked(ProductMyProducts pd, Uri picUri) {
-        Toast.makeText(this, "On Item : " + pd.getPdName() + " sold!", Toast.LENGTH_SHORT).show();
+    public void onItemPublishClicked(ProductMyProducts pd, Uri picUri) {
+        //Toast.makeText(this, "On Item : " + pd.getPdName() + " sold!", Toast.LENGTH_SHORT).show();
+        sosApi.publishItem(new SOS_API.CallbacksProduct() {
+            @Override
+            public void onItemPublishResult(int resultCode, String resultData) {
+                //Log.e(TAG, "onItemPublishResult: code -> " + resultCode + ", resultData -> " + resultData );
+                if(resultCode == NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS){
+
+                    Toast.makeText(ActivityMyProducts.this, "Item published waiting for granting", Toast.LENGTH_SHORT).show();
+
+                    //itemDataBundle.putString(Product.KEY_PD_STAT, Product.PD_STAT_WAITING + "");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            sosApi.loadMyProducts(ActivityMyProducts.this);
+                        }
+                    }, 2000);
+                }else{
+                    Toast.makeText(ActivityMyProducts.this, "Failed to pubish item", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, pd.getDataBundle().getString(SOS_API.KEY_ITEM_ID));
     }
 
     @Override
@@ -396,7 +419,7 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
             @Override
             public void onClick(View v) {
-                ActivityMyProducts.this.onItemSoldClicked(pd, picUri);
+                ActivityMyProducts.this.onItemPublishClicked(pd, picUri);
                 alertDialog.dismiss();
             }
         });
@@ -594,10 +617,14 @@ public class ActivityMyProducts extends AppCompatActivity implements
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         loadMyProductsData();
+
+
+
     }
 
     @Override
