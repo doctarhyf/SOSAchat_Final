@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ScrollView xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.example.rhyfdocta.sosachat.ActivityLookingForView"
-    tools:layout_editor_absoluteY="81dp">
+    >
 
 
 
@@ -53,13 +50,13 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
 
         android:id="@+id/ll2"
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical">-->
 
         <TextView
             android:id="@+id/tvInqTitle"
@@ -67,87 +64,96 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/paddingNormal"
             android:text="INQ TITLE"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/sosBlue"
             android:textSize="18sp" />
 
+    <TextView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/tvInqDesc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:minLines="5"
+        android:padding="@dimen/paddingNormal"
+        android:text="@string/strSampleDesc"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/tvInqTitle" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/paddingNormal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageView
+            android:id="@+id/ivInqPp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@drawable/salem"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <TextView
-            android:padding="@dimen/paddingNormal"
-            android:id="@+id/tvInqDesc"
-            android:layout_width="match_parent"
+            android:id="@+id/tvL4PosterName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Docta Rhyf"
+            android:textColor="@color/sosBlue"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/ivInqPp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+
+            android:id="@+id/tvInqPostedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="0dp"
+            android:text="2 days ago"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tvInqPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@string/strSampleDesc"
-            android:minLines="5"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:text="100%"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toEndOf="@+id/ivInqPp"
+            app:layout_constraintTop_toBottomOf="@+id/tvL4PosterName" />
 
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/paddingNormal"
-            >
-
-            <ImageView
-                android:id="@+id/ivInqPp"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:src="@drawable/salem"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/tvL4PosterName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textStyle="bold"
-                android:text="Docta Rhyf"
-                android:textColor="@color/sosBlue"
-                app:layout_constraintStart_toEndOf="@+id/ivInqPp"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-
-                android:id="@+id/tvInqPostedTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="0dp"
-                android:text="2 days ago"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/tvInqPriority"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="100%"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintStart_toEndOf="@+id/ivInqPp"
-                app:layout_constraintTop_toBottomOf="@+id/tvL4PosterName" />
-
-
-        </android.support.constraint.ConstraintLayout>
-
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 
 
 
 
 
-</LinearLayout>
 
-</ScrollView>
+
+</android.support.constraint.ConstraintLayout>
+

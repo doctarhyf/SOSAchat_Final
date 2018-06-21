@@ -759,7 +759,7 @@ AdapterLookingFor.CallBacks,
             View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
             final EditText etpwd = v.findViewById(R.id.etDgPassword);
 
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(MainActivity.this)
                     //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
                     .setView(v)
                     .setPositiveButton("LOGOUT", new DialogInterface.OnClickListener() {
