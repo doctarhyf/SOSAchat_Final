@@ -37,7 +37,7 @@
         android:layout_marginTop="8dp"
         android:gravity="top|start"
         android:hint="@string/msgInquiryDesc"
-        android:lines="5"
+
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btnPostInquiry"
+        app:layout_constraintBottom_toTopOf="@+id/btnNewLooking4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -77,18 +77,25 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnPostInquiry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:onClick="onBtnPostInq"
-        android:text="@string/btnTextPost"
+        android:id="@+id/btnNewLooking4"
+        android:onClick="onBtnNewLooking4Clicked"
+        android:text="@string/btnNewLooking4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="OnClick" />
+        tools:ignore="OnClick"
+        style="@style/btnLookingForPost" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btnUpdateLooking4"
+        android:onClick="onBtnUpdateLooking4Clicked"
+        android:text="@string/btnUpdateLooking4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="OnClick"
+        style="@style/btnLookingForPost" />
 
 
 </android.support.constraint.ConstraintLayout>

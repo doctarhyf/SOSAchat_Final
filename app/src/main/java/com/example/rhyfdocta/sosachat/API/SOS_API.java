@@ -38,6 +38,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -196,7 +198,7 @@ public class SOS_API {
     public static final String KEY_ITEM_UNIQUE_NAME = "pdUniqueName";
 
     public static final String ACTION_REMOVE_PRODUCT = "rmProd";
-    public static final String ACTION_POST_INQUIRY = "postInquiry";
+    public static final String ACTION_POST_INQUIRY = "postLooking4";
     public static final Object DIR_PATH_SAVED_ITEMS_IMAGES = "SOSAchat Products";
     public static final String KEY_ITEM_IS_MINE = "itemIsMine";
     public static final String KEY_ITEM_MODE_EDITING = "itemModeEditing";
@@ -696,9 +698,10 @@ public class SOS_API {
         context.startActivity(intent);
     }
 
-    public void deleteLookingFor(final CallbacksDelLookingFor callbacksDelLookingFor, String id) {
+    public void deleteLookingFor(final CallbacksLookingFor callbacksLookingFor, String id) {
 
         String url =GSA() + API_URL + "act=" + ACTION_DELETE_LOOKING_FOR + "&iid=" + id + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -707,16 +710,16 @@ public class SOS_API {
                     @Override
                     public void onResponse(String s) {
                         if(s.equals(TRUE)){
-                            callbacksDelLookingFor.onDeleteLookingSuccess();
+                            callbacksLookingFor.onDeleteLookingSuccess();
                         }else{
-                            callbacksDelLookingFor.onDeleteLookingForFailure(s);
+                            callbacksLookingFor.onDeleteLookingForFailure(s);
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        callbacksDelLookingFor.onDeleteLookingForFailure(volleyError.getMessage());
+                        callbacksLookingFor.onDeleteLookingForFailure(volleyError.getMessage());
                     }
                 }
         );
@@ -757,6 +760,53 @@ public class SOS_API {
 
         SOSApplication.GI().addToRequestQueue(request);
 
+    }
+
+    public void updateLooking4(final CallbacksLookingFor listener, String title, String desc, float rating, String updid) {
+
+        try {
+            title = URLEncoder.encode(title, "utf-8");
+            desc = URLEncoder.encode(desc, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.e(TAG, "updateLooking4: excetion -> " + e.getMessage() );
+        }
+
+
+        String url =GSA() + API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating;
+
+        if(!updid.equals(LookingFor.NO_ID)) url = url.concat("&updid=" + updid);
+
+        Log.e(TAG, "updateLooking4: -> " + url );
+
+        StringRequest request = new StringRequest(
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        Log.e("XXX", "updl4 -> " + s );
+                        boolean success = s.equals(TRUE);
+                        int code = success ? NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS : NETWORK_RESULT_CODES.RESULT_CODE_FAILURE;
+
+                        String message = "success";
+
+                        if(code == NETWORK_RESULT_CODES.RESULT_CODE_FAILURE) message = s;
+
+                        listener.onUpdateLookingForResult(code, message);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                        listener.onUpdateLookingForResult(NETWORK_RESULT_CODES.RESULT_CODE_NETWORK_ERROR,volleyError.getMessage());
+                    }
+                }
+
+        );
+
+        SOSApplication.getInstance().addToRequestQueue(request);
     }
 
     public interface CallbacksProduct {
@@ -809,9 +859,10 @@ public class SOS_API {
         SOSApplication.GI().addToRequestQueue(request);
     }
 
-    public interface CallbacksDelLookingFor{
+    public interface CallbacksLookingFor {
         void onDeleteLookingSuccess();
         void onDeleteLookingForFailure(String message);
+        void onUpdateLookingForResult(int code, String data);
     }
 
     public interface CallbacksUniqueID{
@@ -1104,12 +1155,17 @@ public class SOS_API {
 
         if(mine) url = url.concat("&mine");
 
+        Log.e(TAG, "loadLookingFors: -> " + url );
+
         StringRequest request = new StringRequest(
                 Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
+
+
+                        Log.e("XXX", "XXX -> " + s );
 
                         if(s.equals(SOS_API.RES_EMPTY)){
                             callbacks.onLookingForsEmpty();
@@ -1561,14 +1617,21 @@ public class SOS_API {
 
     }
 
-    public void postInquiry(final SOSApiListener listener, String title, String desc, float rating) {
+    public void postLooking4(final SOSApiListener listener, String title, String desc, float rating) {
 
-        title = Uri.encode(title);
-        desc = Uri.encode(desc);
+        try {
+            title = URLEncoder.encode(title, "utf-8");
+            desc = URLEncoder.encode(desc, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.e(TAG, "postLooking4: exception -> " + e.getMessage() );
+        }
 
-        String url =GSA() + API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating;
-        Log.e(TAG, "postInquiry: url -> " + url );
+
+        String url =GSA() + API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating + "&updid=-1";
+        Log.e(TAG, "postLooking4: url -> " + url );
         StringRequest request = new StringRequest(
+
                 url,
                 new Response.Listener<String>() {
                     @Override

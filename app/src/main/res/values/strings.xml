@@ -228,7 +228,7 @@
     <string name="msgLoadingError">Loading error, please try again later!</string>
     <string name="titleInquiryTitle">e.g : Looking for PS4</string>
     <string name="msgInquiryDesc">e.g : In good conditions, used for less than 2 years with both gamepads</string>
-    <string name="btnTextPost">POST</string>
+    <string name="btnNewLooking4">POST</string>
     <string name="titleAllCats">All Categories</string>
     <string name="priceToDiscuss">Price to discuss</string>
     <string name="txtNewItemType">ITEM TYPE</string>
@@ -423,5 +423,6 @@
     <string name="lblItemStats">Item Status</string>
     <string name="tagItemStats">itemStats</string>
     <string name="lblCurStat">Current Stat :</string>
+    <string name="btnUpdateLooking4">UPDATE</string>
 
 </resources>

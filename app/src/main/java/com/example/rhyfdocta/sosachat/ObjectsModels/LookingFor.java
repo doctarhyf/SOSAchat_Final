@@ -21,6 +21,7 @@ public class LookingFor implements Serializable {
     public static final String KEY_ID_LOOKINGFOR = "inq_id";
     public static final String KEY_EDITING = "editing";
     public static final String KEY_PRIORITY = "inq_rating";
+    public static final String NO_ID = "-1";
     private String title;
     private String message;
     private String dateTime;

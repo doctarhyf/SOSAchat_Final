@@ -37,6 +37,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
     private Switch swOnlyMyLookingfor;
     private Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +74,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
 
         if(extras!= null){
             mine = extras.getBoolean(LookingFor.KEY_IS_MINE, false);
+
         }
 
         swOnlyMyLookingfor.setChecked(mine);
@@ -87,6 +89,8 @@ public class ActivityLookingFor extends AppCompatActivity implements
         lvInquiries.setAdapter(adapterLookingFor);
 
         lvInquiries.setOnItemClickListener(this);
+
+
     }
 
     @Override

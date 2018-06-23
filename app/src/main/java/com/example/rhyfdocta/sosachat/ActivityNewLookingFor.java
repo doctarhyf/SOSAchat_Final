@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.example.rhyfdocta.sosachat.API.NETWORK_RESULT_CODES;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
@@ -29,11 +31,13 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
     private static final String TAG = "ACT_INQ";
     EditText etInqTitle, etInqDesc;
     SOS_API sosApi;
-    private Button btn;
+    private Button btnNew;
     private AlertDialog dialogProcessing;
     private Bundle data = null;
     private LookingFor lookingFor = null;
     private RatingBar rbInqPriority;
+    private boolean editing = false;
+    private Button btnUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,9 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
         setContentView(R.layout.activity_new_looking_for);
 
 
-        btn = findViewById(R.id.btnPostInquiry);
+        btnNew = findViewById(R.id.btnNewLooking4);
+        btnUpdate = findViewById(R.id.btnUpdateLooking4);
+
         sosApi = new SOS_API(this);
 
         dialogProcessing = HM.GADP(this, getResources().getString(R.string.processing), false);
@@ -58,20 +64,67 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
         data = getIntent().getExtras();
 
         if(data != null){
-            boolean editing = data.getBoolean(LookingFor.KEY_EDITING, false);
+            editing = data.getBoolean(LookingFor.KEY_EDITING, false);
 
             if(editing){
-                loadEditingData();
+                setupEditingData();
             }
         }
     }
 
-    private void loadEditingData() {
+    private void setupEditingData() {
         lookingFor = new LookingFor(data);
 
         etInqTitle.setText((String) lookingFor.getProperty(LookingFor.KEY_TITLE));
         etInqDesc.setText((String) lookingFor.getProperty(LookingFor.KEY_DESC));
         rbInqPriority.setRating(Float.parseFloat((String) lookingFor.getProperty(LookingFor.KEY_PRIORITY)));
+
+        btnUpdate.setVisibility(View.GONE);
+        btnUpdate.setVisibility(View.VISIBLE);
+
+
+
+    }
+
+    public void onBtnUpdateLooking4Clicked(View view){
+
+        String title = etInqTitle.getText().toString();
+        String desc = etInqDesc.getText().toString();
+        String updid = data.getString(LookingFor.KEY_ID_LOOKINGFOR);
+        float rating = rbInqPriority.getRating();
+
+        sosApi.updateLooking4(
+                new SOS_API.CallbacksLookingFor() {
+                    @Override
+                    public void onDeleteLookingSuccess() {
+
+                    }
+
+                    @Override
+                    public void onDeleteLookingForFailure(String message) {
+
+                    }
+
+                    @Override
+                    public void onUpdateLookingForResult(int code, String data) {
+
+                        if(NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS == code){
+
+                            Intent intent = new Intent(ActivityNewLookingFor.this, ActivityLookingFor.class);
+                            startActivity(intent);
+
+                        }else{
+                            Toast.makeText(ActivityNewLookingFor.this, "Error updating looking for!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                },
+                title,
+                desc,
+                rating,
+                updid
+
+        );
 
     }
 
@@ -89,7 +142,7 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
         return super.onOptionsItemSelected(item);
     }
 
-    public void onBtnPostInq(View view) {
+    public void onBtnNewLooking4Clicked(View view) {
 
         String title = etInqTitle.getText().toString();
         String desc = etInqDesc.getText().toString();
@@ -97,9 +150,9 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
         if(!title.equals("") && !desc.equals("")) {
             RatingBar rb = findViewById(R.id.rbInqPriority);
             float rating = rb.getRating();
-            sosApi.postInquiry(this, title, desc, rating);
-            //Button btn = (Button) view;
-            btn.setEnabled(false);
+            sosApi.postLooking4(this, title, desc, rating);
+            //Button btnNew = (Button) view;
+            btnNew.setEnabled(false);
 
            dialogProcessing.show();
 
@@ -125,7 +178,7 @@ public class ActivityNewLookingFor extends AppCompatActivity implements SOS_API.
     @Override
     public void onPostInquiryResult(String result) {
 
-        btn.setEnabled(true);
+        btnNew.setEnabled(true);
         dialogProcessing.hide();
 
         if(result.equals(SOS_API.JSON_RESULT_SUCCESS)){

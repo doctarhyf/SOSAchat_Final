@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +52,7 @@ public class ActivityLookingForView extends AppCompatActivity {
     private Button btnEditL4;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +73,9 @@ public class ActivityLookingForView extends AppCompatActivity {
             phoneNumber = data.getString(SOS_API.KEY_ACC_DATA_MOBILE);
             email = data.getString(SOS_API.KEY_ACC_DATA_EMAIL);
             mine = data.getBoolean(LookingFor.KEY_IS_MINE, false);
+
+
+
             updateGUI();
             initDialogContact();
 
@@ -326,7 +329,7 @@ public class ActivityLookingForView extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
 
-                            sosApi.deleteLookingFor(new SOS_API.CallbacksDelLookingFor() {
+                            sosApi.deleteLookingFor(new SOS_API.CallbacksLookingFor() {
                                 @Override
                                 public void onDeleteLookingSuccess() {
                                     Intent intent = new Intent(ActivityLookingForView.this, ActivityLookingFor.class);
@@ -339,6 +342,11 @@ public class ActivityLookingForView extends AppCompatActivity {
                                     String errMsg = HM.RGS(ActivityLookingForView.this, R.string.msgFailedDeleteL4);
                                     HM.GADWMAT(ActivityLookingForView.this,title,errMsg, true, true);
                                     Log.e("L4", "onDeleteLookingForFailure: " + message );
+                                }
+
+                                @Override
+                                public void onUpdateLookingForResult(int code, String data) {
+
                                 }
                             }, id);
 
