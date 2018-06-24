@@ -78,7 +78,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:minLines="5"
+
         android:padding="@dimen/paddingNormal"
         android:text="@string/strSampleDesc"
         android:textColor="@color/black"

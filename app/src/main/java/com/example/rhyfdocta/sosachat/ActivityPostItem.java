@@ -108,7 +108,8 @@ public class ActivityPostItem extends AppCompatActivity implements
     private String catToSelect = "";
     private Button btnExposeItem;
 
-    private ProgressDialog progressDialog;
+    //private ProgressDialog progressDialog;
+    private DialogUploadItem dialogUploadItem;
     /*private int totalUploadProgress = 0;
     private int progMain = 0;
     private int prog1 = 0;
@@ -161,10 +162,24 @@ public class ActivityPostItem extends AppCompatActivity implements
 
 
 
-        progressDialog = new ProgressDialog(this);
+        /*progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setMessage(HM.RGS(this, R.string.pbMsgPostingNewItem));
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(false);*/
+
+        dialogUploadItem = new DialogUploadItem(this);
+        dialogUploadItem.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(ActivityPostItem.this, "Upload cancelled", Toast.LENGTH_SHORT).show();
+                serverImageManager.cancelAllUploads();
+                btnExposeItem.setEnabled(true);
+            }
+        });
+
+        dialogUploadItem.setMessage(HM.RGS(this, R.string.pbMsgPostingNewItem));
+        dialogUploadItem.setCancelable(false);
+
 
 
 
@@ -930,7 +945,8 @@ public class ActivityPostItem extends AppCompatActivity implements
     @Override
     public void onProducImageManagerProgress(ServerImage serverImage, int progress, int totalProgress) {
         Log.e(TAG, "total : " + totalProgress + " %" );
-        progressDialog.setProgress(totalProgress);
+        //progressDialog.setProgress(totalProgress);
+        dialogUploadItem.setProgress(totalProgress);
     }
 
 
@@ -957,7 +973,8 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         //numImgUploaded = 0;
         sosApi.SSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID, SOS_API.KEY_SESSION_DATA_EMPTY);
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
+        dialogUploadItem.dismiss();
         btnExposeItem.setEnabled(false);
         toggleImageViews(false);
 
@@ -965,6 +982,11 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         sosApi.exposeItem(ActivityPostItem.this, data);
 
+    }
+
+    @Override
+    public void onProducImageTotalDataSize(double totalDataSize) {
+        dialogUploadItem.setDataSize(totalDataSize);
     }
 
     @Override
@@ -997,13 +1019,15 @@ public class ActivityPostItem extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         if(etpwd.getText().toString().equals(sosApi.GSV(SOS_API.KEY_ACC_DATA_PASSWORD))) {
 
-                            progressDialog.show();
+                            //progressDialog.show();
+                            dialogUploadItem.show();
 
                             //Message msg = new Message();
                             //progressDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", msg);
 
                             serverImageManager.setUploadToken(sosApi.GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID));
                             serverImageManager.uploadAllImagesToServer(ActivityPostItem.this, itemModeEditing);
+                            btnExposeItem.setEnabled(false);
 
                         }else{
                             Toast.makeText(ActivityPostItem.this, HM.RGS(ActivityPostItem.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();

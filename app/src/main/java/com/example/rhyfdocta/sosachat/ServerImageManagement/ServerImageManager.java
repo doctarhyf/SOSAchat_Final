@@ -53,6 +53,7 @@ public class ServerImageManager {
     private int[] imagesProgress;
     private String uploadToken = null;
     private int totalProgress = 0;
+    private double totalDataSize = 0;
     //private long totalProgress = 0;
 
 
@@ -276,6 +277,7 @@ public class ServerImageManager {
 
     public void uploadAllImagesToServer(final Callbacks callbacks, boolean editiing) {
 
+        totalDataSize = 0d;
         if(uploadToken == null) return;
 
         this.editing = editiing;
@@ -319,6 +321,8 @@ public class ServerImageManager {
 
                 }
 
+                totalDataSize += pi.imageSize();
+                callbacks.onProducImageTotalDataSize(totalDataSize);
 
 
 
@@ -418,9 +422,30 @@ public class ServerImageManager {
                 }
         );
 
+        tasks.add(uploadAsyncTask);
+
+
+        Log.e("XXX", "tasks -> " + tasks.size() );
         uploadAsyncTask.execute();
+        //uploadAsyncTask.cancel(true);
 
     }
+
+
+
+    public void cancelAllUploads(){
+
+        if(tasks.size() > 0){
+            for (UploadAsyncTask task : tasks) {
+                task.cancel(true);
+            }
+        }
+
+
+        tasks.clear();
+    }
+
+    private List<UploadAsyncTask> tasks = new ArrayList<>();
 
     private void initTotalProgress() {
         totalProgress = 0;
@@ -596,5 +621,7 @@ public class ServerImageManager {
         void onProducImageManagerPreExecute(ServerImage pi);
 
         void onProducImageAllImagesUploadedComplete();
+
+        void onProducImageTotalDataSize(double totalDataSize);
     }
 }
