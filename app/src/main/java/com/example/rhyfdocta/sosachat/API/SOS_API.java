@@ -111,6 +111,7 @@ public class SOS_API {
     private static final String RES_EMPTY = "resEmpty";
     private static final String ACTION_CLEAR_WISHLIST = "clearWishlist";
     private static final String ACTION_PUBLISH_ITEM = "publishItem";
+    public static final int NO_LIMIT = -1;
 
     public static boolean POST_MARSHMALLOW = false;
 
@@ -1155,7 +1156,10 @@ public class SOS_API {
 
         if(mine) url = url.concat("&mine");
 
-        Log.e(TAG, "loadLookingFors: -> " + url );
+        if(limit != NO_LIMIT) url = url.concat("&limit=" + limit);
+
+
+        Log.e(TAG, "KAAK: -> " + url );
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

@@ -55,7 +55,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
                 mine = isChecked;
                 lvInquiries.setVisibility(View.GONE);
                 pb.setVisibility(View.VISIBLE);
-                sosApi.loadLookingFors(ActivityLookingFor.this, mine,  -1);
+                sosApi.loadLookingFors(ActivityLookingFor.this, mine,  SOS_API.NO_LIMIT);
             }
         });
 
@@ -79,7 +79,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
 
         swOnlyMyLookingfor.setChecked(mine);
 
-        sosApi.loadLookingFors(this, mine,  -1);
+        sosApi.loadLookingFors(this, mine,  SOS_API.NO_LIMIT);
 
 
         looking4s = new ArrayList<>();
@@ -102,7 +102,7 @@ public class ActivityLookingFor extends AppCompatActivity implements
                 break;
 
             case R.id.menuInqRefresh:
-                sosApi.loadLookingFors(this, mine,-1);
+                sosApi.loadLookingFors(this, mine,SOS_API.NO_LIMIT);
                 tvError.setVisibility(View.GONE);
                 pb.setVisibility(View.VISIBLE);
                 lvInquiries.setVisibility(View.GONE);
