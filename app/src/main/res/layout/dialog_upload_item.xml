@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="13.50/17 MB"
-        android:textStyle="bold"
+
         app:layout_constraintBottom_toBottomOf="@+id/tvProgress"
         app:layout_constraintStart_toStartOf="parent" />
 

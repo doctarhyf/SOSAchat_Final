@@ -172,6 +172,8 @@ public class ActivityPostItem extends AppCompatActivity implements
             @Override
             public void onCancel(DialogInterface dialog) {
                 Toast.makeText(ActivityPostItem.this, "Upload cancelled", Toast.LENGTH_SHORT).show();
+
+                dialogUploadItem.init();
                 serverImageManager.cancelAllUploads();
                 btnExposeItem.setEnabled(true);
             }
@@ -812,7 +814,7 @@ public class ActivityPostItem extends AppCompatActivity implements
        //Toast.makeText(this, "ITEM WILL BE POSTED", Toast.LENGTH_SHORT).show();
 
 
-
+        btnExposeItem.setEnabled(false);
         if(!cbAcceptTerms.isChecked()){
 
             //showMessage( getResources().getString(R.string.titleTermsAndCondition),
@@ -833,6 +835,7 @@ public class ActivityPostItem extends AppCompatActivity implements
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
+                            btnExposeItem.setEnabled(true);
 
                         }
                     });
@@ -852,6 +855,8 @@ public class ActivityPostItem extends AppCompatActivity implements
 
             showMessageDialog(getResources().getString(R.string.msgEmptyFields),
                     getResources().getString(R.string.msgPostItemFieldsIncomplete));
+
+            btnExposeItem.setEnabled(true);
             return;
         }
 
@@ -888,7 +893,10 @@ public class ActivityPostItem extends AppCompatActivity implements
                         sosApi.SSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID, SOS_API.KEY_SESSION_DATA_EMPTY);
                         serverImageManager.setUploadToken(null);
                         Toast.makeText(ActivityPostItem.this,
-                                "Error getting UID : " + error, Toast.LENGTH_LONG).show();
+                                getResources().getString(R.string.msgNetEr), Toast.LENGTH_LONG).show();
+
+                        Log.e(TAG, "Error getting UID : -> " + error );
+                        btnExposeItem.setEnabled(true);
                     }
                 });
             }else{
@@ -1011,6 +1019,7 @@ public class ActivityPostItem extends AppCompatActivity implements
         View v = layoutInflater.inflate(R.layout.layout_dialog_input_password, null);
         final EditText etpwd = v.findViewById(R.id.etDgPassword);
 
+
         new AlertDialog.Builder(ActivityPostItem.this)
                 //.setTitle(HM.RGS(ActivityAccountSettings.this, R.string.dgTitleInputPassword))
                 .setView(v)
@@ -1031,6 +1040,7 @@ public class ActivityPostItem extends AppCompatActivity implements
 
                         }else{
                             Toast.makeText(ActivityPostItem.this, HM.RGS(ActivityPostItem.this, R.string.tmsgPwdNotCorrect), Toast.LENGTH_LONG).show();
+                            btnExposeItem.setEnabled(true);
                         }
                     }
                 })

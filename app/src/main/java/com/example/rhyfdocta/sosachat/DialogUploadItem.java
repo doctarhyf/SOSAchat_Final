@@ -121,4 +121,12 @@ public class DialogUploadItem extends AlertDialog {
         progress = (dataSize / dataProgress) * 100.0;
         updateDisplays();
     }
+
+    public void init() {
+
+        setProgress(0);
+        dataSize = 0;
+        dataProgress = 0;
+        updateDisplays();
+    }
 }

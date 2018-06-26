@@ -811,7 +811,10 @@ public class SOS_API {
     }
 
     public interface CallbacksProduct {
-        void onItemPublishResult(int resultCode, String resultData);
+        void onItemPublishResult(int code, String data);
+        void onLoadAllItemsResult(int code, List<ProductMyProducts> products);
+
+        void onLoadAllItemsNetworkError(String message);
     }
 
 
@@ -1370,11 +1373,111 @@ public class SOS_API {
 
     }
 
+    public void loadAllProducts(final CallbacksProduct callbacks, String uid) {
+
+        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_PRODUCTS + "&uid=" + uid ;
+
+        StringRequest request = new StringRequest(
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        try {
+                            JSONObject res = new JSONObject(s);
+                            int code = res.getInt(NETWORK_RESULT_CODES.KEY_RESULT_CODE);
+                            List<ProductMyProducts> products = null;
+
+                            if(code == NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS){
+
+                                String data = res.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
+
+                                JSONArray items = new JSONArray(data);
+
+                                if(items.length() == 0){
+                                    callbacks.onLoadAllItemsResult(NETWORK_RESULT_CODES.RESULT_CODE_EMPTY_LIST, null);
+                                }else{
+
+                                    products = new ArrayList<>();
+                                    for(int i = 0; i < items.length(); i++){
+
+                                        JSONObject jo = items.getJSONObject(i);
+
+                                        ProductMyProducts pd = new ProductMyProducts(
+                                                jo.getString(Product.KEY_PD_NAME),
+                                                jo.getString(Product.KEY_PD_PRICE),
+                                                jo.getString(Product.KEY_PD_IMG) + KEY_ITEM_POST_FIX_MAIN_PIC,
+                                                jo.getString(Product.KEY_PD_CUR),
+                                                jo.getString(Product.KEY_PD_CAT),
+                                                jo.getString(Product.KEY_PD_QUAL),
+                                                jo.getString(Product.KEY_PD_DESC),
+                                                jo.getString(ProductWishList.KEY_DATE_ADDED));
+
+
+
+                                        //Log.e(TAG, "date -> " + dateJson );
+
+                                        Bundle b = new Bundle();
+                                        HelperMethods.PutAllJSONIntoBundle(jo, b);
+                                        b.putString(KEY_ITEM_ID, jo.getString(KEY_ITEM_ID));
+                                        b.putString(KEY_ITEM_ITEM_VIEWS_ACCOUNT, jo.getString(KEY_ITEM_ITEM_VIEWS_ACCOUNT));
+                                        b.putString(KEY_ITEM_UNIQUE_NAME, jo.getString(KEY_ITEM_UNIQUE_NAME));
+                                        b.putString(KEY_ACC_DATA_DISPLAY_NAME, jo.getString(KEY_ACC_DATA_DISPLAY_NAME));
+                                        b.putString(KEY_ACC_DATA_USER_ID, jo.getString(KEY_ACC_DATA_USER_ID));
+                                        b.putString(KEY_ACC_DATA_MOBILE, jo.getString(KEY_ACC_DATA_MOBILE));
+                                        b.putString(KEY_ACC_DATA_EMAIL, jo.getString(KEY_ACC_DATA_EMAIL));
+                                        String dateStart = jo.getString(Product.KEY_PD_DATE_ADDED);
+
+                                        //HelperDate.DateDiff dateDiff = HelperDate.dateDiff(dateStart, dateEnd );//new Date().toString());
+
+                                        String postedDate = HM.CLDTAS(context,
+                                                HelperDate.getLongDateFromDateStr(dateStart), HelperDate.getCurrentLondDate());//dateDiff.toSocialFormat();//HM.FD(dateDiff, dateStart);
+
+
+                                        b.putString(Product.KEY_PD_DATE_ADDED, postedDate);
+
+                                        pd.setDataBundle(b);
+
+
+
+                                        products.add(pd);
+
+
+                                    }
+
+                                }
+
+
+                            }
+
+                            callbacks.onLoadAllItemsResult(code, products);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        callbacks.onLoadAllItemsNetworkError(volleyError.getMessage());
+                    }
+                }
+        );
+
+        SOSApplication.GI().addToRequestQueue(request);
+    }
+
+    /*
     public void loadAllProducts(final SOSApiListener listener, String uid) {
 
 
         final List<ProductMyProducts> allProducts = new ArrayList<>();
-        allProducts.clear();
+        //allProducts.clear();
         String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_PRODUCTS + "&uid=" + uid ;
 
         Log.e(TAG, "loadAllProducts: url -> " + url );
@@ -1465,7 +1568,7 @@ public class SOS_API {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                       //Log.e("LOAD ALL PRODS", "onErrorResponse: " + volleyError.getMessage() );
+                       Log.e("LOAD ALL PRODS", "onErrorResponse: " + volleyError.getMessage() );
                         //listener.onLoadAllProductsResult(new ArrayList<ProductMyProducts>());
                         listener.onLoadAllProductsError(volleyError.getMessage());
                     }
@@ -1476,6 +1579,8 @@ public class SOS_API {
 
 
     }
+    */
+
 
     public void updateAccSettings(final SOSApiListener listener, final String settingKey, final String newValue) {
 

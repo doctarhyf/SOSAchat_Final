@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.rhyfdocta.sosachat.API.NETWORK_RESULT_CODES;
 import com.example.rhyfdocta.sosachat.API.SOS_API;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
@@ -33,7 +35,8 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
         SOS_API.SOSApiListener,
         AdapterAP.ListenerAllProducts,
         SearchView.OnQueryTextListener,
-        SOS_API.CallbacksSearch
+        SOS_API.CallbacksSearch,
+        SOS_API.CallbacksProduct
 {
 
     private static final String TAG = "TAG_VIEW_ALL";
@@ -238,6 +241,8 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
         recyclerView.setVisibility(View.GONE);
         tvAllProductsLoadingError.setText(getResources().getString(R.string.msgServerUnreachable));
         tvAllProductsLoadingError.setVisibility(View.VISIBLE);
+
+
     }
 
     /*
@@ -396,5 +401,55 @@ public class ActivityViewAllProducts extends AppCompatActivity implements
     @Override
     public void onSearchResult(Context context, List<ProductMyProducts> products) {
 
+    }
+
+    @Override
+    public void onItemPublishResult(int code, String data) {
+
+    }
+
+    public void onEmptyList(){
+        pbAllProducts.setVisibility(View.GONE);
+        tvAllProductsEmptyList.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        tvAllProductsLoadingError.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onLoadAllItemsResult(int code, List<ProductMyProducts> products) {
+        Log.e(TAG, "onLoadAllItemsResult: -> code : " + code );
+        pbAllProducts.setVisibility(View.GONE);
+
+
+
+        if(code == NETWORK_RESULT_CODES.RESULT_CODE_EMPTY_LIST){
+            onEmptyList();
+        }
+
+        if(code == NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS && products != null){
+
+            if(products.size() == 0){
+                onEmptyList();
+            }else{
+
+                this.products.clear();
+                this.products.addAll(products);
+                adapter.notifyDataSetChanged();
+                recyclerView.setVisibility(View.VISIBLE);
+                tvAllProductsLoadingError.setVisibility(View.GONE);
+                tvAllProductsEmptyList.setVisibility(View.GONE);
+
+            }
+        }
+    }
+
+    @Override
+    public void onLoadAllItemsNetworkError(String message){
+        tvAllProductsEmptyList.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+        tvAllProductsLoadingError.setText(getResources().getString(R.string.msgLoadingError));
+        tvAllProductsLoadingError.setVisibility(View.VISIBLE);
+
+        Log.e(TAG, "onLoadAllItemsNetworkError: message -> " + message );
     }
 }

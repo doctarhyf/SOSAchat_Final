@@ -344,7 +344,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         super.onLoadFailed(e, errorDrawable);
-                        ivProfilePic.setImageResource(R.drawable.ic_error);
+                        ivProfilePic.setImageResource(R.drawable.ic_user_m);
                         sosApi.TADRWM(ActivityMyAccount.this,true, HM.RGS(ActivityMyAccount.this, R.string.msgFailedToLoadPP));
                     }
                 });

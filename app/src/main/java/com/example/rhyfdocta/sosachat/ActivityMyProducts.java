@@ -369,6 +369,16 @@ public class ActivityMyProducts extends AppCompatActivity implements
                     Toast.makeText(ActivityMyProducts.this, "Failed to pubish item", Toast.LENGTH_LONG).show();
                 }
             }
+
+            @Override
+            public void onLoadAllItemsResult(int code, List<ProductMyProducts> products) {
+
+            }
+
+            @Override
+            public void onLoadAllItemsNetworkError(String message) {
+
+            }
         }, pd.getDataBundle().getString(SOS_API.KEY_ITEM_ID));
     }
 

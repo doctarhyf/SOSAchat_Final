@@ -919,6 +919,16 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
                                     progressDialog.dismiss();
                                 }
+
+                                @Override
+                                public void onLoadAllItemsResult(int code, List<ProductMyProducts> products) {
+
+                                }
+
+                                @Override
+                                public void onLoadAllItemsNetworkError(String message) {
+
+                                }
                             }, itemID);
 
 
