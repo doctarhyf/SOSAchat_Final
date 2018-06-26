@@ -424,5 +424,6 @@
     <string name="tagItemStats">itemStats</string>
     <string name="lblCurStat">Current Stat :</string>
     <string name="btnUpdateLooking4">UPDATE</string>
+    <string name="msgNoLookingforsYet">Sorry there are not lookingfors posted yet</string>
 
 </resources>

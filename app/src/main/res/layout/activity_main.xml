@@ -155,6 +155,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/tvRecentItemsEmpty"
+            android:text="@string/msgNoRecentItems"
+            style="@style/tvStatusMessage" />
+
         <LinearLayout
             android:id="@+id/llPbLoadingRecentItems"
             android:orientation="horizontal"
@@ -204,7 +209,9 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            style="@style/tvStatusMessage"
             android:id="@+id/tvMsgLookingFor"
+            android:text="@string/msgNoLookingforsYet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

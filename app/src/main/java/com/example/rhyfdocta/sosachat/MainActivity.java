@@ -1,6 +1,7 @@
 package com.example.rhyfdocta.sosachat;
 
 import android.app.Activity;
+import android.app.MediaRouteButton;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -119,6 +120,7 @@ AdapterLookingFor.CallBacks,
     private ListView lvLookifor;
     private TextView tvMsgLookingFor;
     private float startX;
+    private TextView tvRecentItemsEmpty;
 
 
     @Override
@@ -128,7 +130,7 @@ AdapterLookingFor.CallBacks,
 
         sosApi = SOSApplication.getInstance().getSosApi();//new SOS_API(this);
 
-
+        tvRecentItemsEmpty = findViewById(R.id.tvRecentItemsEmpty);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             SOS_API.POST_MARSHMALLOW = true;
@@ -288,7 +290,7 @@ AdapterLookingFor.CallBacks,
         if(inquiries.size() == 0){
             lvLookifor.setVisibility(View.GONE);
             tvMsgLookingFor.setVisibility(View.VISIBLE);
-            tvMsgLookingFor.setText("No lookingfors posted yet");
+            tvMsgLookingFor.setText(getResources().getString(R.string.msgNoLookingforsYet));
         }else{
             lvLookifor.setVisibility(View.VISIBLE);
             tvMsgLookingFor.setVisibility(View.GONE);
@@ -589,10 +591,14 @@ AdapterLookingFor.CallBacks,
             onLoadRecentItemsResult(products, false);
             alertDialogProcessing.hide();
             llPbLoadingRecentItems.setVisibility(View.GONE);
+            tvRecentItemsEmpty.setVisibility(View.VISIBLE);
         }
 
         @Override
         public void onRecentItemsEmpty() {
+
+            tvRecentItemsEmpty.setVisibility(View.VISIBLE);
+
             llPbLoadingRecentItems.setVisibility(View.GONE);
             //toggleNoConnGUI(false);
             //Toast.makeText(MainActivity.this, "onRecentItemsEmpty", Toast.LENGTH_SHORT).show();
