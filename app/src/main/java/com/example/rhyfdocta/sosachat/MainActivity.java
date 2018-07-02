@@ -290,7 +290,7 @@ AdapterLookingFor.CallBacks,
         if(inquiries.size() == 0){
             lvLookifor.setVisibility(View.GONE);
             tvMsgLookingFor.setVisibility(View.VISIBLE);
-            tvMsgLookingFor.setText(getResources().getString(R.string.msgNoLookingforsYet));
+            //tvMsgLookingFor.setText(getResources().getString(R.string.msgNoLookingforsYet));
         }else{
             lvLookifor.setVisibility(View.VISIBLE);
             tvMsgLookingFor.setVisibility(View.GONE);
@@ -316,7 +316,7 @@ AdapterLookingFor.CallBacks,
         Log.e(TAG, "onLookingForsEmpty: " );
         lvLookifor.setVisibility(View.GONE);
         tvMsgLookingFor.setVisibility(View.VISIBLE);
-        tvMsgLookingFor.setText("No lookingfors posted yet");
+
     }
 
     private void toggleNoConnGUI(boolean connected) {
