@@ -33,7 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SOSApiListener {
+public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SOSApiListener,
+        SOS_API.CallbacksLoginSignup{
 
 
     private static final String TAG = "ACT_LOG";
@@ -358,6 +359,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
     public void onLoginResult(Bundle data) {
 
 
+        /*
         boolean loginResult = data.getString(SOS_API.JSON_KEY_RESULT).equalsIgnoreCase(SOS_API.LOGIN_SUCCESS);
 
         if (loginResult) {
@@ -369,9 +371,11 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
             alertDialogProcessing.hide();
            String msg =  HM.RGS(this, R.string.msgLoginFailed);
            sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
-        }
+        }*/
 
     }
+
+
 
     @Override
     public void onSignUpResult(Bundle data) {
@@ -515,5 +519,39 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
     public void onForgotPasswordClicked(View view) {
 
         Log.e(TAG, "onForgotPasswordClicked: " );
+    }
+
+    @Override
+    public void userConnectionSuccess(Bundle userData) {
+
+        /*
+        boolean loginResult = data.getString(SOS_API.JSON_KEY_RESULT).equalsIgnoreCase(SOS_API.LOGIN_SUCCESS);
+
+        if (loginResult) {
+
+            alertDialogProcessing.hide();
+            fireLoginIntent();
+
+        } else {
+            alertDialogProcessing.hide();
+           String msg =  HM.RGS(this, R.string.msgLoginFailed);
+           sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
+        }*/
+        alertDialogProcessing.hide();
+        fireLoginIntent();
+    }
+
+    @Override
+    public void userPasswordError(String username) {
+        alertDialogProcessing.hide();
+        String msg =  HM.RGS(this, R.string.msgLoginFailedPasswordError);
+        sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
+    }
+
+    @Override
+    public void userDontExist(String username) {
+        alertDialogProcessing.hide();
+        String msg =  HM.RGS(this, R.string.msgLoginFailedUserDontExist);
+        sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
     }
 }

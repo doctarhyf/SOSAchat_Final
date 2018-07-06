@@ -425,5 +425,7 @@
     <string name="lblCurStat">Current Stat :</string>
     <string name="btnUpdateLooking4">UPDATE</string>
     <string name="msgNoLookingforsYet">Sorry there are not lookingfors posted yet</string>
+    <string name="msgLoginFailedPasswordError">Login failed, your password is not correct!</string>
+    <string name="msgLoginFailedUserDontExist">Error login, this user account does\'nt exist, check your phone number or email then try again!</string>
 
 </resources>

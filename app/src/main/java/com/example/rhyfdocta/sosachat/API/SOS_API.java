@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-
-//import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
@@ -24,7 +21,6 @@ import com.example.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.example.rhyfdocta.sosachat.Helpers.HM;
 import com.example.rhyfdocta.sosachat.Helpers.HelperDate;
 import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
-
 import com.example.rhyfdocta.sosachat.ObjectsModels.LookingFor;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
@@ -44,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+//import android.support.v7.app.AlertDialog;
 
 /**
  * Created by rhyfdocta on 11/13/17.
@@ -108,27 +106,12 @@ public class SOS_API {
     public static final String SEARCH_Q = "q";
     public static final String FALSE = "false";
     public static final String SERVER_ADD = "serverAdd";
-    private static final String RES_EMPTY = "resEmpty";
-    private static final String ACTION_CLEAR_WISHLIST = "clearWishlist";
-    private static final String ACTION_PUBLISH_ITEM = "publishItem";
     public static final int NO_LIMIT = -1;
-
-    public static boolean POST_MARSHMALLOW = false;
-
-    
     public static final String KEY_USER_IS_ADMIN = "user_is_admin";
     public static final String ACTTION_LOAD_WISH_LIST = "loadWishList";
     public static final String KEY_SHOWING_VENDOR_PROFILE = "showingVendorProfile";
     public static final String KEY_SOSACHAT_PIX_DIR = "SOSAchat";
-
     public static final String DIR_PATH_CAT_PIX = "sosachat/img/cats/";
-    public static String API_URL = "sosachat/api.php?";
-    public static String DIR_PATH_CATEGORIES = "sosachat/img/";
-    public static String DIR_PATH_PRODUCTS_PIX = "sosachat/img/products/";
-    public static String DIR_PATH_PP = "sosachat/img/pp/";
-    public static String ROOT_URL = "sosachat/";
-
-    public static String DIR_PATH_TYPES = "img/types/";
     public static final String ACTION_LOAD_FEATURED_ITEMS = "loadFeatItems";
     public static final String ACTION_LOAD_CATEGORY_CARS = "loadCatCars";
     public static final String ACTION_LOAD_CATEGORY_ELECTRONICS = "loadCatElec";
@@ -143,7 +126,6 @@ public class SOS_API {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_NO_USERNAME = "no_username";
     public static final String ACTION_LOAD_ACC_DATA = "loadAccData";
-
     public static final String KEY_ACC_DATA_DISPLAY_NAME = "user_display_name";
     public static final String KEY_ACC_DATA_ACC_TYPE = "accType";
     public static final String KEY_ACC_DATA_ACC_CITY = "city";
@@ -159,11 +141,9 @@ public class SOS_API {
     public static final String KEY_ACC_DATA_SHOW_MY_ADDRESS = "user_show_address";
     public static final String KEY_ACC_DATA_USERNAME = "username";
     public static final String KEY_NAME_FOUND_PRODUCTS_LIST = "foundProducts";
-
     public static final String ACTION_SIGNUP = "signup";
     public static final String SIGNUP_SUCCESS = "true";
     public static final String SIGNUP_FAILURE = "false";
-
     public static final String JSON_KEY_RESULT = "result";
     public static final String LOGIN_FAILURE = "false";
     public static final String JSON_KEY_RESULT_ERROR_MESSAGE = "errorMessage";
@@ -175,7 +155,6 @@ public class SOS_API {
     public static final String ACTION_DELETE_ACCOUNT = "delAcc";
     public static final String JSON_RESULT_FAILURE = "false";
     public static final String ACTION_LOGOUT = "logout";
-
     public static final String KEY_ITEM_MAIN_PIC = "mainPic";
     public static final String KEY_ITEM_PIC_1 = "pic1";
     public static final String KEY_ITEM_PIC_2 = "pic2";
@@ -197,7 +176,6 @@ public class SOS_API {
     public static final String ACTION_LOAD_FEATURED_PRODUCTS = "loadAllFeaturedProducts";
     public static final String KEY_ITEM_POST_FIX_MAIN_PIC = "_main.jpg";
     public static final String KEY_ITEM_UNIQUE_NAME = "pdUniqueName";
-
     public static final String ACTION_REMOVE_PRODUCT = "rmProd";
     public static final String ACTION_POST_INQUIRY = "postLooking4";
     public static final Object DIR_PATH_SAVED_ITEMS_IMAGES = "SOSAchat Products";
@@ -208,7 +186,6 @@ public class SOS_API {
     public static final String KEY_ITEM_ITEM_VIEWS_ACCOUNT = "pdViews";
     public static final String KEY_ITEM_DATE_ADDED = "pdDateAdded";
     public static final String KEY_ITEM_NO_PRICE = "-1";
-
     public static final String ACTION_SEARCH_ITEMS = "search";
     public static final String KEY_ITEMS_SEARCH_RESULT_IDS = "itemsResultIds";
     public static final String ACTION_LOAD_ITEM_TYPES_FROM_CAT_ID = "loadItemsTypes";
@@ -230,33 +207,39 @@ public class SOS_API {
     public static final String KEY_ITEM_TYPE_NAME = "items_types_name";
     public static final String KEY_ITEM_TYPE_ID = "items_types_id";
     public static final String KEY_ITEMS_CATEGORY_TYPES = "cat_types";
+    public static final int PIC_SOURCE_CAMERA = 1;
+    public static final int PIC_SOURCE_GALLERY = 0;
+    public static final String ACTION_ADD_ITEM_TO_WISHLIST = "addItemToWishlist";
+    public static final String ACTION_REMOVE_ITEM_FROM_WISHLIST = "removeItemFromWishlist";
+    private static final String RES_EMPTY = "resEmpty";
+    private static final String ACTION_CLEAR_WISHLIST = "clearWishlist";
+    private static final String ACTION_PUBLISH_ITEM = "publishItem";
+    public static boolean POST_MARSHMALLOW = false;
+    public static String API_URL = "sosachat/api.php?";
+    public static String DIR_PATH_CATEGORIES = "sosachat/img/";
 
 
     //public static final String ACTION_LOAD_ITEMS_TYPES = "loadItemsTypes";
-
-
+    public static String DIR_PATH_PRODUCTS_PIX = "sosachat/img/products/";
+    public static String DIR_PATH_PP = "sosachat/img/pp/";
+    public static String ROOT_URL = "sosachat/";
+    public static String DIR_PATH_TYPES = "img/types/";
     public static String KEY_ITEM_NAME = "itemName";
     public static String KEY_ITEM_PRICE = "itemPrice";
     public static String KEY_ITEM_DESCRIPTION = "itemDescription";
-
     public static String KEY_ITEM_CURRENCY = "itemCurrency";
     public static String KEY_ITEM_QUALITY = "itemQuality";
-
     public static String KEY_ITEM_CATEGORY = "itemCategory";
-    private AlertDialog alertDialogResults;
-
-    public static  boolean isOnline(Context context){
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnectedOrConnecting();
-    }
-
-    private  SharedPreferences preferences;
+    public static Object[] keys;
+    public static String ACTION_LOAD_ITEMS_IN_TYPE = "loadItemsInType";
     Context context;
     SharedPreferences.Editor editor;
+    private AlertDialog alertDialogResults;
+    private SharedPreferences preferences;
     private BitmapCacheManager bitmapCacheManager;
+
     //AlertDialog alertDialog;
-    public SOS_API(Context context){
+    public SOS_API(Context context) {
         this.context = context;
         setBitmapCacheManager(new BitmapCacheManager(context));
         preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -264,17 +247,23 @@ public class SOS_API {
         setupAlertDialogResponse();
         //SSV(KEY_NEW_ITEM_UNIQUE_ID, null);
 
-        Log.e(TAG, "FUCK -> " + GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID) );
+        Log.e(TAG, "FUCK -> " + GSV(SOS_API.KEY_NEW_ITEM_UNIQUE_ID));
 
         //alertDialog = HelperMethods.getAlertDialogProcessingWithMessage(context, HelperMethods.getStringResource(this, R.string.pbMsgProcessing),false);
 
         //getAllItemCats();
     }
 
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    }
+
     public static String GetPicExtTagByIndex(int idx) {
         String tag = null;
 
-        switch (idx){
+        switch (idx) {
             case SOS_API.KEY_ITEM_PIC_IDX_MAIN:
                 tag = SOS_API.KEY_NEW_ITEM_IMG_TYPE_MAIN;
                 break;
@@ -293,8 +282,49 @@ public class SOS_API {
         }
 
 
-
         return tag;
+    }
+
+    public static AlertDialog DWPNB(Context ctx, boolean show, String message, String positiveBtn, DialogInterface.OnClickListener positiveHandler,
+                                    String negativeBtn, DialogInterface.OnClickListener negativeHandler, String title) {
+        return dialogWithPositiveNegativeButtons(ctx, show, message, positiveBtn, positiveHandler, negativeBtn, negativeHandler, title);
+    }
+
+    public static AlertDialog dialogWithPositiveNegativeButtons(Context ctx, boolean show, String message, String positiveBtn, DialogInterface.OnClickListener positiveHandler,
+                                                                String negativeBtn, DialogInterface.OnClickListener negativeHandler, String title) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+
+        if (title != null) builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(positiveBtn, positiveHandler);
+        builder.setNegativeButton(negativeBtn, negativeHandler);
+
+        AlertDialog alertDialog = builder.create();
+
+        if (show) alertDialog.show();
+
+        return alertDialog;
+
+    }
+
+    public static File GetSOSAchatCacheRootDir() {
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + BitmapCacheManager.CACHE_ROOT_DIR + "/";
+        return new File(path);
+    }
+
+    public static void deletePP() {
+
+        BitmapCacheManager.EmptyDir(new File(GetSOSAchatCacheRootDir().toString() + "/" + DIR_NAME_PIX_CACHE_PROFILCE_PIC));
+        Log.e(TAG, "deletePP: ");
+    }
+
+    public static String getSOSAchatItemPixCameraPath() {
+        return Environment.getExternalStorageDirectory().toString() + "/" + KEY_SOSACHAT_PIX_DIR;
+    }
+
+    public static String GSAIPCP() {
+        return getSOSAchatItemPixCameraPath();
     }
 
     private void setupAlertDialogResponse() {
@@ -312,77 +342,49 @@ public class SOS_API {
         //alertDialogResults.setCancelable(false);*/
 
 
-
     }
 
-    public static AlertDialog DWPNB(Context ctx, boolean show, String message, String positiveBtn, DialogInterface.OnClickListener positiveHandler,
-                        String negativeBtn, DialogInterface.OnClickListener negativeHandler, String title){
-        return dialogWithPositiveNegativeButtons(ctx, show, message, positiveBtn, positiveHandler, negativeBtn, negativeHandler, title);
-    }
-
-    public static AlertDialog dialogWithPositiveNegativeButtons(Context ctx, boolean show, String message, String positiveBtn, DialogInterface.OnClickListener positiveHandler,
-                                           String negativeBtn, DialogInterface.OnClickListener negativeHandler, String title){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-
-        if(title != null) builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setPositiveButton(positiveBtn, positiveHandler);
-        builder.setNegativeButton(negativeBtn, negativeHandler);
-
-        AlertDialog alertDialog = builder.create();
-
-        if(show) alertDialog.show();
-
-        return alertDialog;
-
-    }
-
-    public void toggleAlertDialogResponseWithMessage(Context context, boolean show, String message){
+    public void toggleAlertDialogResponseWithMessage(Context context, boolean show, String message) {
 
         AlertDialog.Builder builder;
 
 
-        builder =new AlertDialog.Builder(context)
-                .setPositiveButton("OK",null);
+        builder = new AlertDialog.Builder(context)
+                .setPositiveButton("OK", null);
         //View view = getLayoutInflater().inflate(R.layout.layout_alert_dialog_load_response,null);
         //tvAlertDialogResponse = (TextView) view.findViewById(R.id.tvAlertDialogResponse);
         //builder.setView(view);
         alertDialogResults = builder.create();
         //alertDialogResults.setCancelable(false);
 
-        if(message != null){
+        if (message != null) {
             alertDialogResults.setMessage(message);
 
         }
 
-        if(show){
+        if (show) {
             alertDialogResults.show();
-        }else{
+        } else {
             alertDialogResults.hide();
         }
 
 
     }
 
-    public void TADRWM(Context context, boolean show, String msg){
+    public void TADRWM(Context context, boolean show, String msg) {
         toggleAlertDialogResponseWithMessage(context, show, msg);
     }
 
-    public boolean isLoggedIn(){
-
-
+    public boolean isLoggedIn() {
 
 
         boolean result = false;
 
 
-
-
         String username = getPreferences().getString(KEY_ACC_DATA_MOBILE, KEY_NO_USERNAME);
         //String password = preferences.getString(KEY_PASSWORD, KEY_PASSWORD);
 
-        if(!username.equalsIgnoreCase(KEY_NO_USERNAME) ){
+        if (!username.equalsIgnoreCase(KEY_NO_USERNAME)) {
             result = true;
 
             //Toast.makeText(context, "username : " + username, Toast.LENGTH_SHORT).show();
@@ -393,11 +395,80 @@ public class SOS_API {
 
     }
 
-    public  void login(final SOSApiListener SOSApiListener, final String username, final String password) {
+    public interface CallbacksLoginSignup{
+
+
+        void userConnectionSuccess(Bundle userData);
+
+        void userPasswordError(String username);
+
+        void userDontExist(String username);
+    }
+
+    public void login(final CallbacksLoginSignup callbacks, final String username, final String password) {
 
         String loginURL = GetServerAddress() + SOS_API.API_URL + "act=" + ACTION_LOGIN + "&username=" + username + "&password=" + password;
 
-        Log.e(TAG, "login:url -> " + loginURL );
+        Log.e(TAG, "login:url -> " + loginURL);
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                loginURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Log.e("XYZ", "onResponse: " + s );
+                        try {
+                            JSONObject data = new JSONObject(s);
+
+                            int code = data.getInt(NETWORK_RESULT_CODES.KEY_RESULT_CODE) ;
+
+                            switch (code) {
+                                case NETWORK_RESULT_CODES.RESULT_CODE_USER_CONNECTION_SUCCESS:
+
+                                    String userJSON = data.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
+                                    JSONObject userJO = new JSONObject(userJSON);
+
+                                    Bundle userData = HM.JTB(userJO);
+                                    setSessionData(new Bundle(userData));
+                                    callbacks.userConnectionSuccess(userData);
+                                    break;
+
+                                case NETWORK_RESULT_CODES.RESULT_CODE_USER_CONNECTION_FAILURE_PASSWORD_ERROR:
+                                    callbacks.userPasswordError(username);
+                                break;
+
+                                case NETWORK_RESULT_CODES.RESULT_CODE_USER_DONT_EXIST:
+                                    callbacks.userDontExist(username);
+                                    break;
+
+                            }
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e("XYZ", "onResponse: " + volleyError.getMessage() );
+                    }
+                });
+
+        SOSApplication.GI().addToRequestQueue(request);
+
+
+    }
+
+    /*public void login(final SOSApiListener SOSApiListener, final String username, final String password) {
+
+        String loginURL = GetServerAddress() + SOS_API.API_URL + "act=" + ACTION_LOGIN + "&username=" + username + "&password=" + password;
+
+        Log.e(TAG, "login:url -> " + loginURL);
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -409,19 +480,18 @@ public class SOS_API {
                         try {
 
 
-                           Log.e(TAG, "onResponse: login response -> " + s );
+                            Log.e(TAG, "onResponse: login response -> " + s);
 
                             JSONObject jo = new JSONObject(s);
                             Bundle b = HM.JTB(jo);//HelperMethods.jsonToBundle(jo);
 
 
-
-                            if(b.size() == 1){
+                            if (b.size() == 1) {
                                 b.putString(JSON_KEY_RESULT, SIGNUP_FAILURE);
-                            }else {
+                            } else {
                                 b.putString(JSON_KEY_RESULT, SIGNUP_SUCCESS);
 
-                                if(b.getString(KEY_USER_IS_ADMIN).equals("1")){
+                                if (b.getString(KEY_USER_IS_ADMIN).equals("1")) {
                                     b.putBoolean(KEY_USER_IS_ADMIN, true);
                                 }
 
@@ -456,43 +526,37 @@ public class SOS_API {
         );
 
 
-
         //SOSApplication.getInstance().addToRequestQueue(request);
         SOSApplication.getInstance().addToRequestQueue(request);
 
 
-    }
+    }*/
 
     public String GetServerAddress() {
         return "http://" + GSV(SERVER_ADD) + "/";
     }
 
-    public static  Object[] keys;
-
-    public String getSessionVar(String key){
+    public String getSessionVar(String key) {
 
         return getPreferences().getString(key, KEY_SESSION_DATA_EMPTY);
     }
 
-    public void setSessionVar(String key, String val){
+    public void setSessionVar(String key, String val) {
 
         editor.putString(key, val);
         editor.apply();
         editor.commit();
     }
 
-    public void SSV(String key, String val){
-        setSessionVar(key,val);
+    public void SSV(String key, String val) {
+        setSessionVar(key, val);
     }
 
-    public static final int PIC_SOURCE_CAMERA = 1;
-    public static final int PIC_SOURCE_GALLERY = 0;
-
-    public String GSV(String key){
+    public String GSV(String key) {
         return getSessionVar(key);
     }
 
-    private void SSD(Bundle data){
+    private void SSD(Bundle data) {
         setSessionData(data);
     }
 
@@ -500,14 +564,14 @@ public class SOS_API {
 
         String serverAdd = GSV(SERVER_ADD);
         String lun = GSV(KEY_LAST_USERNAME);
-            editor.clear();
-            editor.putString(SERVER_ADD, serverAdd);
-            editor.putString(KEY_LAST_USERNAME, lun);
-            editor.commit();
+        editor.clear();
+        editor.putString(SERVER_ADD, serverAdd);
+        editor.putString(KEY_LAST_USERNAME, lun);
+        editor.commit();
 
         keys = b.keySet().toArray();
 
-        for(int i = 0; i < keys.length; i++){
+        for (int i = 0; i < keys.length; i++) {
 
 
             String key = keys[i].toString();
@@ -515,7 +579,7 @@ public class SOS_API {
 
             editor.putString(key, val);
 
-           //Log.e(TAG, "setSessionData: putting : " + keys[i] + " : " + b.getString(keys[i].toString()) );
+            //Log.e(TAG, "setSessionData: putting : " + keys[i] + " : " + b.getString(keys[i].toString()) );
 
 
         }
@@ -524,32 +588,27 @@ public class SOS_API {
 
     }
 
-    public void signup(final SOSApiListener SOSApiListener, Bundle data){
-
+    public void signup(final SOSApiListener SOSApiListener, Bundle data) {
 
 
         final String mobile = data.getString(SOS_API.KEY_ACC_DATA_MOBILE);
         final String email = data.getString(SOS_API.KEY_ACC_DATA_EMAIL);
         final String password = data.getString(SOS_API.KEY_ACC_DATA_PASSWORD);
         final String fullName = data.getString(SOS_API.KEY_ACC_DATA_FULL_NAME);
-        final String displayName =data.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME);
+        final String displayName = data.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME);
         final String location = data.getString(SOS_API.KEY_ACC_DATA_LOCATION);
 
         //Log.e(TAG, "bundle -> " + data.toString() );
 
-        String url =GSA() + API_URL + "act=" + ACTION_SIGNUP;
-
+        String url = GSA() + API_URL + "act=" + ACTION_SIGNUP;
 
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>()
-                {
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // response
-                       Log.e("signup res -> ", response);
-
-
+                        Log.e("signup res -> ", response);
 
 
                         try {
@@ -558,10 +617,10 @@ public class SOS_API {
                             JSONObject jo = new JSONObject(response);
                             Bundle b = HelperMethods.jsonToBundle(jo);
 
-                            if(b.size() == 1){
+                            if (b.size() == 1) {
                                 b.putString(JSON_KEY_RESULT, SIGNUP_FAILURE);
 
-                            }else {
+                            } else {
 
 
                                 b.putString(JSON_KEY_RESULT, SIGNUP_SUCCESS);
@@ -572,7 +631,7 @@ public class SOS_API {
                             }
 
                             SOSApiListener.onSignUpResult(b);
-                           ////Log.e(TAG, "my bundle from jo -->> " + b.toString());
+                            ////Log.e(TAG, "my bundle from jo -->> " + b.toString());
 
 
                         } catch (JSONException e) {
@@ -583,16 +642,13 @@ public class SOS_API {
                         }
 
 
-
-
                     }
                 },
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                       //Log.e("signup err res -> ", error.getMessage());
+                        //Log.e("signup err res -> ", error.getMessage());
                         Bundle b = new Bundle();
                         b.putString(JSON_KEY_RESULT, SIGNUP_FAILURE);
                         SOSApiListener.onSignUpResult(b);
@@ -602,9 +658,8 @@ public class SOS_API {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("mobile", mobile);
                 params.put("password", password);
                 params.put("email", email);
@@ -613,7 +668,6 @@ public class SOS_API {
                 params.put("location", location);
                 return params;
             }
-
 
 
         };
@@ -631,7 +685,7 @@ public class SOS_API {
 
         final String mobile = GSV(SOS_API.KEY_ACC_DATA_MOBILE);
         String url = GSA() + API_URL + "act=" + ACTION_DELETE_ACCOUNT + "&" + KEY_ACC_DATA_MOBILE + "=" + mobile;
-       //Log.e(TAG, "deleAccount: url -> " + url );
+        //Log.e(TAG, "deleAccount: url -> " + url );
 
         StringRequest request = new StringRequest(
 
@@ -642,15 +696,15 @@ public class SOS_API {
                     public void onResponse(String s) {
 
                         Bundle b = new Bundle();
-                        if(s.equalsIgnoreCase(JSON_RESULT_SUCCESS)){
+                        if (s.equalsIgnoreCase(JSON_RESULT_SUCCESS)) {
 
                             b.putString(JSON_KEY_RESULT, JSON_RESULT_SUCCESS);
                             sosApiListener.onLogoutResult();
-                        }else{
+                        } else {
                             b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
                         }
                         sosApiListener.onAccountDeleteResult(b);
-                       //Log.e(TAG, "ON RESPONSE FROM VOLLEY -> : " + s );
+                        //Log.e(TAG, "ON RESPONSE FROM VOLLEY -> : " + s );
                     }
                 },
                 new Response.ErrorListener() {
@@ -670,8 +724,8 @@ public class SOS_API {
 
     }
 
-    public void getNewItemUniqueId(final CallbacksUniqueID callbacksUniqueID){
-        String url =GSA() + API_URL + "act=" + ACTION_GET_UNIQUE_ID;
+    public void getNewItemUniqueId(final CallbacksUniqueID callbacksUniqueID) {
+        String url = GSA() + API_URL + "act=" + ACTION_GET_UNIQUE_ID;
         StringRequest request = new StringRequest(
                 Request.Method.POST,
                 url,
@@ -701,7 +755,7 @@ public class SOS_API {
 
     public void deleteLookingFor(final CallbacksLookingFor callbacksLookingFor, String id) {
 
-        String url =GSA() + API_URL + "act=" + ACTION_DELETE_LOOKING_FOR + "&iid=" + id + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+        String url = GSA() + API_URL + "act=" + ACTION_DELETE_LOOKING_FOR + "&iid=" + id + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
 
 
         StringRequest request = new StringRequest(
@@ -710,9 +764,9 @@ public class SOS_API {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                        if(s.equals(TRUE)){
+                        if (s.equals(TRUE)) {
                             callbacksLookingFor.onDeleteLookingSuccess();
-                        }else{
+                        } else {
                             callbacksLookingFor.onDeleteLookingForFailure(s);
                         }
                     }
@@ -733,9 +787,7 @@ public class SOS_API {
         return preferences;
     }
 
-
-
-    public void clearWishList(final  CallbacksWishlist callbacks) {
+    public void clearWishList(final CallbacksWishlist callbacks) {
 
 
         String url = GSA() + API_URL + "act=" + ACTION_CLEAR_WISHLIST + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
@@ -760,331 +812,6 @@ public class SOS_API {
         );
 
         SOSApplication.GI().addToRequestQueue(request);
-
-    }
-
-    public void updateLooking4(final CallbacksLookingFor listener, String title, String desc, float rating, String updid) {
-
-        try {
-            title = URLEncoder.encode(title, "utf-8");
-            desc = URLEncoder.encode(desc, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            Log.e(TAG, "updateLooking4: excetion -> " + e.getMessage() );
-        }
-
-
-        String url =GSA() + API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating;
-
-        if(!updid.equals(LookingFor.NO_ID)) url = url.concat("&updid=" + updid);
-
-        Log.e(TAG, "updateLooking4: -> " + url );
-
-        StringRequest request = new StringRequest(
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-
-                        Log.e("XXX", "updl4 -> " + s );
-                        boolean success = s.equals(TRUE);
-                        int code = success ? NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS : NETWORK_RESULT_CODES.RESULT_CODE_FAILURE;
-
-                        String message = "success";
-
-                        if(code == NETWORK_RESULT_CODES.RESULT_CODE_FAILURE) message = s;
-
-                        listener.onUpdateLookingForResult(code, message);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-
-                        listener.onUpdateLookingForResult(NETWORK_RESULT_CODES.RESULT_CODE_NETWORK_ERROR,volleyError.getMessage());
-                    }
-                }
-
-        );
-
-        SOSApplication.getInstance().addToRequestQueue(request);
-    }
-
-    public interface CallbacksProduct {
-        void onItemPublishResult(int code, String data);
-        void onLoadAllItemsResult(int code, List<ProductMyProducts> products);
-
-        void onLoadAllItemsNetworkError(String message);
-    }
-
-
-
-
-
-    public void publishItem(final CallbacksProduct callBacksProduct, String itemID) {
-
-        String url = GSA() + API_URL + "act=" + ACTION_PUBLISH_ITEM + "&itid=" + itemID;
-
-        Log.e(TAG, "publishItem: -> " + url );
-        StringRequest request = new StringRequest(
-                Request.Method.GET,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-
-                        try {
-
-                            Log.e(TAG, "onResponse: -> " + s );
-                            JSONObject object = new JSONObject(s);
-                            int resCode = object.getInt(NETWORK_RESULT_CODES.KEY_RESULT_CODE);
-                            String data = object.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
-
-                            callBacksProduct.onItemPublishResult(resCode, data);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.e(TAG, "onResponse: Exception -> " + e.getMessage() );
-
-                            callBacksProduct.onItemPublishResult(NETWORK_RESULT_CODES.RESULT_CODE_EXCEPTION, e.getMessage());
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-
-                    }
-                }
-        );
-
-        SOSApplication.GI().addToRequestQueue(request);
-    }
-
-    public interface CallbacksLookingFor {
-        void onDeleteLookingSuccess();
-        void onDeleteLookingForFailure(String message);
-        void onUpdateLookingForResult(int code, String data);
-    }
-
-    public interface CallbacksUniqueID{
-        void onUniqueIDLoaded(String un);
-        void onError(String error);
-    }
-
-    public void exposeItem(final SOSApiListener listener, final Bundle data) {
-
-
-        //Log.e(TAG, "exposeItem: data -> " + data.toString() );
-        //String pdUniqueName = data.getString("");
-
-        String url =GSA() + API_URL;
-        String itemId = data.getString(KEY_ITEM_ID);
-        final boolean itemUpdating = itemId != null;
-
-        if( itemUpdating  ){ //UPDATING ITEM
-            url = url.concat("act=" + ACTION_UPDATE_ITEM + "&itemId=" + itemId + "&un=" + data.getString(Product.KEY_PD_UNIQUE_NAME) );
-        }else{
-            url = url.concat("act=" + ACTION_EXPOSE_ITEM) + "&un=" + data.getString(Product.KEY_PD_UNIQUE_ID);
-        }
-
-        //Log.e(TAG, "exposeItem: url -> " + url );
-        //Log.e(TAG, "exposeItem: item data -> " + data.toString() );
-
-
-
-        StringRequest requestItemDetails = new StringRequest(
-                Request.Method.POST,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-
-
-                       Log.e(TAG, "ON THA RES -> " + s );
-
-                        Bundle b = new Bundle();
-                        b.putString(JSON_KEY_DATA, s);
-                        try {
-                            JSONObject jo = new JSONObject(s);
-
-
-                            String result = jo.getString(JSON_KEY_RESULT);
-
-                            if(result.equals(JSON_RESULT_SUCCESS)){
-                                b.putString(JSON_KEY_RESULT, JSON_RESULT_SUCCESS);
-
-                                b.putString(KEY_ITEM_UNIQUE_NAME, jo.getString(KEY_ITEM_UNIQUE_NAME));
-
-                                if(itemUpdating){
-                                    b.putBoolean(KEY_ITEM_UPDATED, true);
-                                }
-                            }else{
-                                b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
-                           //Log.e(TAG, "THA FUCKING EXCEPTION" + e.getMessage() );
-                        }
-
-
-
-                        listener.onExposeItemResult(b);
-
-
-
-
-
-                    }
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-
-
-
-                        Bundle b = new Bundle();
-                        b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
-                        b.putString(JSON_KEY_DATA, volleyError.getMessage());
-
-                        listener.onExposeItemResult(b);
-                       //Log.e(TAG, "expose volley item -> " + volleyError.toString() );
-
-                    }
-                }
-        ){
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-
-
-
-                params.put(KEY_ITEM_NAME,data.getString(KEY_ITEM_NAME));
-                params.put(KEY_ITEM_PRICE,data.getString(KEY_ITEM_PRICE));
-                params.put(KEY_ITEM_CURRENCY,data.getString(KEY_ITEM_CURRENCY));
-                params.put(KEY_ITEM_PRICE_TO_DISCUSS, data.getString(KEY_ITEM_PRICE_TO_DISCUSS));
-                params.put(KEY_ITEM_DESCRIPTION,data.getString(KEY_ITEM_DESCRIPTION));
-                params.put(KEY_ITEM_CATEGORY,data.getString(KEY_ITEM_CATEGORY));
-                params.put(KEY_ITEM_TYPE,data.getString(KEY_ITEM_TYPE));
-                params.put(Product.KEY_PD_OWNER_ID, data.getString(Product.KEY_PD_OWNER_ID));
-
-                params.put(KEY_ITEM_MAIN_PIC,  KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_MAIN_PIC));
-
-                params.put(KEY_ITEM_PIC_1, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_1));
-                params.put(KEY_ITEM_PIC_2, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_2));
-                params.put(KEY_ITEM_PIC_3, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_3));
-                params.put(KEY_ITEM_QUALITY, data.getString(KEY_ITEM_QUALITY));
-
-
-                return params;
-            }
-
-
-
-        };
-
-        SOSApplication.getInstance().addToRequestQueue(requestItemDetails);
-    }
-
-    public void loadMyProducts(final ListenerLoadMyProducts listener){
-
-        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_MY_PRODUCTS +
-                "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
-
-        Log.e(TAG, "myproducs url : " + url );
-
-        StringRequest request = new StringRequest(
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-
-
-
-                        if(s.equals(JSON_RESULT_FAILURE)){
-                            listener.onMyProductsEmpty();
-                        }else{
-
-                            List<ProductMyProducts> products = new ArrayList<>();
-
-                            try {
-                                JSONArray ja = new JSONArray(s);
-
-                                if(ja.length() == 0){
-                                    listener.onMyProductsEmpty();
-                                }else{
-
-
-                                    for (int i = 0; i < ja.length(); i++) {
-
-                                        JSONObject jo = ja.getJSONObject(i);
-
-                                        ProductMyProducts pd = new ProductMyProducts(
-                                                jo.getString(Product.KEY_PD_NAME),
-                                                jo.getString(Product.KEY_PD_PRICE),
-                                                jo.getString(Product.KEY_PD_IMG) + SOS_API.KEY_ITEM_POST_FIX_MAIN_PIC,
-                                                jo.getString(Product.KEY_PD_CUR),
-                                                jo.getString(Product.KEY_PD_CAT),
-                                                jo.getString(Product.KEY_PD_QUAL),
-                                                jo.getString(Product.KEY_PD_DESC),
-                                                jo.getString(Product.KEY_PD_UNIQUE_NAME));
-
-                                        Bundle b = new Bundle();
-
-                                        HelperMethods.PutAllJSONIntoBundle(jo,b);
-                                        String dateStart = jo.getString(KEY_ITEM_DATE_ADDED);
-
-                                        //HelperDate.DateDiff dateDiff = HelperDate.dateDiff(dateStart, dateEnd );//new Date().toString());
-
-                                        String postedDate = HM.CLDTAS(context,
-                                                HelperDate.getLongDateFromDateStr(dateStart), HelperDate.getCurrentLondDate());//dateDiff.toSocialFormat();//HM.FD(dateDiff, dateStart);
-
-                                        b.putString(KEY_ITEM_ID, jo.getString(KEY_ITEM_ID));
-                                        b.putString(KEY_ITEM_UNIQUE_NAME, jo.getString(KEY_ITEM_UNIQUE_NAME));
-                                        b.putString(KEY_ITEM_DATE_ADDED, postedDate);
-                                        //b.putString(KEY_ITEM_DATE_ADDED, postedDate);
-                                        b.putString(KEY_ITEM_ITEM_VIEWS_ACCOUNT, jo.getString(KEY_ITEM_ITEM_VIEWS_ACCOUNT));
-                                        b.putString(KEY_ACC_DATA_USER_ID, jo.getString(KEY_ACC_DATA_USER_ID));
-                                        b.putString(KEY_ACC_DATA_DISPLAY_NAME, jo.getString(KEY_ACC_DATA_DISPLAY_NAME));
-                                        b.putString(KEY_ACC_DATA_EMAIL, jo.getString(KEY_ACC_DATA_EMAIL));
-                                        b.putString(KEY_ACC_DATA_MOBILE, jo.getString(KEY_ACC_DATA_MOBILE));
-
-                                        pd.setDataBundle(b);
-                                        products.add(pd);
-
-                                    }
-                                    listener.onMyProductsLoaded(products);
-
-
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                listener.onParseJsonError(s);
-                            }
-
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        listener.onNetworkError(volleyError.getMessage());
-                    }
-                }
-        );
-
-
-
-        SOSApplication.getInstance().addToRequestQueue(request);
-
 
     }
 
@@ -1134,6 +861,299 @@ public class SOS_API {
         void CBIFUonPostExecute(String tag, String result);
     }*/
 
+    public void updateLooking4(final CallbacksLookingFor listener, String title, String desc, float rating, String updid) {
+
+        try {
+            title = URLEncoder.encode(title, "utf-8");
+            desc = URLEncoder.encode(desc, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.e(TAG, "updateLooking4: excetion -> " + e.getMessage());
+        }
+
+
+        String url = GSA() + API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating;
+
+        if (!updid.equals(LookingFor.NO_ID)) url = url.concat("&updid=" + updid);
+
+        Log.e(TAG, "updateLooking4: -> " + url);
+
+        StringRequest request = new StringRequest(
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        Log.e("XXX", "updl4 -> " + s);
+                        boolean success = s.equals(TRUE);
+                        int code = success ? NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS : NETWORK_RESULT_CODES.RESULT_CODE_FAILURE;
+
+                        String message = "success";
+
+                        if (code == NETWORK_RESULT_CODES.RESULT_CODE_FAILURE) message = s;
+
+                        listener.onUpdateLookingForResult(code, message);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                        listener.onUpdateLookingForResult(NETWORK_RESULT_CODES.RESULT_CODE_NETWORK_ERROR, volleyError.getMessage());
+                    }
+                }
+
+        );
+
+        SOSApplication.getInstance().addToRequestQueue(request);
+    }
+
+    public void publishItem(final CallbacksProduct callBacksProduct, String itemID) {
+
+        String url = GSA() + API_URL + "act=" + ACTION_PUBLISH_ITEM + "&itid=" + itemID;
+
+        Log.e(TAG, "publishItem: -> " + url);
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        try {
+
+                            Log.e(TAG, "onResponse: -> " + s);
+                            JSONObject object = new JSONObject(s);
+                            int resCode = object.getInt(NETWORK_RESULT_CODES.KEY_RESULT_CODE);
+                            String data = object.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
+
+                            callBacksProduct.onItemPublishResult(resCode, data);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, "onResponse: Exception -> " + e.getMessage());
+
+                            callBacksProduct.onItemPublishResult(NETWORK_RESULT_CODES.RESULT_CODE_EXCEPTION, e.getMessage());
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                }
+        );
+
+        SOSApplication.GI().addToRequestQueue(request);
+    }
+
+    public void exposeItem(final SOSApiListener listener, final Bundle data) {
+
+
+        //Log.e(TAG, "exposeItem: data -> " + data.toString() );
+        //String pdUniqueName = data.getString("");
+
+        String url = GSA() + API_URL;
+        String itemId = data.getString(KEY_ITEM_ID);
+        final boolean itemUpdating = itemId != null;
+
+        if (itemUpdating) { //UPDATING ITEM
+            url = url.concat("act=" + ACTION_UPDATE_ITEM + "&itemId=" + itemId + "&un=" + data.getString(Product.KEY_PD_UNIQUE_NAME));
+        } else {
+            url = url.concat("act=" + ACTION_EXPOSE_ITEM) + "&un=" + data.getString(Product.KEY_PD_UNIQUE_ID);
+        }
+
+        //Log.e(TAG, "exposeItem: url -> " + url );
+        //Log.e(TAG, "exposeItem: item data -> " + data.toString() );
+
+
+        StringRequest requestItemDetails = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+
+                        Log.e(TAG, "ON THA RES -> " + s);
+
+                        Bundle b = new Bundle();
+                        b.putString(JSON_KEY_DATA, s);
+                        try {
+                            JSONObject jo = new JSONObject(s);
+
+
+                            String result = jo.getString(JSON_KEY_RESULT);
+
+                            if (result.equals(JSON_RESULT_SUCCESS)) {
+                                b.putString(JSON_KEY_RESULT, JSON_RESULT_SUCCESS);
+
+                                b.putString(KEY_ITEM_UNIQUE_NAME, jo.getString(KEY_ITEM_UNIQUE_NAME));
+
+                                if (itemUpdating) {
+                                    b.putBoolean(KEY_ITEM_UPDATED, true);
+                                }
+                            } else {
+                                b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
+                            //Log.e(TAG, "THA FUCKING EXCEPTION" + e.getMessage() );
+                        }
+
+
+                        listener.onExposeItemResult(b);
+
+
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+
+                        Bundle b = new Bundle();
+                        b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
+                        b.putString(JSON_KEY_DATA, volleyError.getMessage());
+
+                        listener.onExposeItemResult(b);
+                        //Log.e(TAG, "expose volley item -> " + volleyError.toString() );
+
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+
+                params.put(KEY_ITEM_NAME, data.getString(KEY_ITEM_NAME));
+                params.put(KEY_ITEM_PRICE, data.getString(KEY_ITEM_PRICE));
+                params.put(KEY_ITEM_CURRENCY, data.getString(KEY_ITEM_CURRENCY));
+                params.put(KEY_ITEM_PRICE_TO_DISCUSS, data.getString(KEY_ITEM_PRICE_TO_DISCUSS));
+                params.put(KEY_ITEM_DESCRIPTION, data.getString(KEY_ITEM_DESCRIPTION));
+                params.put(KEY_ITEM_CATEGORY, data.getString(KEY_ITEM_CATEGORY));
+                params.put(KEY_ITEM_TYPE, data.getString(KEY_ITEM_TYPE));
+                params.put(Product.KEY_PD_OWNER_ID, data.getString(Product.KEY_PD_OWNER_ID));
+
+                params.put(KEY_ITEM_MAIN_PIC, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_MAIN_PIC));
+
+                params.put(KEY_ITEM_PIC_1, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_1));
+                params.put(KEY_ITEM_PIC_2, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_2));
+                params.put(KEY_ITEM_PIC_3, KEY_ITEM_NO_PIC);//data.getString(KEY_ITEM_PIC_3));
+                params.put(KEY_ITEM_QUALITY, data.getString(KEY_ITEM_QUALITY));
+
+
+                return params;
+            }
+
+
+        };
+
+        SOSApplication.getInstance().addToRequestQueue(requestItemDetails);
+    }
+
+    public void loadMyProducts(final ListenerLoadMyProducts listener) {
+
+        String url = GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_MY_PRODUCTS +
+                "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
+
+        Log.e(TAG, "myproducs url : " + url);
+
+        StringRequest request = new StringRequest(
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+
+                        if (s.equals(JSON_RESULT_FAILURE)) {
+                            listener.onMyProductsEmpty();
+                        } else {
+
+                            List<ProductMyProducts> products = new ArrayList<>();
+
+                            try {
+                                JSONArray ja = new JSONArray(s);
+
+                                if (ja.length() == 0) {
+                                    listener.onMyProductsEmpty();
+                                } else {
+
+
+                                    for (int i = 0; i < ja.length(); i++) {
+
+                                        JSONObject jo = ja.getJSONObject(i);
+
+                                        ProductMyProducts pd = new ProductMyProducts(
+                                                jo.getString(Product.KEY_PD_NAME),
+                                                jo.getString(Product.KEY_PD_PRICE),
+                                                jo.getString(Product.KEY_PD_IMG) + SOS_API.KEY_ITEM_POST_FIX_MAIN_PIC,
+                                                jo.getString(Product.KEY_PD_CUR),
+                                                jo.getString(Product.KEY_PD_CAT),
+                                                jo.getString(Product.KEY_PD_QUAL),
+                                                jo.getString(Product.KEY_PD_DESC),
+                                                jo.getString(Product.KEY_PD_UNIQUE_NAME));
+
+                                        Bundle b = new Bundle();
+
+                                        HelperMethods.PutAllJSONIntoBundle(jo, b);
+                                        String dateStart = jo.getString(KEY_ITEM_DATE_ADDED);
+
+                                        //HelperDate.DateDiff dateDiff = HelperDate.dateDiff(dateStart, dateEnd );//new Date().toString());
+
+                                        String postedDate = HM.CLDTAS(context,
+                                                HelperDate.getLongDateFromDateStr(dateStart), HelperDate.getCurrentLondDate());//dateDiff.toSocialFormat();//HM.FD(dateDiff, dateStart);
+
+                                        b.putString(KEY_ITEM_ID, jo.getString(KEY_ITEM_ID));
+                                        b.putString(KEY_ITEM_UNIQUE_NAME, jo.getString(KEY_ITEM_UNIQUE_NAME));
+                                        b.putString(KEY_ITEM_DATE_ADDED, postedDate);
+                                        //b.putString(KEY_ITEM_DATE_ADDED, postedDate);
+                                        b.putString(KEY_ITEM_ITEM_VIEWS_ACCOUNT, jo.getString(KEY_ITEM_ITEM_VIEWS_ACCOUNT));
+                                        b.putString(KEY_ACC_DATA_USER_ID, jo.getString(KEY_ACC_DATA_USER_ID));
+                                        b.putString(KEY_ACC_DATA_DISPLAY_NAME, jo.getString(KEY_ACC_DATA_DISPLAY_NAME));
+                                        b.putString(KEY_ACC_DATA_EMAIL, jo.getString(KEY_ACC_DATA_EMAIL));
+                                        b.putString(KEY_ACC_DATA_MOBILE, jo.getString(KEY_ACC_DATA_MOBILE));
+
+                                        pd.setDataBundle(b);
+                                        products.add(pd);
+
+                                    }
+                                    listener.onMyProductsLoaded(products);
+
+
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                listener.onParseJsonError(s);
+                            }
+
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        listener.onNetworkError(volleyError.getMessage());
+                    }
+                }
+        );
+
+
+        SOSApplication.getInstance().addToRequestQueue(request);
+
+
+    }
+
     public BitmapCacheManager getBitmapCacheManager() {
         return bitmapCacheManager;
     }
@@ -1142,27 +1162,16 @@ public class SOS_API {
         this.bitmapCacheManager = bitmapCacheManager;
     }
 
-    public static File GetSOSAchatCacheRootDir() {
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + BitmapCacheManager.CACHE_ROOT_DIR + "/";
-        return new File(path);
-    }
-
-    public static void deletePP() {
-
-        BitmapCacheManager.EmptyDir(new File(GetSOSAchatCacheRootDir().toString() + "/" + DIR_NAME_PIX_CACHE_PROFILCE_PIC));
-        Log.e(TAG, "deletePP: " );
-    }
-
-    public void loadLookingFors(final AdapterLookingFor.CallBacks callbacks, boolean mine, int limit){
+    public void loadLookingFors(final AdapterLookingFor.CallBacks callbacks, boolean mine, int limit) {
 
         String url = GSA() + API_URL + "act=" + ACTION_LOAD_ALL_LOOKINGFORS + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
 
-        if(mine) url = url.concat("&mine");
+        if (mine) url = url.concat("&mine");
 
-        if(limit != NO_LIMIT) url = url.concat("&limit=" + limit);
+        if (limit != NO_LIMIT) url = url.concat("&limit=" + limit);
 
 
-        Log.e(TAG, "KAAK: -> " + url );
+        Log.e(TAG, "KAAK: -> " + url);
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -1172,17 +1181,17 @@ public class SOS_API {
                     public void onResponse(String s) {
 
 
-                        Log.e("XXX", "XXX -> " + s );
+                        Log.e("XXX", "XXX -> " + s);
 
-                        if(s.equals(SOS_API.RES_EMPTY)){
+                        if (s.equals(SOS_API.RES_EMPTY)) {
                             callbacks.onLookingForsEmpty();
-                        }else{
+                        } else {
 
                             try {
                                 JSONArray jsonArray = new JSONArray(s);
                                 ArrayList<LookingFor> looking4s = new ArrayList<>();
 
-                                for (int i = 0; i < jsonArray.length(); i++){
+                                for (int i = 0; i < jsonArray.length(); i++) {
 
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     LookingFor lookingFor = new LookingFor();
@@ -1250,25 +1259,10 @@ public class SOS_API {
 
     }
 
-    public interface  ListenerLoadMyProducts{
-        void onMyProductsLoaded(List<ProductMyProducts> products);
-        void onMyProductsEmpty();
-        void onNetworkError(String msg);
-        void onParseJsonError(String s);
-    }
-
-    public interface  ListenerLoadRecentItems{
-        void onRecentItemsLoaded(List<Product> products);
-        void onRecentItemsEmpty();
-        void onNetworkError(String msg);
-
-        void onParseJsonError(String s);
-    }
-
     public void loadRecentItems(final ListenerLoadRecentItems listener) {
 
-        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_FEATURED_PRODUCTS + "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
-        Log.e(TAG, "loadRecentItems: url -> " + url );
+        String url = GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_FEATURED_PRODUCTS + "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
+        Log.e(TAG, "loadRecentItems: url -> " + url);
 
 
         StringRequest request = new StringRequest(
@@ -1278,19 +1272,18 @@ public class SOS_API {
                     public void onResponse(String s) {
 
 
-
-                        if(s.equals(JSON_RESULT_FAILURE)){
+                        if (s.equals(JSON_RESULT_FAILURE)) {
                             listener.onRecentItemsEmpty();
-                        }else{
+                        } else {
 
                             List<Product> products = new ArrayList<>();
 
                             try {
                                 JSONArray ja = new JSONArray(s);
 
-                                if(ja.length() == 0){
+                                if (ja.length() == 0) {
                                     listener.onRecentItemsEmpty();
-                                }else{
+                                } else {
 
 
                                     for (int i = 0; i < ja.length(); i++) {
@@ -1308,7 +1301,7 @@ public class SOS_API {
                                                 jo.getString(Product.KEY_PD_UNIQUE_NAME));
 
                                         Bundle b = new Bundle();
-                                        HelperMethods.PutAllJSONIntoBundle(jo,b);
+                                        HelperMethods.PutAllJSONIntoBundle(jo, b);
 
                                         String dateStart = jo.getString(KEY_ITEM_DATE_ADDED);
 
@@ -1340,7 +1333,6 @@ public class SOS_API {
                                         b.putString(Product.KEY_PD_CAT, cat);
 
 
-
                                         pd.setData(b);
                                         products.add(pd);
 
@@ -1368,14 +1360,13 @@ public class SOS_API {
         );
 
 
-
         SOSApplication.getInstance().addToRequestQueue(request);
 
     }
 
     public void loadAllProducts(final CallbacksProduct callbacks, String uid) {
 
-        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_PRODUCTS + "&uid=" + uid ;
+        String url = GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ALL_PRODUCTS + "&uid=" + uid;
 
         StringRequest request = new StringRequest(
                 url,
@@ -1388,18 +1379,18 @@ public class SOS_API {
                             int code = res.getInt(NETWORK_RESULT_CODES.KEY_RESULT_CODE);
                             List<ProductMyProducts> products = null;
 
-                            if(code == NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS){
+                            if (code == NETWORK_RESULT_CODES.RESULT_CODE_SUCCESS) {
 
                                 String data = res.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
 
                                 JSONArray items = new JSONArray(data);
 
-                                if(items.length() == 0){
+                                if (items.length() == 0) {
                                     callbacks.onLoadAllItemsResult(NETWORK_RESULT_CODES.RESULT_CODE_EMPTY_LIST, null);
-                                }else{
+                                } else {
 
                                     products = new ArrayList<>();
-                                    for(int i = 0; i < items.length(); i++){
+                                    for (int i = 0; i < items.length(); i++) {
 
                                         JSONObject jo = items.getJSONObject(i);
 
@@ -1412,7 +1403,6 @@ public class SOS_API {
                                                 jo.getString(Product.KEY_PD_QUAL),
                                                 jo.getString(Product.KEY_PD_DESC),
                                                 jo.getString(ProductWishList.KEY_DATE_ADDED));
-
 
 
                                         //Log.e(TAG, "date -> " + dateJson );
@@ -1437,7 +1427,6 @@ public class SOS_API {
                                         b.putString(Product.KEY_PD_DATE_ADDED, postedDate);
 
                                         pd.setDataBundle(b);
-
 
 
                                         products.add(pd);
@@ -1586,10 +1575,10 @@ public class SOS_API {
 
 
         String userid = getSessionVar(KEY_ACC_DATA_USER_ID);
-        String url =GSA() + API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&setName=" + settingKey + "&newVal=" + newValue +
+        String url = GSA() + API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&setName=" + settingKey + "&newVal=" + newValue +
                 "&user_id=" + userid;
 
-       //Log.e(TAG, "updateSignleSetting: url -> " + url );
+        //Log.e(TAG, "updateSignleSetting: url -> " + url );
 
         StringRequest request = new StringRequest(
                 url,
@@ -1598,10 +1587,10 @@ public class SOS_API {
                     public void onResponse(String s) {
 
 
-                        if(s.equals(JSON_RESULT_SUCCESS)) {
+                        if (s.equals(JSON_RESULT_SUCCESS)) {
                             listener.onUpdateSettingsResult(settingKey, s);
                             setSessionVar(settingKey, newValue);
-                        }else{
+                        } else {
                             listener.onUpdateSettingsResult(settingKey, JSON_RESULT_FAILURE);
                         }
 
@@ -1620,12 +1609,12 @@ public class SOS_API {
 
     }
 
-    public void updateUserPassword(final OnUpdatePasswordListenerm listener, final String newPassword){
+    public void updateUserPassword(final OnUpdatePasswordListenerm listener, final String newPassword) {
 
-        String url =GSA() + API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&newVal=" + newPassword +
+        String url = GSA() + API_URL + "act=" + ACTION_UPDATE_USER_SETTING + "&newVal=" + newPassword +
                 "&" + KEY_ACC_DATA_USER_ID + "=" + GSV(KEY_ACC_DATA_USER_ID) + "&setName=" + KEY_ACC_DATA_PASSWORD;
 
-        Log.e(TAG, "updateUserPassword: url -> " + url );
+        Log.e(TAG, "updateUserPassword: url -> " + url);
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
@@ -1636,7 +1625,7 @@ public class SOS_API {
 
                         String resMsg;
 
-                        if(s.equals(JSON_RESULT_SUCCESS)){
+                        if (s.equals(JSON_RESULT_SUCCESS)) {
 
                             // TODO: 5/1/2018 SEND CONFIRMATION SMS
 
@@ -1644,7 +1633,7 @@ public class SOS_API {
 
                             SSV(KEY_ACC_DATA_PASSWORD, newPassword);
 
-                        }else{
+                        } else {
                             resMsg = s;
                         }
 
@@ -1666,27 +1655,14 @@ public class SOS_API {
 
     }
 
-    public interface OnUpdatePasswordListenerm{
-        void onPasswordUpdateResult(String resStatus, String resMessage);
-    }
-
-    public static String getSOSAchatItemPixCameraPath() {
-        return Environment.getExternalStorageDirectory().toString()+"/" + KEY_SOSACHAT_PIX_DIR;
-    }
-
-    public static String GSAIPCP(){
-        return getSOSAchatItemPixCameraPath();
-    }
-
     public void removeProduct(final SOSApiListener listener, final ProductWishList pd) {
 
         String myid = getSessionVar(KEY_ACC_DATA_USER_ID);
 
         final String uniqueName = pd.getPdUniqueNameFromIMG();
-        String url =GSA() + API_URL + "act=" + ACTION_REMOVE_PRODUCT + "&unq=" + uniqueName + "&myid=" + myid ;
+        String url = GSA() + API_URL + "act=" + ACTION_REMOVE_PRODUCT + "&unq=" + uniqueName + "&myid=" + myid;
 
-       //Log.e(TAG, "removeProduct: url -> " + url );
-
+        //Log.e(TAG, "removeProduct: url -> " + url );
 
 
         StringRequest request = new StringRequest(
@@ -1698,12 +1674,12 @@ public class SOS_API {
                         Bundle b = new Bundle();
                         b.putInt(Product.KEY_PD_ADAPTER_POSITION, pd.getData().getInt(Product.KEY_PD_ADAPTER_POSITION));
                         b.putString(Product.KEY_PD_UNIQUE_NAME, uniqueName);
-                        if(s.equals(JSON_RESULT_SUCCESS)) {
+                        if (s.equals(JSON_RESULT_SUCCESS)) {
 
                             b.putString(JSON_KEY_RESULT, JSON_RESULT_SUCCESS);
                             b.putInt(Product.KEY_PD_ADAPTER_POSITION, pd.getData().getInt(Product.KEY_PD_ADAPTER_POSITION));
 
-                        }else{
+                        } else {
                             b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
                         }
 
@@ -1733,12 +1709,12 @@ public class SOS_API {
             desc = URLEncoder.encode(desc, "utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            Log.e(TAG, "postLooking4: exception -> " + e.getMessage() );
+            Log.e(TAG, "postLooking4: exception -> " + e.getMessage());
         }
 
 
-        String url =GSA() + API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating + "&updid=-1";
-        Log.e(TAG, "postLooking4: url -> " + url );
+        String url = GSA() + API_URL + "act=" + ACTION_POST_INQUIRY + "&title=" + title + "&desc=" + desc + "&myid=" + getSessionVar(KEY_ACC_DATA_USER_ID) + "&rating=" + rating + "&updid=-1";
+        Log.e(TAG, "postLooking4: url -> " + url);
         StringRequest request = new StringRequest(
 
                 url,
@@ -1746,14 +1722,14 @@ public class SOS_API {
                     @Override
                     public void onResponse(String s) {
 
-                       //Log.e(TAG, "onResponse: postinq -> " + s );
+                        //Log.e(TAG, "onResponse: postinq -> " + s );
                         listener.onPostInquiryResult(s);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                       //Log.e(TAG, "onErrorResponse: postinq -> " + volleyError.getMessage() );
+                        //Log.e(TAG, "onErrorResponse: postinq -> " + volleyError.getMessage() );
                         listener.onPostInquiryResult(JSON_RESULT_FAILURE);
                     }
                 }
@@ -1766,25 +1742,25 @@ public class SOS_API {
 
     public void updateItemViewsCount(final SOSApiListener listener, String itemId) {
 
-        String url =GSA() + API_URL + "act=" + ACTTION_UPDATE_ITEM_VIEWS_COUNT + "&itemid=" + itemId;
-       //Log.e(TAG, "updateItemViewsCount: url -> " + url );
+        String url = GSA() + API_URL + "act=" + ACTTION_UPDATE_ITEM_VIEWS_COUNT + "&itemid=" + itemId;
+        //Log.e(TAG, "updateItemViewsCount: url -> " + url );
         StringRequest request = new StringRequest(
                 url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                       if(s.equals(JSON_RESULT_FAILURE) == false){
+                        if (s.equals(JSON_RESULT_FAILURE) == false) {
 
-                           String newCount = s;
+                            String newCount = s;
 
-                           listener.onUpdateItemViewsCountResult(newCount);
-                       }
+                            listener.onUpdateItemViewsCountResult(newCount);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                       //Log.e(TAG, "onErrorResponse: upd view count -> " + volleyError.getMessage() );
+                        //Log.e(TAG, "onErrorResponse: upd view count -> " + volleyError.getMessage() );
                     }
                 }
         );
@@ -1793,24 +1769,20 @@ public class SOS_API {
 
     }
 
-    public void searchq(final Context context, String q, final CallbacksSearch callbacksSearch){
+    public void searchq(final Context context, String q, final CallbacksSearch callbacksSearch) {
 
 
     }
 
-    public interface CallbacksSearch{
-        void onSearchResult(Context context, List<ProductMyProducts> products);
-    }
-
-    public void search(final  SOSApiListener listener, String q) {
+    public void search(final SOSApiListener listener, String q) {
 
 
         String uid = getSessionVar(KEY_ACC_DATA_USER_ID);
         final List<ProductMyProducts> allProducts = new ArrayList<>();
         allProducts.clear();
-        String url =GSA() + API_URL + "act=" + ACTION_SEARCH_ITEMS + "&uid=" + uid + "&q=" + q;
+        String url = GSA() + API_URL + "act=" + ACTION_SEARCH_ITEMS + "&uid=" + uid + "&q=" + q;
 
-       //Log.e(TAG, "search url : " + url );
+        //Log.e(TAG, "search url : " + url );
 
         StringRequest request = new StringRequest(
                 url,
@@ -1819,10 +1791,9 @@ public class SOS_API {
                     public void onResponse(String s) {
 
 
-
-                        if(s.equals(JSON_RESULT_FAILURE)){
+                        if (s.equals(JSON_RESULT_FAILURE)) {
                             listener.onSearchResultError(s);
-                        }else{
+                        } else {
 
                             String[] itemsIds = s.split(",");
 
@@ -1919,14 +1890,13 @@ public class SOS_API {
         );*/
 
 
-
     }
 
     public void loadSearchResultItems(final SOSApiListener listener, String ids) {
 
-        String url =GSA() + API_URL + "act=loadSearchRes&ids=" + ids;
+        String url = GSA() + API_URL + "act=loadSearchRes&ids=" + ids;
 
-       //Log.e(TAG, "loadSearchResultItems: url -> " + url );
+        //Log.e(TAG, "loadSearchResultItems: url -> " + url );
 
 
         final List<ProductMyProducts> allProducts = new ArrayList<>();
@@ -1945,13 +1915,11 @@ public class SOS_API {
 
                         //listener.onLoadAllMyProductsResult(products);
 
-                        if(jsonArray.length() > 0){
+                        if (jsonArray.length() > 0) {
 
-                            for(int i =0; i < jsonArray.length(); i++) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
 
                                 try {
-
-
 
 
                                     JSONObject jo = jsonArray.getJSONObject(i);
@@ -1965,7 +1933,6 @@ public class SOS_API {
                                             jo.getString(Product.KEY_PD_QUAL),
                                             jo.getString(Product.KEY_PD_DESC),
                                             jo.getString(ProductWishList.KEY_DATE_ADDED));
-
 
 
                                     //Log.e(TAG, "date -> " + dateJson );
@@ -1994,7 +1961,7 @@ public class SOS_API {
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                   //Log.e(TAG, "load pds exception -> " + e.toString() );
+                                    //Log.e(TAG, "load pds exception -> " + e.toString() );
                                 }
 
 
@@ -2005,14 +1972,12 @@ public class SOS_API {
                         listener.onLoadSearchResultItemsResult(allProducts);
 
 
-
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                       //Log.e("LOAD ALL PRODS", "onErrorResponse: " + volleyError.getMessage() );
+                        //Log.e("LOAD ALL PRODS", "onErrorResponse: " + volleyError.getMessage() );
                         //listener.onLoadAllProductsResult(new ArrayList<ProductMyProducts>());
                         listener.onLoadSearchResultItemsError(volleyError.getMessage());
                     }
@@ -2023,35 +1988,35 @@ public class SOS_API {
 
     }
 
-    public void loadItemsTypesFromCatName(final  SOSApiListener listener, String catName){
+    public void loadItemsTypesFromCatName(final SOSApiListener listener, String catName) {
         String catsAndTypes = GSV(KEY_ITEMS_CATS_AND_TYPES);
 
-        if(catsAndTypes.equals(KEY_SESSION_DATA_EMPTY)){
+        if (catsAndTypes.equals(KEY_SESSION_DATA_EMPTY)) {
 
             //Log.e(TAG, "loadItemsTypesFromCatId: error " );
 
-        }else{
+        } else {
 
 
             try {
                 JSONArray cats = new JSONArray(catsAndTypes);
 
-                for(int i = 0; i < cats.length(); i++){
+                for (int i = 0; i < cats.length(); i++) {
 
                     JSONObject cat = (JSONObject) cats.get(i);
                     String curCatId = cat.getString(KEY_ITEM_CATEGORY_NAME);
 
-                    if(curCatId.equals("" + catName)){
+                    if (curCatId.equals("" + catName)) {
 
-                        String types = cat.getString(KEY_ITEMS_CATEGORY_TYPES) ;
+                        String types = cat.getString(KEY_ITEMS_CATEGORY_TYPES);
 
                         JSONArray jsonArray = new JSONArray(types);
 
-                        if(jsonArray.length() > 0){
+                        if (jsonArray.length() > 0) {
 
                             String[] typesArr = new String[jsonArray.length()];
 
-                            for(int j = 0; j < jsonArray.length(); j++){
+                            for (int j = 0; j < jsonArray.length(); j++) {
 
                                 JSONObject type = jsonArray.getJSONObject(j);
                                 typesArr[j] = HM.UCF(type.getString(KEY_ITEM_TYPE_NAME));
@@ -2060,7 +2025,7 @@ public class SOS_API {
 
                             listener.onLoadItemsTypesResult(typesArr);
 
-                        }else{
+                        } else {
                             listener.onLoadItemsTypesResultError();
                         }
 
@@ -2071,7 +2036,7 @@ public class SOS_API {
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.e(TAG, "loadItemsTypesFromCatId: json exception -> " + e.getMessage() );
+                Log.e(TAG, "loadItemsTypesFromCatId: json exception -> " + e.getMessage());
             }
 
         }
@@ -2082,32 +2047,32 @@ public class SOS_API {
 
         String catsAndTypes = GSV(KEY_ITEMS_CATS_AND_TYPES);
 
-        if(catsAndTypes.equals(KEY_SESSION_DATA_EMPTY)){
+        if (catsAndTypes.equals(KEY_SESSION_DATA_EMPTY)) {
 
             //Log.e(TAG, "loadItemsTypesFromCatId: error " );
 
-        }else{
+        } else {
 
 
             try {
                 JSONArray cats = new JSONArray(catsAndTypes);
 
-                for(int i = 0; i < cats.length(); i++){
+                for (int i = 0; i < cats.length(); i++) {
 
                     JSONObject cat = (JSONObject) cats.get(i);
                     String curCatId = cat.getString(KEY_ITEM_CATEGORY_ID);
 
-                    if(curCatId.equals("" + categoryId)){
+                    if (curCatId.equals("" + categoryId)) {
 
-                        String types = cat.getString(KEY_ITEMS_CATEGORY_TYPES) ;
+                        String types = cat.getString(KEY_ITEMS_CATEGORY_TYPES);
 
                         JSONArray jsonArray = new JSONArray(types);
 
-                        if(jsonArray.length() > 0){
+                        if (jsonArray.length() > 0) {
 
                             String[] typesArr = new String[jsonArray.length()];
 
-                            for(int j = 0; j < jsonArray.length(); j++){
+                            for (int j = 0; j < jsonArray.length(); j++) {
 
                                 JSONObject type = jsonArray.getJSONObject(j);
                                 typesArr[j] = HM.UCF(type.getString(KEY_ITEM_TYPE_NAME));
@@ -2116,7 +2081,7 @@ public class SOS_API {
 
                             listener.onLoadItemsTypesResult(typesArr);
 
-                        }else{
+                        } else {
                             listener.onLoadItemsTypesResultError();
                         }
 
@@ -2127,7 +2092,7 @@ public class SOS_API {
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.e(TAG, "loadItemsTypesFromCatId: json exception -> " + e.getMessage() );
+                Log.e(TAG, "loadItemsTypesFromCatId: json exception -> " + e.getMessage());
             }
 
         }
@@ -2136,8 +2101,8 @@ public class SOS_API {
 
     public void uploadProfilePic(final SOSApiListener listener, final String imgStr) {
 
-        String url =GSA() + API_URL + "act=" + ACTION_UPLOAD_PP + "&mobile=" + GSV(KEY_ACC_DATA_MOBILE);
-       //Log.e("UPDPP", "uploadProfilePic: -> " + url );
+        String url = GSA() + API_URL + "act=" + ACTION_UPLOAD_PP + "&mobile=" + GSV(KEY_ACC_DATA_MOBILE);
+        //Log.e("UPDPP", "uploadProfilePic: -> " + url );
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -2145,8 +2110,7 @@ public class SOS_API {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                       //Log.e(TAG, "UPDPP RESP -> " + s );
-
+                        //Log.e(TAG, "UPDPP RESP -> " + s );
 
 
                         try {
@@ -2155,12 +2119,12 @@ public class SOS_API {
                             Bundle b = new Bundle();
 
 
-                            if(jsonObject.getString(JSON_KEY_RESULT).equals(JSON_RESULT_SUCCESS)) {
+                            if (jsonObject.getString(JSON_KEY_RESULT).equals(JSON_RESULT_SUCCESS)) {
 
                                 b.putString(JSON_KEY_RESULT, JSON_RESULT_SUCCESS);
 
 
-                            }else{
+                            } else {
                                 b.putString(JSON_KEY_RESULT, JSON_RESULT_FAILURE);
                             }
 
@@ -2187,7 +2151,7 @@ public class SOS_API {
                         listener.onUploadPPResult(b);
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() {
 
@@ -2205,7 +2169,7 @@ public class SOS_API {
 
     public void loadCatTypeNames(SOSApiListener listener, String catId, String typeId) {
 
-        if(getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY).equals(KEY_PREF_EMPTY)) {
+        if (getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY).equals(KEY_PREF_EMPTY)) {
 
 
             /*String url =GSA() + API_URL + "act=" + ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES;
@@ -2249,19 +2213,19 @@ public class SOS_API {
 
             SOSApplication.getInstance().addToRequestQueue(request);*/
 
-        }else{
+        } else {
             try {
                 String s = getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY);
                 JSONArray cats = new JSONArray(s);
 
                 if (cats.length() > 0) {
 
-                    for(int i = 0; i < cats.length(); i ++){
+                    for (int i = 0; i < cats.length(); i++) {
 
 
                         JSONObject cat = (JSONObject) cats.get(i);
 
-                        if(cat.getString(KEY_ITEM_CATEGORY_ID).equals(catId)){
+                        if (cat.getString(KEY_ITEM_CATEGORY_ID).equals(catId)) {
 
                             String cn = cat.getString(KEY_ITEM_CATEGORY_NAME);
                             //Log.e(TAG, "THA CAT NAME BE -> " + cn );
@@ -2273,19 +2237,19 @@ public class SOS_API {
                             JSONArray types = new JSONArray(typesStr);
 
                             String tn = "N/A";
-                            if(types.length() > 0){
+                            if (types.length() > 0) {
 
-                                for(int j =0; j < types.length(); j++){
+                                for (int j = 0; j < types.length(); j++) {
                                     JSONObject type = types.getJSONObject(j);
 
-                                    if(type.getString(KEY_ITEM_TYPE_ID).equals(typeId)) {
+                                    if (type.getString(KEY_ITEM_TYPE_ID).equals(typeId)) {
                                         tn = type.getString(KEY_ITEM_TYPE_NAME);
-                                            //Log.e(TAG, "THA TYPE NAME BE -> " + tn);
+                                        //Log.e(TAG, "THA TYPE NAME BE -> " + tn);
                                     }
-                                   // break;
+                                    // break;
                                 }
 
-                            }else{
+                            } else {
 
                                 //Log.e(TAG, "TYPES LEN IS ZERO SO TN -> " + tn );
                             }
@@ -2297,13 +2261,13 @@ public class SOS_API {
 
                     }
 
-                }else{
+                } else {
                     //Log.e(TAG, "CATS LEN IS ZERO" );
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.e(TAG, "loadCatTypeNames: " + e.getMessage() );
+                Log.e(TAG, "loadCatTypeNames: " + e.getMessage());
             }
 
         }
@@ -2312,15 +2276,15 @@ public class SOS_API {
 
     public void loadCategoryTypesFromCatId(final SOSApiListener listener, String id) {
 
-        Log.e(TAG, "loadCatData: id -> " + id );
+        Log.e(TAG, "loadCatData: id -> " + id);
 
 
         //sosApi.loadItemsTypesFromCatId(this, new Integer(id).intValue());
 
         // TODO: 12/26/2017 TO MOVE IN SOS API CLASS
 
-        String url =GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ITEM_TYPES_FROM_CAT_ID + "&catId=" + id;
-        Log.e(TAG, "loadCatData: -> " + url );
+        String url = GSA() + API_URL + "act=" + SOS_API.ACTION_LOAD_ITEM_TYPES_FROM_CAT_ID + "&catId=" + id;
+        Log.e(TAG, "loadCatData: -> " + url);
 
         StringRequest request = new StringRequest(
                 url,
@@ -2333,15 +2297,15 @@ public class SOS_API {
                             JSONArray jsonArray = new JSONArray(s);
 
 
-                            if(jsonArray.length() > 0 ){
+                            if (jsonArray.length() > 0) {
 
                                 //List<TypesItem> types = new ArrayList<>();
                                 types = new ArrayList<>();
 
-                                for(int i =0; i < jsonArray.length(); i++){
+                                for (int i = 0; i < jsonArray.length(); i++) {
 
                                     JSONObject type = jsonArray.getJSONObject(i);
-                                    Log.e(TAG, "TYPE JO -> " + type.toString() );
+                                    Log.e(TAG, "TYPE JO -> " + type.toString());
 
 
                                     String id = type.getString(TypesItem.KEY_TYPE_ITEM_ID);
@@ -2351,7 +2315,6 @@ public class SOS_API {
                                     TypesItem typeItem = new TypesItem(id, name, imgPath);
 
 
-
                                     types.add(typeItem);
 
 
@@ -2359,19 +2322,19 @@ public class SOS_API {
 
                                 listener.onCategoryTypesLoaded(types, false);
 
-                            }else{
-                                Log.e(TAG, "TYPES JSON ARRAY LEN = 0" );
+                            } else {
+                                Log.e(TAG, "TYPES JSON ARRAY LEN = 0");
                                 listener.onCategoryTypesLoaded(types, false);
                             }
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e(TAG, "LOAD TYPES JSON ERROR -> " + e.getMessage() );
+                            Log.e(TAG, "LOAD TYPES JSON ERROR -> " + e.getMessage());
 
-                            if(s.equals(JSON_RESULT_FAILURE)){
+                            if (s.equals(JSON_RESULT_FAILURE)) {
                                 listener.onCategoryTypesLoaded(types, false);
-                            }else{
+                            } else {
                                 listener.onCategoryTypesLoaded(types, true);
                             }
 
@@ -2394,17 +2357,13 @@ public class SOS_API {
 
     }
 
-    public static final String ACTION_ADD_ITEM_TO_WISHLIST = "addItemToWishlist";
-
-    public static final String ACTION_REMOVE_ITEM_FROM_WISHLIST = "removeItemFromWishlist";
-
     public void removeItemFromWishlist(final ListenerItemsWishlist listener, final Bundle itemData) {
 
         String wid = itemData.getString(SOS_API.KEY_ITEM_ID);
         //final String itemName = itemData.getString(Product.KEY_PD_NAME);
-        String url =GSA() + API_URL + "act=" + ACTION_REMOVE_ITEM_FROM_WISHLIST + "&wid=" + wid + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+        String url = GSA() + API_URL + "act=" + ACTION_REMOVE_ITEM_FROM_WISHLIST + "&wid=" + wid + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
 
-        Log.e(TAG, "removeItemFromWishlist: url -> " + url );
+        Log.e(TAG, "removeItemFromWishlist: url -> " + url);
 
         StringRequest request = new StringRequest(
                 url,
@@ -2412,9 +2371,9 @@ public class SOS_API {
                     @Override
                     public void onResponse(String s) {
 
-                        if(s.equals(JSON_RESULT_FAILURE)){
+                        if (s.equals(JSON_RESULT_FAILURE)) {
                             listener.onWishlistItemRemoveError(itemData);
-                        }else{
+                        } else {
                             listener.onWishlistItemRemoveSuccess(itemData);
                         }
 
@@ -2431,22 +2390,12 @@ public class SOS_API {
         SOSApplication.getInstance().addToRequestQueue(request);
     }
 
-    public interface ListenerItemsWishlist {
-        void onItemAddedSuccess();
-        void onItemAddedError(String msg);
-        void onNetworkError(String msg);
-
-        void onWishlistItemRemoveError(Bundle pd);
-
-        void onWishlistItemRemoveSuccess(Bundle pd);
-    }
-
     public void addItemToWishlist(final ListenerItemsWishlist listener, String itemId) {
 
-        String url =GSA() + API_URL + "act=" + ACTION_ADD_ITEM_TO_WISHLIST + "&uid=" +
+        String url = GSA() + API_URL + "act=" + ACTION_ADD_ITEM_TO_WISHLIST + "&uid=" +
                 GSV(KEY_ACC_DATA_USER_ID) + "&wid=" + itemId;
 
-        Log.e(TAG, "addItemToWishlist: url -> " + url );
+        Log.e(TAG, "addItemToWishlist: url -> " + url);
 
         StringRequest request = new StringRequest(
                 url,
@@ -2454,9 +2403,9 @@ public class SOS_API {
                     @Override
                     public void onResponse(String s) {
 
-                        if(s.equals(JSON_RESULT_FAILURE)){
+                        if (s.equals(JSON_RESULT_FAILURE)) {
                             listener.onItemAddedError(s);
-                        }else{
+                        } else {
                             listener.onItemAddedSuccess();
                         }
 
@@ -2474,22 +2423,11 @@ public class SOS_API {
 
     }
 
-    public  interface CallbacksWishlist {
-         void onWishLisItemsLoaded(List<ProductWishList> wishlistItems);
-
-         void onNoItemsInWishlist();
-
-        void onErrorLoadWishList(String message);
-
-        void onWishlistClearResult(boolean success, String message);
-    }
-
     public void loadWishListData(final CallbacksWishlist callbacks) {
 
 
-
-        String url =GSA() + API_URL + "act=" + ACTTION_LOAD_WISH_LIST + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
-        Log.e(TAG, "wishlist: url -> " + url );
+        String url = GSA() + API_URL + "act=" + ACTTION_LOAD_WISH_LIST + "&uid=" + GSV(KEY_ACC_DATA_USER_ID);
+        Log.e(TAG, "wishlist: url -> " + url);
 
         StringRequest requestItems = new StringRequest(
                 url,
@@ -2501,13 +2439,13 @@ public class SOS_API {
                             JSONArray jsonArray = new JSONArray(s);
 
 
-                            if(jsonArray.length() > 0){
+                            if (jsonArray.length() > 0) {
 
 
                                 List<ProductWishList> prods = new ArrayList<>();
                                 //prods.clear();
 
-                                for(int i =0; i < jsonArray.length(); i++) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
 
                                     JSONObject jo = jsonArray.getJSONObject(i);
 
@@ -2536,8 +2474,8 @@ public class SOS_API {
                                     data.putString(SOS_API.KEY_ITEM_ID, jo.getString(SOS_API.KEY_ITEM_ID));
                                     data.putString(Product.KEY_PD_DATE_ADDED, postedDate);
                                     data.putString(Product.KEY_PD_UNIQUE_NAME, jo.getString(Product.KEY_PD_UNIQUE_NAME));
-                                    data.putString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME,jo.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
-                                    data.putString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT,jo.getString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT));
+                                    data.putString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME, jo.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
+                                    data.putString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT, jo.getString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT));
                                     data.putString(Product.KEY_PD_DATE_SOLD, jo.getString(Product.KEY_PD_DATE_SOLD));
                                     data.putString(Product.KEY_PD_UNIQUE_NAME, jo.getString(Product.KEY_PD_UNIQUE_NAME));
                                     data.putString(Product.KEY_PD_OWNER_ID, jo.getString(Product.KEY_PD_OWNER_ID));
@@ -2552,8 +2490,7 @@ public class SOS_API {
                                 callbacks.onWishLisItemsLoaded(prods);
 
 
-
-                            }else{
+                            } else {
                                 callbacks.onNoItemsInWishlist();
                             }
 
@@ -2578,60 +2515,22 @@ public class SOS_API {
 
     }
 
-    public interface SOSApiListener {
-        void onSearchResult(String ids);
-        void onSearchResultError(String error);
-        void onPostInquiryResult(String result);
-        void onLoadRecentItemsResult(List<Product> featuredProducts, boolean networkError);
-        void onLoginResult(Bundle data);
-        void onSignUpResult(Bundle data);
-        void onAccountDeleteResult(Bundle data);
-        void onLogoutResult();
-        void onExposeItemResult(Bundle data);
-        void onLoadAllMyProductsResult(List<ProductMyProducts> myProducts, boolean networkError);
-        void onLoadItemsCats(JSONArray jsonArray);
-        void onUpdatePasswordResult(String resp);
-        void onUpdateSettingsResult(String settingKey, String result);
-        void onLoadAllProductsResult(List<ProductMyProducts> allProducts);
-        void onRemoveProductResult(Bundle b);
-        void onUpdateItemViewsCountResult(String newCount);
-        void onLoadAllProductsError(String message);
-
-        void onLoadSearchResultItemsResult(List<ProductMyProducts> searchResultProducts);
-
-        void onLoadSearchResultItemsError(String message);
-
-        void onItemsTypesLoaded(JSONArray itemCats);
-
-        void onUploadPPResult(Bundle data);
-
-        void onLoadItemsTypesResultError();
-
-        void onLoadItemsTypesResult(String[] types);
-
-        void onLoadCatsTypesNames(String cn, String tn);
-
-        void onCategoryTypesLoaded(List<TypesItem> types, boolean errorLoading);
+    public void loadItemsCatsAndTypes(final SOSApiListener listener) {
 
 
-    }
-
-    public void loadItemsCatsAndTypes(final SOSApiListener listener){
+        if (getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY).equals(KEY_PREF_EMPTY)) {
 
 
-        if(getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY).equals(KEY_PREF_EMPTY)) {
+            String url = GSA() + API_URL + "act=" + ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES;
 
-
-            String url =GSA() + API_URL + "act=" + ACTION_LOAD_ALL_ITEMS_CATS_AND_TYPES;
-
-           //Log.e(TAG, "loadItemsCatsAndTypes: url -> " + url );
+            //Log.e(TAG, "loadItemsCatsAndTypes: url -> " + url );
 
             StringRequest request = new StringRequest(
                     url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
-                           //Log.e(TAG, "ALL CATS RESP -> " + s);
+                            //Log.e(TAG, "ALL CATS RESP -> " + s);
 
 
                             try {
@@ -2641,7 +2540,7 @@ public class SOS_API {
                                     listener.onLoadItemsCats(jsonArray);
                                     editor.putString(KEY_ITEMS_CATS_AND_TYPES, s);
                                     editor.commit();
-                                   //Log.e(TAG, "CATS LOADED FROM SERVER" );
+                                    //Log.e(TAG, "CATS LOADED FROM SERVER" );
                                 }
 
                             } catch (JSONException e) {
@@ -2654,7 +2553,7 @@ public class SOS_API {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-                           //Log.e(TAG, "ALL CAT RESP ERR ->  " + volleyError.getMessage());
+                            //Log.e(TAG, "ALL CAT RESP ERR ->  " + volleyError.getMessage());
                             //listener.onLoadItemsCats(null);
                         }
                     }
@@ -2663,7 +2562,7 @@ public class SOS_API {
 
             SOSApplication.getInstance().addToRequestQueue(request);
 
-        }else{
+        } else {
             try {
                 String s = getPreferences().getString(KEY_ITEMS_CATS_AND_TYPES, KEY_PREF_EMPTY);
                 JSONArray jsonArray = new JSONArray(s);
@@ -2671,7 +2570,7 @@ public class SOS_API {
                 if (jsonArray.length() > 0) {
                     listener.onLoadItemsCats(jsonArray);
                     //editor.putStringSet(KEY_ITEMS_CATS_AND_TYPES, s);
-                   //Log.e(TAG, "CATS LOADED FROM PREFS" );
+                    //Log.e(TAG, "CATS LOADED FROM PREFS" );
                 }
 
             } catch (JSONException e) {
@@ -2683,27 +2582,13 @@ public class SOS_API {
 
     }
 
-    public static String ACTION_LOAD_ITEMS_IN_TYPE = "loadItemsInType";
-
-    public interface CallBacksItemsInTypes {
-
-        void onItemsInTypeLoaded(List<Product> prods);
-        void onNoProdsInType();
-        void onErrorLoadProdsInType(String msg);
-    }
-
-    public void loadItemsInType(final CallBacksItemsInTypes listener, String typeId){
+    public void loadItemsInType(final CallBacksItemsInTypes listener, String typeId) {
 
 
+        String url = GSA() + API_URL + "act=" + ACTION_LOAD_ITEMS_IN_TYPE + "&typeId=" + typeId;
+        Log.e(TAG, "loadItemsInType: url -> " + url);
 
-
-
-
-
-        String url =GSA() + API_URL + "act=" + ACTION_LOAD_ITEMS_IN_TYPE + "&typeId=" + typeId;
-        Log.e(TAG, "loadItemsInType: url -> " + url );
-
-        Log.e(TAG, "onResponse: \nurl : " + url );
+        Log.e(TAG, "onResponse: \nurl : " + url);
 
         StringRequest requestItems = new StringRequest(
                 url,
@@ -2715,56 +2600,55 @@ public class SOS_API {
                             JSONArray jsonArray = new JSONArray(s);
 
 
-                            if(jsonArray.length() > 0){
+                            if (jsonArray.length() > 0) {
 
 
                                 List<Product> prods = new ArrayList<>();
                                 //prods.clear();
 
-                                    for(int i =0; i < jsonArray.length(); i++) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
 
-                                        JSONObject jo = jsonArray.getJSONObject(i);
+                                    JSONObject jo = jsonArray.getJSONObject(i);
 
-                                        Product pd = new Product(
-                                                jo.getString(Product.KEY_PD_NAME),
-                                                jo.getString(Product.KEY_PD_PRICE),
-                                                jo.getString(Product.KEY_PD_IMG),
-                                                jo.getString(Product.KEY_PD_CUR),
-                                                jo.getString(Product.KEY_PD_CAT),
-                                                jo.getString(Product.KEY_PD_QUAL),
-                                                jo.getString(Product.KEY_PD_DESC),
-                                                null
-                                        );
+                                    Product pd = new Product(
+                                            jo.getString(Product.KEY_PD_NAME),
+                                            jo.getString(Product.KEY_PD_PRICE),
+                                            jo.getString(Product.KEY_PD_IMG),
+                                            jo.getString(Product.KEY_PD_CUR),
+                                            jo.getString(Product.KEY_PD_CAT),
+                                            jo.getString(Product.KEY_PD_QUAL),
+                                            jo.getString(Product.KEY_PD_DESC),
+                                            null
+                                    );
 
-                                        Bundle data = new Bundle();
-
-
-                                        String dateStart = jo.getString(Product.KEY_PD_DATE_ADDED);
-
-                                        //HelperDate.DateDiff dateDiff = HelperDate.dateDiff(dateStart, dateEnd );//new Date().toString());
-
-                                        String postedDate = HM.CLDTAS(context,
-                                                HelperDate.getLongDateFromDateStr(dateStart), HelperDate.getCurrentLondDate());//dateDiff.toSocialFormat();//HM.FD(dateDiff, dateStart);
+                                    Bundle data = new Bundle();
 
 
-                                        data.putString(Product.KEY_PD_DATE_ADDED, postedDate);
-                                        data.putString(Product.KEY_PD_UNIQUE_NAME, jo.getString(Product.KEY_PD_UNIQUE_NAME));
-                                        data.putString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME,jo.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
-                                        data.putString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT,jo.getString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT));
-                                        data.putString(Product.KEY_PD_DATE_SOLD, jo.getString(Product.KEY_PD_DATE_SOLD));
-                                        data.putString(SOS_API.KEY_ACC_DATA_USER_ID, jo.getString(SOS_API.KEY_ACC_DATA_USER_ID));
-                                        pd.setData(data);
-                                        //Log.e(TAG, "PD TOB " + pd.toBundle().toString() );
+                                    String dateStart = jo.getString(Product.KEY_PD_DATE_ADDED);
 
-                                        prods.add(pd);
+                                    //HelperDate.DateDiff dateDiff = HelperDate.dateDiff(dateStart, dateEnd );//new Date().toString());
 
-                                    }
-
-                                    listener.onItemsInTypeLoaded(prods);
+                                    String postedDate = HM.CLDTAS(context,
+                                            HelperDate.getLongDateFromDateStr(dateStart), HelperDate.getCurrentLondDate());//dateDiff.toSocialFormat();//HM.FD(dateDiff, dateStart);
 
 
+                                    data.putString(Product.KEY_PD_DATE_ADDED, postedDate);
+                                    data.putString(Product.KEY_PD_UNIQUE_NAME, jo.getString(Product.KEY_PD_UNIQUE_NAME));
+                                    data.putString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME, jo.getString(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
+                                    data.putString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT, jo.getString(SOS_API.KEY_ITEM_ITEM_VIEWS_ACCOUNT));
+                                    data.putString(Product.KEY_PD_DATE_SOLD, jo.getString(Product.KEY_PD_DATE_SOLD));
+                                    data.putString(SOS_API.KEY_ACC_DATA_USER_ID, jo.getString(SOS_API.KEY_ACC_DATA_USER_ID));
+                                    pd.setData(data);
+                                    //Log.e(TAG, "PD TOB " + pd.toBundle().toString() );
 
-                            }else{
+                                    prods.add(pd);
+
+                                }
+
+                                listener.onItemsInTypeLoaded(prods);
+
+
+                            } else {
                                 listener.onNoProdsInType();
                             }
 
@@ -2789,31 +2673,26 @@ public class SOS_API {
 
     }
 
-    public interface CallbacksLogout {
-        public void onLogoutResult(final boolean logoutSuccess);
-    }
-
-    public  void logout(final CallbacksLogout callbacks){
-
+    public void logout(final CallbacksLogout callbacks) {
 
 
         // TODO: 12/1/17 EMPTY SESSION INPHP
 
-        String url =GSA() + API_URL + "act=" + ACTION_LOGOUT + "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
+        String url = GSA() + API_URL + "act=" + ACTION_LOGOUT + "&uid=" + getSessionVar(KEY_ACC_DATA_USER_ID);
 
-       //Log.e(TAG, "logout: url -> " + url );
+        //Log.e(TAG, "logout: url -> " + url );
 
         StringRequest request = new StringRequest(
                 url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                       Log.e("XXX", "onResponse: logout resp -> " + s );
+                        Log.e("XXX", "onResponse: logout resp -> " + s);
 
-                       boolean success = s.equals(TRUE);
+                        boolean success = s.equals(TRUE);
 
 
-                        if(success){
+                        if (success) {
                             String serverAdd = GSV(SERVER_ADD);
                             String lun = GSV(KEY_LAST_USERNAME);
                             String autorefresh = GSV(KEY_AUTOREFRESH_RECENT_ITEMS);
@@ -2831,7 +2710,7 @@ public class SOS_API {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Log.d(TAG, "onError logout restp ->  " + volleyError.getMessage() );
+                        Log.d(TAG, "onError logout restp ->  " + volleyError.getMessage());
                         callbacks.onLogoutResult(false);
                     }
                 }
@@ -2840,7 +2719,145 @@ public class SOS_API {
         SOSApplication.getInstance().addToRequestQueue(request);
 
 
+    }
 
+    public interface CallbacksProduct {
+        void onItemPublishResult(int code, String data);
+
+        void onLoadAllItemsResult(int code, List<ProductMyProducts> products);
+
+        void onLoadAllItemsNetworkError(String message);
+    }
+
+    public interface CallbacksLookingFor {
+        void onDeleteLookingSuccess();
+
+        void onDeleteLookingForFailure(String message);
+
+        void onUpdateLookingForResult(int code, String data);
+    }
+
+    public interface CallbacksUniqueID {
+        void onUniqueIDLoaded(String un);
+
+        void onError(String error);
+    }
+
+    public interface ListenerLoadMyProducts {
+        void onMyProductsLoaded(List<ProductMyProducts> products);
+
+        void onMyProductsEmpty();
+
+        void onNetworkError(String msg);
+
+        void onParseJsonError(String s);
+    }
+
+    public interface ListenerLoadRecentItems {
+        void onRecentItemsLoaded(List<Product> products);
+
+        void onRecentItemsEmpty();
+
+        void onNetworkError(String msg);
+
+        void onParseJsonError(String s);
+    }
+
+    public interface OnUpdatePasswordListenerm {
+        void onPasswordUpdateResult(String resStatus, String resMessage);
+    }
+
+    public interface CallbacksSearch {
+        void onSearchResult(Context context, List<ProductMyProducts> products);
+    }
+
+    public interface ListenerItemsWishlist {
+        void onItemAddedSuccess();
+
+        void onItemAddedError(String msg);
+
+        void onNetworkError(String msg);
+
+        void onWishlistItemRemoveError(Bundle pd);
+
+        void onWishlistItemRemoveSuccess(Bundle pd);
+    }
+
+    public interface CallbacksWishlist {
+        void onWishLisItemsLoaded(List<ProductWishList> wishlistItems);
+
+        void onNoItemsInWishlist();
+
+        void onErrorLoadWishList(String message);
+
+        void onWishlistClearResult(boolean success, String message);
+    }
+
+    public interface SOSApiListener {
+        void onSearchResult(String ids);
+
+        void onSearchResultError(String error);
+
+        void onPostInquiryResult(String result);
+
+        void onLoadRecentItemsResult(List<Product> featuredProducts, boolean networkError);
+
+        void onLoginResult(Bundle data);
+
+        void onSignUpResult(Bundle data);
+
+        void onAccountDeleteResult(Bundle data);
+
+        void onLogoutResult();
+
+        void onExposeItemResult(Bundle data);
+
+        void onLoadAllMyProductsResult(List<ProductMyProducts> myProducts, boolean networkError);
+
+        void onLoadItemsCats(JSONArray jsonArray);
+
+        void onUpdatePasswordResult(String resp);
+
+        void onUpdateSettingsResult(String settingKey, String result);
+
+        void onLoadAllProductsResult(List<ProductMyProducts> allProducts);
+
+        void onRemoveProductResult(Bundle b);
+
+        void onUpdateItemViewsCountResult(String newCount);
+
+        void onLoadAllProductsError(String message);
+
+        void onLoadSearchResultItemsResult(List<ProductMyProducts> searchResultProducts);
+
+        void onLoadSearchResultItemsError(String message);
+
+        void onItemsTypesLoaded(JSONArray itemCats);
+
+        void onUploadPPResult(Bundle data);
+
+        void onLoadItemsTypesResultError();
+
+        void onLoadItemsTypesResult(String[] types);
+
+        void onLoadCatsTypesNames(String cn, String tn);
+
+        void onCategoryTypesLoaded(List<TypesItem> types, boolean errorLoading);
+
+
+    }
+
+    public interface CallBacksItemsInTypes {
+
+        void onItemsInTypeLoaded(List<Product> prods);
+
+        void onNoProdsInType();
+
+        void onErrorLoadProdsInType(String msg);
+    }
+
+    public interface CallbacksLogout {
+        public void onLogoutResult(final boolean logoutSuccess);
     }
 
 }
