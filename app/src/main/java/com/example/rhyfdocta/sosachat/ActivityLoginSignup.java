@@ -258,19 +258,31 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
         //Log.e(TAG, "loginResult " + loginResult.toString() + " isOnlie : " + isOnline.toString() );
 
         // TODO: 11/30/17 REMOVE BACK DOOR
+
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+
         if(isOnline) {
 
-            alertDialogProcessing.show();
-            String user = etUsername.getText().toString();
+            if(username.isEmpty() || password.isEmpty()){
 
-            if(HM.PIV(user) || HM.EIV(user)) {
-                sosApi.login(this, etUsername.getText().toString(), etPassword.getText().toString());
-            }else{
-                alertDialogProcessing.hide();
-                String msg = HM.RGS(this,R.string.msgInvalideEmailOrPhone);
-                sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true, msg);
-                //Toast.makeText(this, , Toast.LENGTH_SHORT).show();
+                String msg = HM.RGS(this, R.string.msgEmailOrPasswordEmpty);
+                sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this, true, msg);
+
+            }else {
+                alertDialogProcessing.show();
+                String user = etUsername.getText().toString();
+
+                if (HM.PIV(user) || HM.EIV(user)) {
+                    sosApi.login(this, username, password);
+                } else {
+                    alertDialogProcessing.hide();
+                    String msg = HM.RGS(this, R.string.msgInvalideEmailOrPhone);
+                    sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this, true, msg);
+                    //Toast.makeText(this, , Toast.LENGTH_SHORT).show();
+                }
             }
+
         }else{
             alertDialogProcessing.hide();
             sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true, HM.RGS(this, R.string.msgErrorInternetConnection));

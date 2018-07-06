@@ -591,7 +591,8 @@ AdapterLookingFor.CallBacks,
             onLoadRecentItemsResult(products, false);
             alertDialogProcessing.hide();
             llPbLoadingRecentItems.setVisibility(View.GONE);
-            tvRecentItemsEmpty.setVisibility(View.VISIBLE);
+            tvRecentItemsEmpty.setVisibility(View.GONE);
+            Log.e(TAG, ":KAKI " );
         }
 
         @Override

@@ -427,5 +427,6 @@
     <string name="msgNoLookingforsYet">Sorry there are not lookingfors posted yet</string>
     <string name="msgLoginFailedPasswordError">Login failed, your password is not correct!</string>
     <string name="msgLoginFailedUserDontExist">Error login, this user account does\'nt exist, check your phone number or email then try again!</string>
+    <string name="msgEmailOrPasswordEmpty">Email or password can\'t be empty</string>
 
 </resources>
