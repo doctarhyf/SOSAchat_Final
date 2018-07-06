@@ -403,6 +403,12 @@ public class SOS_API {
         void userPasswordError(String username);
 
         void userDontExist(String username);
+
+        void signupSuccess(Bundle userData);
+
+        void signupFailureUserExist();
+
+        void signupFailure(String message);
     }
 
     public void login(final CallbacksLoginSignup callbacks, final String username, final String password) {
@@ -430,7 +436,7 @@ public class SOS_API {
                                     JSONObject userJO = new JSONObject(userJSON);
 
                                     Bundle userData = HM.JTB(userJO);
-                                    setSessionData(new Bundle(userData));
+                                    setSessionData(userData);
                                     callbacks.userConnectionSuccess(userData);
                                     break;
 
@@ -588,7 +594,7 @@ public class SOS_API {
 
     }
 
-    public void signup(final SOSApiListener SOSApiListener, Bundle data) {
+    public void signup(final CallbacksLoginSignup callbacks, Bundle data) {
 
 
         final String mobile = data.getString(SOS_API.KEY_ACC_DATA_MOBILE);
@@ -607,51 +613,46 @@ public class SOS_API {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // response
-                        Log.e("signup res -> ", response);
-
 
                         try {
+                            JSONObject jsonObject = new JSONObject(response);
 
+                            int code = jsonObject.getInt(NETWORK_RESULT_CODES.KEY_RESULT_CODE);
+                            String dataStr = jsonObject.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
+                            JSONObject userJSon = new JSONObject(dataStr);
+                            Bundle userData = HM.JTB(userJSon);
+                            //userData = HM.JTB(new JSONObject(userData.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA)));
 
-                            JSONObject jo = new JSONObject(response);
-                            Bundle b = HelperMethods.jsonToBundle(jo);
+                            switch (code){
+                                case NETWORK_RESULT_CODES.RESULT_CODE_SIGNUP_SUCCESS:
 
-                            if (b.size() == 1) {
-                                b.putString(JSON_KEY_RESULT, SIGNUP_FAILURE);
+                                    callbacks.signupSuccess(userData);
+                                    String data = userData.getString("data");
+                                    JSONObject jo = new JSONObject(data);
+                                    Bundle b = HM.JTB(jo);
+                                    setSessionData(b);
+                                    break;
 
-                            } else {
+                                case NETWORK_RESULT_CODES.RESULT_CODE_SIGNUP_FAILURE:
+                                    callbacks.signupFailure(dataStr);
+                                    break;
 
-
-                                b.putString(JSON_KEY_RESULT, SIGNUP_SUCCESS);
-
-
-                                //SOSApiListener.onSignUpResult(b);
-
+                                case NETWORK_RESULT_CODES.RESULT_CODE_SIGNUP_FAILURE_USER_EXISTS:
+                                    callbacks.signupFailureUserExist();
+                                    break;
                             }
-
-                            SOSApiListener.onSignUpResult(b);
-                            ////Log.e(TAG, "my bundle from jo -->> " + b.toString());
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Bundle b = new Bundle();
-                            b.putString(JSON_KEY_RESULT, SIGNUP_FAILURE);
-                            SOSApiListener.onSignUpResult(b);
+                            Log.e("XXX", "onResponse: -> " + e.getMessage() );
                         }
-
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // error
-                        //Log.e("signup err res -> ", error.getMessage());
-                        Bundle b = new Bundle();
-                        b.putString(JSON_KEY_RESULT, SIGNUP_FAILURE);
-                        SOSApiListener.onSignUpResult(b);
+
 
 
                     }

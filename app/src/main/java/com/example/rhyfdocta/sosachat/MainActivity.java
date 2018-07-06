@@ -599,7 +599,6 @@ AdapterLookingFor.CallBacks,
         public void onRecentItemsEmpty() {
 
             tvRecentItemsEmpty.setVisibility(View.VISIBLE);
-
             llPbLoadingRecentItems.setVisibility(View.GONE);
             //toggleNoConnGUI(false);
             //Toast.makeText(MainActivity.this, "onRecentItemsEmpty", Toast.LENGTH_SHORT).show();

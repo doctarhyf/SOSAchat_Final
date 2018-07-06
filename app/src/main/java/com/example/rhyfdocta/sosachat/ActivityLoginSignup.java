@@ -369,9 +369,9 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
     @Override
     public void onLoginResult(Bundle data) {
+/*
 
 
-        /*
         boolean loginResult = data.getString(SOS_API.JSON_KEY_RESULT).equalsIgnoreCase(SOS_API.LOGIN_SUCCESS);
 
         if (loginResult) {
@@ -564,6 +564,32 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
     public void userDontExist(String username) {
         alertDialogProcessing.hide();
         String msg =  HM.RGS(this, R.string.msgLoginFailedUserDontExist);
+        sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
+    }
+
+    @Override
+    public void signupSuccess(Bundle userData) {
+        Toast.makeText(this, "SIGN UP SUCCESS", Toast.LENGTH_SHORT).show();
+
+
+        String username = userData.getString(SOS_API.KEY_ACC_DATA_MOBILE);
+        String password = userData.getString(SOS_API.KEY_ACC_DATA_PASSWORD);
+
+        fireLoginIntent();
+    }
+
+    @Override
+    public void signupFailureUserExist() {
+        alertDialogProcessing.hide();
+        String msg =  HM.RGS(this, R.string.msgSignupFailedUserExists);
+        sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
+    }
+
+    @Override
+    public void signupFailure(String message) {
+        Log.e(TAG, "signupFailure: msg -> " + message );
+        alertDialogProcessing.hide();
+        String msg =  HM.RGS(this, R.string.msgSignupFailedMsg);
         sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
     }
 }

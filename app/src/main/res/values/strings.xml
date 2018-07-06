@@ -428,5 +428,7 @@
     <string name="msgLoginFailedPasswordError">Login failed, your password is not correct!</string>
     <string name="msgLoginFailedUserDontExist">Error login, this user account does\'nt exist, check your phone number or email then try again!</string>
     <string name="msgEmailOrPasswordEmpty">Email or password can\'t be empty</string>
+    <string name="msgSignupFailedUserExists">Error signing up, the email or the mobile number you used are already taken, change email or mobile then try again!</string>
+    <string name="msgSignupFailedMsg">Error signup, please try again later!</string>
 
 </resources>
