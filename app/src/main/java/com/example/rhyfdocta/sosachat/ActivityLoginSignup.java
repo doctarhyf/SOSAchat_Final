@@ -25,6 +25,8 @@ import com.example.rhyfdocta.sosachat.Helpers.HelperMethods;
 import com.example.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.ObjectsModels.ProductMyProducts;
 import com.example.rhyfdocta.sosachat.ObjectsModels.TypesItem;
+import com.example.rhyfdocta.sosachat.ObjectsModels.User;
+import com.example.rhyfdocta.sosachat.app.SOSApplication;
 import com.example.rhyfdocta.sosachat.debug.SOSDebug;
 
 import org.json.JSONArray;
@@ -63,7 +65,11 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
 
 
 
-        sosApi = new SOS_API(this);
+        sosApi = SOSApplication.GI().getSosApi();
+
+        if(sosApi.isLoggedIn()){
+            fireLoginIntent();
+        }
 
         String serverAdd = sosApi.GSV(SOS_API.SERVER_ADD);
 
@@ -135,6 +141,8 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
         String lun = sosApi.GSV(SOS_API.KEY_LAST_USERNAME);
         if(!lun.equals(SOS_API.KEY_SESSION_DATA_EMPTY)) etUsername.setText(lun);
     }
+
+
 
     @Override
     protected void onResume() {
@@ -534,7 +542,7 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
     }
 
     @Override
-    public void userConnectionSuccess(Bundle userData) {
+    public void loginSuccess(Bundle userData) {
 
         /*
         boolean loginResult = data.getString(SOS_API.JSON_KEY_RESULT).equalsIgnoreCase(SOS_API.LOGIN_SUCCESS);
@@ -554,14 +562,14 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
     }
 
     @Override
-    public void userPasswordError(String username) {
+    public void loginFailedUserPasswordError(String username) {
         alertDialogProcessing.hide();
         String msg =  HM.RGS(this, R.string.msgLoginFailedPasswordError);
         sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
     }
 
     @Override
-    public void userDontExist(String username) {
+    public void loginFailedUserDontExist(String username) {
         alertDialogProcessing.hide();
         String msg =  HM.RGS(this, R.string.msgLoginFailedUserDontExist);
         sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
@@ -572,11 +580,21 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
         Toast.makeText(this, "SIGN UP SUCCESS", Toast.LENGTH_SHORT).show();
 
 
-        String username = userData.getString(SOS_API.KEY_ACC_DATA_MOBILE);
-        String password = userData.getString(SOS_API.KEY_ACC_DATA_PASSWORD);
+        //String username = userData.getString(SOS_API.KEY_ACC_DATA_MOBILE);
+        //String password = userData.getString(SOS_API.KEY_ACC_DATA_PASSWORD);
 
-        fireLoginIntent();
+
+        //fireLoginIntent();
+
+        Intent intent = new Intent(this, ActivityTutorial.class);
+        intent.putExtra(User.KEY_DATA, userData);
+        startActivity(intent);
+
+        Log.e(TAG, "session data ->  " + SOSApplication.GI().getSosApi().GSV(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
+        //Log.e(TAG, "signupSuccess: " + userData.toString() );
     }
+
+
 
     @Override
     public void signupFailureUserExist() {
@@ -591,5 +609,19 @@ public class ActivityLoginSignup extends AppCompatActivity implements SOS_API.SO
         alertDialogProcessing.hide();
         String msg =  HM.RGS(this, R.string.msgSignupFailedMsg);
         sosApi.toggleAlertDialogResponseWithMessage(ActivityLoginSignup.this,true,msg);
+    }
+
+    @Override
+    public void onJSONException(String message) {
+        sosApi.TADRWM(this, true, message);
+        alertDialogProcessing.hide();
+        Log.e("UDT", "onJSONException: " + message );
+    }
+
+    @Override
+    public void onNetworkError(String message) {
+        sosApi.TADRWM(this, true, message);
+        alertDialogProcessing.hide();
+        Log.e("UDT", "onNetworkError: " + message );
     }
 }

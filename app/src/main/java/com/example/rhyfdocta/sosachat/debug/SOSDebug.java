@@ -2,15 +2,19 @@ package com.example.rhyfdocta.sosachat.debug;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.rhyfdocta.sosachat.API.SOS_API;
+import com.example.rhyfdocta.sosachat.ActivityLoginSignup;
 import com.example.rhyfdocta.sosachat.R;
 import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
@@ -23,7 +27,7 @@ public class SOSDebug {
     public static boolean IS_DEBUG_MODE = true;
 
 
-    public static void showDebugDialog(Activity activity) {
+    public static void showDebugDialog(final Activity activity) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater layoutInflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -31,6 +35,7 @@ public class SOSDebug {
 
         final EditText input = view.findViewById(R.id.dbgEtNewHost);
         final TextView tv = view.findViewById(R.id.tvSSV);
+        final Button btnForceLogout = view.findViewById(R.id.btnForceLogout);
 
 
         String curIP = SOSApplication.getInstance().getSosApi().GSV(SOS_API.SERVER_ADD);
@@ -60,7 +65,19 @@ public class SOSDebug {
             }
         });
 
+        btnForceLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //SOSApplication.GI().getSosApi().clearSessionData();
+                SOSApplication.GI().getSosApi().CSD();
+                Context context = (Context) activity;
+                Intent intent = new Intent(context, ActivityLoginSignup.class);
+                context.startActivity(intent);
+            }
+        });
+
         builder.setCancelable(false);
+        builder.setTitle("");
         builder.show();
 
     }

@@ -430,5 +430,6 @@
     <string name="msgEmailOrPasswordEmpty">Email or password can\'t be empty</string>
     <string name="msgSignupFailedUserExists">Error signing up, the email or the mobile number you used are already taken, change email or mobile then try again!</string>
     <string name="msgSignupFailedMsg">Error signup, please try again later!</string>
+    <string name="strNeedPermsCallPhone">We need your permission to call a phone.</string>
 
 </resources>

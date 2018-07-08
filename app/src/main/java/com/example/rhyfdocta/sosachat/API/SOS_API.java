@@ -395,27 +395,43 @@ public class SOS_API {
 
     }
 
+    public void clearSessionData() {
+        String ip = GSV(SERVER_ADD);
+        editor.clear();
+        editor.putString(SERVER_ADD, ip);
+        editor.commit();
+        editor.commit();
+    }
+
+    public void CSD(){
+        clearSessionData();
+    }
+
     public interface CallbacksLoginSignup{
 
 
-        void userConnectionSuccess(Bundle userData);
+        void loginSuccess(Bundle userData);
 
-        void userPasswordError(String username);
+        void loginFailedUserPasswordError(String username);
 
-        void userDontExist(String username);
+        void loginFailedUserDontExist(String username);
 
         void signupSuccess(Bundle userData);
 
         void signupFailureUserExist();
 
         void signupFailure(String message);
+
+        void onJSONException(String message);
+
+        void onNetworkError(String message);
     }
 
     public void login(final CallbacksLoginSignup callbacks, final String username, final String password) {
 
         String loginURL = GetServerAddress() + SOS_API.API_URL + "act=" + ACTION_LOGIN + "&username=" + username + "&password=" + password;
 
-        Log.e(TAG, "login:url -> " + loginURL);
+        Log.e("UDT", "login:url -> " + loginURL);
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -434,18 +450,20 @@ public class SOS_API {
 
                                     String userJSON = data.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
                                     JSONObject userJO = new JSONObject(userJSON);
+                                    //String userDataStr = userJO.getString(NETWORK_RESULT_CODES.KEY_RESULT_DATA);
 
+                                    Log.e("UDT", "udata : " + userJSON );
                                     Bundle userData = HM.JTB(userJO);
                                     setSessionData(userData);
-                                    callbacks.userConnectionSuccess(userData);
+                                    callbacks.loginSuccess(userData);
                                     break;
 
                                 case NETWORK_RESULT_CODES.RESULT_CODE_USER_CONNECTION_FAILURE_PASSWORD_ERROR:
-                                    callbacks.userPasswordError(username);
+                                    callbacks.loginFailedUserPasswordError(username);
                                 break;
 
                                 case NETWORK_RESULT_CODES.RESULT_CODE_USER_DONT_EXIST:
-                                    callbacks.userDontExist(username);
+                                    callbacks.loginFailedUserDontExist(username);
                                     break;
 
                             }
@@ -455,6 +473,7 @@ public class SOS_API {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            callbacks.onJSONException(e.getMessage());
                         }
                     }
                 },
@@ -462,6 +481,7 @@ public class SOS_API {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Log.e("XYZ", "onResponse: " + volleyError.getMessage() );
+                        callbacks.onNetworkError(volleyError.getMessage());
                     }
                 });
 
@@ -626,11 +646,12 @@ public class SOS_API {
                             switch (code){
                                 case NETWORK_RESULT_CODES.RESULT_CODE_SIGNUP_SUCCESS:
 
-                                    callbacks.signupSuccess(userData);
+
                                     String data = userData.getString("data");
                                     JSONObject jo = new JSONObject(data);
                                     Bundle b = HM.JTB(jo);
                                     setSessionData(b);
+                                    callbacks.signupSuccess(userData);
                                     break;
 
                                 case NETWORK_RESULT_CODES.RESULT_CODE_SIGNUP_FAILURE:
@@ -645,6 +666,7 @@ public class SOS_API {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("XXX", "onResponse: -> " + e.getMessage() );
+                            callbacks.onJSONException(e.getMessage());
                         }
 
                     }
@@ -653,7 +675,7 @@ public class SOS_API {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-
+                        callbacks.onNetworkError(error.getMessage());
 
                     }
                 }

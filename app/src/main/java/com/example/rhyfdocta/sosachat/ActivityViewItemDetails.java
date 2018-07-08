@@ -1,17 +1,20 @@
 package com.example.rhyfdocta.sosachat;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
@@ -43,6 +46,7 @@ import com.example.rhyfdocta.sosachat.app.SOSApplication;
 
 import org.json.JSONArray;
 
+import java.security.Permission;
 import java.util.List;
 
 /**
@@ -59,6 +63,7 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
     private static final int KEY_CONTACT_BY_EMAIL = 2;
     private static final int KEY_CONTACT_BY_SOSDM = 3;
     private static final String CHANNEL_ID = "id";
+    private static final int PERM_REQ_CODE_CALL_PHONE = 404;
     Bundle itemDataBundle;
     TextView tvItemName, tvItemPrice, tvDatePosted, tvItemDesc, tvItemQual, tvItemViewsCount, tvItemCat, tvItemType;
     TextView tvSellerDislayName;
@@ -662,11 +667,21 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
 
             case KEY_CONTACT_BY_PHONE:
 
-                String uri = "tel:" + phoneNumber ;
-                intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse(uri));
 
-                startActivity(intent);
+
+
+                // TODO: 7/8/2018 MAKE PHONE CALL
+                if(Build.VERSION_CODES.M >= Build.VERSION.SDK_INT) {
+                    if (checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                        callPhone();
+                    }else{
+                        String perms[] = new String[]{Manifest.permission.CALL_PHONE};
+                        requestPermissions(perms, PERM_REQ_CODE_CALL_PHONE);
+                    }
+                }else{
+
+                    callPhone();
+                }
 
                 break;
 
@@ -699,6 +714,30 @@ public class ActivityViewItemDetails extends AppCompatActivity implements SOS_AP
         //alertContactChoice = null;
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == PERM_REQ_CODE_CALL_PHONE){
+
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                callPhone();
+            }else{
+                Toast.makeText(this, getResources().getString(R.string.strNeedPermsCallPhone), Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+
+
+    }
+
+    private void callPhone() {
+        String uri = "tel:" + phoneNumber ;
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse(uri));
     }
 
     @Override

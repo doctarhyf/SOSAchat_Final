@@ -25,17 +25,14 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
-            android:authorities="${applicationId}.provider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"
-            />
-
+                android:resource="@xml/provider_paths" />
         </provider>
 
         <activity android:name=".MainActivity" />
@@ -74,27 +71,25 @@
             android:parentActivityName=".ActivityMyAccount" />
         <activity
             android:name=".ActivityMyProducts"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ActivityMyAccount" />
+            android:parentActivityName=".ActivityMyAccount"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActivityMessages"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ActivityViewItemPics" />
-        <activity
-            android:name=".ActivityNewLookingFor"
-
-            />
+        <activity android:name=".ActivityNewLookingFor" />
         <activity
             android:name=".ActivityViewAllProducts"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActivityAccountSettings2"
             android:label="@string/title_activity_account_settings2" />
-        <activity android:name=".ActivityLookingFor"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:name=".ActivityLookingForView"/>
+        <activity
+            android:name=".ActivityLookingFor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ActivityLookingForView" />
+        <activity android:name=".ActivityTutorial"></activity>
     </application>
 
 </manifest>

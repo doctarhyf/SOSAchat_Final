@@ -969,6 +969,7 @@ AdapterLookingFor.CallBacks,
         }
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e(TAG, "CATEGORIES onLoadItemsCats: " + e.getMessage() );
         }
 
         adapterCats = new AdapterHomeCategories(this, list, new AdapterHomeCategories.Callbacks() {
