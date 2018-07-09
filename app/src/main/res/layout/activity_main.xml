@@ -14,7 +14,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.rhyfdocta.sosachat.MainActivity"
+    tools:context="com.example.rhyfdocta.sosachat.com.koziengineering.rhyfdocta.sosachat.MainActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
     android:orientation="vertical"
@@ -203,7 +203,7 @@
         android:background="@color/white"
         android:layout_height="wrap_content">
 
-        <com.example.rhyfdocta.sosachat.Helpers.MyListView
+        <com.koziengineering.rhyfdocta.sosachat.Helpers.MyListView
             android:id="@+id/lvLookingfor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

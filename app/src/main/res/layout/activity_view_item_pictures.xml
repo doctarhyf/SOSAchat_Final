@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="com.example.rhyfdocta.sosachat.ActivityViewItemPics">
+    tools:context="com.example.rhyfdocta.sosachat.com.koziengineering.rhyfdocta.sosachat.ActivityViewItemPics">
 
 
     <ImageView

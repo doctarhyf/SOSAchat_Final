@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.rhyfdocta.sosachat.ActivityMessages">
+    tools:context="com.example.rhyfdocta.sosachat.com.koziengineering.rhyfdocta.sosachat.ActivityMessages">
     <item
         android:id="@+id/menuContactList"
         android:orderInCategory="100"

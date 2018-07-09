@@ -36,7 +36,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/plamie"
-    tools:context="com.example.rhyfdocta.sosachat.ActivityLoginSignup"
+    tools:context="com.example.rhyfdocta.sosachat.com.koziengineering.rhyfdocta.sosachat.ActivityLoginSignup"
 
     >
 

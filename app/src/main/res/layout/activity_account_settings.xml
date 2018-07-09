@@ -10,7 +10,7 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="com.example.rhyfdocta.sosachat.ActivityAccountSettings">
+    tools:context="com.example.rhyfdocta.sosachat.com.koziengineering.rhyfdocta.sosachat.ActivityAccountSettings">
 
 
     <TextView
