@@ -246,13 +246,14 @@
 
 
     <TextView
-
+        android:visibility="gone"
         android:text="@string/tvExchRates"
         android:id="@+id/titleExRates"
         style="@style/tvHomeSectionsSeparator" />
 
 
     <LinearLayout
+
 
         android:id="@+id/footer"
         android:visibility="gone"

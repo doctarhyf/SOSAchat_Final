@@ -6,6 +6,12 @@
     android:padding="@dimen/dblGenPadding"
     >
 
+    <ImageView
+        android:id="@+id/ivPPLarge"
+        android:src="@drawable/salem"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
 
     <LinearLayout
 

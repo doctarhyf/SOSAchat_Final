@@ -330,19 +330,19 @@ AdapterLookingFor.CallBacks,
 
         if(connected){
 
-            tvTitleExRate.setVisibility(View.VISIBLE);
+            //tvTitleExRateibility(View.VISIBLE);
             tvLatesL4s.setVisibility(View.VISIBLE);
             llLooking4.setVisibility(View.VISIBLE);
             tvAllCats.setVisibility(View.VISIBLE);
             tvNoConn.setVisibility(View.GONE);
             llFeatCats.setVisibility(View.VISIBLE);
             tvLatestItems.setVisibility(View.VISIBLE);
-            footer.setVisibility(View.VISIBLE);
+            //footer.setVisibility(View.VISIBLE);
             btnSearch.setEnabled(true);
 
             //llPbLoadingRecentItems.setVisibility(View.GONE);
         }else{
-            tvTitleExRate.setVisibility(View.GONE);
+            //tvTitleExRateibility(View.GONE);
             tvLatesL4s.setVisibility(View.GONE);
             llLooking4.setVisibility(View.GONE);
             btnSearch.setEnabled(false);
@@ -350,7 +350,7 @@ AdapterLookingFor.CallBacks,
             tvNoConn.setVisibility(View.VISIBLE);
             llFeatCats.setVisibility(View.GONE);
             tvLatestItems.setVisibility(View.GONE);
-            footer.setVisibility(View.GONE);
+            //footer.setVisibility(View.GONE);
             //llPbLoadingRecentItems.setVisibility(View.GONE);
         }
 
@@ -481,7 +481,7 @@ AdapterLookingFor.CallBacks,
         rvRecentItems.setLayoutParams(layoutParams);
 
         alertDialogProcessing.dismiss();
-        //footer.setVisibility(View.VISIBLE);
+        ////footer.setVisibility(View.VISIBLE);
         toggleNoConnGUI(true);
 
         if(refreshing == true){
@@ -534,7 +534,7 @@ AdapterLookingFor.CallBacks,
             //featProdRootView.addView(pbLoadingFeatItems);
             //pbLoadingFeatItems.setVisibility(View.VISIBLE);
             alertDialogProcessing.show();
-            footer.setVisibility(View.GONE);
+            //footer.setVisibility(View.GONE);
             //toggleNoConnGUI(fa);
 
         }
@@ -894,7 +894,7 @@ AdapterLookingFor.CallBacks,
             sosApi.toggleAlertDialogResponseWithMessage(MainActivity.this, true, HM.RGS(this, R.string.msgNoRecentItems));
 
 
-            footer.setVisibility(View.VISIBLE);
+            //footer.setVisibility(View.VISIBLE);
 
         }else{
 

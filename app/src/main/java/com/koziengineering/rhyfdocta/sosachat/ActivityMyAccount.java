@@ -72,6 +72,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
     private int uploadProgress = 0;
     private String localPath = null;
     //private BitmapCacheManager bitmapCacheManager;
+    ImageView ivPPLarge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,9 @@ public class ActivityMyAccount extends AppCompatActivity implements
         setContentView(R.layout.activity_my_account);
 
         //bitmapCacheManager = new BitmapCacheManager(this);
+
+        ivPPLarge = findViewById(R.id.ivPPLarge);
+
         glideBitmapLoaderCallbacks = new MyGlideBitmapLoaderCallbacks(this);
 
 
@@ -393,6 +397,8 @@ public class ActivityMyAccount extends AppCompatActivity implements
         View viewDialog = getLayoutInflater().inflate(R.layout.alert_dialog_choose_pic_source, null);
 
 
+
+
         View viewSourceGallery = viewDialog.findViewById(R.id.llDialogPicSourceGalley);
         View viewSourceCamera = viewDialog.findViewById(R.id.llDialogPicSourceCamera);
 
@@ -416,6 +422,9 @@ public class ActivityMyAccount extends AppCompatActivity implements
                 .setTitle(getResources().getString(R.string.msgChooseYourPictureSource))
                 .setView(viewDialog);
 
+        ImageView iv = viewDialog.findViewById(R.id.ivPPLarge);
+
+        iv.setImageDrawable(ivProfilePic.getDrawable());
 
         alertDialogPictureSource = builder.create();
         alertDialogPictureSource.show();

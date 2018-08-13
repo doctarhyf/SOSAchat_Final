@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/myAccRootView"
     android:orientation="vertical"
-    tools:context="com.example.rhyfdocta.sosachat.com.koziengineering.rhyfdocta.sosachat.ActivityMyAccount">
+    tools:context="com.koziengineering.rhyfdocta.sosachat.ActivityMyAccount">
 
     <LinearLayout
         android:id="@+id/ppHeaderCont"

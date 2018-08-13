@@ -109,26 +109,6 @@ public class ActivityMyProducts extends AppCompatActivity implements
         @Override
         public void onMyProductsEmpty() {
 
-            final Context ctx = this;
-            String msg = HM.RGS(ctx, R.string.msgNoProducts);
-            String btnOk = HM.RGS(ctx, R.string.btnOk);
-            String btnNwItem = HM.RGS(ctx, R.string.btnNewItem);
-
-
-            SOS_API.DWPNB(this, true, msg, btnNwItem,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(ctx, ActivityPostItem.class);
-                            startActivity(intent);
-                        }
-                    }, btnOk,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    },null);
 
             progressBar.setVisibility(View.INVISIBLE);
             tvEmptyList.setVisibility(View.VISIBLE);
