@@ -9,6 +9,7 @@
 
 
     <TextView
+        android:visibility="gone"
         android:text=":Username:"
         android:textSize="22sp"
         android:id="@+id/tvDialogChoosePicTitle"
@@ -22,6 +23,8 @@
         android:layout_height="200dp" />
 
     <TextView
+        android:id="@+id/tvDialogChoosePicPicSource"
+        android:visibility="gone"
         android:text="Choose your picture source"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

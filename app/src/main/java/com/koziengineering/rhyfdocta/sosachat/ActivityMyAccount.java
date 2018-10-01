@@ -398,7 +398,11 @@ public class ActivityMyAccount extends AppCompatActivity implements
 
         TextView tvTitle = viewDialog.findViewById(R.id.tvDialogChoosePicTitle);
         tvTitle.setText(sosApi.GSV(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
+        tvTitle.setVisibility(View.VISIBLE);
 
+        TextView tvPicSource = viewDialog.findViewById(R.id.tvDialogChoosePicPicSource);
+        //tvTitle.setText(sosApi.GSV(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
+        tvPicSource.setVisibility(View.VISIBLE);
 
 
         View viewSourceGallery = viewDialog.findViewById(R.id.llDialogPicSourceGalley);
