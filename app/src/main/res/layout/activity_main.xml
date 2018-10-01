@@ -52,30 +52,33 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/heightMainSLideshow">
 
-        <ImageView
-
-            android:scaleType="centerCrop"
-            android:src="@drawable/salem"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
         <ImageView
-            android:scaleType="centerCrop"
-            android:src="@drawable/airtel_money"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
-        <ImageView
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             android:src="@drawable/logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <!--
+
         <ImageView
             android:scaleType="centerCrop"
-            android:src="@drawable/logo"
+            android:src="@drawable/xbox_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@drawable/plamie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@drawable/phantom_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />-->
 
     </ViewFlipper>
 

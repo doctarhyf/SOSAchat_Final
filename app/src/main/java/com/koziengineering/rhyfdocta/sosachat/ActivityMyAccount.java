@@ -349,7 +349,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         super.onLoadFailed(e, errorDrawable);
                         ivProfilePic.setImageResource(R.drawable.ic_user_m);
-                        sosApi.TADRWM(ActivityMyAccount.this,true, HM.RGS(ActivityMyAccount.this, R.string.msgFailedToLoadPP));
+                        //sosApi.TADRWM(ActivityMyAccount.this,true, HM.RGS(ActivityMyAccount.this, R.string.msgFailedToLoadPP));
                     }
                 });
 
@@ -396,6 +396,8 @@ public class ActivityMyAccount extends AppCompatActivity implements
 
         View viewDialog = getLayoutInflater().inflate(R.layout.alert_dialog_choose_pic_source, null);
 
+        TextView tvTitle = viewDialog.findViewById(R.id.tvDialogChoosePicTitle);
+        tvTitle.setText(sosApi.GSV(SOS_API.KEY_ACC_DATA_DISPLAY_NAME));
 
 
 
@@ -419,7 +421,7 @@ public class ActivityMyAccount extends AppCompatActivity implements
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(getResources().getString(R.string.msgChooseYourPictureSource))
+                //.setTitle()//getResources().getString(R.string.msgChooseYourPictureSource))
                 .setView(viewDialog);
 
         ImageView iv = viewDialog.findViewById(R.id.ivPPLarge);

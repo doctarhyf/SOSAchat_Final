@@ -435,6 +435,10 @@ public class ActivityPostItem extends AppCompatActivity implements
 
         View viewDialog = getLayoutInflater().inflate(R.layout.alert_dialog_choose_pic_source, null);
 
+        ImageView ivlarge = viewDialog.findViewById(R.id.ivPPLarge);
+
+        ivlarge.setVisibility(View.GONE);
+
 
         View viewSourceGallery = viewDialog.findViewById(R.id.llDialogPicSourceGalley);
         View viewSourceCamera = viewDialog.findViewById(R.id.llDialogPicSourceCamera);

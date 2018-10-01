@@ -6,11 +6,25 @@
     android:padding="@dimen/dblGenPadding"
     >
 
+
+
+    <TextView
+        android:text=":Username:"
+        android:textSize="22sp"
+        android:id="@+id/tvDialogChoosePicTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ImageView
         android:id="@+id/ivPPLarge"
         android:src="@drawable/salem"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
+
+    <TextView
+        android:text="Choose your picture source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <LinearLayout

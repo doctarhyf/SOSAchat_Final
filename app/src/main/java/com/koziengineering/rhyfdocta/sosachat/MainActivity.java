@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -29,6 +30,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -158,8 +160,10 @@ AdapterLookingFor.CallBacks,
 
         vfMain = findViewById(R.id.vfMain);
         vfMain.setFlipInterval(MAIN_SLIDESHOW_FLIP_INTERVAL);
-        vfMain.setAutoStart(true);
-        vfMain.startFlipping();
+        vfMain.setAutoStart(false);
+
+
+        //loadPromoData();
 
         Animation imgAnimationIn = AnimationUtils.loadAnimation(
                 this,
@@ -278,6 +282,36 @@ AdapterLookingFor.CallBacks,
 
 
 
+    }
+
+    private void loadPromoData() {
+
+        vfMain.removeAllViews();
+        int[] ids = {R.drawable.xbox_one, R.drawable.plamie,R.drawable.phantom_4,R.drawable.salem};
+
+        for(int i = 0; i < 4; i++) {
+            ImageView iv = new ImageView(this);
+            iv.setClickable(true);
+
+            Drawable drawable = getResources().getDrawable(ids[i]);
+            iv.setImageDrawable(drawable);
+
+            vfMain.addView(iv);
+        }
+
+        ImageView v = (ImageView) vfMain.getChildAt(0);
+
+        // TODO: 8/14/2018 check promo size
+        HelperMethods.GetViewSize(new HelperMethods.CallbacksViewSize() {
+            @Override
+            public void onSizeFound(double[] size) {
+
+                Toast.makeText(MainActivity.this, "promo w : " + size[0] + " h : " + size[1], Toast.LENGTH_LONG).show();
+
+            }
+        }, v);
+
+        vfMain.startFlipping();
     }
 
     @Override
