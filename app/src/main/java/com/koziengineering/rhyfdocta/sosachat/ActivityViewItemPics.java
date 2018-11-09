@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
@@ -24,6 +25,7 @@ import com.koziengineering.rhyfdocta.sosachat.API.SOS_API;
 import com.koziengineering.rhyfdocta.sosachat.Helpers.BitmapCacheManager;
 import com.koziengineering.rhyfdocta.sosachat.ObjectsModels.Product;
 import com.example.rhyfdocta.sosachat.R;
+import com.koziengineering.rhyfdocta.sosachat.ObjectsViews.TouchImageView;
 import com.koziengineering.rhyfdocta.sosachat.ServerImageManagement.ServerImage;
 
 import java.io.File;
@@ -35,7 +37,8 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
     private static final Integer TAG_OK = 101;
     Bundle itemBundle;
     SOS_API sosApi;
-    ImageView ivMain, ivp1, ivp2, ivp3, ivMorePicMain;
+    ImageView  ivp1, ivp2, ivp3, ivMorePicMain;
+    TouchImageView ivMain;
     String title;
 
     @Override
@@ -181,7 +184,7 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
                         iv.setEnabled(true);
                         iv.setVisibility(View.VISIBLE);
 
-                        if(iv.getId() == R.id.ivmpMain){
+                        if(false){//iv.getId() == R.id.ivmpMain){
                             //registerForContextMenu(iv);
 
                             iv.setOnTouchListener(new View.OnTouchListener() {
@@ -208,6 +211,7 @@ public class ActivityViewItemPics extends AppCompatActivity implements View.OnTo
                                     return false;
                                 }
                             });
+
 
 
                         }else {

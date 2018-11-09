@@ -9,7 +9,7 @@
     tools:context="com.example.rhyfdocta.sosachat.com.koziengineering.rhyfdocta.sosachat.ActivityViewItemPics">
 
 
-    <ImageView
+    <com.koziengineering.rhyfdocta.sosachat.ObjectsViews.TouchImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"

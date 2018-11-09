@@ -306,8 +306,8 @@ AdapterLookingFor.CallBacks,
             @Override
             public void onSizeFound(double[] size) {
 
-                Toast.makeText(MainActivity.this, "promo w : " + size[0] + " h : " + size[1], Toast.LENGTH_LONG).show();
-
+                //Toast.makeText(MainActivity.this, "promo w : " + size[0] + " h : " + size[1], Toast.LENGTH_LONG).show();
+                Log.e(TAG, "onSizeFound: Tha fucking promo size : \"promo w : \" + size[0] + \" h : \" + size[1]" );
             }
         }, v);
 
