@@ -39,6 +39,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.koziengineering.rhyfdocta.sosachat.API.SOS_API;
 import com.koziengineering.rhyfdocta.sosachat.Helpers.HM;
 import com.koziengineering.rhyfdocta.sosachat.Helpers.HelperMethods;
@@ -160,7 +161,7 @@ AdapterLookingFor.CallBacks,
 
         vfMain = findViewById(R.id.vfMain);
         vfMain.setFlipInterval(MAIN_SLIDESHOW_FLIP_INTERVAL);
-        vfMain.setAutoStart(false);
+        vfMain.setAutoStart(true);
 
 
         //loadPromoData();
@@ -286,6 +287,8 @@ AdapterLookingFor.CallBacks,
 
     private void loadPromoData() {
 
+
+
         vfMain.removeAllViews();
         int[] ids = {R.drawable.xbox_one, R.drawable.plamie,R.drawable.phantom_4,R.drawable.salem};
 
@@ -360,11 +363,15 @@ AdapterLookingFor.CallBacks,
         TextView tvTitleExRate = findViewById(R.id.titleExRates);
         TextView tvLatesL4s = findViewById(R.id.titleLookingFors);
         LinearLayout llLooking4 = findViewById(R.id.llLookingfors);
+        TextView titleSearch = findViewById(R.id.titleSearch);
+        LinearLayout llContSearch = findViewById(R.id.llContSearch);
 
 
         if(connected){
 
             //tvTitleExRateibility(View.VISIBLE);
+
+            llContSearch.setVerticalGravity(View.VISIBLE);
             tvLatesL4s.setVisibility(View.VISIBLE);
             llLooking4.setVisibility(View.VISIBLE);
             tvAllCats.setVisibility(View.VISIBLE);
@@ -373,10 +380,13 @@ AdapterLookingFor.CallBacks,
             tvLatestItems.setVisibility(View.VISIBLE);
             //footer.setVisibility(View.VISIBLE);
             btnSearch.setEnabled(true);
+            titleSearch.setVisibility(View.VISIBLE);
 
             //llPbLoadingRecentItems.setVisibility(View.GONE);
         }else{
             //tvTitleExRateibility(View.GONE);
+            llContSearch.findViewById(View.GONE);
+            titleSearch.setVisibility(View.GONE);
             tvLatesL4s.setVisibility(View.GONE);
             llLooking4.setVisibility(View.GONE);
             btnSearch.setEnabled(false);
@@ -395,7 +405,7 @@ AdapterLookingFor.CallBacks,
     protected void onDestroy() {
         super.onDestroy();
         //requestQueue = null;
-        requestFeaturedItems = null;
+        //requestFeaturedItems = null;
     }
 
     @Override

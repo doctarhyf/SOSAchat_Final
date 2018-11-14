@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <!--
+
 
         <ImageView
             android:scaleType="centerCrop"
@@ -78,7 +78,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/phantom_4"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />-->
+            android:layout_height="match_parent" />
 
     </ViewFlipper>
 
@@ -90,6 +90,7 @@
         style="@style/tvHomeSectionsSeparator" />
 
     <LinearLayout
+
         android:background="@color/white"
         android:id="@+id/llContSearch"
         android:orientation="vertical"
